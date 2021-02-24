@@ -1,14 +1,14 @@
 name: string
 
 config-version: 2
-version: version
+version: 0.18.1
 
 profile: profilename
 
-source-paths: [directorypath]
-data-paths: [directorypath]
-test-paths: [directorypath]
-analysis-paths: [directorypath]
+source-paths: ["models"]
+data-paths: ["data"]
+test-paths: ["tests"]
+analysis-paths: ["analysis"]
 macro-paths: [directorypath]
 snapshot-paths: [directorypath]
 docs-paths: [directorypath]
@@ -21,8 +21,6 @@ modules-path: directorypath
 clean-targets: [directorypath]
 
 query-comment: string
-
-require-dbt-version: version-range | [version-range]
 
 quoting:
   database: true | false
