@@ -1,0 +1,48 @@
+name: string
+
+config-version: 2
+version: version
+
+profile: profilename
+
+source-paths: [directorypath]
+data-paths: [directorypath]
+test-paths: [directorypath]
+analysis-paths: [directorypath]
+macro-paths: [directorypath]
+snapshot-paths: [directorypath]
+docs-paths: [directorypath]
+asset-paths: [directorypath]
+
+target-path: directorypath
+log-path: directorypath
+modules-path: directorypath
+
+clean-targets: [directorypath]
+
+query-comment: string
+
+require-dbt-version: version-range | [version-range]
+
+quoting:
+  database: true | false
+  schema: true | false
+  identifier: true | false
+
+models:
+  <model-configs>
+
+seeds:
+  <seed-configs>
+
+snapshots:
+  <snapshot-configs>
+
+sources:
+  <source-configs>
+
+vars:
+  <variables>
+
+on-run-start: sql-statement | [sql-statement]
+on-run-end: sql-statement | [sql-statement]
