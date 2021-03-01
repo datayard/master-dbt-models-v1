@@ -1,4 +1,4 @@
-name: master-dbt-models
+name: master_dbt_models
 version: '1.0'
 
 # This setting configures which "profile" dbt uses for this project. Profiles contain
