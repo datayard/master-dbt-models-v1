@@ -6,7 +6,9 @@
     select 
     	sfdc_account.id,
     	sfdc_account.name
+
     from "dev"."salesforce_production"."account" as sfdc_account
+
         where true
 
 ),
