@@ -3857,3 +3857,617 @@ There are 2 unused configuration paths:
 2021-03-12 19:50:55.761697 (Thread-206): handling status request
 2021-03-12 19:50:55.762153 (Thread-206): Sending event: {'category': 'dbt', 'action': 'rpc_request', 'label': '449b68ed-a143-4f69-8892-fc4f4de13d2c', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fc7eace17c0>]}
 2021-03-12 19:50:55.765836 (Thread-206): sending response (<Response 9416 bytes [200 OK]>) to 10.0.33.208
+2021-03-12 19:50:59.679513 (MainThread): Connection 'model.master_dbt_models.stg_salesforce_accounts' was properly closed.
+2021-03-12 19:50:59.715423 (Thread-207): Parsing macros/adapters.sql
+2021-03-12 19:50:59.742645 (Thread-207): Parsing macros/relations.sql
+2021-03-12 19:50:59.743573 (Thread-207): Parsing macros/catalog.sql
+2021-03-12 19:50:59.757097 (Thread-207): Parsing macros/materializations/snapshot_merge.sql
+2021-03-12 19:50:59.758362 (Thread-207): Parsing macros/adapters.sql
+2021-03-12 19:50:59.779411 (Thread-207): Parsing macros/relations.sql
+2021-03-12 19:50:59.780862 (Thread-207): Parsing macros/catalog.sql
+2021-03-12 19:50:59.783143 (Thread-207): Parsing macros/materializations/snapshot_merge.sql
+2021-03-12 19:50:59.786062 (Thread-207): Parsing macros/core.sql
+2021-03-12 19:50:59.789883 (Thread-207): Parsing macros/materializations/helpers.sql
+2021-03-12 19:50:59.802521 (Thread-207): Parsing macros/materializations/common/merge.sql
+2021-03-12 19:50:59.826448 (Thread-207): Parsing macros/materializations/snapshot/snapshot_merge.sql
+2021-03-12 19:50:59.828322 (Thread-207): Parsing macros/materializations/snapshot/strategies.sql
+2021-03-12 19:50:59.847999 (Thread-207): Parsing macros/materializations/snapshot/snapshot.sql
+2021-03-12 19:50:59.886424 (Thread-207): Parsing macros/materializations/view/create_or_replace_view.sql
+2021-03-12 19:50:59.892879 (Thread-207): Parsing macros/materializations/view/view.sql
+2021-03-12 19:50:59.906583 (Thread-207): Parsing macros/materializations/seed/seed.sql
+2021-03-12 19:50:59.927557 (Thread-207): Parsing macros/materializations/table/table.sql
+2021-03-12 19:50:59.934187 (Thread-207): Parsing macros/materializations/incremental/helpers.sql
+2021-03-12 19:50:59.936106 (Thread-207): Parsing macros/materializations/incremental/incremental.sql
+2021-03-12 19:50:59.942118 (Thread-207): Parsing macros/etc/is_incremental.sql
+2021-03-12 19:50:59.943841 (Thread-207): Parsing macros/etc/query.sql
+2021-03-12 19:50:59.944927 (Thread-207): Parsing macros/etc/datetime.sql
+2021-03-12 19:50:59.953969 (Thread-207): Parsing macros/etc/get_custom_alias.sql
+2021-03-12 19:50:59.955008 (Thread-207): Parsing macros/etc/get_custom_database.sql
+2021-03-12 19:50:59.956794 (Thread-207): Parsing macros/etc/get_custom_schema.sql
+2021-03-12 19:50:59.958878 (Thread-207): Parsing macros/schema_tests/not_null.sql
+2021-03-12 19:50:59.960489 (Thread-207): Parsing macros/schema_tests/accepted_values.sql
+2021-03-12 19:50:59.963124 (Thread-207): Parsing macros/schema_tests/relationships.sql
+2021-03-12 19:50:59.965029 (Thread-207): Parsing macros/schema_tests/unique.sql
+2021-03-12 19:50:59.966767 (Thread-207): Parsing macros/adapters/common.sql
+2021-03-12 19:51:00.039220 (Thread-208): handling status request
+2021-03-12 19:51:00.046572 (Thread-208): Sending event: {'category': 'dbt', 'action': 'rpc_request', 'label': '449b68ed-a143-4f69-8892-fc4f4de13d2c', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fc7eaa467c0>]}
+2021-03-12 19:51:00.047794 (Thread-208): sending response (<Response 184 bytes [200 OK]>) to 10.0.21.63
+2021-03-12 19:51:00.053571 (Thread-207): Acquiring new redshift connection "model.master_dbt_models.stg_salesforce_accounts".
+2021-03-12 19:51:00.264911 (Thread-207): [WARNING]: Configuration paths exist in your dbt_project.yml file which do not apply to any resources.
+There are 2 unused configuration paths:
+- models.vidyard_dbt
+- models.vidyard_dbt.staging
+
+2021-03-12 19:51:01.460699 (Thread-209): handling status request
+2021-03-12 19:51:01.461144 (Thread-209): Sending event: {'category': 'dbt', 'action': 'rpc_request', 'label': '449b68ed-a143-4f69-8892-fc4f4de13d2c', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fc8069d7790>]}
+2021-03-12 19:51:01.464362 (Thread-209): sending response (<Response 9416 bytes [200 OK]>) to 10.0.10.7
+2021-03-12 19:51:26.876918 (Thread-210): handling ps request
+2021-03-12 19:51:26.877859 (Thread-211): handling status request
+2021-03-12 19:51:26.878017 (Thread-210): Sending event: {'category': 'dbt', 'action': 'rpc_request', 'label': '449b68ed-a143-4f69-8892-fc4f4de13d2c', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fc807ddaa00>]}
+2021-03-12 19:51:26.878980 (Thread-210): sending response (<Response 104 bytes [200 OK]>) to 10.0.13.245
+2021-03-12 19:51:26.879128 (Thread-211): Sending event: {'category': 'dbt', 'action': 'rpc_request', 'label': '449b68ed-a143-4f69-8892-fc4f4de13d2c', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fc7eaac1bb0>]}
+2021-03-12 19:51:26.882688 (Thread-211): sending response (<Response 9416 bytes [200 OK]>) to 10.0.10.7
+2021-03-12 19:51:30.301913 (Thread-212): handling status request
+2021-03-12 19:51:30.302342 (Thread-212): Sending event: {'category': 'dbt', 'action': 'rpc_request', 'label': '449b68ed-a143-4f69-8892-fc4f4de13d2c', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fc7f00fda00>]}
+2021-03-12 19:51:30.305532 (Thread-212): sending response (<Response 9416 bytes [200 OK]>) to 10.0.10.7
+2021-03-12 19:54:59.149757 (Thread-213): handling status request
+2021-03-12 19:54:59.150186 (Thread-213): Sending event: {'category': 'dbt', 'action': 'rpc_request', 'label': '449b68ed-a143-4f69-8892-fc4f4de13d2c', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fc8069ef040>]}
+2021-03-12 19:54:59.153363 (Thread-213): sending response (<Response 9416 bytes [200 OK]>) to 10.0.33.208
+2021-03-12 19:54:59.183339 (Thread-214): handling ps request
+2021-03-12 19:54:59.183786 (Thread-214): Sending event: {'category': 'dbt', 'action': 'rpc_request', 'label': '449b68ed-a143-4f69-8892-fc4f4de13d2c', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fc7eaac0880>]}
+2021-03-12 19:54:59.184531 (Thread-214): sending response (<Response 104 bytes [200 OK]>) to 10.0.33.123
+2021-03-12 19:55:09.147892 (MainThread): Connection 'model.master_dbt_models.stg_salesforce_accounts' was properly closed.
+2021-03-12 19:55:09.184426 (Thread-215): For key master_dbt_models, hash mismatch (FileHash(name='sha256', checksum='f9ffbea2707e9d6827b7f4394358a74d8075c66b547ee6b75f8d9a238e9f0ecc') -> FileHash(name='sha256', checksum='96d8127f9923199bc2c2fbfadd3da1c7a9f3f3dbf051009acd12c6744d6cf7fa')), cache invalidated
+2021-03-12 19:55:09.185110 (Thread-215): Parsing macros/adapters.sql
+2021-03-12 19:55:09.211679 (Thread-215): Parsing macros/relations.sql
+2021-03-12 19:55:09.212398 (Thread-215): Parsing macros/catalog.sql
+2021-03-12 19:55:09.225442 (Thread-215): Parsing macros/materializations/snapshot_merge.sql
+2021-03-12 19:55:09.226437 (Thread-215): Parsing macros/adapters.sql
+2021-03-12 19:55:09.247514 (Thread-215): Parsing macros/relations.sql
+2021-03-12 19:55:09.249040 (Thread-215): Parsing macros/catalog.sql
+2021-03-12 19:55:09.251410 (Thread-215): Parsing macros/materializations/snapshot_merge.sql
+2021-03-12 19:55:09.253917 (Thread-215): Parsing macros/core.sql
+2021-03-12 19:55:09.257572 (Thread-215): Parsing macros/materializations/helpers.sql
+2021-03-12 19:55:09.266598 (Thread-215): Parsing macros/materializations/common/merge.sql
+2021-03-12 19:55:09.280768 (Thread-215): Parsing macros/materializations/snapshot/snapshot_merge.sql
+2021-03-12 19:55:09.282584 (Thread-215): Parsing macros/materializations/snapshot/strategies.sql
+2021-03-12 19:55:09.299187 (Thread-215): Parsing macros/materializations/snapshot/snapshot.sql
+2021-03-12 19:55:09.333507 (Thread-215): Parsing macros/materializations/view/create_or_replace_view.sql
+2021-03-12 19:55:09.338542 (Thread-215): Parsing macros/materializations/view/view.sql
+2021-03-12 19:55:09.345163 (Thread-215): Parsing macros/materializations/seed/seed.sql
+2021-03-12 19:55:09.366254 (Thread-215): Parsing macros/materializations/table/table.sql
+2021-03-12 19:55:09.372900 (Thread-215): Parsing macros/materializations/incremental/helpers.sql
+2021-03-12 19:55:09.374850 (Thread-215): Parsing macros/materializations/incremental/incremental.sql
+2021-03-12 19:55:09.380921 (Thread-215): Parsing macros/etc/is_incremental.sql
+2021-03-12 19:55:09.388926 (Thread-215): Parsing macros/etc/query.sql
+2021-03-12 19:55:09.390084 (Thread-215): Parsing macros/etc/datetime.sql
+2021-03-12 19:55:09.398904 (Thread-215): Parsing macros/etc/get_custom_alias.sql
+2021-03-12 19:55:09.399913 (Thread-215): Parsing macros/etc/get_custom_database.sql
+2021-03-12 19:55:09.401559 (Thread-215): Parsing macros/etc/get_custom_schema.sql
+2021-03-12 19:55:09.403551 (Thread-215): Parsing macros/schema_tests/not_null.sql
+2021-03-12 19:55:09.405108 (Thread-215): Parsing macros/schema_tests/accepted_values.sql
+2021-03-12 19:55:09.407769 (Thread-215): Parsing macros/schema_tests/relationships.sql
+2021-03-12 19:55:09.409645 (Thread-215): Parsing macros/schema_tests/unique.sql
+2021-03-12 19:55:09.411404 (Thread-215): Parsing macros/adapters/common.sql
+2021-03-12 19:55:09.465083 (Thread-215): For key master_dbt_models, hash mismatch (FileHash(name='sha256', checksum='f9ffbea2707e9d6827b7f4394358a74d8075c66b547ee6b75f8d9a238e9f0ecc') -> FileHash(name='sha256', checksum='96d8127f9923199bc2c2fbfadd3da1c7a9f3f3dbf051009acd12c6744d6cf7fa')), cache invalidated
+2021-03-12 19:55:09.577573 (Thread-216): handling status request
+2021-03-12 19:55:09.578107 (Thread-216): Sending event: {'category': 'dbt', 'action': 'rpc_request', 'label': '449b68ed-a143-4f69-8892-fc4f4de13d2c', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fc7ea9c1760>]}
+2021-03-12 19:55:09.578889 (Thread-216): sending response (<Response 184 bytes [200 OK]>) to 10.0.7.210
+2021-03-12 19:55:09.618288 (Thread-215): Acquiring new redshift connection "model.master_dbt_models.stg_salesforce_accounts".
+2021-03-12 19:55:09.845470 (Thread-215): [WARNING]: Configuration paths exist in your dbt_project.yml file which do not apply to any resources.
+There are 2 unused configuration paths:
+- models.vidyard_dbt
+- models.vidyard_dbt.staging
+
+2021-03-12 19:55:11.074104 (Thread-217): handling status request
+2021-03-12 19:55:11.074545 (Thread-217): Sending event: {'category': 'dbt', 'action': 'rpc_request', 'label': '449b68ed-a143-4f69-8892-fc4f4de13d2c', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fc7eaef9fa0>]}
+2021-03-12 19:55:11.077927 (Thread-217): sending response (<Response 10412 bytes [200 OK]>) to 10.0.35.21
+2021-03-12 19:55:17.425714 (Thread-218): handling status request
+2021-03-12 19:55:17.426141 (Thread-218): Sending event: {'category': 'dbt', 'action': 'rpc_request', 'label': '449b68ed-a143-4f69-8892-fc4f4de13d2c', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fc8067a2850>]}
+2021-03-12 19:55:17.429549 (Thread-218): sending response (<Response 10412 bytes [200 OK]>) to 10.0.25.57
+2021-03-12 19:55:17.521597 (Thread-219): handling status request
+2021-03-12 19:55:17.522024 (Thread-219): Sending event: {'category': 'dbt', 'action': 'rpc_request', 'label': '449b68ed-a143-4f69-8892-fc4f4de13d2c', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fc806b37a60>]}
+2021-03-12 19:55:17.525507 (Thread-219): sending response (<Response 10412 bytes [200 OK]>) to 10.0.33.123
+2021-03-12 19:55:17.928021 (Thread-220): handling cli_args request
+2021-03-12 19:55:17.928455 (Thread-220): Sending event: {'category': 'dbt', 'action': 'rpc_request', 'label': '449b68ed-a143-4f69-8892-fc4f4de13d2c', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fc8069d77c0>]}
+2021-03-12 19:55:17.937008 (Thread-220): Connection 'model.master_dbt_models.stg_salesforce_accounts' was properly closed.
+2021-03-12 19:55:18.765131 (Thread-220): sending response (<Response 137 bytes [200 OK]>) to 10.0.12.83
+2021-03-12 19:55:18.861388 (MainThread): Partial parsing not enabled
+2021-03-12 19:55:18.862638 (MainThread): Parsing macros/adapters.sql
+2021-03-12 19:55:18.890097 (MainThread): Parsing macros/relations.sql
+2021-03-12 19:55:18.890939 (MainThread): Parsing macros/catalog.sql
+2021-03-12 19:55:18.904122 (MainThread): Parsing macros/materializations/snapshot_merge.sql
+2021-03-12 19:55:18.905288 (MainThread): Parsing macros/adapters.sql
+2021-03-12 19:55:18.926249 (MainThread): Parsing macros/relations.sql
+2021-03-12 19:55:18.927835 (MainThread): Parsing macros/catalog.sql
+2021-03-12 19:55:18.930242 (MainThread): Parsing macros/materializations/snapshot_merge.sql
+2021-03-12 19:55:18.932783 (MainThread): Parsing macros/core.sql
+2021-03-12 19:55:18.936750 (MainThread): Parsing macros/materializations/helpers.sql
+2021-03-12 19:55:18.945642 (MainThread): Parsing macros/materializations/common/merge.sql
+2021-03-12 19:55:18.959847 (MainThread): Parsing macros/materializations/snapshot/snapshot_merge.sql
+2021-03-12 19:55:18.961775 (MainThread): Parsing macros/materializations/snapshot/strategies.sql
+2021-03-12 19:55:18.978365 (MainThread): Parsing macros/materializations/snapshot/snapshot.sql
+2021-03-12 19:55:19.006743 (MainThread): Parsing macros/materializations/view/create_or_replace_view.sql
+2021-03-12 19:55:19.011994 (MainThread): Parsing macros/materializations/view/view.sql
+2021-03-12 19:55:19.018509 (MainThread): Parsing macros/materializations/seed/seed.sql
+2021-03-12 19:55:19.045086 (MainThread): Parsing macros/materializations/table/table.sql
+2021-03-12 19:55:19.051843 (MainThread): Parsing macros/materializations/incremental/helpers.sql
+2021-03-12 19:55:19.053796 (MainThread): Parsing macros/materializations/incremental/incremental.sql
+2021-03-12 19:55:19.059860 (MainThread): Parsing macros/etc/is_incremental.sql
+2021-03-12 19:55:19.061532 (MainThread): Parsing macros/etc/query.sql
+2021-03-12 19:55:19.062642 (MainThread): Parsing macros/etc/datetime.sql
+2021-03-12 19:55:19.071693 (MainThread): Parsing macros/etc/get_custom_alias.sql
+2021-03-12 19:55:19.072761 (MainThread): Parsing macros/etc/get_custom_database.sql
+2021-03-12 19:55:19.074448 (MainThread): Parsing macros/etc/get_custom_schema.sql
+2021-03-12 19:55:19.076493 (MainThread): Parsing macros/schema_tests/not_null.sql
+2021-03-12 19:55:19.078041 (MainThread): Parsing macros/schema_tests/accepted_values.sql
+2021-03-12 19:55:19.080795 (MainThread): Parsing macros/schema_tests/relationships.sql
+2021-03-12 19:55:19.083186 (MainThread): Parsing macros/schema_tests/unique.sql
+2021-03-12 19:55:19.085898 (MainThread): Parsing macros/adapters/common.sql
+2021-03-12 19:55:19.139746 (Thread-221): handling poll request
+2021-03-12 19:55:19.140206 (Thread-221): Sending event: {'category': 'dbt', 'action': 'rpc_request', 'label': '449b68ed-a143-4f69-8892-fc4f4de13d2c', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fc7eaa6db50>]}
+2021-03-12 19:55:19.145171 (Thread-221): sending response (<Response 9083 bytes [200 OK]>) to 10.0.30.20
+2021-03-12 19:55:19.136686 (MainThread): Partial parsing not enabled
+2021-03-12 19:55:19.182220 (MainThread): Acquiring new redshift connection "model.master_dbt_models.stg_salesforce_accounts".
+2021-03-12 19:55:19.482979 (MainThread): [WARNING]: Configuration paths exist in your dbt_project.yml file which do not apply to any resources.
+There are 2 unused configuration paths:
+- models.vidyard_dbt.staging
+- models.vidyard_dbt
+
+2021-03-12 19:55:19.519590 (MainThread): Found 1 model, 4 tests, 0 snapshots, 0 analyses, 163 macros, 0 operations, 0 seed files, 1 source
+2021-03-12 19:55:19.520692 (MainThread): 
+2021-03-12 19:55:19.521110 (MainThread): Acquiring new redshift connection "master".
+2021-03-12 19:55:19.530644 (ThreadPoolExecutor-0_0): Acquiring new redshift connection "list_dev_dbt_vidyard_master".
+2021-03-12 19:55:19.541897 (ThreadPoolExecutor-0_0): Using redshift connection "list_dev_dbt_vidyard_master".
+2021-03-12 19:55:19.542004 (ThreadPoolExecutor-0_0): On list_dev_dbt_vidyard_master: BEGIN
+2021-03-12 19:55:19.542064 (ThreadPoolExecutor-0_0): Opening a new connection, currently in state init
+2021-03-12 19:55:19.542106 (ThreadPoolExecutor-0_0): Connecting to Redshift using 'database' credentials
+2021-03-12 19:55:19.564645 (ThreadPoolExecutor-0_0): SQL status: BEGIN in 0.02 seconds
+2021-03-12 19:55:19.564778 (ThreadPoolExecutor-0_0): Using redshift connection "list_dev_dbt_vidyard_master".
+2021-03-12 19:55:19.564832 (ThreadPoolExecutor-0_0): On list_dev_dbt_vidyard_master: /* {"app": "dbt", "dbt_version": "0.18.1", "profile_name": "user", "target_name": "default", "connection_name": "list_dev_dbt_vidyard_master"} */
+select
+      'dev' as database,
+      tablename as name,
+      schemaname as schema,
+      'table' as type
+    from pg_tables
+    where schemaname ilike 'dbt_vidyard_master'
+    union all
+    select
+      'dev' as database,
+      viewname as name,
+      schemaname as schema,
+      'view' as type
+    from pg_views
+    where schemaname ilike 'dbt_vidyard_master'
+  
+2021-03-12 19:55:19.584727 (ThreadPoolExecutor-0_0): SQL status: SELECT in 0.02 seconds
+2021-03-12 19:55:19.588005 (ThreadPoolExecutor-0_0): On list_dev_dbt_vidyard_master: ROLLBACK
+2021-03-12 19:55:19.590395 (ThreadPoolExecutor-0_0): On list_dev_dbt_vidyard_master: Close
+2021-03-12 19:55:19.599740 (MainThread): Using redshift connection "master".
+2021-03-12 19:55:19.599834 (MainThread): On master: BEGIN
+2021-03-12 19:55:19.599893 (MainThread): Opening a new connection, currently in state init
+2021-03-12 19:55:19.599935 (MainThread): Connecting to Redshift using 'database' credentials
+2021-03-12 19:55:19.620835 (MainThread): SQL status: BEGIN in 0.02 seconds
+2021-03-12 19:55:19.620954 (MainThread): Using redshift connection "master".
+2021-03-12 19:55:19.621004 (MainThread): On master: /* {"app": "dbt", "dbt_version": "0.18.1", "profile_name": "user", "target_name": "default", "connection_name": "master"} */
+with relation as (
+        select
+            pg_rewrite.ev_class as class,
+            pg_rewrite.oid as id
+        from pg_rewrite
+    ),
+    class as (
+        select
+            oid as id,
+            relname as name,
+            relnamespace as schema,
+            relkind as kind
+        from pg_class
+    ),
+    dependency as (
+        select
+            pg_depend.objid as id,
+            pg_depend.refobjid as ref
+        from pg_depend
+    ),
+    schema as (
+        select
+            pg_namespace.oid as id,
+            pg_namespace.nspname as name
+        from pg_namespace
+        where nspname != 'information_schema' and nspname not like 'pg\_%'
+    ),
+    referenced as (
+        select
+            relation.id AS id,
+            referenced_class.name ,
+            referenced_class.schema ,
+            referenced_class.kind
+        from relation
+        join class as referenced_class on relation.class=referenced_class.id
+        where referenced_class.kind in ('r', 'v')
+    ),
+    relationships as (
+        select
+            referenced.name as referenced_name,
+            referenced.schema as referenced_schema_id,
+            dependent_class.name as dependent_name,
+            dependent_class.schema as dependent_schema_id,
+            referenced.kind as kind
+        from referenced
+        join dependency on referenced.id=dependency.id
+        join class as dependent_class on dependency.ref=dependent_class.id
+        where
+            (referenced.name != dependent_class.name or
+             referenced.schema != dependent_class.schema)
+    )
+
+    select
+        referenced_schema.name as referenced_schema,
+        relationships.referenced_name as referenced_name,
+        dependent_schema.name as dependent_schema,
+        relationships.dependent_name as dependent_name
+    from relationships
+    join schema as dependent_schema on relationships.dependent_schema_id=dependent_schema.id
+    join schema as referenced_schema on relationships.referenced_schema_id=referenced_schema.id
+    group by referenced_schema, referenced_name, dependent_schema, dependent_name
+    order by referenced_schema, referenced_name, dependent_schema, dependent_name;
+2021-03-12 19:55:19.676492 (MainThread): SQL status: SELECT in 0.06 seconds
+2021-03-12 19:55:19.692713 (MainThread): On master: ROLLBACK
+2021-03-12 19:55:19.695463 (MainThread): On master: Close
+2021-03-12 19:55:19.695949 (MainThread): 19:55:19 | Concurrency: 1 threads (target='default')
+2021-03-12 19:55:19.696042 (MainThread): 19:55:19 | 
+2021-03-12 19:55:19.698153 (Thread-1): Began running node model.master_dbt_models.stg_salesforce_accounts
+2021-03-12 19:55:19.698485 (Thread-1): Acquiring new redshift connection "model.master_dbt_models.stg_salesforce_accounts".
+2021-03-12 19:55:19.698574 (Thread-1): Compiling model.master_dbt_models.stg_salesforce_accounts
+2021-03-12 19:55:19.717460 (Thread-1): Writing injected SQL for node "model.master_dbt_models.stg_salesforce_accounts"
+2021-03-12 19:55:19.734318 (Thread-1): finished collecting timing info
+2021-03-12 19:55:19.734661 (Thread-1): finished collecting timing info
+2021-03-12 19:55:19.735057 (Thread-1): Finished running node model.master_dbt_models.stg_salesforce_accounts
+2021-03-12 19:55:19.735189 (Thread-1): Began running node test.master_dbt_models.source_not_null_salesforce_account_id
+2021-03-12 19:55:19.735400 (Thread-1): Acquiring new redshift connection "test.master_dbt_models.source_not_null_salesforce_account_id".
+2021-03-12 19:55:19.735469 (Thread-1): Compiling test.master_dbt_models.source_not_null_salesforce_account_id
+2021-03-12 19:55:19.749574 (Thread-1): Writing injected SQL for node "test.master_dbt_models.source_not_null_salesforce_account_id"
+2021-03-12 19:55:19.767974 (Thread-1): finished collecting timing info
+2021-03-12 19:55:19.768268 (Thread-1): finished collecting timing info
+2021-03-12 19:55:19.768642 (Thread-1): Finished running node test.master_dbt_models.source_not_null_salesforce_account_id
+2021-03-12 19:55:19.768747 (Thread-1): Began running node test.master_dbt_models.source_unique_salesforce_account_id
+2021-03-12 19:55:19.768942 (Thread-1): Acquiring new redshift connection "test.master_dbt_models.source_unique_salesforce_account_id".
+2021-03-12 19:55:19.769010 (Thread-1): Compiling test.master_dbt_models.source_unique_salesforce_account_id
+2021-03-12 19:55:19.777771 (Thread-1): Writing injected SQL for node "test.master_dbt_models.source_unique_salesforce_account_id"
+2021-03-12 19:55:19.794488 (Thread-1): finished collecting timing info
+2021-03-12 19:55:19.794763 (Thread-1): finished collecting timing info
+2021-03-12 19:55:19.795133 (Thread-1): Finished running node test.master_dbt_models.source_unique_salesforce_account_id
+2021-03-12 19:55:19.795264 (Thread-1): Began running node test.master_dbt_models.not_null_stg_salesforce_accounts_account_id
+2021-03-12 19:55:19.795459 (Thread-1): Acquiring new redshift connection "test.master_dbt_models.not_null_stg_salesforce_accounts_account_id".
+2021-03-12 19:55:19.795527 (Thread-1): Compiling test.master_dbt_models.not_null_stg_salesforce_accounts_account_id
+2021-03-12 19:55:19.804001 (Thread-1): Writing injected SQL for node "test.master_dbt_models.not_null_stg_salesforce_accounts_account_id"
+2021-03-12 19:55:19.821217 (Thread-1): finished collecting timing info
+2021-03-12 19:55:19.821525 (Thread-1): finished collecting timing info
+2021-03-12 19:55:19.821899 (Thread-1): Finished running node test.master_dbt_models.not_null_stg_salesforce_accounts_account_id
+2021-03-12 19:55:19.822006 (Thread-1): Began running node test.master_dbt_models.unique_stg_salesforce_accounts_account_id
+2021-03-12 19:55:19.822214 (Thread-1): Acquiring new redshift connection "test.master_dbt_models.unique_stg_salesforce_accounts_account_id".
+2021-03-12 19:55:19.822284 (Thread-1): Compiling test.master_dbt_models.unique_stg_salesforce_accounts_account_id
+2021-03-12 19:55:19.830865 (Thread-1): Writing injected SQL for node "test.master_dbt_models.unique_stg_salesforce_accounts_account_id"
+2021-03-12 19:55:19.860859 (Thread-1): finished collecting timing info
+2021-03-12 19:55:19.861191 (Thread-1): finished collecting timing info
+2021-03-12 19:55:19.861579 (Thread-1): Finished running node test.master_dbt_models.unique_stg_salesforce_accounts_account_id
+2021-03-12 19:55:19.862688 (MainThread): Connection 'master' was properly closed.
+2021-03-12 19:55:19.862792 (MainThread): Connection 'test.master_dbt_models.unique_stg_salesforce_accounts_account_id' was properly closed.
+2021-03-12 19:55:19.917379 (MainThread): 19:55:19 | Done.
+2021-03-12 19:55:20.591972 (Thread-222): handling poll request
+2021-03-12 19:55:20.592492 (Thread-222): Sending event: {'category': 'dbt', 'action': 'rpc_request', 'label': '449b68ed-a143-4f69-8892-fc4f4de13d2c', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fc7ead2bdc0>]}
+2021-03-12 19:55:20.610541 (Thread-222): sending response (<Response 42475 bytes [200 OK]>) to 10.0.12.83
+2021-03-12 19:55:21.046089 (Thread-223): handling status request
+2021-03-12 19:55:21.046517 (Thread-223): Sending event: {'category': 'dbt', 'action': 'rpc_request', 'label': '449b68ed-a143-4f69-8892-fc4f4de13d2c', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fc806b39a60>]}
+2021-03-12 19:55:21.049986 (Thread-223): sending response (<Response 10412 bytes [200 OK]>) to 10.0.33.123
+2021-03-12 19:55:26.346192 (Thread-224): handling status request
+2021-03-12 19:55:26.346640 (Thread-224): Sending event: {'category': 'dbt', 'action': 'rpc_request', 'label': '449b68ed-a143-4f69-8892-fc4f4de13d2c', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fc806b39280>]}
+2021-03-12 19:55:26.349939 (Thread-224): sending response (<Response 10412 bytes [200 OK]>) to 10.0.30.20
+2021-03-12 19:55:26.352176 (Thread-225): handling status request
+2021-03-12 19:55:26.352469 (Thread-225): Sending event: {'category': 'dbt', 'action': 'rpc_request', 'label': '449b68ed-a143-4f69-8892-fc4f4de13d2c', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fc806b39f10>]}
+2021-03-12 19:55:26.356221 (Thread-225): sending response (<Response 10412 bytes [200 OK]>) to 10.0.15.20
+2021-03-12 19:55:26.746493 (Thread-226): handling cli_args request
+2021-03-12 19:55:26.746927 (Thread-226): Sending event: {'category': 'dbt', 'action': 'rpc_request', 'label': '449b68ed-a143-4f69-8892-fc4f4de13d2c', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fc7eaa6d940>]}
+2021-03-12 19:55:27.600981 (Thread-226): sending response (<Response 137 bytes [200 OK]>) to 10.0.33.123
+2021-03-12 19:55:27.695345 (MainThread): Partial parsing not enabled
+2021-03-12 19:55:27.696564 (MainThread): Parsing macros/adapters.sql
+2021-03-12 19:55:27.724251 (MainThread): Parsing macros/relations.sql
+2021-03-12 19:55:27.725106 (MainThread): Parsing macros/catalog.sql
+2021-03-12 19:55:27.738192 (MainThread): Parsing macros/materializations/snapshot_merge.sql
+2021-03-12 19:55:27.739272 (MainThread): Parsing macros/adapters.sql
+2021-03-12 19:55:27.760377 (MainThread): Parsing macros/relations.sql
+2021-03-12 19:55:27.762009 (MainThread): Parsing macros/catalog.sql
+2021-03-12 19:55:27.764347 (MainThread): Parsing macros/materializations/snapshot_merge.sql
+2021-03-12 19:55:27.766861 (MainThread): Parsing macros/core.sql
+2021-03-12 19:55:27.770656 (MainThread): Parsing macros/materializations/helpers.sql
+2021-03-12 19:55:27.779486 (MainThread): Parsing macros/materializations/common/merge.sql
+2021-03-12 19:55:27.793460 (MainThread): Parsing macros/materializations/snapshot/snapshot_merge.sql
+2021-03-12 19:55:27.795327 (MainThread): Parsing macros/materializations/snapshot/strategies.sql
+2021-03-12 19:55:27.811589 (MainThread): Parsing macros/materializations/snapshot/snapshot.sql
+2021-03-12 19:55:27.839622 (MainThread): Parsing macros/materializations/view/create_or_replace_view.sql
+2021-03-12 19:55:27.844668 (MainThread): Parsing macros/materializations/view/view.sql
+2021-03-12 19:55:27.850890 (MainThread): Parsing macros/materializations/seed/seed.sql
+2021-03-12 19:55:27.871094 (MainThread): Parsing macros/materializations/table/table.sql
+2021-03-12 19:55:27.877731 (MainThread): Parsing macros/materializations/incremental/helpers.sql
+2021-03-12 19:55:27.879626 (MainThread): Parsing macros/materializations/incremental/incremental.sql
+2021-03-12 19:55:27.885589 (MainThread): Parsing macros/etc/is_incremental.sql
+2021-03-12 19:55:27.887477 (MainThread): Parsing macros/etc/query.sql
+2021-03-12 19:55:27.889277 (MainThread): Parsing macros/etc/datetime.sql
+2021-03-12 19:55:27.904554 (MainThread): Parsing macros/etc/get_custom_alias.sql
+2021-03-12 19:55:27.906162 (MainThread): Parsing macros/etc/get_custom_database.sql
+2021-03-12 19:55:27.909138 (MainThread): Parsing macros/etc/get_custom_schema.sql
+2021-03-12 19:55:27.912511 (MainThread): Parsing macros/schema_tests/not_null.sql
+2021-03-12 19:55:27.914430 (MainThread): Parsing macros/schema_tests/accepted_values.sql
+2021-03-12 19:55:27.917169 (MainThread): Parsing macros/schema_tests/relationships.sql
+2021-03-12 19:55:27.919172 (MainThread): Parsing macros/schema_tests/unique.sql
+2021-03-12 19:55:27.920968 (MainThread): Parsing macros/adapters/common.sql
+2021-03-12 19:55:27.975531 (MainThread): Partial parsing not enabled
+2021-03-12 19:55:27.995767 (Thread-227): handling poll request
+2021-03-12 19:55:27.996235 (Thread-227): Sending event: {'category': 'dbt', 'action': 'rpc_request', 'label': '449b68ed-a143-4f69-8892-fc4f4de13d2c', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fc7eabb9760>]}
+2021-03-12 19:55:28.000165 (Thread-227): sending response (<Response 9339 bytes [200 OK]>) to 10.0.15.39
+2021-03-12 19:55:28.019383 (MainThread): Acquiring new redshift connection "model.master_dbt_models.stg_salesforce_accounts".
+2021-03-12 19:55:28.313022 (MainThread): [WARNING]: Configuration paths exist in your dbt_project.yml file which do not apply to any resources.
+There are 2 unused configuration paths:
+- models.vidyard_dbt.staging
+- models.vidyard_dbt
+
+2021-03-12 19:55:28.351041 (MainThread): Found 1 model, 4 tests, 0 snapshots, 0 analyses, 163 macros, 0 operations, 0 seed files, 1 source
+2021-03-12 19:55:28.351797 (MainThread): 
+2021-03-12 19:55:28.352109 (MainThread): Acquiring new redshift connection "master".
+2021-03-12 19:55:28.353764 (ThreadPoolExecutor-0_0): Acquiring new redshift connection "list_dev".
+2021-03-12 19:55:28.364823 (ThreadPoolExecutor-0_0): Using redshift connection "list_dev".
+2021-03-12 19:55:28.364941 (ThreadPoolExecutor-0_0): On list_dev: /* {"app": "dbt", "dbt_version": "0.18.1", "profile_name": "user", "target_name": "default", "connection_name": "list_dev"} */
+
+    select distinct nspname from pg_namespace
+  
+2021-03-12 19:55:28.365006 (ThreadPoolExecutor-0_0): Opening a new connection, currently in state init
+2021-03-12 19:55:28.365049 (ThreadPoolExecutor-0_0): Connecting to Redshift using 'database' credentials
+2021-03-12 19:55:28.390637 (ThreadPoolExecutor-0_0): SQL status: SELECT in 0.03 seconds
+2021-03-12 19:55:28.393653 (ThreadPoolExecutor-0_0): On list_dev: Close
+2021-03-12 19:55:28.400093 (ThreadPoolExecutor-1_0): Acquiring new redshift connection "list_dev_dbt_vidyard_master".
+2021-03-12 19:55:28.407697 (ThreadPoolExecutor-1_0): Using redshift connection "list_dev_dbt_vidyard_master".
+2021-03-12 19:55:28.407802 (ThreadPoolExecutor-1_0): On list_dev_dbt_vidyard_master: BEGIN
+2021-03-12 19:55:28.407879 (ThreadPoolExecutor-1_0): Opening a new connection, currently in state closed
+2021-03-12 19:55:28.407922 (ThreadPoolExecutor-1_0): Connecting to Redshift using 'database' credentials
+2021-03-12 19:55:28.427945 (ThreadPoolExecutor-1_0): SQL status: BEGIN in 0.02 seconds
+2021-03-12 19:55:28.428106 (ThreadPoolExecutor-1_0): Using redshift connection "list_dev_dbt_vidyard_master".
+2021-03-12 19:55:28.428158 (ThreadPoolExecutor-1_0): On list_dev_dbt_vidyard_master: /* {"app": "dbt", "dbt_version": "0.18.1", "profile_name": "user", "target_name": "default", "connection_name": "list_dev_dbt_vidyard_master"} */
+select
+      'dev' as database,
+      tablename as name,
+      schemaname as schema,
+      'table' as type
+    from pg_tables
+    where schemaname ilike 'dbt_vidyard_master'
+    union all
+    select
+      'dev' as database,
+      viewname as name,
+      schemaname as schema,
+      'view' as type
+    from pg_views
+    where schemaname ilike 'dbt_vidyard_master'
+  
+2021-03-12 19:55:28.447828 (ThreadPoolExecutor-1_0): SQL status: SELECT in 0.02 seconds
+2021-03-12 19:55:28.449308 (ThreadPoolExecutor-1_0): On list_dev_dbt_vidyard_master: ROLLBACK
+2021-03-12 19:55:28.451755 (ThreadPoolExecutor-1_0): On list_dev_dbt_vidyard_master: Close
+2021-03-12 19:55:28.461688 (MainThread): Using redshift connection "master".
+2021-03-12 19:55:28.461809 (MainThread): On master: BEGIN
+2021-03-12 19:55:28.461868 (MainThread): Opening a new connection, currently in state init
+2021-03-12 19:55:28.461915 (MainThread): Connecting to Redshift using 'database' credentials
+2021-03-12 19:55:28.481490 (MainThread): SQL status: BEGIN in 0.02 seconds
+2021-03-12 19:55:28.481640 (MainThread): Using redshift connection "master".
+2021-03-12 19:55:28.481691 (MainThread): On master: /* {"app": "dbt", "dbt_version": "0.18.1", "profile_name": "user", "target_name": "default", "connection_name": "master"} */
+with relation as (
+        select
+            pg_rewrite.ev_class as class,
+            pg_rewrite.oid as id
+        from pg_rewrite
+    ),
+    class as (
+        select
+            oid as id,
+            relname as name,
+            relnamespace as schema,
+            relkind as kind
+        from pg_class
+    ),
+    dependency as (
+        select
+            pg_depend.objid as id,
+            pg_depend.refobjid as ref
+        from pg_depend
+    ),
+    schema as (
+        select
+            pg_namespace.oid as id,
+            pg_namespace.nspname as name
+        from pg_namespace
+        where nspname != 'information_schema' and nspname not like 'pg\_%'
+    ),
+    referenced as (
+        select
+            relation.id AS id,
+            referenced_class.name ,
+            referenced_class.schema ,
+            referenced_class.kind
+        from relation
+        join class as referenced_class on relation.class=referenced_class.id
+        where referenced_class.kind in ('r', 'v')
+    ),
+    relationships as (
+        select
+            referenced.name as referenced_name,
+            referenced.schema as referenced_schema_id,
+            dependent_class.name as dependent_name,
+            dependent_class.schema as dependent_schema_id,
+            referenced.kind as kind
+        from referenced
+        join dependency on referenced.id=dependency.id
+        join class as dependent_class on dependency.ref=dependent_class.id
+        where
+            (referenced.name != dependent_class.name or
+             referenced.schema != dependent_class.schema)
+    )
+
+    select
+        referenced_schema.name as referenced_schema,
+        relationships.referenced_name as referenced_name,
+        dependent_schema.name as dependent_schema,
+        relationships.dependent_name as dependent_name
+    from relationships
+    join schema as dependent_schema on relationships.dependent_schema_id=dependent_schema.id
+    join schema as referenced_schema on relationships.referenced_schema_id=referenced_schema.id
+    group by referenced_schema, referenced_name, dependent_schema, dependent_name
+    order by referenced_schema, referenced_name, dependent_schema, dependent_name;
+2021-03-12 19:55:28.537627 (MainThread): SQL status: SELECT in 0.06 seconds
+2021-03-12 19:55:28.555594 (MainThread): On master: ROLLBACK
+2021-03-12 19:55:28.558156 (MainThread): Using redshift connection "master".
+2021-03-12 19:55:28.558244 (MainThread): On master: BEGIN
+2021-03-12 19:55:28.562731 (MainThread): SQL status: BEGIN in 0.00 seconds
+2021-03-12 19:55:28.562841 (MainThread): On master: COMMIT
+2021-03-12 19:55:28.562884 (MainThread): Using redshift connection "master".
+2021-03-12 19:55:28.562925 (MainThread): On master: COMMIT
+2021-03-12 19:55:28.565160 (MainThread): SQL status: COMMIT in 0.00 seconds
+2021-03-12 19:55:28.565270 (MainThread): On master: Close
+2021-03-12 19:55:28.565741 (MainThread): 19:55:28 | Concurrency: 1 threads (target='default')
+2021-03-12 19:55:28.565829 (MainThread): 19:55:28 | 
+2021-03-12 19:55:28.567712 (Thread-1): Began running node model.master_dbt_models.stg_salesforce_accounts
+2021-03-12 19:55:28.568964 (Thread-1): 19:55:28 | 1 of 1 START view model dbt_vidyard_master.stg_salesforce_accounts... [RUN]
+2021-03-12 19:55:28.569246 (Thread-1): Acquiring new redshift connection "model.master_dbt_models.stg_salesforce_accounts".
+2021-03-12 19:55:28.569331 (Thread-1): Compiling model.master_dbt_models.stg_salesforce_accounts
+2021-03-12 19:55:28.587344 (Thread-1): Writing injected SQL for node "model.master_dbt_models.stg_salesforce_accounts"
+2021-03-12 19:55:28.611873 (Thread-1): finished collecting timing info
+2021-03-12 19:55:28.633057 (Thread-1): Using redshift connection "model.master_dbt_models.stg_salesforce_accounts".
+2021-03-12 19:55:28.633194 (Thread-1): On model.master_dbt_models.stg_salesforce_accounts: BEGIN
+2021-03-12 19:55:28.633261 (Thread-1): Opening a new connection, currently in state closed
+2021-03-12 19:55:28.633304 (Thread-1): Connecting to Redshift using 'database' credentials
+2021-03-12 19:55:28.657881 (Thread-1): SQL status: BEGIN in 0.02 seconds
+2021-03-12 19:55:28.662899 (Thread-1): Using redshift connection "model.master_dbt_models.stg_salesforce_accounts".
+2021-03-12 19:55:28.663008 (Thread-1): On model.master_dbt_models.stg_salesforce_accounts: /* {"app": "dbt", "dbt_version": "0.18.1", "profile_name": "user", "target_name": "default", "node_id": "model.master_dbt_models.stg_salesforce_accounts"} */
+drop view if exists "dev"."dbt_vidyard_master"."stg_salesforce_accounts__dbt_tmp" cascade
+2021-03-12 19:55:28.665955 (Thread-1): SQL status: DROP VIEW in 0.00 seconds
+2021-03-12 19:55:28.668746 (Thread-1): On model.master_dbt_models.stg_salesforce_accounts: COMMIT
+2021-03-12 19:55:28.668842 (Thread-1): Using redshift connection "model.master_dbt_models.stg_salesforce_accounts".
+2021-03-12 19:55:28.668888 (Thread-1): On model.master_dbt_models.stg_salesforce_accounts: COMMIT
+2021-03-12 19:55:28.805430 (Thread-1): SQL status: COMMIT in 0.14 seconds
+2021-03-12 19:55:28.805665 (Thread-1): Using redshift connection "model.master_dbt_models.stg_salesforce_accounts".
+2021-03-12 19:55:28.805745 (Thread-1): On model.master_dbt_models.stg_salesforce_accounts: BEGIN
+2021-03-12 19:55:28.808646 (Thread-1): SQL status: BEGIN in 0.00 seconds
+2021-03-12 19:55:28.808822 (Thread-1): On model.master_dbt_models.stg_salesforce_accounts: COMMIT
+2021-03-12 19:55:28.808870 (Thread-1): Using redshift connection "model.master_dbt_models.stg_salesforce_accounts".
+2021-03-12 19:55:28.808912 (Thread-1): On model.master_dbt_models.stg_salesforce_accounts: COMMIT
+2021-03-12 19:55:28.811282 (Thread-1): SQL status: COMMIT in 0.00 seconds
+2021-03-12 19:55:28.811369 (Thread-1): Using redshift connection "model.master_dbt_models.stg_salesforce_accounts".
+2021-03-12 19:55:28.811411 (Thread-1): On model.master_dbt_models.stg_salesforce_accounts: BEGIN
+2021-03-12 19:55:28.813982 (Thread-1): SQL status: BEGIN in 0.00 seconds
+2021-03-12 19:55:28.816216 (Thread-1): Using redshift connection "model.master_dbt_models.stg_salesforce_accounts".
+2021-03-12 19:55:28.816296 (Thread-1): On model.master_dbt_models.stg_salesforce_accounts: /* {"app": "dbt", "dbt_version": "0.18.1", "profile_name": "user", "target_name": "default", "node_id": "model.master_dbt_models.stg_salesforce_accounts"} */
+drop view if exists "dev"."dbt_vidyard_master"."stg_salesforce_accounts__dbt_backup" cascade
+2021-03-12 19:55:28.819013 (Thread-1): SQL status: DROP VIEW in 0.00 seconds
+2021-03-12 19:55:28.821478 (Thread-1): On model.master_dbt_models.stg_salesforce_accounts: COMMIT
+2021-03-12 19:55:28.821559 (Thread-1): Using redshift connection "model.master_dbt_models.stg_salesforce_accounts".
+2021-03-12 19:55:28.821604 (Thread-1): On model.master_dbt_models.stg_salesforce_accounts: COMMIT
+2021-03-12 19:55:28.978795 (Thread-1): SQL status: COMMIT in 0.16 seconds
+2021-03-12 19:55:28.978965 (Thread-1): Using redshift connection "model.master_dbt_models.stg_salesforce_accounts".
+2021-03-12 19:55:28.979018 (Thread-1): On model.master_dbt_models.stg_salesforce_accounts: BEGIN
+2021-03-12 19:55:28.982002 (Thread-1): SQL status: BEGIN in 0.00 seconds
+2021-03-12 19:55:28.986701 (Thread-1): Writing runtime SQL for node "model.master_dbt_models.stg_salesforce_accounts"
+2021-03-12 19:55:29.004686 (Thread-1): Using redshift connection "model.master_dbt_models.stg_salesforce_accounts".
+2021-03-12 19:55:29.004831 (Thread-1): On model.master_dbt_models.stg_salesforce_accounts: /* {"app": "dbt", "dbt_version": "0.18.1", "profile_name": "user", "target_name": "default", "node_id": "model.master_dbt_models.stg_salesforce_accounts"} */
+
+
+  create view "dev"."dbt_vidyard_master"."stg_salesforce_accounts__dbt_tmp" as (
+    with source as (
+
+    select 
+    	sfdc_account.id,
+    	sfdc_account.name
+
+    from "dev"."salesforce_production"."account" as sfdc_account
+
+        where true
+
+),
+
+renamed as (
+
+    select
+        id as account_id,
+        name as name
+
+    from source
+
+)
+
+select 
+	*
+from renamed
+  ) ;
+
+2021-03-12 19:55:29.020245 (Thread-1): SQL status: CREATE VIEW in 0.02 seconds
+2021-03-12 19:55:29.030197 (Thread-1): Using redshift connection "model.master_dbt_models.stg_salesforce_accounts".
+2021-03-12 19:55:29.030292 (Thread-1): On model.master_dbt_models.stg_salesforce_accounts: /* {"app": "dbt", "dbt_version": "0.18.1", "profile_name": "user", "target_name": "default", "node_id": "model.master_dbt_models.stg_salesforce_accounts"} */
+alter table "dev"."dbt_vidyard_master"."stg_salesforce_accounts" rename to "stg_salesforce_accounts__dbt_backup"
+2021-03-12 19:55:29.034494 (Thread-1): SQL status: ALTER TABLE in 0.00 seconds
+2021-03-12 19:55:29.038684 (Thread-1): Using redshift connection "model.master_dbt_models.stg_salesforce_accounts".
+2021-03-12 19:55:29.038774 (Thread-1): On model.master_dbt_models.stg_salesforce_accounts: /* {"app": "dbt", "dbt_version": "0.18.1", "profile_name": "user", "target_name": "default", "node_id": "model.master_dbt_models.stg_salesforce_accounts"} */
+alter table "dev"."dbt_vidyard_master"."stg_salesforce_accounts__dbt_tmp" rename to "stg_salesforce_accounts"
+2021-03-12 19:55:29.042077 (Thread-1): SQL status: ALTER TABLE in 0.00 seconds
+2021-03-12 19:55:29.051522 (Thread-1): On model.master_dbt_models.stg_salesforce_accounts: COMMIT
+2021-03-12 19:55:29.051621 (Thread-1): Using redshift connection "model.master_dbt_models.stg_salesforce_accounts".
+2021-03-12 19:55:29.051667 (Thread-1): On model.master_dbt_models.stg_salesforce_accounts: COMMIT
+2021-03-12 19:55:29.197753 (Thread-1): SQL status: COMMIT in 0.15 seconds
+2021-03-12 19:55:29.199790 (Thread-1): Using redshift connection "model.master_dbt_models.stg_salesforce_accounts".
+2021-03-12 19:55:29.199891 (Thread-1): On model.master_dbt_models.stg_salesforce_accounts: BEGIN
+2021-03-12 19:55:29.202706 (Thread-1): SQL status: BEGIN in 0.00 seconds
+2021-03-12 19:55:29.204509 (Thread-1): Using redshift connection "model.master_dbt_models.stg_salesforce_accounts".
+2021-03-12 19:55:29.204586 (Thread-1): On model.master_dbt_models.stg_salesforce_accounts: /* {"app": "dbt", "dbt_version": "0.18.1", "profile_name": "user", "target_name": "default", "node_id": "model.master_dbt_models.stg_salesforce_accounts"} */
+drop view if exists "dev"."dbt_vidyard_master"."stg_salesforce_accounts__dbt_backup" cascade
+2021-03-12 19:55:29.210447 (Thread-1): SQL status: DROP VIEW in 0.01 seconds
+2021-03-12 19:55:29.212999 (Thread-1): On model.master_dbt_models.stg_salesforce_accounts: COMMIT
+2021-03-12 19:55:29.213079 (Thread-1): Using redshift connection "model.master_dbt_models.stg_salesforce_accounts".
+2021-03-12 19:55:29.213125 (Thread-1): On model.master_dbt_models.stg_salesforce_accounts: COMMIT
+2021-03-12 19:55:29.356421 (Thread-1): SQL status: COMMIT in 0.14 seconds
+2021-03-12 19:55:29.356601 (Thread-1): Using redshift connection "model.master_dbt_models.stg_salesforce_accounts".
+2021-03-12 19:55:29.356654 (Thread-1): On model.master_dbt_models.stg_salesforce_accounts: BEGIN
+2021-03-12 19:55:29.359411 (Thread-1): SQL status: BEGIN in 0.00 seconds
+2021-03-12 19:55:29.361169 (Thread-1): finished collecting timing info
+2021-03-12 19:55:29.361382 (Thread-1): On model.master_dbt_models.stg_salesforce_accounts: ROLLBACK
+2021-03-12 19:55:29.363804 (Thread-1): On model.master_dbt_models.stg_salesforce_accounts: Close
+2021-03-12 19:55:29.364471 (Thread-1): Sending event: {'category': 'dbt', 'action': 'run_model', 'label': '5372110b-485e-4056-9647-a5c8f8acc5c7', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fd48e01b0d0>]}
+2021-03-12 19:55:29.365968 (Thread-1): 19:55:29 | 1 of 1 OK created view model dbt_vidyard_master.stg_salesforce_accounts [CREATE VIEW in 0.80s]
+2021-03-12 19:55:29.366058 (Thread-1): Finished running node model.master_dbt_models.stg_salesforce_accounts
+2021-03-12 19:55:29.367998 (MainThread): Acquiring new redshift connection "master".
+2021-03-12 19:55:29.368121 (MainThread): Using redshift connection "master".
+2021-03-12 19:55:29.368176 (MainThread): On master: BEGIN
+2021-03-12 19:55:29.368237 (MainThread): Opening a new connection, currently in state closed
+2021-03-12 19:55:29.368277 (MainThread): Connecting to Redshift using 'database' credentials
+2021-03-12 19:55:29.379880 (Thread-228): handling poll request
+2021-03-12 19:55:29.380277 (Thread-228): Sending event: {'category': 'dbt', 'action': 'rpc_request', 'label': '449b68ed-a143-4f69-8892-fc4f4de13d2c', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fc7eabb99d0>]}
+2021-03-12 19:55:29.390809 (Thread-228): sending response (<Response 44772 bytes [200 OK]>) to 10.0.15.39
+2021-03-12 19:55:29.392985 (MainThread): SQL status: BEGIN in 0.02 seconds
+2021-03-12 19:55:29.393145 (MainThread): On master: COMMIT
+2021-03-12 19:55:29.393193 (MainThread): Using redshift connection "master".
+2021-03-12 19:55:29.393239 (MainThread): On master: COMMIT
+2021-03-12 19:55:29.395449 (MainThread): SQL status: COMMIT in 0.00 seconds
+2021-03-12 19:55:29.395564 (MainThread): On master: Close
+2021-03-12 19:55:29.396041 (MainThread): 19:55:29 | 
+2021-03-12 19:55:29.396131 (MainThread): 19:55:29 | Finished running 1 view model in 1.04s.
+2021-03-12 19:55:29.396182 (MainThread): Connection 'master' was properly closed.
+2021-03-12 19:55:29.396220 (MainThread): Connection 'model.master_dbt_models.stg_salesforce_accounts' was properly closed.
+2021-03-12 19:55:29.418206 (MainThread): 
+2021-03-12 19:55:29.418358 (MainThread): Completed successfully
+2021-03-12 19:55:29.418418 (MainThread): 
+Done. PASS=1 WARN=0 ERROR=0 SKIP=0 TOTAL=1
+2021-03-12 19:55:31.423717 (Thread-229): handling poll request
+2021-03-12 19:55:31.424171 (Thread-229): Sending event: {'category': 'dbt', 'action': 'rpc_request', 'label': '449b68ed-a143-4f69-8892-fc4f4de13d2c', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fc806b7bb50>]}
+2021-03-12 19:55:31.428782 (Thread-229): sending response (<Response 7296 bytes [200 OK]>) to 10.0.38.107
+2021-03-12 19:55:31.943765 (Thread-230): handling status request
+2021-03-12 19:55:31.944202 (Thread-230): Sending event: {'category': 'dbt', 'action': 'rpc_request', 'label': '449b68ed-a143-4f69-8892-fc4f4de13d2c', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fc7eac73df0>]}
+2021-03-12 19:55:31.947647 (Thread-230): sending response (<Response 10412 bytes [200 OK]>) to 10.0.16.243
+2021-03-12 19:55:47.070104 (Thread-231): handling status request
+2021-03-12 19:55:47.070542 (Thread-231): Sending event: {'category': 'dbt', 'action': 'rpc_request', 'label': '449b68ed-a143-4f69-8892-fc4f4de13d2c', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fc7eac73f70>]}
+2021-03-12 19:55:47.073811 (Thread-231): sending response (<Response 10412 bytes [200 OK]>) to 10.0.45.94
