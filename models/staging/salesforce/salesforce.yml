@@ -1,5 +1,3 @@
-version: 1
-
 sources:
   - name: salesforce
     description: The cleaned collection of data and tables from Salesforce as a source
