@@ -3,7 +3,7 @@ with source as (
     select 
     	sfdc_account.id,
     	sfdc_account.name
-    from {{ source('salesforce_production', 'account') }}
+    from {{ source('salesforce', 'account') }}
         where true
 
 ),
