@@ -25,24 +25,14 @@ clean-targets:         # directories to be removed by `dbt clean`
 # These settings can be overridden in the individual model files
 # using the `{{ config(...) }}` macro.
 models:
-  materialized: ephemeral
-  enabled: true
+  vidyard_dbt:
+      materialized: table
+      staging:
+        materialized: view
 
-  vidyard_unified_record:
-    materialized: ephemeral
-    database: dev
 
-  vars:
-    internal_domains:
-      - vidyard.com
-      - viewedit.com
 
-# run hooks
-on-run-start:
-  - CREATE TABLE IF NOT EXISTS census.enrichment_results_raw (
-      service VARCHAR,
-      enrichment_key VARCHAR,
-      enrichment_value VARCHAR,
-      updated_at TIMESTAMPTZ,
-      data VARCHAR
-    );
+
+
+
+
