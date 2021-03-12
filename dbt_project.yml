@@ -1,6 +1,8 @@
 name: master_dbt_models
-version: '1.0'
 
+version: '2.0'
+
+require-dbt-version: ">=0.13.0"
 # This setting configures which "profile" dbt uses for this project. Profiles contain
 # database connection information, and should be configured in the  ~/.dbt/profiles.yml file
 profile: vidyard_redshift
