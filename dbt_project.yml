@@ -1,6 +1,6 @@
 name: master_dbt_models
 
-version: '2.0'
+#version: '2.0'
 
 require-dbt-version: ">=0.13.0"
 # This setting configures which "profile" dbt uses for this project. Profiles contain
