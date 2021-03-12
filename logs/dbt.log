@@ -3789,3 +3789,21 @@ with relation as (
 2021-03-12 19:49:02.878372 (Thread-203): handling status request
 2021-03-12 19:49:02.878794 (Thread-203): Sending event: {'category': 'dbt', 'action': 'rpc_request', 'label': '30beaf72-0712-4c40-bb77-a4d2cdb116d3', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fc7eab0a4c0>]}
 2021-03-12 19:49:02.879773 (Thread-203): sending response (<Response 897 bytes [200 OK]>) to 10.0.27.198
+2021-03-12 19:49:05.649619 (MainThread): Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fc7f79629d0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fc7f08d3bb0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fc807e7b550>]}
+2021-03-12 19:49:05.649871 (MainThread): Flushing usage events
+2021-03-12 19:49:05.676166 (MainThread): Runtime Error
+  Syntax error near line 5
+  ------------------------------
+  2  |  # - package: fishtown-analytics/dbt-utils
+  3  | <<<<<<< HEAD
+  4  |   #  version: 0.1.19
+  5  | =======
+  6  |   #  version: ">0.1.23"
+  7  | >>>>>>> 4ac4844bbb97c718f01f6ceb1db42fdf408bb3bb
+  
+  Raw Error:
+  ------------------------------
+  expected '<document start>', but found '<scalar>'
+    in "<unicode string>", line 5, column 1:
+      =======
+      ^

@@ -1,3 +1,7 @@
 #packages:
  # - package: fishtown-analytics/dbt-utils
+<<<<<<< HEAD
   #  version: 0.1.19
+=======
+  #  version: ">0.1.23"
+>>>>>>> 4ac4844bbb97c718f01f6ceb1db42fdf408bb3bb
