@@ -2185,3 +2185,64 @@ There are 2 unused configuration paths:
 2021-03-12 18:36:06.576603 (Thread-114): handling status request
 2021-03-12 18:36:06.577032 (Thread-114): Sending event: {'category': 'dbt', 'action': 'rpc_request', 'label': '30beaf72-0712-4c40-bb77-a4d2cdb116d3', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fc7eac73610>]}
 2021-03-12 18:36:06.580233 (Thread-114): sending response (<Response 9416 bytes [200 OK]>) to 10.0.15.39
+2021-03-12 18:36:12.396995 (MainThread): Connection 'model.master_dbt_models.stg_salesforce_accounts' was properly closed.
+2021-03-12 18:36:12.432985 (Thread-115): Parsing macros/adapters.sql
+2021-03-12 18:36:12.460169 (Thread-115): Parsing macros/relations.sql
+2021-03-12 18:36:12.460912 (Thread-115): Parsing macros/catalog.sql
+2021-03-12 18:36:12.473890 (Thread-115): Parsing macros/materializations/snapshot_merge.sql
+2021-03-12 18:36:12.474862 (Thread-115): Parsing macros/adapters.sql
+2021-03-12 18:36:12.495515 (Thread-115): Parsing macros/relations.sql
+2021-03-12 18:36:12.496974 (Thread-115): Parsing macros/catalog.sql
+2021-03-12 18:36:12.499282 (Thread-115): Parsing macros/materializations/snapshot_merge.sql
+2021-03-12 18:36:12.501742 (Thread-115): Parsing macros/core.sql
+2021-03-12 18:36:12.507927 (Thread-115): Parsing macros/materializations/helpers.sql
+2021-03-12 18:36:12.516679 (Thread-115): Parsing macros/materializations/common/merge.sql
+2021-03-12 18:36:12.530651 (Thread-115): Parsing macros/materializations/snapshot/snapshot_merge.sql
+2021-03-12 18:36:12.538235 (Thread-115): Parsing macros/materializations/snapshot/strategies.sql
+2021-03-12 18:36:12.561606 (Thread-115): Parsing macros/materializations/snapshot/snapshot.sql
+2021-03-12 18:36:12.590000 (Thread-115): Parsing macros/materializations/view/create_or_replace_view.sql
+2021-03-12 18:36:12.595144 (Thread-115): Parsing macros/materializations/view/view.sql
+2021-03-12 18:36:12.601528 (Thread-115): Parsing macros/materializations/seed/seed.sql
+2021-03-12 18:36:12.625930 (Thread-115): Parsing macros/materializations/table/table.sql
+2021-03-12 18:36:12.633753 (Thread-115): Parsing macros/materializations/incremental/helpers.sql
+2021-03-12 18:36:12.635624 (Thread-115): Parsing macros/materializations/incremental/incremental.sql
+2021-03-12 18:36:12.641527 (Thread-115): Parsing macros/etc/is_incremental.sql
+2021-03-12 18:36:12.643128 (Thread-115): Parsing macros/etc/query.sql
+2021-03-12 18:36:12.644232 (Thread-115): Parsing macros/etc/datetime.sql
+2021-03-12 18:36:12.659573 (Thread-115): Parsing macros/etc/get_custom_alias.sql
+2021-03-12 18:36:12.660557 (Thread-115): Parsing macros/etc/get_custom_database.sql
+2021-03-12 18:36:12.662202 (Thread-115): Parsing macros/etc/get_custom_schema.sql
+2021-03-12 18:36:12.664176 (Thread-115): Parsing macros/schema_tests/not_null.sql
+2021-03-12 18:36:12.665682 (Thread-115): Parsing macros/schema_tests/accepted_values.sql
+2021-03-12 18:36:12.668343 (Thread-115): Parsing macros/schema_tests/relationships.sql
+2021-03-12 18:36:12.670190 (Thread-115): Parsing macros/schema_tests/unique.sql
+2021-03-12 18:36:12.671921 (Thread-115): Parsing macros/adapters/common.sql
+2021-03-12 18:36:12.751083 (Thread-115): Acquiring new redshift connection "model.master_dbt_models.stg_salesforce_accounts".
+2021-03-12 18:36:12.804251 (Thread-116): handling status request
+2021-03-12 18:36:12.824296 (Thread-116): Sending event: {'category': 'dbt', 'action': 'rpc_request', 'label': '30beaf72-0712-4c40-bb77-a4d2cdb116d3', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fc7eaf7cd30>]}
+2021-03-12 18:36:12.825060 (Thread-116): sending response (<Response 184 bytes [200 OK]>) to 10.0.39.130
+2021-03-12 18:36:12.973764 (Thread-115): [WARNING]: Configuration paths exist in your dbt_project.yml file which do not apply to any resources.
+There are 2 unused configuration paths:
+- models.vidyard_dbt
+- models.vidyard_dbt.staging
+
+2021-03-12 18:36:14.219710 (Thread-117): handling status request
+2021-03-12 18:36:14.220150 (Thread-117): Sending event: {'category': 'dbt', 'action': 'rpc_request', 'label': '30beaf72-0712-4c40-bb77-a4d2cdb116d3', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fc7f0032670>]}
+2021-03-12 18:36:14.223356 (Thread-117): sending response (<Response 9416 bytes [200 OK]>) to 10.0.21.63
+2021-03-12 18:36:33.989937 (MainThread): Connection 'model.master_dbt_models.stg_salesforce_accounts' was properly closed.
+2021-03-12 18:36:34.046204 (Thread-118): Got an acceptable cached parse result
+2021-03-12 18:36:34.203433 (Thread-118): Acquiring new redshift connection "model.master_dbt_models.stg_salesforce_accounts".
+2021-03-12 18:36:34.370019 (Thread-119): handling status request
+2021-03-12 18:36:34.385787 (Thread-119): Sending event: {'category': 'dbt', 'action': 'rpc_request', 'label': '30beaf72-0712-4c40-bb77-a4d2cdb116d3', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fc7ead78700>]}
+2021-03-12 18:36:34.391801 (Thread-119): sending response (<Response 184 bytes [200 OK]>) to 10.0.25.57
+2021-03-12 18:36:34.397878 (Thread-118): [WARNING]: Configuration paths exist in your dbt_project.yml file which do not apply to any resources.
+There are 2 unused configuration paths:
+- models.vidyard_dbt
+- models.vidyard_dbt.staging
+
+2021-03-12 18:36:35.836840 (Thread-120): handling status request
+2021-03-12 18:36:35.837277 (Thread-120): Sending event: {'category': 'dbt', 'action': 'rpc_request', 'label': '30beaf72-0712-4c40-bb77-a4d2cdb116d3', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fc7f00f8880>]}
+2021-03-12 18:36:35.838278 (Thread-120): sending response (<Response 1215 bytes [200 OK]>) to 10.0.15.39
+2021-03-12 18:36:45.726694 (Thread-121): handling status request
+2021-03-12 18:36:45.727135 (Thread-121): Sending event: {'category': 'dbt', 'action': 'rpc_request', 'label': '30beaf72-0712-4c40-bb77-a4d2cdb116d3', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7fc7eafc8d00>]}
+2021-03-12 18:36:45.728138 (Thread-121): sending response (<Response 1215 bytes [200 OK]>) to 10.0.25.57
