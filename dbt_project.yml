@@ -30,6 +30,7 @@ models:
       materialized: table
       staging:
         materialized: view
+  bind: false
 
 
 
