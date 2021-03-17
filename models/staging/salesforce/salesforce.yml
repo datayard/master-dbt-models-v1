@@ -26,6 +26,7 @@ sources:
 
 
 models:
+  - bind: false
   - name: stg_salesforce_accounts
     columns:
       - name: account_id
