@@ -24,6 +24,12 @@ sources:
           - name: accountName
             description: name of the account
 
+          - name: isDeleted
+            description: If the account is deleted or not, currently all accounts have this value as FALSE
+
+          - name: accountType
+            description: prospect/customer/former customer/etc. 
+
       - name: stg_salesforce_contact
         columns:
           - name: id
