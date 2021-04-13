@@ -1,6 +1,8 @@
 SELECT
-    sfdc_account.id,
-    sfdc_account.name
+    sfdc_account.id as accountId,
+    sfdc_account.name as accountName,
+    sfdc_account.isdeleted as isDeleted,
+    sfdc_account.type as accountType
 FROM
     salesforce_production.account as sfdc_account
 WHERE
