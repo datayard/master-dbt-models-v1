@@ -8,3 +8,4 @@ FROM
 WHERE
     sfdc_account.type LIKE 'Customer'
     AND sfdc_account.ispersonaccount = false
+limit 1000000
