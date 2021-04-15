@@ -28,4 +28,4 @@ SELECT
     sfdc_contact.mailingpostalcode as mailingPostalCode,
     sfdc_contact.mailingcountry as mailingCountry 
  FROM 
-    salesforce_production.contact as sfdc_contact
+    {{ source('salesforce_production', 'contact') }} as sfdc_contact

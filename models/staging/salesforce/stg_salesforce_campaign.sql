@@ -23,4 +23,4 @@ SELECT
     sfdc_campaign .campaign_sourced_by__c as campaignSourcedBy,
     sfdc_campaign .response_type__c as responseType 
  FROM 
-    salesforce_production.campaign  as sfdc_campaign
+    {{ source('salesforce_production', 'campaign') }}  as sfdc_campaign
