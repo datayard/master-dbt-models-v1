@@ -3,7 +3,7 @@ version: 2
 sources:
   - name: salesforce_production
     description: Main CRM
-
+    
     freshness:
       warn_after:
         period: hour
@@ -13,6 +13,9 @@ sources:
         count: 24
 
     tables:
+
+      - name: opportunity
+
       - name: stg_salesforce_account
         columns:
           - name: accountId
@@ -49,3 +52,125 @@ models:
       - name: accountName
 
       - name: isDeleted
+
+  # Documentation for Staging Opportunity table
+  - name: stg_salesforce_opportunity
+    columns:
+      - name: opportunityId
+        description: salesforce opportunity id
+        tests:
+          - unique
+          - not_null
+
+      - name: accountId
+        description: salesforce account id tied to this opportunity
+        tests:
+          - unique
+          - not_null
+
+      - name: ownerId
+        description: Salesforce user id who owns the opportunity , id of a Vidyard person, not a user
+        tests:
+          - unique
+          - not_null
+
+      - name: opportunityName
+        description: Name of the Opportunity in Salesforce
+
+      - name: stageName
+        description: where the opportunity is in the sales funnel (stage 1 to 7, dead)
+
+      - name: closeDate
+        description: close date of the opportunity (either won or dead out), used for pipeline purposes
+
+      - name: opportunityType
+        description: opportunity type - new business, add-on, renewal, etc
+
+      - name: isClosed
+        description: T/F, opportunity is close - won or dead
+
+      - name: isWon
+        description: T/F, opportunity is won
+
+      - name: campaignId
+        description: salesforce campaign that brought the opportunity
+
+      - name: createdDate
+        description: opportunity created date
+
+      - name: enteredPipelineDate
+        description: opportunity entered pipeline date
+
+      - name: deadReason
+        description: the reason for an opportunity to be deaded out             
+
+      - name: closedWonDate
+        description: date when the opportunity is marked closed-won by the salesperson; used for commission purposes
+
+      - name: deadDate
+        description: date when the opportunity is deaded out
+
+      - name: renewalDueDate
+        description: date when the next renewal is due
+
+      - name: multiYear1stDueDate
+        description: for a multi-year contract, the first year's renewal duedate
+
+      - name: multiYear2ndDueDate
+        description: for a multi-year contract, the second year's renewal due date
+
+      - name: contactChampionId
+        description: the main contact for the opportunity in the customer company 
+        tests:
+          - unique
+          - not_null
+          
+      - name: businessUnit
+        description: whether the opportunity is coming from commercial or emerging business
+
+      - name: opportunityAttribution
+        description: where the opportunity is attributed to
+
+      - name: newARR
+        description: arr amount for the opportunity, enterprise contract only! not including self serve
+
+      - name: oneTimeCharge
+        description: one time charge fee on the opportunity
+
+      - name: lastYearARR
+        description: arr charged from last year, used as renewal target for this year
+
+      - name: renewalAmount
+        description: renewal amount
+
+      - name: csmOwnerId
+        description: Salesforce ID of the CSM owners of the opportunity
+
+      - name: contractStartDate
+        description: Start date of current contract
+
+      - name: contractEndDate
+        description: end date of current contract
+
+      - name: previousContractStartDate
+        description: start date of last contract
+
+      - name: previousContractEndDate
+        description: end date of last contract
+
+      - name: churnReason
+        description: reason opportunity/account is churning
+
+      - name: competitor
+        description: potential competitor being evaluated/used by prospect
+
+      - name: forecastCategory
+        description: a list of values to pick from that CX uses for reporting - omitted, pipeline, best case, commit, closed
+
+      - name: redOpportunity
+        description: T/F for labeling if the opportunity is Red Opportunity or not
+
+      - name: Assurance
+        description: positive - confirmed to renew; negative - haven't heard from them, but will auto-renew; sales order
+
+       
