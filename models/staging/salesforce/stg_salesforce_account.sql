@@ -42,7 +42,7 @@ SELECT
     sfdc_account.primary_use_case__c as primaryUseCase,
     sfdc_account.qa_status__c as qaStatus 
  FROM 
-    salesforce_production.account as sfdc_account
+    {{ source('salesforce_production', 'account') }} as sfdc_account
 WHERE
     sfdc_account.type LIKE 'Customer'
     AND sfdc_account.ispersonaccount = false
