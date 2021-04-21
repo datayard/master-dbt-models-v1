@@ -37,6 +37,12 @@ sources:
       - name: vidyard_allotment_limits
 
       - name: vidyard_allotment_types
+
+      - name: vidyard_hubs
+
+      - name: vidyard_events
+
+      - name: vidyard_event_joins
       
 
 models:
@@ -44,198 +50,179 @@ models:
     columns:
 
       - name: organizationID
-        description: ''
+        description: unique identifier of this table, the ID of the organization/folder
         tests:
           - unique
           - not_null
 
       - name: name
-        description: ''
+        description: the name of the organization/folder
 
       - name: orgtype
-        description: ''
+        description: ='self_serve' for free/pro and =' ' for enterprise
 
       - name: parentID
-        description: ''
+        description: =' ' blank if this is the parent org, otherwise shows which parent org this org belongs to
         tests:
           - unique
           - not_null
 
-      - name: verified
-        description: ''
-
       - name: locked
-        description: ''
+        description: T|F if the organization's account is locked
 
       - name: createdByClientID
-        description: ''
+        description: location where orgs were created- enterprise/hubspot/vidyard/etc. = 'Enterprise' means the user was created as a user in the enterprise account and not as a self-serve signup
 
       - name: createdDate
-        description: ''
+        description: organization created datetime
 
       - name: updatedDate
-        description: ''
-
-      - name: planId
-        description: ''
+        description: ' '
 
       - name: ownerId
-        description: ''
+        description: user who owns the organiztation, owner_id = user_id for free/pro orgs
         tests:
           - unique
           - not_null
 
       - name: lockedAt
-        description: ''
+        description: date the organization's account was locked
 
       - name: accountId
-        description: ''
+        description: account id of the organization
         tests:
           - unique
           - not_null
-
-      - name: paying
-        description: ''
-
 
   - name: stg_vidyard_users
     columns:
 
       - name: userId
-        description: ''
+        description: Unique identifier for the Vidyard user's ID, can be used to join with- * vidyard_organizations.owner_id & * vidyard_user_groups.user_id etc
         tests:
           - unique
           - not_null
 
       - name: email
-        description: ''
-
-      - name: current_sign_in_at
-        description: ''
+        description: user's email the signed up with
 
       - name: createdDate
-        description: ''
+        description: users creation date
 
       - name: updatedDate
-        description: ''
+        description: ' '
 
       - name: firstName
-        description: ''
+        description: first name of the user
 
       - name: lastName
-        description: ''
+        description: last name of the user
 
 
   - name: stg_vidyard_user_groups
     columns:
 
       - name: groupID
-        description: ''
+        description: Uniquie identifier for this table to find the user groups id. This table is used to link vidyard_organizations to vidyard_users when organizations contain more than 1 users (non-self-serve orgs)
         tests:
           - unique
           - not_null
 
       - name: userID
-        description: ''
-        tests:
-          - unique
-          - not_null
-
-      - name: roleId
-        description: ''
+        description: vidyard user's id
         tests:
           - unique
           - not_null
 
       - name: organizationID
-        description: ''
+        description: the organization id the user belongs to
         tests:
           - unique
           - not_null
 
       - name: inviteAccepted
-        description: ''
+        description: ' '
 
       - name: createdDate
-        description: ''
+        description: datetime the user group was created
 
       - name: updatedDate
-        description: ''
+        description: ' '
 
 
   - name: stg_vidyard_teams
     columns:
 
       - name: teamID
-        description: ''
+        description: vidyard team ID
         tests:
           - unique
           - not_null
 
       - name: accountID
-        description: ''
+        description: Vidyard account ID, links to the account each team belongs to
         tests:
           - unique
           - not_null
 
       - name: isAdmin
-        description: ''
+        description: Flags if the team is the admin team within the account
 
 
   - name: stg_vidyard_team_memberships
     columns:
 
       - name: teamMembershipID
-        description: ''
+        description: unique ID for the team member
         tests:
           - unique
           - not_null
 
       - name: teamID
-        description: ''
+        description: unique ID of the team
         tests:
           - unique
           - not_null
 
       - name: userID
-        description: ''
+        description: vidyard user ID
         tests:
           - unique
           - not_null
 
       - name: inviteAccepted
-        description: ''
+        description: if a user accepted invite, only then would he be tied to an existing org/account, rather than being a standalone org
 
       - name: createdAt
-        description: ''
+        description: when an invite is sent to a user
 
       - name: updatedAt
-        description: ''
+        description: timestamp when the user accepts invite; for users who have not accepted invite, this is the same timestamp as created_at
 
 
   - name: stg_vidyard_org_metrics
     columns:
 
       - name: organizationID
-        description: ''
+        description: vidyard org id
         tests:
           - unique
           - not_null
 
       - name: totalSeconds
-        description: ''
+        description: total seconds of videos being viewed = view time
 
       - name: viewsCount
-        description: ''
+        description: number fo views this org received
 
       - name: videosWithViews
-        description: ''
+        description: number of videos with views in the organzation
 
       - name: firstView
-        description: ''
+        description: the timestamp of the first view of a video in this org, in seconds
 
       - name: firstViewVideoID
-        description: ''
+        description: the video id of the first-viewed video
         tests:
           - unique
           - not_null
@@ -425,3 +412,105 @@ models:
 
       - name: defaultEnforced
         description: ''
+
+  # Documentation for VIDYARD_HUBS table from PUBLIC schema
+  - name: stg_vidyard_hubs
+    columns:
+
+      - name: hubID
+        description: unique identifier for this table
+        tests:
+          - unique
+          - not_null
+
+      - name: organizationID
+        description: ' '
+
+      - name: accountID
+        description: ' '
+        
+      - name: name
+        description: ' '
+
+      - name: subDomain
+        description: ' '
+
+      - name: hubType
+        description: ' '
+
+      - name: manageHubUsers
+        description: ' '
+
+      - name: routeType
+        description: ' '
+
+      - name: createdDate
+        description: ' '
+
+      - name: updatedDate
+        description: ' '
+
+      - name: indexLayoutID
+        description: ' '
+
+      - name: showLayoutID
+        description: ' '
+
+      - name: categoryLayoutID
+        description: ' '
+
+      - name: searchLayoutID
+        description: ' '
+
+  # Documentation for VIDYARD_EVENTS table from PUBLIC schema
+  - name: stg_vidyard_events
+    columns:
+
+      - name: eventID
+        description: unique identifier for this table
+        tests:
+          - unique
+          - not_null
+
+      - name: eventType
+        description: ' '
+
+      - name: organizationID
+        description: ' '
+
+      - name: createdDate
+        description: ' '
+
+      - name: updatedDate
+        description: ' '
+
+ # Documentation for VIDYARD_EVENT_JOINS table from PUBLIC schema
+  - name: stg_vidyard_event_joins
+    columns:
+
+      - name: eventJoinID
+        description: unique identifier for this table
+        tests:
+          - unique
+          - not_null
+
+      - name: eventID
+        description: use to join to vidyard_events table
+
+      - name: ownerType
+        description: ' '
+
+      - name: ownerID
+        description: ' '
+
+      - name: second
+        description: ' '
+
+      - name: duration
+        description: ' '
+
+      - name: createdDate
+        description: ' '
+
+      - name: updatedDate
+        description: ' '
