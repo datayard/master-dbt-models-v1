@@ -1,0 +1,427 @@
+version: 2
+
+sources:
+  - name: public
+    description: Vidyard Tables
+    
+    freshness:
+      warn_after:
+        period: hour
+        count: 12
+      error_after:
+        period: hour
+        count: 24
+
+    tables:
+
+      - name: vidyard_organizations
+
+      - name: vidyard_users
+
+      - name: vidyard_user_groups
+
+      - name: vidyard_teams
+
+      - name: vidyard_team_memberships
+
+      - name: vidyard_org_metrics
+
+      - name: vidyard_videos
+
+      - name: vidyard_active_features
+
+      - name: vidyard_features
+
+      - name: vidyard_players
+
+      - name: vidyard_allotment_limits
+
+      - name: vidyard_allotment_types
+      
+
+models:
+  - name: stg_vidyard_organizations
+    columns:
+
+      - name: organizationID
+        description: ''
+        tests:
+          - unique
+          - not_null
+
+      - name: name
+        description: ''
+
+      - name: orgtype
+        description: ''
+
+      - name: parentID
+        description: ''
+        tests:
+          - unique
+          - not_null
+
+      - name: verified
+        description: ''
+
+      - name: locked
+        description: ''
+
+      - name: createdByClientID
+        description: ''
+
+      - name: createdDate
+        description: ''
+
+      - name: updatedDate
+        description: ''
+
+      - name: planId
+        description: ''
+
+      - name: ownerId
+        description: ''
+        tests:
+          - unique
+          - not_null
+
+      - name: lockedAt
+        description: ''
+
+      - name: accountId
+        description: ''
+        tests:
+          - unique
+          - not_null
+
+      - name: paying
+        description: ''
+
+
+  - name: stg_vidyard_users
+    columns:
+
+      - name: userId
+        description: ''
+        tests:
+          - unique
+          - not_null
+
+      - name: email
+        description: ''
+
+      - name: current_sign_in_at
+        description: ''
+
+      - name: createdDate
+        description: ''
+
+      - name: updatedDate
+        description: ''
+
+      - name: firstName
+        description: ''
+
+      - name: lastName
+        description: ''
+
+
+  - name: stg_vidyard_user_groups
+    columns:
+
+      - name: groupID
+        description: ''
+        tests:
+          - unique
+          - not_null
+
+      - name: userID
+        description: ''
+        tests:
+          - unique
+          - not_null
+
+      - name: roleId
+        description: ''
+        tests:
+          - unique
+          - not_null
+
+      - name: organizationID
+        description: ''
+        tests:
+          - unique
+          - not_null
+
+      - name: inviteAccepted
+        description: ''
+
+      - name: createdDate
+        description: ''
+
+      - name: updatedDate
+        description: ''
+
+
+  - name: stg_vidyard_teams
+    columns:
+
+      - name: teamID
+        description: ''
+        tests:
+          - unique
+          - not_null
+
+      - name: accountID
+        description: ''
+        tests:
+          - unique
+          - not_null
+
+      - name: isAdmin
+        description: ''
+
+
+  - name: stg_vidyard_team_memberships
+    columns:
+
+      - name: teamMembershipID
+        description: ''
+        tests:
+          - unique
+          - not_null
+
+      - name: teamID
+        description: ''
+        tests:
+          - unique
+          - not_null
+
+      - name: userID
+        description: ''
+        tests:
+          - unique
+          - not_null
+
+      - name: inviteAccepted
+        description: ''
+
+      - name: createdAt
+        description: ''
+
+      - name: updatedAt
+        description: ''
+
+
+  - name: stg_vidyard_org_metrics
+    columns:
+
+      - name: organizationID
+        description: ''
+        tests:
+          - unique
+          - not_null
+
+      - name: totalSeconds
+        description: ''
+
+      - name: viewsCount
+        description: ''
+
+      - name: videosWithViews
+        description: ''
+
+      - name: firstView
+        description: ''
+
+      - name: firstViewVideoID
+        description: ''
+        tests:
+          - unique
+          - not_null
+
+
+  - name: stg_vidyard_videos
+    columns:
+
+      - name: videoID
+        description: ''
+        tests:
+          - unique
+          - not_null
+
+      - name: userID
+        description: ''
+        tests:
+          - unique
+          - not_null
+
+      - name: organizationID
+        description: ''
+        tests:
+          - unique
+          - not_null
+
+      - name: hostingProvider
+        description: ''
+
+      - name: isSecure
+        description: ''
+
+      - name: status
+        description: ''
+
+      - name: createdByClientID
+        description: ''
+
+      - name: createdAt
+        description: ''
+
+      - name: origin
+        description: ''
+
+      - name: milliseconds
+        description: ''
+
+      - name: updatedAt
+        description: ''
+
+      - name: videoType
+        description: ''
+
+
+  - name: stg_vidyard_active_features
+    columns:
+
+      - name: activeFeatureID
+        description: ''
+        tests:
+          - unique
+          - not_null
+
+      - name: organizationID
+        description: ''
+        tests:
+          - unique
+          - not_null
+
+      - name: featureID
+        description: ''
+
+      - name: createdDate
+        description: ''
+
+      - name: updatedDate
+        description: ''
+
+
+  - name: stg_vidyard_features
+    columns:
+
+      - name: featureId
+        description: ''
+        tests:
+          - unique
+          - not_null
+
+      - name: friendlyName
+        description: ''
+
+      - name: includeByDefault
+        description: ''
+
+      - name: category
+        description: ''
+
+      - name: uniqueName
+        description: ''
+
+
+  - name: stg_vidyard_players
+    columns:
+
+      - name: playerID
+        description: ''
+        tests:
+          - unique
+          - not_null
+
+      - name: organizationID
+        description: ''
+        tests:
+          - unique
+          - not_null
+
+      - name: ownerID
+        description: ''
+        tests:
+          - unique
+          - not_null
+
+      - name: createdbyclientID
+        description: ''
+
+      - name: createdDate
+        description: ''
+
+      - name: updatedDate
+        description: ''
+
+      - name: playerType
+        description: ''
+
+      - name: uuID
+        description: ''
+
+
+  - name: stg_vidyard_allotment_limits
+    columns:
+
+      - name: accountID
+        description: ''
+        tests:
+          - unique
+          - not_null
+
+      - name: allotmentLimitID
+        description: ''
+        tests:
+          - unique
+          - not_null
+
+      - name: limit
+        description: ''
+
+      - name: graceLimit
+        description: ''
+
+      - name: allotmentTypeID
+        description: ''
+
+      - name: enforced
+        description: ''
+
+
+  - name: stg_vidyard_allotment_types
+    columns:
+
+      - name: allotmentTypeID
+        description: ''
+        tests:
+          - unique
+          - not_null
+
+      - name: name
+        description: ''
+
+      - name: description
+        description: ''
+
+      - name: defaultLimit
+        description: ''
+
+      - name: defaultGraceLimit
+        description: ''
+
+      - name: defaultEnforced
+        description: ''
