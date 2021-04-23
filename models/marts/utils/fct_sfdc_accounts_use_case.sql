@@ -8,7 +8,7 @@ JOIN
 ON
     sfdc_opp.accountid = sfdc_account.accountid
 WHERE
-  sfdc_opp.vy_use_case__c is not null
+  sfdc_opp.usecase is not null
   and sfdc_opp.stagename LIKE '7 - Closed Won'
 GROUP BY
   sfdc_opp.accountid

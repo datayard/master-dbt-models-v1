@@ -28,3 +28,4 @@ models:
     
     columns:
       - name: useCase
+        description: The main use case this particular customer has indicated will be applied to their products
