@@ -142,6 +142,9 @@ models:
 
       - name: Assurance
         description: positive - confirmed to renew; negative - haven't heard from them, but will auto-renew; sales order
+      
+      - name: useCase
+        description: The main purpose the client has stated this products will be used for
 
   - name: stg_salesforce_account
     columns:
