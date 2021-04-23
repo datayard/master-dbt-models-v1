@@ -11,5 +11,5 @@ WHERE
   sfdc_opp.usecase is not null
   and sfdc_opp.stagename LIKE '7 - Closed Won'
 GROUP BY
-  sfdc_opp.accountid
+  sfdc_account.accountId
   
