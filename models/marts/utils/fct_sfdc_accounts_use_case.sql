@@ -1,6 +1,6 @@
 SELECT
-    sfdc_account.accountid,
-    listagg (distinct sfdc_opp.vy_use_case__c,';')
+    sfdc_account.accountid as accountId,
+    listagg (distinct sfdc_opp.vy_use_case__c,';') as useCase
 FROM
     {{ ref('stg_salesforce_opportunity') }} as sfdc_opp
 JOIN

@@ -1,0 +1,30 @@
+version: 2
+
+sources:
+  - name: salesforce
+    description: Main CRM
+    
+    freshness:
+      warn_after:
+        period: hour
+        count: 12
+      error_after:
+        period: hour
+        count: 24
+
+    tables:
+
+      - name: fct_sfdc_accounts_use_case
+      
+models:
+  # Documentation for the Utils table
+  - name: fct_sfdc_accounts_use_case
+    columns:
+      - name: accountId
+        description: salesforce Account id
+        tests:
+          - unique
+          - not_null
+    
+    columns:
+      - name: useCase
