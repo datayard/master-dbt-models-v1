@@ -43,6 +43,8 @@ sources:
       - name: vidyard_events
 
       - name: vidyard_event_joins
+
+      - name: vidyard_nps_surveys
       
 
 models:
@@ -117,6 +119,45 @@ models:
 
       - name: lastName
         description: last name of the user
+
+  - name: stg_nps_survey_responses
+    columns:
+
+    - name: npsSurveyID
+      description: Unique identifier for the NPS Survey event
+      test:
+        - unique
+        - not_null
+
+    - name: userScore
+      description: Score given by the user
+
+    - name: userComment
+      description: Comments to the given Score
+
+    - name: userId
+      description: Key identifier for the User that submitted the NPS in the platform
+
+    - name: organizationId
+      description: The organization id in which the NPS survey was submitted
+
+    - name: createdAt
+      description: The date in which the Score was submitted
+
+    - name: updatedAt
+      description: ''
+
+    - name: filled
+      description: ''
+
+    - name: allowContact
+      description: ''
+
+    - name: surveyType
+      description: ''
+
+    - name: cancelled
+      description: ''
 
 
   - name: stg_vidyard_user_groups
