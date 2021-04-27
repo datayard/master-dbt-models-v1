@@ -188,7 +188,7 @@ models:
         description: datetime the user group was created
 
       - name: updatedDate
-        description: ' '
+        description: datetime the user group was updated
 
 
   - name: stg_vidyard_teams
@@ -273,71 +273,74 @@ models:
     columns:
 
       - name: videoID
-        description: ''
+        description: unique video id
         tests:
           - unique
           - not_null
 
       - name: userID
-        description: ''
+        description: vidyard user id
         tests:
           - unique
           - not_null
 
       - name: organizationID
-        description: ''
+        description: vidyard org id
         tests:
           - unique
           - not_null
 
       - name: hostingProvider
-        description: ''
+        description: vidyard/youtube/audio/etc
 
       - name: isSecure
-        description: ''
+        description: indicates where the video currently has one of our security controls enabled on it (e.g. password, SSO, etc.)
 
       - name: status
-        description: ''
+        description: status of the video - failed, processing, ready, etc
 
       - name: createdByClientID
-        description: ''
+        description: where the video was created
 
       - name: createdAt
-        description: ''
+        description: video creation timestamp
 
       - name: origin
-        description: ''
+        description: how the video was created - upload, chrome extension, etc
 
       - name: milliseconds
-        description: ''
+        description: length of the video in milliseconds
 
       - name: updatedAt
-        description: ''
+        description: ' '
 
       - name: videoType
-        description: ''
+        description: time when the video was updated
+
+      - name: videoType
+        description: 360 or normal
 
 
   - name: stg_vidyard_active_features
     columns:
 
       - name: activeFeatureID
-        description: ''
+        description: unique identifier for the table
         tests:
           - unique
           - not_null
 
       - name: organizationID
-        description: ''
+        description: ' '
         tests:
           - unique
           - not_null
 
       - name: featureID
-        description: ''
+        description: which feature the organization has access to, used to join with vidyard_features to get the feature information
 
       - name: createdDate
-        description: ''
+        description: datetime the feature was activated for the organization
 
       - name: updatedDate
         description: ''
@@ -347,112 +350,112 @@ models:
     columns:
 
       - name: featureId
-        description: ''
+        description: the unique identifier for this table
         tests:
           - unique
           - not_null
 
       - name: friendlyName
-        description: ''
+        description: description of the features
 
       - name: includeByDefault
-        description: ''
+        description: ' '
 
       - name: category
-        description: ''
+        description: what category the feature falls under
 
       - name: uniqueName
-        description: ''
+        description: name of the feature
 
 
   - name: stg_vidyard_players
     columns:
 
       - name: playerID
-        description: ''
+        description: unique identifier for this table
         tests:
           - unique
           - not_null
 
       - name: organizationID
-        description: ''
+        description: the organization the player lives in
         tests:
           - unique
           - not_null
 
       - name: ownerID
-        description: ''
+        description: the owner of the player
         tests:
           - unique
           - not_null
 
       - name: createdbyclientID
-        description: ''
+        description: location where orgs were created
 
       - name: createdDate
-        description: ''
+        description: date the player was created
 
       - name: updatedDate
-        description: ''
+        description: ' '
 
       - name: playerType
-        description: ''
+        description: description of the player
 
       - name: uuID
-        description: ''
+        description: ' '
 
 
   - name: stg_vidyard_allotment_limits
     columns:
 
       - name: accountID
-        description: ''
+        description: unique identifier for this table
         tests:
           - unique
           - not_null
 
       - name: allotmentLimitID
-        description: ''
+        description: ' '
         tests:
           - unique
           - not_null
 
       - name: limit
-        description: ''
+        description: ' '
 
       - name: graceLimit
         description: ''
 
       - name: allotmentTypeID
-        description: ''
+        description: ' '
 
       - name: enforced
-        description: ''
+        description: ' '
 
 
   - name: stg_vidyard_allotment_types
     columns:
 
       - name: allotmentTypeID
-        description: ''
+        description: unique identifier for this table
         tests:
           - unique
           - not_null
 
       - name: name
-        description: ''
+        description: ' '
 
       - name: description
-        description: ''
+        description: ' '
 
       - name: defaultLimit
-        description: ''
+        description: ' '
 
       - name: defaultGraceLimit
-        description: ''
+        description: ' '
 
       - name: defaultEnforced
-        description: ''
+        description: ' '
 
   # Documentation for VIDYARD_HUBS table from PUBLIC schema
   - name: stg_vidyard_hubs
