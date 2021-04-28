@@ -15,8 +15,7 @@ JOIN
 on
     surveys.userid = users.userId
   WHERE TRUE
-    --AND surveys.createdAt >= DATEADD(day,-7,CURRENT_DATE)
-    AND surveys.createdAt < CURRENT_DATE
     AND surveys.userScore IS NOT null
     AND surveys.filled = true
     AND surveys.cancelled = false
+    AND surveys.surveytype IS null
