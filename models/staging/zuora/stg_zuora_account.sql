@@ -8,6 +8,7 @@ SELECT
         account.cx_department_c as cxDepartment,
         account.mrr as net_mrr,
         account.name as accountName,
+        account.status as accountStatus,
         account.sales_rep_name as salesRepName,
         account.vidyard_id_c as vidyardId,
         account.sold_to_contact_id as soldToContactId,

@@ -60,6 +60,9 @@ models:
         - name: accountName
           description: Name of the account
 
+        - name: accountStatus
+          description: Current Status of Account
+
         - name: salesRepName
           description: Name of AE who sold the contract
 
