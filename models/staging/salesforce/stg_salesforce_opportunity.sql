@@ -33,6 +33,7 @@ SELECT
         op.competition__c as competitor,
         op.forecastcategoryname as forecastCategory,
         op.red_opportunity__c as redOpportunity,
-        op.assurance__c as Assurance
+        op.assurance__c as Assurance,
+        op.vy_use_case__c as useCase
 FROM 
     {{ source('salesforce_production', 'opportunity') }} as op
