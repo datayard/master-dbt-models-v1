@@ -34,6 +34,7 @@ models:
 
 on-run-end:
  - "{{ grant_permission_to_looker() }}"
+ - "{{ grant_permission_to_dbt() }}"
 
 
 
