@@ -9,6 +9,7 @@ SELECT
 	vidyard_organizations.updated_at as updatedDate,
 	vidyard_organizations.owner_id as ownerId,
 	vidyard_organizations.locked_at as lockedAt,
-	vidyard_organizations.account_id as accountId
+	vidyard_organizations.account_id as accountId,
+	vidyard_organizations.paying as paying
  FROM 
 	{{ source('public', 'vidyard_organizations') }} as vidyard_organizations
