@@ -292,10 +292,6 @@ models:
       - name: onlineVideoPlatform
         description: online video platform used by the account
 
-      - name: nonContract
-        description: really really old customers who paid us by credit card, but not self
-          serve; legacy
-
       - name: primaryUseCase
         description: the account's primary use case for vidyard (e.g. corporate comms,
           hosting, sales etc)
