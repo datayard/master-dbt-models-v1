@@ -15,3 +15,6 @@ FROM
 WHERE
 	product.sku LIKE 'SS-010'
 	AND subscription.status LIKE 'Active'
+	OR (
+		subscription.status LIKE 'Cancelled' 
+		AND subscription.termenddate >= getdate())
