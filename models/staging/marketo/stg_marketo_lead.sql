@@ -98,7 +98,7 @@ SELECT
 	lead.PersonMailingAddress as mailingAddressA,
 	lead.PersonMailingCity as mailingCity,
 	lead.PersonMailingCountry as mailingCountry,
-	lead.PersonMailingState as mailingState/Province,
+	lead.PersonMailingState as mailingStateProvince,
 	lead.PersonTitle as title,
 	lead.phone as phoneNumber,
 	lead.postalCode as postalCode,
