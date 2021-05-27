@@ -1,6 +1,7 @@
 SELECT 
 	account.accountID AS activeProaccounts,
 	account.accountname,
+	account.vidyardId,
 	subscription.status AS subscriptionstatus,
 	account.accountStatus,
 	productrateplan.name,
@@ -15,3 +16,8 @@ FROM
 WHERE
 	product.sku LIKE 'SS-010'
 	AND subscription.status LIKE 'Active'
+	OR (
+		product.sku LIKE 'SS-010'
+		AND subscription.status LIKE 'Cancelled' 
+		AND subscription.termenddate >= getdate()
+		)
