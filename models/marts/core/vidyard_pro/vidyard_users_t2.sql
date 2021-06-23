@@ -6,6 +6,9 @@ select
     om.videoswithviews,
     om.firstview,
     u.email,
+    u.userid,
+    ug.groupid as usergroupid,
+    v.videoid,
     --check vidyard email
     case 
 	    when email like '%vidyard.com' then 1
@@ -192,3 +195,5 @@ from {{ ref('stg_vidyard_organizations') }} o
 	    on u.userid = ug.userid
     left join {{ ref('stg_vidyard_org_metrics') }} om
 	    on om.organizationid = o.organizationid
+    left join {{ ref('stg_vidyard_videos') }} v
+	    on v.userid = u.userid
