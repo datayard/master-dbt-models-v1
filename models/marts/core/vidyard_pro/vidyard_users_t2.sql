@@ -1,33 +1,32 @@
+with user_segmented as
+(
 select 
-    o.organizationid,
-    o.name,
-    o.ownerid,
-    o.parentid,
-    o.createddate,
-    o.createdbyclientid,
-    o.orgtype,
-    om.videoswithviews,
-    om.firstview,
-    u.email,
-    u.userid,
-    ug.groupid as usergroupid,
-    v.videoid,
+distinct
+	o.organizationid
+    , o.accountid
+    , o.ownerid
+    , o.parentid
+    , o.orgtype
+    , o.createddate
+    , o.createdbyclientid
+    , u.userid
+    , u.email
     --check vidyard email
-    case 
-	    when email like '%vidyard.com' then 1
+    , case 
+	    when u.email like '%vidyard.com' then 1
 	    else 0
-    end as vidyard_email,
+    end as vidyard_email
     --check viewedit email
-    case 
-        when email like '%viewedit.com' then 1
+    , case 
+        when u.email like '%viewedit.com' then 1
         else 0
-    end as viewedit_email,
+    end as viewedit_email
     --exclude hubspot personal signups per zendesk ticket #85501 and #98583
-    case
+    , case
         when o.createdbyclientid in ('app.hubspot.com','marketing.hubspot.com','marketing.hubspotqa.com') then 1
         else 0
-    end as hubspot_personal_signup,
-    case
+    end as hubspot_personal_signup
+    , case
         when split_part(u.email, '@', 2) like '%gmail.com%'
             or split_part(u.email, '@', 2) like '%yahoo%'
             or split_part(u.email, '@', 2) like '%hotmail%'
@@ -191,12 +190,50 @@ select
         then 'education'
         else 'business'
     end as user_type_from_email
+    , case
+    		when coalesce(tm.teamid) is not null  then 2
+            else null
+       end as has_teamid
+    , case
+    		when coalesce(tm.teammembershipid) is not null  then 2
+            else null
+       end as has_membershipid
+    , case
+    		when coalesce(ug.groupid) is not null  then 2
+            else null
+       end as has_groupid    
+    , o.name
+    , case
+    	when o.ownerid = u.userid and o.orgtype = 'self_serve' then 1
+        else 0
+       end as has_personal_account
+    , case
+    	when (o.ownerid = u.userid and o.orgtype = 'self_serve' and o.organizationid != o.accountid) then 4
+        else 0
+       end as linked_to_parent_account
+    , case
+    	when (has_personal_account + linked_to_parent_account + case when coalesce(has_teamid, has_membershipid, has_groupid) is null then 0 else coalesce(has_teamid, has_membershipid, has_groupid) end) = 0 then 'Orphan'
+        when (has_personal_account + linked_to_parent_account + case when coalesce(has_teamid, has_membershipid, has_groupid) is null then 0 else coalesce(has_teamid, has_membershipid, has_groupid) end) = 1 then 'Standalone'
+        when (has_personal_account + linked_to_parent_account + case when coalesce(has_teamid, has_membershipid, has_groupid) is null then 0 else coalesce(has_teamid, has_membershipid, has_groupid) end) = 2 then 'Enterprise Only'
+        when (has_personal_account + linked_to_parent_account + case when coalesce(has_teamid, has_membershipid, has_groupid) is null then 0 else coalesce(has_teamid, has_membershipid, has_groupid) end) = 3 then 'Hybrid'
+        when (has_personal_account + linked_to_parent_account + case when coalesce(has_teamid, has_membershipid, has_groupid) is null then 0 else coalesce(has_teamid, has_membershipid, has_groupid) end) = 7 then 'Enterprise Personal'
+      	else '--'
+      end as user_type
 from {{ ref('stg_vidyard_organizations') }} o
-    join {{ ref('stg_vidyard_user_groups') }} ug
-	    on ug.organizationid = o.organizationid
-    join {{ ref('stg_vidyard_users') }} u
-	    on u.userid = ug.userid
-    left join {{ ref('stg_vidyard_org_metrics') }} om
-	    on om.organizationid = o.organizationid
-    left join {{ ref('stg_vidyard_videos') }} v
-	    on v.userid = u.userid
+join {{ ref('stg_vidyard_users') }} u
+	on o.ownerid = u.userid
+left join {{ ref('stg_vidyard_user_groups') }} ug
+    on ug.userid = u.userid
+left join {{ ref('stg_vidyard_team_memberships') }} tm
+    on tm.userid = u.userid
+)
+select 
+	us.*
+    , om.videoswithviews
+    , om.firstview
+    , v.videoid
+from user_segmented us
+left join {{ ref('stg_vidyard_org_metrics') }} om
+    on om.organizationid = us.organizationid
+left join {{ ref('stg_vidyard_videos') }} v
+    on v.userid = us.userid
