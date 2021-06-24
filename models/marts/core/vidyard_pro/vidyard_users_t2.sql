@@ -231,6 +231,7 @@ select
 	us.*
     , om.videoswithviews
     , om.firstview
+    , om.viewscount
     , v.videoid
 from user_segmented us
 left join {{ ref('stg_vidyard_org_metrics') }} om
