@@ -1,5 +1,8 @@
 select 
     o.organizationid,
+    o.name,
+    o.ownerid,
+    o.parentid,
     o.createddate,
     o.createdbyclientid,
     o.orgtype,
