@@ -189,7 +189,7 @@ distinct
             or split_part(u.email, '@', 2) like '%.net'
         then 'education'
         else 'business'
-    end as user_type_from_email
+    end as business_domain
     , case
     		when coalesce(tm.teamid) is not null  then 2
             else null
