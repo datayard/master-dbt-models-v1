@@ -27,11 +27,10 @@ clean-targets:         # directories to be removed by `dbt clean`
 # using the `{{ config(...) }}` macro.
 models:
   bind: false
-  dbt_vidyard_master:
-      #materialized: table
+  master_dbt_models:
       staging:
-        materialized: view
+        +materialized: view
       marts:
-        materialized: table
+        +materialized: table
 
 
