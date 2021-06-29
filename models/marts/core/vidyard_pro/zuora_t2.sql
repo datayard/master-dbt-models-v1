@@ -22,7 +22,7 @@ select
     , s.defaultpaymentmethodid
     , s.initialterm
     , s.initialtermperiodtype
-    , s.name
+    , s.susbcriptionname
     , s.originalcreateddate
     , s.originalsubscriptionid
     , s.previoussubscriptionid
@@ -45,7 +45,7 @@ select
     , prp.description
     , prp.effectiveenddate
     , prp.effectivestartdate
-    , prp.name
+    , prp.productrateplanname
     , prp.productid
     , prp.productrateplanid
     , prp.pvstatus
