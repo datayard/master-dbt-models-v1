@@ -38,35 +38,19 @@ models:
         tests:
           - unique
           - not_null
-    
-    columns:
       - name: userid
         description: User ID that created the NPS
-
-    columns:
       - name: organizationid
         description: 
-    
-    columns:
       - name: email
         description: 
-
-    columns:
       - name: filled
         description: 
-
-    columns:
       - name: cancelled
         description: 
-
-    columns:
       - name: userscore
         description:
-    
-    columns:
       - name: usercomment
         description:
-
-    columns:
       - name: createdat
         description:
