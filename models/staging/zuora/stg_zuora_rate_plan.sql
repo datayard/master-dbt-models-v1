@@ -12,7 +12,7 @@ SELECT
         rate_plan.updated_date as updatedDate,
         rate_plan.sold_to_contact_id as soldToContactId,
         rate_plan.account_id as accountId,
-        rate_plan.product_id as productId,
+        --rate_plan.product_id as productId,
         rate_plan.bill_to_contact_id as billtoContactId,
         rate_plan.subscription_version_amendment_id as subscriptionVersionAmendmentId,
         rate_plan.default_payment_method_id as defaultPaymentMethodId,
