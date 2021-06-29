@@ -22,7 +22,7 @@ select
     , s.defaultpaymentmethodid
     , s.initialterm
     , s.initialtermperiodtype
-    , s.name
+    , s.name as susbcriptionname
     , s.originalcreateddate
     , s.originalsubscriptionid
     , s.previoussubscriptionid
@@ -33,28 +33,28 @@ select
     , s.subscriptionenddate
     , s.subscriptionid
     , s.subscriptionstartdate
-    , s.subscriptionversionamendmentid
+    , s.subscriptionversionamendmentid as ssubscriptionversionamendmentid
     , s.termenddate
     , s.termstartdate
     , s.termtype
-    , s.updatedbyid
-    , s.updateddate
+    , s.updatedbyid as subscriptionupdatedby
+    , s.updateddate as subscriptionupdateddate
     , s.vidyardcanceldate
     , prp.activecurrencies
     , prp.billingperiod
     , prp.description
     , prp.effectiveenddate
     , prp.effectivestartdate
-    , prp.name
+    , prp.name as productrateplanname
     , prp.productid
     , prp.productrateplanid
     , prp.pvstatus
-    , prp.updatedbyid
-    , prp.updateddate
+    , prp.updatedbyid as productrateplanupdatedby
+    , prp.updateddate productrateplanupdateddate
     , rp.amendmentid
     , rp.amendmentsubscriptionrateplanid
     , rp.amendmenttype
-    , rp.subscriptionversionamendmentid
+    , rp.subscriptionversionamendmentid as rpsubscriptionversionamendmentid
     , rp.triggersync
 from {{ ref('stg_zuora_rate_plan') }} as rp 
         join {{ ref('stg_zuora_subscription') }} as s on s.subscriptionid = rp.subscriptionid
