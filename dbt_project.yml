@@ -27,7 +27,7 @@ clean-targets:         # directories to be removed by `dbt clean`
 # using the `{{ config(...) }}` macro.
 models:
   bind: false
-  vidyard_dbt:
+  dbt_vidyard_master:
       #materialized: table
       staging:
         materialized: view
