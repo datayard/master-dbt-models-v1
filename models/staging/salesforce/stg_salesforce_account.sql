@@ -43,5 +43,4 @@ SELECT
  FROM 
     {{ source('salesforce_production', 'account') }} as sfdc_account
 WHERE
-    sfdc_account.type LIKE 'Customer'
-    AND sfdc_account.ispersonaccount = false
+    TRUE
