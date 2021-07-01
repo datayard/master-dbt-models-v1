@@ -1,7 +1,7 @@
 
 -- more fields will be added to the table 
 select
-      cast(hu."identity" as varchar(50)) as userid
+      hu."identity" as heap_vid_userid
       , (
        case
           when s.landingpage like '%share.vidyard.com%'
