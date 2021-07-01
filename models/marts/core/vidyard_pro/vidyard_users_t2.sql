@@ -232,6 +232,11 @@ select
                 then 'Partner App'
             when o.createdByClientID = 'edge-extension.vidyard.com'
                 then 'Edge'
+            when o.createdByClientID = 'Enterprise'
+                then 'Enterprise'
+            when o.createdByClientID IN ('app.hubspot.com','marketing.hubspot.com','marketing.hubspotqa.com')
+                then 'Hubspot'
+            else null
           end as signup_source
 from 
 dbt_vidyard_master.stg_vidyard_organizations o
