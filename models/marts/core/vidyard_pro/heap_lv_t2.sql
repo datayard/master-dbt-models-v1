@@ -9,6 +9,17 @@ select
     , gs.domain
     , gs.channels
   	, gs.path
+    , case
+        when gs.landingpage like '%share.vidyard.com%'
+          then 'Product'
+        when gs.landingpage like '%welcome.vidyard.com/chrome_setup/%'
+          then 'Chrome'
+        when gs.landingpage like '%jiihcciniecimeajcniapbngjjbonjan%'
+          then 'Chrome'
+        when gs.channels like 'Product'
+          then 'Player'
+        else gs.channels
+      end as derived_channel
     , 'GS' as tracker
 from {{ ref('stg_govideo_production_global_session') }} gs
 join {{ ref('stg_govideo_production_users') }} u
@@ -27,6 +38,7 @@ select
     , oe.domain
     , oe.channels
   	, oe.path
+    , null as derived_channel
     , 'OE' as tracker
 from {{ ref('stg_govideo_production_opened_extension') }} oe
 join {{ ref('stg_govideo_production_users') }} u
@@ -45,6 +57,7 @@ select
     , pv.domain
     , null as channels
   	, pv.path
+    , null as derived_channel
     , 'PV' as tracker
 from {{ ref('stg_govideo_production_pageviews') }} pv
 join {{ ref('stg_govideo_production_users') }} u
@@ -63,6 +76,7 @@ select
     , ps.domain
     , ps.channels
   	, ps.path
+    , null as derived_channel
     , 'PS' as tracker
 from {{ ref('stg_govideo_production_product_sessions') }} ps
 join {{ ref('stg_govideo_production_users') }} u
@@ -81,6 +95,7 @@ select
     , ssc.domain
     , ssc.channels
   	, ssc.path
+    , null as derived_channel
     , 'SSC' as tracker
 from {{ ref('stg_govideo_production_sharing_share_combo') }} ssc
 join {{ ref('stg_govideo_production_users') }} u
@@ -99,6 +114,7 @@ select
     , vidcompv.domain
     , vidcompv.channels
   	, vidcompv.path
+    , null as derived_channel
     , 'VCPV' as tracker
 from {{ ref('stg_govideo_production_vidyard_com_any_pageview') }} vidcompv
 join {{ ref('stg_govideo_production_users') }} u
@@ -117,6 +133,7 @@ select
     , vidcomss.domain
     , vidcomss.channels
   	, vidcomss.path
+    , null as derived_channel
     , 'VCSS' as tracker
 from {{ ref('stg_govideo_production_vidyard_com_sessions') }} vidcomss
 join {{ ref('stg_govideo_production_users') }} u
