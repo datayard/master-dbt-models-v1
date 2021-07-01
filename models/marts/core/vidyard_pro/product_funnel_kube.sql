@@ -24,7 +24,7 @@ with vidyard_user_table as (
   from
       vidyard_user_table vut
       left join {{ ref('heap_users_t2') }} hs 
-          on vut.userid = cast(hs."identity" as varchar(10))
+          on vut.userid = cast(hs.heap_vid_userid as varchar(10))
 )
 select 
 	'1-signups' as step
