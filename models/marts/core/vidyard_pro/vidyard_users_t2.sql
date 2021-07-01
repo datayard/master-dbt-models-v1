@@ -221,6 +221,18 @@ select
   
             else cast((has_personal_account + linked_to_parent_account + has_group_or_team_id) as varchar(10))
           end as user_type
+        , case
+            when o.createdByClientID = 'android.vidyard.com'
+                then 'Android'
+            when o.createdByClientID = 'govideo-mobile.vidyard.com'
+                then 'iOS'
+            when o.createdByClientID = 'app.slack.com'
+                then 'Slack'
+            when o.createdByClientID not in ('secure.vidyard.com','auth.viewedit.com','edge-extension.vidyard.com')
+                then 'Partner App'
+            when o.createdByClientID = 'edge-extension.vidyard.com'
+                then 'Edge'
+          end as signup_source
 from 
 dbt_vidyard_master.stg_vidyard_organizations o
 join dbt_vidyard_master.stg_vidyard_users u
