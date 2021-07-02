@@ -33,4 +33,3 @@ models:
       marts:
         +materialized: table
 
-
