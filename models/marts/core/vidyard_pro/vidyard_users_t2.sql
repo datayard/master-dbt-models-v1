@@ -195,9 +195,9 @@ select
             else 'business'
         end as business_domain
 		, case 
-  				when ug.num_groups > 0 then 2
-  				when tm.num_teams > 0 then 2
-  				when tm.num_teammemberships > 0 then 2
+  				when ug.num_groups > 0 then 1
+  				when tm.num_teams > 0 then 1
+  				when tm.num_teammemberships > 0 then 1
   				else 0
   		  end as has_group_or_team_id
   		, case
@@ -205,19 +205,19 @@ select
             else 0
            end as has_personal_account
         , case
-            when (o.ownerid = u.userid and o.orgtype = 'self_serve' and o.organizationid != o.accountid) then 4
+            when (o.ownerid = u.userid and o.orgtype = 'self_serve' and o.organizationid != o.accountid) then 1
             else 0
            end as linked_to_parent_account
   		, case
-            when (has_personal_account + linked_to_parent_account + has_group_or_team_id) = 0 then 'Orphan'
-            when (has_personal_account + linked_to_parent_account + has_group_or_team_id) = 1 then 'Standalone'
-            when (has_personal_account + linked_to_parent_account + has_group_or_team_id) = 2 then 'Enterprise Only'
-            when (has_personal_account + linked_to_parent_account + has_group_or_team_id) = 3 then 'Hybrid'
-            when (has_personal_account + linked_to_parent_account + has_group_or_team_id) = 7 then 'Enterprise Personal'
+            when ((has_personal_account*1) + (has_group_or_team_id*2) + (linked_to_parent_account*4)) = 0 then 'Orphan'
+            when ((has_personal_account*1) + (has_group_or_team_id*2) + (linked_to_parent_account*4)) = 1 then 'Standalone'
+            when ((has_personal_account*1) + (has_group_or_team_id*2) + (linked_to_parent_account*4)) = 2 then 'Enterprise Only'
+            when ((has_personal_account*1) + (has_group_or_team_id*2) + (linked_to_parent_account*4)) = 3 then 'Hybrid'
+            when ((has_personal_account*1) + (has_group_or_team_id*2) + (linked_to_parent_account*4)) = 7 then 'Enterprise Personal'
   			
-  			when (has_personal_account + linked_to_parent_account + has_group_or_team_id) = 4 then 'Linked to Parent Account only'
-  			when (has_personal_account + linked_to_parent_account + has_group_or_team_id) = 5 then 'Has Personal Account & Linked to Parent Account'
-  			when (has_personal_account + linked_to_parent_account + has_group_or_team_id) = 6 then 'Has Group/Team membership id & Linked to Parent Account'
+  			when ((has_personal_account*1) + (has_group_or_team_id*2) + (linked_to_parent_account*4)) = 4 then 'Linked to Parent Account only'
+  			when ((has_personal_account*1) + (has_group_or_team_id*2) + (linked_to_parent_account*4)) = 5 then 'Has Personal Account & Linked to Parent Account'
+  			when ((has_personal_account*1) + (has_group_or_team_id*2) + (linked_to_parent_account*4)) = 6 then 'Has Group/Team membership id & Linked to Parent Account'
   
             else cast((has_personal_account + linked_to_parent_account + has_group_or_team_id) as varchar(10))
           end as user_type
@@ -239,12 +239,12 @@ select
             else null
           end as signup_source
 from 
-dbt_vidyard_master.stg_vidyard_organizations o
-join dbt_vidyard_master.stg_vidyard_users u
+{{ ref('stg_vidyard_organizations') }} o
+join {{ ref('stg_vidyard_users') }} u
 	on o.ownerid = u.userid and u.userid is not null and o.organizationid is not null
 left join (
   		select organizationid, userid, count(distinct groupid) as num_groups
-  		from dbt_vidyard_master.stg_vidyard_user_groups ug
+  		from {{ ref('stg_vidyard_user_groups') }} ug
   		where ug.inviteaccepted = 'True' and ug.groupid is not null
   		group by 1, 2
 	) ug
@@ -258,13 +258,13 @@ left join
               , tm.updatedat as invitation_accepted_time
               , count(distinct t.teamid) as num_teams
               , count(distinct teammembershipid) as num_teammemberships
-		  from dbt_vidyard_master.stg_vidyard_teams t
-		  join dbt_vidyard_master.stg_vidyard_team_memberships tm
+		  from {{ ref('stg_vidyard_teams') }} t
+		  join {{ ref('stg_vidyard_team_memberships') }} tm
 			on t.teamid = tm.teamid
           group by 1, 2, 3, 4
         ) tm
 	on  tm.accountid = o.accountid and tm.userid = u.userid   
-left join dbt_vidyard_master.stg_vidyard_org_metrics om
+left join {{ ref('stg_vidyard_org_metrics') }} om
     on om.organizationid = o.organizationid
-left join dbt_vidyard_master.stg_vidyard_videos v
+left join {{ ref('stg_vidyard_videos') }} v
     on v.videoid is not null and v.organizationid = o.organizationid and v.userid = u.userid
