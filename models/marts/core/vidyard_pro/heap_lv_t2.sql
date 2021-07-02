@@ -138,3 +138,41 @@ select
 from {{ ref('stg_govideo_production_vidyard_com_sessions') }} vidcomss
 join {{ ref('stg_govideo_production_users') }} u
 	on vidcomss.userid = u.userid and u."identity" is not null
+
+union all
+
+select 
+	pv.eventid
+  	, u."identity" as vid_userid
+    , pv.userid
+    , null as sessionid
+    , null as sessiontime
+    , pv.eventtime
+    , pv.landingpage
+    , pv.domain
+    , null as channels
+  	, pv.path
+    , null as derived_channel
+    , 'VC' as tracker
+from {{ ref('stg_govideo_production_video_creation_started_to_create_or_upload_a_video_combo') }} pv
+join {{ ref('stg_govideo_production_users') }} u
+	on pv.userid = u.userid and u."identity" is not null
+  
+union all
+
+select 
+	pv.eventid
+  	, u."identity" as vid_userid
+    , pv.userid
+    , null as sessionid
+    , null as sessiontime
+    , pv.eventtime
+    , pv.landingpage
+    , pv.domain
+    , null as channels
+  	, pv.path
+    , null as derived_channel
+    , 'VU' as tracker
+from {{ ref('stg_govideo_production_video_recorded_or_uploaded') }} pv
+join {{ ref('stg_govideo_production_users') }} u
+	on pv.userid = u.userid and u."identity" is not null
