@@ -90,7 +90,7 @@ select
     , ssc.userid
     , ssc.sessionid
     , ssc.sessiontime
-    , null as eventtime
+    , ssc.eventtime
     , ssc.landingpage
     , ssc.domain
     , ssc.channels
