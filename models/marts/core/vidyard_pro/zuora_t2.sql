@@ -47,6 +47,7 @@ select
     , prp.effectivestartdate
     , prp.name as productrateplanname
     , prp.productid
+    , p.sku
     , prp.productrateplanid
     , prp.pvstatus
     , prp.updatedbyid as productrateplanupdatedby
