@@ -47,6 +47,9 @@ sources:
       - name: vidyard_nps_surveys
 
       - name: vidyard_chapters
+
+      - name: vidyard_referrals
+      
       
 
 models:
@@ -578,4 +581,29 @@ models:
         description: use to join to vidyard_videos table
 
       - name: createdDate
-        description: ''        
+        description: ''  
+
+ # Documentation for VIDYARD_CHAPTERS table from PUBLIC schema
+  - name: stg_vidyard_referrals
+    columns:
+
+      - name: referralID
+        description: unique identifier for this table
+        tests:
+          - unique
+          - not_null
+
+      - name: referrerID
+        description: use to join to vidyard_players table
+
+      - name: referreID
+        description: use to join to vidyard_videos table
+
+      - name: referralStatus
+        description: ''     
+
+      - name: incentive
+        description: ''  
+
+      - name: updatedAt
+        description: ''             
