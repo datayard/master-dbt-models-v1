@@ -38,11 +38,9 @@ SELECT
     sfdc_account.marketing_automation_platform__c as marketingAutomationPlatform,
     sfdc_account.abm_tier__c as abmTier,
     sfdc_account.online_video_platform__c as onlineVideoPlatform,
-    sfdc_account.non_contract__c as nonContract,
     sfdc_account.primary_use_case__c as primaryUseCase,
     sfdc_account.qa_status__c as qaStatus 
  FROM 
     {{ source('salesforce_production', 'account') }} as sfdc_account
 WHERE
-    sfdc_account.type LIKE 'Customer'
-    AND sfdc_account.ispersonaccount = false
+    TRUE

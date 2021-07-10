@@ -6,6 +6,7 @@ SELECT
     surveys.filled,
     surveys.cancelled,
     surveys.userScore,
+    surveys.surveytype,
     surveys.userComment,
     surveys.createdAt
 FROM 
@@ -18,4 +19,4 @@ on
     AND surveys.userScore IS NOT null
     AND surveys.filled = true
     AND surveys.cancelled = false
-    AND surveys.surveytype IS null
+    --AND surveys.surveytype IS null

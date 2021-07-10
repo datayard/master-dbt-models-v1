@@ -1,0 +1,112 @@
+version: 2
+
+sources:
+  - name: intercom
+    description: Intercom Production
+    
+    freshness:
+      warn_after:
+        period: hour
+        count: 24
+      error_after:
+        period: hour
+        count: 48
+
+    tables:
+
+      - name: company_history
+
+      - name: contact_company_history
+
+      - name: contact_history
+
+      - name: conversation_contact_history
+
+      - name: conversation_history
+  
+
+models:
+  # Documentation for Staging Intercom table
+  - name: stg_intercom_company
+    columns:
+
+      - name: companyId
+        description: Unique identifier id for Company in Intercom
+
+      - name: updatedAt
+        description: The last date the company was updated
+                
+      - name: createdAt
+        description: The date the Company record was created
+
+      - name: companyName
+        description: Name of the company
+
+      - name: sessionsCount
+        description: Total number of chat sessions this company has had from all its contacts
+
+      - name: userCount
+        description: Total number of Contacts in Intercom for this Account
+
+      - name: website
+        description: website of the company
+
+  - name: stg_intercom_contact_company
+    columns:
+
+      - name: companyID
+        description: ID of the company in Intercom
+
+      - name: contactID
+        desctiption: ID of the contact in Intercom
+
+      - name: contactUpdatedAt
+        description: Date in which the contact was added to the company
+
+  - name: stg_contact_history
+    columns:
+
+      - name:  contactId
+        description: Unique contact ID in Intercom for this contact
+
+      - name: updatedAt
+        description: The last Updated date for the contact in Intercom
+
+      - name: email
+        description: Known email of the contact
+
+      - name: createdAt
+        description: Date when the contact was first Created
+
+      - name: vyUserID
+        description: The Vidyard User ID for this contact
+
+      - name: lastSeenAt
+        description: The last chat session this user had
+
+  - name: stg_conversation_contact_history
+    columns:
+
+      - name: contactID
+        description: The contact ID that had this conversation
+
+      - name: conversationID
+        description: Conversation record ID
+
+      - name: coversationUpdatedAt
+        description: The time when the conversation was last updated
+    
+  - name: stg_conversation_history
+    columns:
+
+      - name: conversationId
+        description: Unique Identifier for the conversation record
+
+      - name: updatedAt
+        description: When the conversation was last updated
+
+      - name: createdAt
+        description: when the conversation was originally created
+
+      - name: sourceURL
+        description: The URL where the conversationw as originated
