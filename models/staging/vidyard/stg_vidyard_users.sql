@@ -5,6 +5,16 @@ SELECT
 	vidyard_users.updated_at as updatedDate,
 	vidyard_users.first_name as firstName,
 	vidyard_users.last_name as lastName
+    --check vidyard email
+	, case
+   		when email like '%vidyard.com' then 1
+   		else 0
+      end as vidyard_email
+    --check viewedit email
+    , case
+        when email like '%viewedit.com' then 1
+        else 0
+      end as viewedit_email
 	, case
             when split_part(vidyard_users.email, '@', 2) like '%gmail.com%'
                 or split_part(vidyard_users.email, '@', 2) like '%yahoo%'
@@ -168,6 +178,6 @@ SELECT
                 or split_part(vidyard_users.email, '@', 2) like '%.net'
             then 'education'
             else 'business'
-        end as business_domain
+        end as domain_type
  FROM 
 	{{ source('public', 'vidyard_users') }} as vidyard_users
