@@ -3,6 +3,6 @@ SELECT
     contact_company.contact_id as contactId,
     contact_company.contact_updated_at as contactUpdatedAt
 FROM
-    intercom.contact_company_history as contact_company
+    {{ source('intercom', 'contact_company_history') }} as contact_company
 WHERE
     true
