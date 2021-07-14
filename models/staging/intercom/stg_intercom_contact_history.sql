@@ -6,6 +6,6 @@ SELECT
     contact.custom_vyuser_id as vyUserID,
     contact.last_seen_at as lastSeenAt
 FROM
-    intercom.contact_history as contact
+    {{ source('intercom', 'contact_history') }} as contact
 WHERE
     true

@@ -3,6 +3,6 @@ SELECT
     conversation.updated_at as updatedAt,
     conversation.source_url as sourceURL
 FROM
-    intercom.conversation_history as conversation
+    {{ source('intercom', 'conversation_history') }} as conversation
 WHERE
     true

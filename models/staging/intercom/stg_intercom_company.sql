@@ -7,6 +7,6 @@ SELECT
     company_history.user_count as userCount,
     company_history.website as website
 FROM
-    intercom.company_history as company_history
+    {{ source('intercom', 'company_history') }} as company_history
 WHERE
     true
