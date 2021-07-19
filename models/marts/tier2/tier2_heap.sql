@@ -30,8 +30,8 @@ SELECT
         , gs.sessiontime AS column_for_distribution
         , 'global_session'  AS tracker
     FROM
-        dbt_vidyard_master.stg_govideo_production_global_session gs
-            JOIN dbt_vidyard_master.stg_govideo_production_users u
+        {{ ref('stg_govideo_production_global_session') }} gs
+            JOIN {{ ref('stg_govideo_production_users') }} u
                 ON gs.userid = u.userid AND u."identity" IS NOT NULL
     {% if is_incremental() %}
     -- this filter will only be applied on an incremental run
@@ -55,8 +55,8 @@ SELECT
         , oe.eventtime AS column_for_distribution
         , 'opened_extension' AS tracker
     FROM
-        dbt_vidyard_master.stg_govideo_production_opened_extension oe
-            JOIN dbt_vidyard_master.stg_govideo_production_users u
+        {{ ref('stg_govideo_production_opened_extension') }} oe
+            JOIN {{ ref('stg_govideo_production_users') }} u
                 ON oe.userid = u.userid AND u."identity" IS NOT NULL
     {% if is_incremental() %}
     -- this filter will only be applied on an incremental run
@@ -81,8 +81,8 @@ SELECT
             , pv.eventtime AS column_for_distribution
             , 'page_views' AS tracker
     FROM
-        dbt_vidyard_master.stg_govideo_production_pageviews pv
-            JOIN dbt_vidyard_master.stg_govideo_production_users u
+        {{ ref('stg_govideo_production_pageviews') }} pv
+            JOIN {{ ref('stg_govideo_production_users') }} u
                 ON pv.userid = u.userid AND u."identity" IS NOT NULL
     {% if is_incremental() %}
     -- this filter will only be applied on an incremental run
@@ -106,8 +106,8 @@ SELECT
         , ps.eventtime AS column_for_distribution
         , 'product_sessions' AS tracker
     FROM
-        dbt_vidyard_master.stg_govideo_production_product_sessions ps
-            JOIN dbt_vidyard_master.stg_govideo_production_users u
+        {{ ref('stg_govideo_production_product_sessions') }} ps
+            JOIN {{ ref('stg_govideo_production_users') }} u
                 ON ps.userid = u.userid AND u."identity" IS NOT NULL
     {% if is_incremental() %}
     -- this filter will only be applied on an incremental run
@@ -131,8 +131,8 @@ SELECT
         , ssc.eventtime AS column_for_distribution
         , 'sharing_share_combo' AS tracker
     FROM
-        dbt_vidyard_master.stg_govideo_production_sharing_share_combo ssc
-        JOIN dbt_vidyard_master.stg_govideo_production_users u
+        {{ ref('stg_govideo_production_sharing_share_combo') }} ssc
+        JOIN {{ ref('stg_govideo_production_users') }} u
             ON ssc.userid = u.userid AND u."identity" IS NOT NULL
     {% if is_incremental() %}
     -- this filter will only be applied on an incremental run
@@ -156,8 +156,8 @@ SELECT
         , vidcompv.eventtime AS column_for_distribution
         , 'vy_com_page_view' AS tracker
     FROM
-        dbt_vidyard_master.stg_govideo_production_vidyard_com_any_pageview vidcompv
-            JOIN dbt_vidyard_master.stg_govideo_production_users u
+        {{ ref('stg_govideo_production_vidyard_com_any_pageview') }} vidcompv
+            JOIN {{ ref('stg_govideo_production_users') }} u
                 ON vidcompv.userid = u.userid AND u."identity" IS NOT NULL
     {% if is_incremental() %}
     -- this filter will only be applied on an incremental run
@@ -180,8 +180,8 @@ SELECT
         , NULL AS derived_channel
         , vidcomss.sessiontime AS column_for_distribution
         , 'vy_com_sessions' AS tracker
-    FROM dbt_vidyard_master.stg_govideo_production_vidyard_com_sessions vidcomss
-        JOIN dbt_vidyard_master.stg_govideo_production_users u
+    FROM {{ ref('stg_govideo_production_vidyard_com_sessions') }} vidcomss
+        JOIN {{ ref('stg_govideo_production_users') }} u
             ON vidcomss.userid = u.userid AND u."identity" IS NOT NULL
     {% if is_incremental() %}
     -- this filter will only be applied on an incremental run
@@ -205,8 +205,8 @@ SELECT
         , pv.eventtime AS column_for_distribution
         , 'video_creation' AS tracker
     FROM
-        dbt_vidyard_master.stg_govideo_production_video_creation_started_to_create_or_upload_a_video_combo pv
-            JOIN dbt_vidyard_master.stg_govideo_production_users u
+        {{ ref('stg_govideo_production_video_creation_started_to_create_or_upload_a_video_combo') }} pv
+            JOIN {{ ref('stg_govideo_production_users') }} u
                 ON pv.userid = u.userid AND u."identity" IS NOT NULL
     {% if is_incremental() %}
     -- this filter will only be applied on an incremental run
@@ -230,11 +230,10 @@ SELECT
         , pv.eventtime AS column_for_distribution
         , 'video_upload' AS tracker
     FROM
-        dbt_vidyard_master.stg_govideo_production_video_recorded_or_uploaded pv
-            JOIN dbt_vidyard_master.stg_govideo_production_users u
+        {{ ref('stg_govideo_production_video_recorded_or_uploaded') }} pv
+            JOIN {{ ref('stg_govideo_production_users') }} u
                 ON pv.userid = u.userid AND u."identity" IS NOT NULL
     {% if is_incremental() %}
     -- this filter will only be applied on an incremental run
     WHERE pv.eventtime > (select max(pv.eventtime) from {{ this }})
     {% endif %}
-                    
