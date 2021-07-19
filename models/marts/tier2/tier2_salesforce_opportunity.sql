@@ -1,0 +1,38 @@
+SELECT opportunityId
+         , accountId
+         , ownerId
+         , opportunityName
+         , stageName
+         , closeDate
+         , opportunityType
+         , isClosed
+         , isWon
+         , campaignId
+         , createdDate
+         , enteredPipelineDate
+         , deadReason
+         , closedWonDate
+         , deadDate
+         , renewalDueDate
+         , multiYear1stDueDate
+         , multiYear2ndDueDate
+         , contactChampionId
+         , businessUnit
+         , opportunityAttribution
+         , newARR
+         , oneTimeCharge
+         , lastYearARR
+         , renewalAmount
+         , csmOwnerId
+         , contractStartDate
+         , contractEndDate
+         , previousContractStartDate
+         , previousContractEndDate
+         , churnReason
+         , competitor
+         , forecastCategory
+         , redOpportunity
+         , Assurance
+         , useCase
+    FROM 
+        {{ ref('stg_salesforce_opportunity') }}
