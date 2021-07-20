@@ -62,6 +62,7 @@ SELECT
         , vyent.createdbyclientid
         , uuid
         , origin
+        , derived_origin
         , status
         , issecure
         , milliseconds

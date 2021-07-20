@@ -9,6 +9,7 @@ SELECT entity
          , createdbyclientid
          , uuid
          , origin
+         , derived_origin
          , status
          , issecure
          , milliseconds
