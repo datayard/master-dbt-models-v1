@@ -35,7 +35,7 @@ SELECT
                 ON gs.userid = u.userid AND u."identity" IS NOT NULL
     {% if is_incremental() %}
     -- this filter will only be applied on an incremental run
-    WHERE gs.sessiontime > (select max(gs.sessiontime) from {{ this }})
+    WHERE gs.sessiontime > (select max(sessiontime) from {{ this }} where tracker = 'global_session' )
     {% endif %}
 
     UNION ALL
@@ -60,7 +60,7 @@ SELECT
                 ON oe.userid = u.userid AND u."identity" IS NOT NULL
     {% if is_incremental() %}
     -- this filter will only be applied on an incremental run
-    WHERE oe.eventtime > (select max(oe.eventtime) from {{ this }})
+    WHERE oe.eventtime > (select max(eventtime) from {{ this }} where tracker = 'opened_extension' )
     {% endif %}
 
 
@@ -86,7 +86,7 @@ SELECT
                 ON pv.userid = u.userid AND u."identity" IS NOT NULL
     {% if is_incremental() %}
     -- this filter will only be applied on an incremental run
-    WHERE pv.eventtime > (select max(pv.eventtime) from {{ this }})
+    WHERE pv.eventtime > (select max(eventtime) from {{ this }} where tracker = 'page_views' )
     {% endif %}
 
     UNION ALL
@@ -111,7 +111,7 @@ SELECT
                 ON ps.userid = u.userid AND u."identity" IS NOT NULL
     {% if is_incremental() %}
     -- this filter will only be applied on an incremental run
-    WHERE ps.eventtime > (select max(ps.eventtime) from {{ this }})
+    WHERE ps.eventtime > (select max(eventtime) from {{ this }} where tracker = 'product_sessions' )
     {% endif %}
 
     UNION ALL
@@ -136,7 +136,7 @@ SELECT
             ON ssc.userid = u.userid AND u."identity" IS NOT NULL
     {% if is_incremental() %}
     -- this filter will only be applied on an incremental run
-    WHERE ssc.eventtime > (select max(ssc.eventtime) from {{ this }})
+    WHERE ssc.eventtime > (select max(eventtime) from {{ this }} where tracker = 'sharing_share_combo' )
     {% endif %}
 
     UNION ALL
@@ -161,7 +161,7 @@ SELECT
                 ON vidcompv.userid = u.userid AND u."identity" IS NOT NULL
     {% if is_incremental() %}
     -- this filter will only be applied on an incremental run
-    WHERE vidcompv.eventtime > (select max(vidcompv.eventtime) from {{ this }})
+    WHERE vidcompv.eventtime > (select max(eventtime) from {{ this }} where tracker = 'vy_com_page_view' )
     {% endif %}
 
     UNION ALL
@@ -185,7 +185,7 @@ SELECT
             ON vidcomss.userid = u.userid AND u."identity" IS NOT NULL
     {% if is_incremental() %}
     -- this filter will only be applied on an incremental run
-    WHERE vidcomss.sessiontime > (select max(vidcomss.sessiontime) from {{ this }})
+    WHERE vidcomss.sessiontime > (select max(sessiontime) from {{ this }} where tracker = 'vy_com_sessions' )
     {% endif %}
 
     UNION ALL
@@ -210,7 +210,7 @@ SELECT
                 ON pv.userid = u.userid AND u."identity" IS NOT NULL
     {% if is_incremental() %}
     -- this filter will only be applied on an incremental run
-    WHERE pv.eventtime > (select max(pv.eventtime) from {{ this }})
+    WHERE pv.eventtime > (select max(eventtime) from {{ this }} where tracker = 'video_creation' )
     {% endif %}
 
     UNION ALL
@@ -235,5 +235,5 @@ SELECT
                 ON pv.userid = u.userid AND u."identity" IS NOT NULL
     {% if is_incremental() %}
     -- this filter will only be applied on an incremental run
-    WHERE pv.eventtime > (select max(pv.eventtime) from {{ this }})
+    WHERE pv.eventtime > (select max(eventtime) from {{ this }} where tracker = 'video_upload' )
     {% endif %}
