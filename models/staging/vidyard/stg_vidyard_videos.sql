@@ -6,6 +6,17 @@ SELECT
 	, vidyard_videos.is_secure as isSecure
 	, vidyard_videos.status as status
 	, vidyard_videos.created_by_client_id as createdByClientID
+	, case
+			when v.created_by_client_id = 'auth.viewedit.com' or v.created_by_client_id = 'edge-extension.vidyard.com'
+				then 'extension'
+			when v.created_by_client_id = 'secure.vidyard.com' 
+				then 'dashboard'
+			when v.created_by_client_id = 'govideo-mobile.vidyard.com' or v.created_by_client_id = 'android.vidyard.com'
+				then 'mobile'
+			when v.created_by_client_id = 'desktop-mac.vidyard.com' or v.created_by_client_id = 'desktop-windows.vidyard.com'
+			then 'Desktop'
+			else 'partner-app'
+		end as source
 	, vidyard_videos.created_at as createdAt
 	, vidyard_videos.origin as origin
 	, case

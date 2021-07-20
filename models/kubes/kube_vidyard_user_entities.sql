@@ -63,6 +63,7 @@ SELECT
         , uuid
         , origin
         , derived_origin
+        , source
         , status
         , issecure
         , milliseconds
