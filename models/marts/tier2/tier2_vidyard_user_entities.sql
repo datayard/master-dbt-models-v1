@@ -22,6 +22,8 @@ SELECT
     , NULL AS filled                                --COL18
     , NULL AS allowcontact                          --COL19
     , NULL AS cancelled                             --COL20
+
+	, NULL AS derived_origin                        --COL21
 FROM
 	{{ ref('tier2_vidyard_users') }} vut2
   	JOIN {{ ref('stg_vidyard_players') }} p
@@ -53,6 +55,8 @@ SELECT
     , NULL AS filled                               --COL18
     , NULL AS allowcontact                         --COL19
     , NULL AS cancelled                            --COL20
+
+	, v.derived_origin                        	   --COL21
 FROM
 	{{ ref('tier2_vidyard_users') }} vut2
   	JOIN {{ ref('stg_vidyard_players') }} p
@@ -88,6 +92,8 @@ SELECT
     , NULL AS filled                               --COL18
     , NULL AS allowcontact                         --COL19
     , NULL AS cancelled                            --COL20
+
+	, NULL AS derived_origin                       --COL21
 FROM
 	{{ ref('tier2_vidyard_users') }} vut2
   	JOIN {{ ref('stg_vidyard_user_groups') }} ug
@@ -119,6 +125,8 @@ SELECT
     , NULL AS filled                               --COL18
     , NULL AS allowcontact                         --COL19
     , NULL AS cancelled                            --COL20
+
+	, NULL AS derived_origin                       --COL21
 FROM
 	{{ ref('tier2_vidyard_users') }} vut2
   	JOIN {{ ref('stg_vidyard_team_memberships') }} tm
@@ -152,6 +160,8 @@ SELECT
     , filled                                       --COL18
     , allowcontact                                 --COL19
     , cancelled                                    --COL20
+
+	, NULL AS derived_origin                       --COL21
 FROM
 	{{ ref('tier2_vidyard_users') }} vut2
     JOIN {{ ref('stg_vidyard_nps_surveys') }} svy
