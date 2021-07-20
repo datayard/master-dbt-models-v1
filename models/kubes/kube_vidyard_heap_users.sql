@@ -12,7 +12,7 @@ SELECT
         , org_accountid
         , orgtype
         , parentid
-        , name
+        , org_name
         , org_createddate
         , org_updateddate
         , org_createdbyclientid
