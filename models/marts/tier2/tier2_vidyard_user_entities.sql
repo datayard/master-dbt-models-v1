@@ -24,6 +24,7 @@ SELECT
     , NULL AS cancelled                             --COL20
 
 	, NULL AS derived_origin                        --COL21
+	, NULL AS source		                        --COL22
 FROM
 	{{ ref('tier2_vidyard_users') }} vut2
   	JOIN {{ ref('stg_vidyard_players') }} p
@@ -57,6 +58,7 @@ SELECT
     , NULL AS cancelled                            --COL20
 
 	, v.derived_origin                        	   --COL21
+	, v.source		                               --COL22
 FROM
 	{{ ref('tier2_vidyard_users') }} vut2
   	JOIN {{ ref('stg_vidyard_players') }} p
@@ -94,6 +96,7 @@ SELECT
     , NULL AS cancelled                            --COL20
 
 	, NULL AS derived_origin                       --COL21
+	, NULL AS source		                       --COL22
 FROM
 	{{ ref('tier2_vidyard_users') }} vut2
   	JOIN {{ ref('stg_vidyard_user_groups') }} ug
@@ -127,6 +130,7 @@ SELECT
     , NULL AS cancelled                            --COL20
 
 	, NULL AS derived_origin                       --COL21
+	, NULL AS source		                       --COL22
 FROM
 	{{ ref('tier2_vidyard_users') }} vut2
   	JOIN {{ ref('stg_vidyard_team_memberships') }} tm
@@ -162,6 +166,7 @@ SELECT
     , cancelled                                    --COL20
 
 	, NULL AS derived_origin                       --COL21
+	, NULL AS source		                       --COL22
 FROM
 	{{ ref('tier2_vidyard_users') }} vut2
     JOIN {{ ref('stg_vidyard_nps_surveys') }} svy
