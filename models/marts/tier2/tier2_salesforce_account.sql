@@ -39,5 +39,6 @@ SELECT accountId
          , onlineVideoPlatform
          , primaryUseCase
          , qaStatus
+         , arr
     FROM 
         {{ ref('stg_salesforce_account') }}

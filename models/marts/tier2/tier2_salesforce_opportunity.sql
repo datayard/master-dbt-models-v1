@@ -26,6 +26,7 @@ SELECT opportunityId
          , renewalAmount
          , renewalwonarr
          , renewallostarr
+         , reoccurringmrr
          , csmOwnerId
          , contractStartDate
          , contractEndDate

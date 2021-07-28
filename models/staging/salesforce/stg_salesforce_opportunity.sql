@@ -27,6 +27,7 @@ SELECT
         op.renewal_amount__c as renewalAmount,
         op.renewal_won_arr__c as renewalWonARR,
         op.renewal_lost_arr__c as renewalLostARR,
+        op.reoccurring_mrr__c as reoccurringMRR,
         op.csm_owner__c as csmOwnerId,
         op.contract_start_date__c as contractStartDate,
         op.contract_end_date__c as contractEndDate,

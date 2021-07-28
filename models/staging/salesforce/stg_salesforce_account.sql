@@ -39,7 +39,8 @@ SELECT
     sfdc_account.abm_tier__c as abmTier,
     sfdc_account.online_video_platform__c as onlineVideoPlatform,
     sfdc_account.primary_use_case__c as primaryUseCase,
-    sfdc_account.qa_status__c as qaStatus 
+    sfdc_account.qa_status__c as qaStatus,
+    sfdc_account.arr__c as arr
  FROM 
     {{ source('salesforce_production', 'account') }} as sfdc_account
 WHERE
