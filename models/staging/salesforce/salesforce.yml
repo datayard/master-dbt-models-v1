@@ -25,6 +25,8 @@ sources:
       - name: lead
 
       - name: campaignmember
+
+      - name: user
       
 
 models:
@@ -626,3 +628,16 @@ models:
 
       - name: currentStatusReason
         description: reason for a campaign members status
+
+  # Documentation for Staging Users table
+  - name: stg_salesforce_user
+    columns:
+      - name: Id
+        description: id of the user
+        tests:
+          - unique
+          - not_null
+      
+      - name: full_name__c
+        description: User full name
+
