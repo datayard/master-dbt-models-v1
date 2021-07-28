@@ -19,10 +19,13 @@ SELECT opportunityId
          , contactChampionId
          , businessUnit
          , opportunityAttribution
+         , newacv
          , newARR
          , oneTimeCharge
          , lastYearARR
          , renewalAmount
+         , renewalwonarr
+         , renewallostarr
          , csmOwnerId
          , contractStartDate
          , contractEndDate
