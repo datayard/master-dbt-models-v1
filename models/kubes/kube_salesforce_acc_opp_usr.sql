@@ -1,34 +1,34 @@
 SELECT 
     -- ACCOUNT FIELDS
-    accountid
-    , csmownerid
-    , vidyarduserid
-    , createddate
-    , dateofchurn
-    , accountname
-    , ispersonaccount
-    , accounttype
-    , customertier
-    , churnreason
-    , churnreasondetails
+    a.accountid
+    , a.csmownerid
+    , a.vidyarduserid
+    , a.createddate
+    , a.dateofchurn
+    , a.accountname
+    , a.ispersonaccount
+    , a.accounttype
+    , a.customertier
+    , a.churnreason
+    , a.churnreasondetails
 
     --OPPORTUNITY FIELDS
-    , opportunityid
-    , stagename
-    , opportunitytype
-    , campaignid
-    , newarr
-    , newacv
-    , oneTimeCharge
-    , lastYearARR
-    , renewalAmount
-    , renewalwonarr
-    , renewallostarr
-    , reoccurringmrr
+    , o.opportunityid
+    , o.stagename
+    , o.opportunitytype
+    , o.campaignid
+    , o.newarr
+    , o.newacv
+    , o.oneTimeCharge
+    , o.lastYearARR
+    , o.renewalAmount
+    , o.renewalwonarr
+    , o.renewallostarr
+    , o.reoccurringmrr
 
     -- USER FIELDS
-    , userid
-    , fullname
+    , u.userid
+    , u.fullname
 FROM 
     {{ ref('tier2_salesforce_account') }} as a
     JOIN {{ ref('tier2_salesforce_opportunity') }} as o ON o.accountid = a.accountid
