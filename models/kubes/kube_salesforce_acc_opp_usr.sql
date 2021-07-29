@@ -26,6 +26,9 @@ SELECT
     , o.renewallostarr
     , o.reoccurringmrr
     , o.renewalduedate
+    , o.closedate
+    , o.iswon
+    , o.businessunit
 
     -- USER FIELDS
     , u.userid
