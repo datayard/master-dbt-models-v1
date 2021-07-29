@@ -11,6 +11,7 @@ SELECT
     , a.customertier
     , a.churnreason
     , a.churnreasondetails
+    , a.arr
 
     --OPPORTUNITY FIELDS
     , o.opportunityid
