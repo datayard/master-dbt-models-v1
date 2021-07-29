@@ -25,6 +25,7 @@ SELECT
     , o.renewalwonarr
     , o.renewallostarr
     , o.reoccurringmrr
+    , o.renewalduedate
 
     -- USER FIELDS
     , u.userid
