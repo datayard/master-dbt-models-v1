@@ -2,8 +2,8 @@ SELECT
     --USER
     vut2.userid
     , email
-    , vidyard_email
-    , viewedit_email
+    , email_to_exclude
+    , vut2.domain
     , domain_type
 
     --ORGANIZATION
