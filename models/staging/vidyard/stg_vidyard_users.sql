@@ -5,16 +5,13 @@ SELECT
 	vidyard_users.updated_at as updatedDate,
 	vidyard_users.first_name as firstName,
 	vidyard_users.last_name as lastName
-    --check vidyard email
+    --email to exclude - flag
 	, case
    		when email like '%vidyard.com' then 1
-   		else 0
-      end as vidyard_email
-    --check viewedit email
-    , case
         when email like '%viewedit.com' then 1
-        else 0
-      end as viewedit_email
+   		else 0
+      end as email_to_exclude
+    , split_part(vidyard_users.email, '@', 2) as domain
 	, case
             when split_part(vidyard_users.email, '@', 2) like '%gmail.com%'
                 or split_part(vidyard_users.email, '@', 2) like '%yahoo%'

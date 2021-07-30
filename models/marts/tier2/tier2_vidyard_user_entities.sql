@@ -41,8 +41,8 @@ SELECT
     , vut2.organizationid                          --COL03
   	, p.playerid AS entityid                       --COL04
   	, v.videoid AS childentityid                   --COL05
-  	, v.createdat AS createddate                   --COL06
-  	, v.updatedat AS updateddate                   --COL07
+  	, v.createddate AS createddate                   --COL06
+  	, v.updateddate AS updateddate                   --COL07
   	, v.videotype AS type                          --COL08
   	, v.createdbyclientid                          --COL09
     , NULL AS uuid                                 --COL10
@@ -113,8 +113,8 @@ SELECT
     , vut2.organizationid                          --COL03
   	, t.teamid AS entityid                         --COL04
   	, tm.teammembershipid AS childentityid         --COL05
-  	, tm.createdat as createddate                  --COL06
-  	, tm.updatedat as updateddate                  --COL07
+  	, tm.createddate as createddate                  --COL06
+  	, tm.updateddate as updateddate                  --COL07
   	, NULL AS type                                 --COL08
   	, NULL AS createdbyclientid                    --COL09
   	, NULL AS uuid                                 --COL10
@@ -149,8 +149,8 @@ SELECT
     , vut2.organizationid                          --COL03
   	, svy.npssurveyid AS entityid                  --COL04
   	, NULL AS childentityid                        --COL05
-  	, svy.createdat as createddate                 --COL06
-  	, svy.updatedat as updateddate                 --COL07
+  	, svy.createddate as createddate                 --COL06
+  	, svy.updateddate as updateddate                 --COL07
   	, svy.surveytype AS type                       --COL08
   	, NULL AS createdbyclientid                    --COL09
   	, NULL AS uuid                                 --COL10
