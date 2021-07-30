@@ -8,7 +8,7 @@ SELECT
 	vidyard_organizations.created_at as createdDate,
 	vidyard_organizations.updated_at as updatedDate,
 	vidyard_organizations.owner_id as ownerId,
-	vidyard_organizations.locked_at as lockedAt,
+	vidyard_organizations.locked_at as lockedDate,
 	vidyard_organizations.account_id as accountId,
 	vidyard_organizations.paying as paying
 	, case

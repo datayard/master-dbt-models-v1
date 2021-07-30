@@ -23,8 +23,8 @@ WITH user_groups AS (
 SELECT
     u.userid
     , u.email
-    , u.vidyard_email
-    , u.viewedit_email
+    , u.email_to_exclude
+    , u.domain
     , u.domain_type
     , o.organizationid
     , o.ownerid

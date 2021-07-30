@@ -17,7 +17,7 @@ SELECT
 			then 'Desktop'
 			else 'partner-app'
 		end as source
-	, vidyard_videos.created_at as createdAt
+	, vidyard_videos.created_at as createdDate
 	, vidyard_videos.origin as origin
 	, case
     	when vidyard_videos.origin like '%chrome_extension%' then 'extension'
@@ -25,11 +25,12 @@ SELECT
     	when vidyard_videos.origin like '%blockbuster%' then 'partner_app'
     	when vidyard_videos.origin like '%mobile%' then 'mobile'
     	when vidyard_videos.origin like '%dashboard%' then 'dashboard'
+		when vidyard_videos.origin like '%sample%' then 'borrowed or sample video'
     	--when vidyard_videos.origin is null then 'unknown'
 		else 'unknown'
   	   end as derived_origin
 	, vidyard_videos.milliseconds as milliseconds
-	, vidyard_videos.updated_at as updatedAt
+	, vidyard_videos.updated_at as updatedDate
 	, vidyard_videos.video_type as videoType
  FROM 
 	{{ source('public', 'vidyard_videos') }} as vidyard_videos
