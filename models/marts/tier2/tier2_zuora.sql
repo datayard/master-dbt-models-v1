@@ -10,7 +10,7 @@ SELECT a.accountid
                 WHEN (s.status LIKE 'Cancelled' AND s.termenddate >= getdate()) THEN 'Active - Others'
                 WHEN (s.status LIKE 'Cancelled' AND s.termenddate < getdate()) THEN 'Cancelled - Others'
                 ELSE '--Not yet classified--'
-           END AS user_type
+           END AS subscription_type
          , a.accountname
          , a.accountnumber
          , a.accountstatus
