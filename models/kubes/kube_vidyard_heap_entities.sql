@@ -1,22 +1,21 @@
 SELECT 
      --USER
-     kbvzu.userid
+     vut2.userid
     , email
     , email_to_exclude
-    , kbvzu.domain
+    , vut2.domain
     , domain_type
 
      --ORGANIZATION
-     , kbvzu.organizationid
+     , vut2.organizationid
      , ownerid
-     , org_accountid
+     , vut2.accountid as org_accountid
      , orgtype
      , parentid
      , org_name
-     , org_createddate
-     , org_updateddate
-     , org_createdbyclientid
-     , paying
+     , vut2.createddate as org_createddate
+     , vut2.updateddate as org_updateddate
+     , vut2.createdbyclientid as org_createdbyclientid
      , signup_source
 
      --ORG_METRICS
@@ -35,10 +34,10 @@ SELECT
      , has_personal_account
      , linked_to_parent_account
      , user_type
-     , account_type --PARAMETER COMPUTED FROM ZUORA INFO
+     --, account_type --PARAMETER COMPUTED FROM ZUORA INFO
 
      --ZUORA
-     , subscriptionid
+   /*, subscriptionid
      , subscriptionstartdate
      , subscriptionenddate
      , zuoraaccountid
@@ -49,15 +48,16 @@ SELECT
      , net_mrr
      , subscriptionstatus
      , soldtocontactid
-
+   */
+     
      --Entity
      , entity
      , entityid
      , childentityid
-     , createddate
-     , updateddate
-     , type
-     , createdbyclientid
+     , vyent.createddate
+     , vyent.updateddate
+     , type as entitytype
+     , vyent.createdbyclientid as entity_createdbyclientid
      , uuid
      , origin
      , derived_origin
@@ -72,7 +72,6 @@ SELECT
      , allowcontact
      , cancelled
      , eventid
-     , vid_userid
      , ht2.userid AS heapuserid
      , sessionid
      , sessiontime
@@ -82,10 +81,12 @@ SELECT
      , channels
      , path
      , derived_channel
-     , column_for_distribution
      , tracker
      
-FROM {{ ref('kube_vidyard_user_entities') }} kbvzu
-          JOIN {{ ref('tier2_heap') }} ht2
-               ON   ht2.vy_userid = kbvzu.userid
-                    AND ht2.is_vy_userid_integer = 1
+FROM --{{ ref('kube_vidyard_user_entities') }} kbvzu
+     {{ ref('tier2_vidyard_users') }} vut2
+     JOIN {{ ref('tier2_vidyard_user_entities') }} vyent
+          ON vyent.userid = vut2.userid AND vyent.organizationid = vut2.organizationid
+     JOIN {{ ref('tier2_heap') }} ht2
+          ON  ht2.vy_userid = vut2.userid
+              AND ht2.is_vy_userid_integer = 1
