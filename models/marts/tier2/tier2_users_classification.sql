@@ -5,7 +5,7 @@ with user_groups_teams as (
          FROM dbt_vidyard_master.stg_vidyard_users u
                   JOIN dbt_vidyard_master.stg_vidyard_user_groups ug
                        ON ug.userid = u.userid AND ug.inviteaccepted = TRUE
-         WHERE u.userid = 130902
+         --WHERE u.userid = 130902
      )
         , user_teams as (
          SELECT DISTINCT u.userid
@@ -16,7 +16,7 @@ with user_groups_teams as (
                        ON tm.userid = u.userid
                   JOIN dbt_vidyard_master.stg_vidyard_teams t
                        ON tm.teamid = t.teamid
-         WHERE u.userid = 130902
+         --WHERE u.userid = 130902
      )
      SELECT ug.userid
           , ug.organizationid
