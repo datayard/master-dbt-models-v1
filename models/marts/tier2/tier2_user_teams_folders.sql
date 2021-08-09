@@ -22,6 +22,10 @@ SELECT
 FROM dbt_vidyard_master.stg_vidyard_users u
         LEFT JOIN dbt_vidyard_master.stg_vidyard_organizations o
                 ON o.ownerid = u.userid
+WHERE
+    ((o.orgtype = 'self_serve' and o.organizationid = o.accountid)
+    OR (o.orgtype IS NULL and o.organizationid != o.accountid)
+    OR (o.orgtype = 'self_serve' and o.organizationid != o.accountid))
 
 UNION ALL
 
