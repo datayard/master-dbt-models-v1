@@ -118,7 +118,7 @@ SELECT
   	, tm.teammembershipid AS childentityid         --COL05
   	, tm.createddate as createddate                  --COL06
   	, tm.updateddate as updateddate                  --COL07
-  	, NULL AS type                                 --COL08
+  	, vut2.orgtype AS type                         --COL08
   	, NULL AS createdbyclientid                    --COL09
   	, NULL AS uuid                                 --COL10
   	, NULL AS origin                               --COL11
@@ -140,7 +140,7 @@ FROM
   	JOIN {{ ref('stg_vidyard_team_memberships') }} tm
   		ON tm.userid = vut2.userid
   	JOIN {{ ref('stg_vidyard_teams') }} t
-  		ON t.teamid = tm.teamid and t.accountid = vut2.accountid
+  		ON t.teamid = tm.teamid and t.accountid = vut2.accountid and vut2.orgtype is null
 
 UNION ALL
 
