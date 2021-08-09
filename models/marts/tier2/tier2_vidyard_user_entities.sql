@@ -25,6 +25,7 @@ SELECT
 
 	, NULL AS derived_origin                        --COL21
 	, NULL AS source		                        --COL22
+	, NULL AS isadmin								--COL23
 FROM
 	{{ ref('tier2_vidyard_users') }} vut2
   	JOIN {{ ref('stg_vidyard_players') }} p
@@ -59,6 +60,7 @@ SELECT
 
 	, v.derived_origin                        	   --COL21
 	, v.source		                               --COL22
+	, NULL AS isadmin								--COL23
 FROM
 	{{ ref('tier2_vidyard_users') }} vut2
   	JOIN {{ ref('stg_vidyard_players') }} p
@@ -97,6 +99,7 @@ SELECT
 
 	, NULL AS derived_origin                       --COL21
 	, NULL AS source		                       --COL22
+	, NULL AS isadmin								--COL23
 FROM
 	{{ ref('tier2_vidyard_users') }} vut2
   	JOIN {{ ref('stg_vidyard_user_groups') }} ug
@@ -110,7 +113,7 @@ UNION ALL
 SELECT
   	'team' AS entity                               --COL01
 	, vut2.userid                                  --COL02
-    , vut2.organizationid                          --COL03
+    , t.accountid AS organizationid                --COL03
   	, t.teamid AS entityid                         --COL04
   	, tm.teammembershipid AS childentityid         --COL05
   	, tm.createddate as createddate                  --COL06
@@ -131,6 +134,7 @@ SELECT
 
 	, NULL AS derived_origin                       --COL21
 	, NULL AS source		                       --COL22
+	, t.isadmin		        					   --COL23
 FROM
 	{{ ref('tier2_vidyard_users') }} vut2
   	JOIN {{ ref('stg_vidyard_team_memberships') }} tm
@@ -167,6 +171,7 @@ SELECT
 
 	, NULL AS derived_origin                       --COL21
 	, NULL AS source		                       --COL22
+	, NULL AS isadmin							   --COL23
 FROM
 	{{ ref('tier2_vidyard_users') }} vut2
     JOIN {{ ref('stg_vidyard_nps_surveys') }} svy
