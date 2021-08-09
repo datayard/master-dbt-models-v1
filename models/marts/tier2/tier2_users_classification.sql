@@ -23,9 +23,19 @@ with personal_account_type
     )
 SELECT
     utft2.*
-
-    --CASE WHEN users IN (SELECT * from tm) AND tm.account id = parentid is "personal enterprise" THEN 'Enterprise'
     , CASE
+
+        --CASE WHEN userId IN (SELECT user_id from tm join t) AND t.isadmin = true then 'admin' -- Case for admins
+        WHEN vuet2.entityid IS NOT NULL
+                AND vuet2.isadmin = true
+            THEN 'admin'
+
+        --CASE WHEN userId IN (SELECT user_id, from tm join t) AND t.isadmin = false then 'user' -- case for users (NOTE USERS CAN ONLY BE IN 1 GROUP AT THE TIME SO NO DUPES EXPECTED)
+        WHEN vuet2.entityid IS NOT NULL
+                AND vuet2.isadmin = false
+            THEN 'user'
+
+        --CASE WHEN users IN (SELECT * from tm) AND tm.account id = parentid is "personal enterprise" THEN 'Enterprise'
         WHEN vuet2.entityid IS NOT NULL
                 AND vuet2.organizationid = utft2.parentid
                     AND utft2.folder_type = 'personal enterprise'
