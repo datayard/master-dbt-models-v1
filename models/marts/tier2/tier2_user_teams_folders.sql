@@ -25,7 +25,8 @@ FROM dbt_vidyard_master.stg_vidyard_users u
 WHERE
     ((o.orgtype = 'self_serve' and o.organizationid = o.accountid)
     OR (o.orgtype IS NULL and o.organizationid != o.accountid)
-    OR (o.orgtype = 'self_serve' and o.organizationid != o.accountid))
+    OR (o.orgtype = 'self_serve' and o.organizationid != o.accountid)
+    OR (o.orgtype IS NULL and o.organizationid IS NULL))
 
 UNION ALL
 
