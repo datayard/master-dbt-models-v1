@@ -7,13 +7,13 @@ with personal_account_type
                 WHEN zt2.subscriptionid IS NULL AND folder_type = 'personal enterprise' THEN 'enterprise'
 
                 --CASE WHEN organizationid IN (SELECT * from active_subscriptions) AND folder_type is "personal enterprise" THEN 'Enterprise Self-Serve'
-                WHEN zt2.subscriptionid IS NOT NULL AND folder_type = 'personal enterprise' THEN 'enterprise self_serve'
+                WHEN zt2.subscriptionid IS NOT NULL AND zt2.subscription_type LIKE 'Active - Self Serve Enterprise' AND folder_type = 'personal enterprise' THEN 'enterprise self_serve'
 
                 --CASE WHEN organizationid NOT IN (SELECT * from active_subscriptions) AND folder_type LIKE "personal" THEN 'Free'
                 WHEN zt2.subscriptionid IS NULL AND folder_type = 'personal' THEN 'free'
 
                 --CASE WHEN organizationid NOT IN (SELECT * from active_subscriptions) AND folder_type LIKE "personal" THEN 'Free'
-                WHEN zt2.subscriptionid IS NOT NULL AND folder_type = 'personal' THEN 'pro'
+                WHEN zt2.subscriptionid IS NOT NULL AND zt2.subscription_type LIKE 'Active - Pro' AND folder_type = 'personal' THEN 'pro'
 
               END AS personal_account_type
 
