@@ -1,23 +1,27 @@
 with personal_account_type
     as (
-        SELECT utft2.*
-             , CASE
-            --CASE WHEN organizationid NOT IN (SELECT * from active_subscriptions) AND folder_type is "personal enterprise" THEN 'Enterprise'
-                   WHEN zt2.subscriptionid IS NULL AND folder_type = 'personal enterprise' THEN 'enterprise'
+        SELECT 
+            utft2.*
+            , CASE
+                --CASE WHEN organizationid NOT IN (SELECT * from active_subscriptions) AND folder_type is "personal enterprise" THEN 'Enterprise'
+                WHEN zt2.subscriptionid IS NULL AND folder_type = 'personal enterprise' THEN 'enterprise'
 
-            --CASE WHEN organizationid IN (SELECT * from active_subscriptions) AND folder_type is "personal enterprise" THEN 'Enterprise Self-Serve'
-                   WHEN zt2.subscriptionid IS NOT NULL AND folder_type = 'personal enterprise'
-                       THEN 'enterprise self_serve'
+                --CASE WHEN organizationid IN (SELECT * from active_subscriptions) AND folder_type is "personal enterprise" THEN 'Enterprise Self-Serve'
+                WHEN zt2.subscriptionid IS NOT NULL AND folder_type = 'personal enterprise' THEN 'enterprise self_serve'
 
-            --CASE WHEN organizationid NOT IN (SELECT * from active_subscriptions) AND folder_type LIKE "personal" THEN 'Free'
-                   WHEN zt2.subscriptionid IS NULL AND folder_type = 'personal' THEN 'free'
+                --CASE WHEN organizationid NOT IN (SELECT * from active_subscriptions) AND folder_type LIKE "personal" THEN 'Free'
+                WHEN zt2.subscriptionid IS NULL AND folder_type = 'personal' THEN 'free'
 
-            --CASE WHEN organizationid NOT IN (SELECT * from active_subscriptions) AND folder_type LIKE "personal" THEN 'Free'
-                   WHEN zt2.subscriptionid IS NULL AND folder_type = 'personal' THEN 'free'
-            END AS personal_account_type
-        FROM dbt_vidyard_master.tier2_user_teams_folders as utft2
-                 LEFT JOIN dbt_vidyard_master.tier2_zuora zt2
-                           ON zt2.vidyardid = utft2.organizationid
+                --CASE WHEN organizationid NOT IN (SELECT * from active_subscriptions) AND folder_type LIKE "personal" THEN 'Free'
+                WHEN zt2.subscriptionid IS NOT NULL AND folder_type = 'personal' THEN 'pro'
+
+              END AS personal_account_type
+
+        FROM 
+            dbt_vidyard_master.tier2_user_teams_folders as utft2
+            LEFT JOIN dbt_vidyard_master.tier2_zuora zt2
+                ON zt2.vidyardid = utft2.organizationid
+
         WHERE utft2.orgtype LIKE 'self_serve'
           --AND utft2.accountid = 12449
     )
@@ -36,10 +40,11 @@ SELECT
             THEN 'user'
 
         --CASE WHEN users IN (SELECT * from tm) AND tm.account id = parentid is "personal enterprise" THEN 'Enterprise'
-        WHEN vuet2.entityid IS NOT NULL
+        /*WHEN vuet2.entityid IS NOT NULL
                 AND vuet2.organizationid = utft2.parentid
                     AND utft2.folder_type = 'personal enterprise'
             THEN 'enterprise'
+        */
       END AS enterprise_access
 
     , CASE
@@ -92,6 +97,7 @@ FROM
                AND vuet2.userid = utft2.userid
                AND vuet2.organizationid = utft2.accountid
                AND vuet2.inviteaccepted = true
+
 WHERE
     utft2.orgtype LIKE 'self_serve'
     --AND utft2.accountid = 12449
