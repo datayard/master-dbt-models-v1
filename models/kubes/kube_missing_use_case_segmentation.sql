@@ -59,61 +59,65 @@ with
             and domain_type = 'business'
             and activated_flag = 1
          ),
-     extension_usage as (
+     product_usage as (
          select
               mu.organizationid
-              , count(distinct oe.session_id) as oe_frequency
-              , datediff('day', max(oe.session_time), current_date) as oe_recency
+              , count(distinct oe.session_id) as frequency
+              , datediff('day', max(oe.session_time), current_date) as recency
+              , 'opened_extension' as event
          from missing_usecase mu
          join govideo_production.opened_extension oe
             on mu.heap_userid = oe.user_id
          where
-            oe.time >= '2021-01-01'
+            oe.time >= (DATEADD(year, -1, GETDATE()))
          group by 1
-     ),
-     partner_app_usage as (
-         select
+         UNION
+          select
               mu.organizationid
-              , count(distinct pa.session_id) as pa_frequency
-              , datediff('day', max(pa.session_time), current_date) as pa_recency
+              , count(distinct pa.session_id) as frequency
+              , datediff('day', max(pa.session_time), current_date) as recency
+              , 'partner_app' as event
          from missing_usecase mu
          join govideo_production.partner_app_viewed pa
             on mu.heap_userid = pa.user_id
          where
-            pa.time >= '2021-01-01'
+            pa.time >= (DATEADD(year, -1, GETDATE()))
          group by 1
-     ),
-     dashboard_usage as (
+         UNION
           select
               mu.organizationid
-              , count(distinct l.session_id) as lb_frequency
-              , datediff('day', max(l.session_time), current_date) as lb_recency
+              , count(distinct l.session_id) as frequency
+              , datediff('day', max(l.session_time), current_date) as recency
+              , 'library' as event
          from missing_usecase mu
          join govideo_production.library_opened_library l
             on mu.heap_userid = l.user_id
-         where l.time >= '2021-01-01'
+         where l.time >= (DATEADD(year, -1, GETDATE()))
+         group by 1
+     ),
+     pivoted as (
+         select
+            organizationid
+            , sum(case when event = 'opened_extension' and frequency is not null then frequency else CAST(NULL AS bigint) end) as oe_frequency
+            , sum(case when event = 'opened_extension' and recency is not null then recency else CAST(NULL AS bigint) end) as oe_recency
+            , sum(case when event = 'partner_app' and frequency is not null then frequency else CAST(NULL AS bigint) end) as pa_frequency
+            , sum(case when event = 'partner_app' and recency is not null then recency else CAST(NULL AS bigint) end) as pa_recency
+            , sum(case when event = 'library' and frequency is not null then frequency else CAST(NULL AS bigint) end) as lb_frequency
+            , sum(case when event = 'library' and recency is not null then recency else CAST(NULL AS bigint) end) as lb_recency
+         from product_usage
          group by 1
      )
-select distinct
-    mu.organizationid
-    , mu.email
-    , mu.createddate
-    , mu.user_age_months
-    , mu.activated_date
-    , oe.oe_frequency
-    , oe.oe_recency
-    , pa.pa_frequency
-    , pa.pa_recency
-    , db.lb_frequency
-    , db.lb_recency
-from
-missing_usecase mu
-left join extension_usage oe
-    on mu.organizationid = oe.organizationid
-left join partner_app_usage pa
-    on mu.organizationid = pa.organizationid
-left join dashboard_usage db
-    on mu.organizationid = pa.organizationid
-
-
-
+         select distinct
+            mu.organizationid
+            , mu.createddate
+            , mu.user_age_months
+            , mu.activated_date
+            , pv.oe_frequency
+            , pv.oe_recency
+            , pv.pa_frequency
+            , pv.pa_recency
+            , pv.lb_frequency
+            , pv.lb_recency
+         from missing_usecase mu
+         left join pivoted pv
+            on mu.organizationid = pv.organizationid
