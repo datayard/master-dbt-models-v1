@@ -11,7 +11,7 @@ with personal_account_type
 
                 --CASE WHEN organizationid NOT IN (SELECT * from active_subscriptions) AND folder_type LIKE "personal" THEN 'Free'
                 WHEN zt2.subscriptionid IS NULL AND folder_type = 'personal' THEN 'free'
-                WHEN zt2.subscriptionid IS NOT NULL AND zt2.subscription_type NOT LIKE ‘Active %’ AND folder_type = ‘personal’ THEN ‘free’
+                WHEN zt2.subscriptionid IS NOT NULL AND zt2.subscription_type NOT LIKE 'Active %' AND folder_type = 'personal' THEN 'free'
 
                 --CASE WHEN organizationid NOT IN (SELECT * from active_subscriptions) AND folder_type LIKE "personal" THEN 'Free'
                 WHEN zt2.subscriptionid IS NOT NULL AND zt2.subscription_type LIKE 'Active - Pro' AND folder_type = 'personal' THEN 'pro'
