@@ -19,8 +19,10 @@ SELECT
             THEN 'orphan'
         ELSE NULL
     END AS folder_type
-FROM dbt_vidyard_master.stg_vidyard_users u
-        LEFT JOIN dbt_vidyard_master.stg_vidyard_organizations o
+FROM {{ ref('stg_vidyard_users') }} as u
+--FROM dbt_vidyard_master.stg_vidyard_users u
+        LEFT JOIN {{ ref ('stg_vidyard_organizations') }} as o
+        --LEFT JOIN dbt_vidyard_master.stg_vidyard_organizations o
                 ON o.ownerid = u.userid
 WHERE
     ((o.orgtype = 'self_serve' and o.organizationid = o.accountid)
@@ -40,8 +42,11 @@ SELECT
     , u.email
     , 'parent folder' as folder_type
 FROM
-    dbt_vidyard_master.stg_vidyard_users u
-    JOIN dbt_vidyard_master.stg_vidyard_team_memberships tm
+    {{ ref('stg_vidyard_users') }} as u
+    --dbt_vidyard_master.stg_vidyard_users u
+    JOIN {{ref ('stg_vidyard_team_memberships') }} as tm
+    --JOIN dbt_vidyard_master.stg_vidyard_team_memberships tm
         ON tm.userid = u.userid and tm.inviteaccepted = true
-    JOIN dbt_vidyard_master.stg_vidyard_teams t
+    JOIN {{ ref('stg_vidyard_teams') }} as t
+    --JOIN dbt_vidyard_master.stg_vidyard_teams t
         ON t.teamid = tm.teamid
