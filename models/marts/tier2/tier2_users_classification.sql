@@ -18,8 +18,10 @@ with personal_account_type
               END AS personal_account_type
 
         FROM 
-            dbt_vidyard_master.tier2_user_teams_folders as utft2
-            LEFT JOIN dbt_vidyard_master.tier2_zuora zt2
+            {{ ref('tier2_user_teams_folders') }} as utft2
+            --dbt_vidyard_master.tier2_user_teams_folders as utft2
+            LEFT JOIN {{ ref('tier2_zuora') }} as zt2
+            --LEFT JOIN dbt_vidyard_master.tier2_zuora zt2
                 ON zt2.vidyardid = utft2.organizationid
 
         WHERE utft2.orgtype LIKE 'self_serve'
@@ -92,7 +94,8 @@ FROM
      --dbt_vidyard_master.tier2_user_teams_folders AS utft2
      personal_account_type utft2
 
-     LEFT JOIN dbt_vidyard_master.tier2_vidyard_user_entities vuet2
+     LEFT JOIN {{ ref('tier2_vidyard_user_entities') }} as vuet2
+     --LEFT JOIN dbt_vidyard_master.tier2_vidyard_user_entities vuet2
         ON vuet2.entity = 'team'
                AND vuet2.userid = utft2.userid
                AND vuet2.organizationid = utft2.accountid

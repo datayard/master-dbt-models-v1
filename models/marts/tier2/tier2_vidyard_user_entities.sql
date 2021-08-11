@@ -140,8 +140,8 @@ FROM
   	JOIN {{ ref('stg_vidyard_team_memberships') }} tm
   		ON tm.userid = vut2.userid
   	JOIN {{ ref('stg_vidyard_teams') }} t
-  		ON t.teamid = tm.teamid and t.accountid = vut2.accountid and vut2.orgtype is null
-
+  		ON t.teamid = tm.teamid and t.accountid = vut2.accountid 
+		  
 UNION ALL
 
 -------------------------------------------------------------
