@@ -1,7 +1,8 @@
 with personal_account_type
     as (
         SELECT 
-            utft2.*
+            utft2.userid
+            , utft2.accountid
             , CASE
                 --CASE WHEN organizationid NOT IN (SELECT * from active_subscriptions) AND folder_type is "personal enterprise" THEN 'Enterprise'
                 WHEN zt2.subscriptionid IS NULL AND folder_type = 'personal enterprise' THEN 'enterprise'
@@ -23,13 +24,14 @@ with personal_account_type
             --dbt_vidyard_master.tier2_user_teams_folders as utft2
             LEFT JOIN {{ ref('tier2_zuora') }} as zt2
             --LEFT JOIN dbt_vidyard_master.tier2_zuora zt2
-                ON zt2.vidyardid = utft2.organizationid
+                ON zt2.vidyardid = utft2.organizationid and zt2.subscription_type like 'Active %'
 
         WHERE utft2.orgtype LIKE 'self_serve'
           --AND utft2.accountid = 12449
     )
-SELECT
-    utft2.*
+SELECT distinct
+    utft2.userid
+    , utft2.accountid
     , CASE
 
         --CASE WHEN userId IN (SELECT user_id from tm join t) AND t.isadmin = true then 'admin' -- Case for admins
@@ -86,7 +88,7 @@ SELECT
         WHEN personal_account_type = 'enterprise self_serve' AND enterprise_access = 'admin' THEN 'enterprise self_serve'
 
         --CASE WHEN personal_account_type like IS NULL AND enterprise_access IS NULL then 'Orphan'
-        WHEN personal_account_type = 'enterprise self_serve' AND enterprise_access IS NULL THEN 'orphan'
+        WHEN personal_account_type IS NULL AND enterprise_access IS NULL THEN 'orphan'
 
         ELSE 'Unknown'
       END as classification
@@ -102,6 +104,6 @@ FROM
                AND vuet2.organizationid = utft2.accountid
                AND vuet2.inviteaccepted = true
 
-WHERE
-    utft2.orgtype LIKE 'self_serve'
+--WHERE
+    --utft2.orgtype LIKE 'self_serve'
     --AND utft2.accountid = 12449
