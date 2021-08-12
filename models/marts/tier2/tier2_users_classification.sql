@@ -24,7 +24,7 @@ with personal_account_type
             --dbt_vidyard_master.tier2_user_teams_folders as utft2
             LEFT JOIN {{ ref('tier2_zuora') }} as zt2
             --LEFT JOIN dbt_vidyard_master.tier2_zuora zt2
-                ON zt2.vidyardid = utft2.organizationid and zt2.subscription_type like 'Active %'
+                ON zt2.vidyardid = utft2.organizationid and zt2.subscription_type like 'active %'
 
         WHERE utft2.orgtype LIKE 'self_serve'
           --AND utft2.accountid = 12449
