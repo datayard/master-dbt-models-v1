@@ -32,24 +32,15 @@ with personal_account_type
 SELECT distinct
     utft2.userid
     , utft2.accountid
+    , utft2.personal_account_type
     , CASE
 
         --CASE WHEN userId IN (SELECT user_id from tm join t) AND t.isadmin = true then 'admin' -- Case for admins
-        WHEN vuet2.entityid IS NOT NULL
-                AND vuet2.isadmin = true
-            THEN 'admin'
+        WHEN tm.teammembershipid IS NOT NULL AND t.isadmin = true THEN 'admin'
 
         --CASE WHEN userId IN (SELECT user_id, from tm join t) AND t.isadmin = false then 'user' -- case for users (NOTE USERS CAN ONLY BE IN 1 GROUP AT THE TIME SO NO DUPES EXPECTED)
-        WHEN vuet2.entityid IS NOT NULL
-                AND vuet2.isadmin = false
-            THEN 'user'
+        WHEN tm.teammembershipid IS NOT NULL AND t.isadmin = false THEN 'user'
 
-        --CASE WHEN users IN (SELECT * from tm) AND tm.account id = parentid is "personal enterprise" THEN 'Enterprise'
-        /*WHEN vuet2.entityid IS NOT NULL
-                AND vuet2.organizationid = utft2.parentid
-                    AND utft2.folder_type = 'personal enterprise'
-            THEN 'enterprise'
-        */
       END AS enterprise_access
 
     , CASE
@@ -97,12 +88,19 @@ FROM
      --dbt_vidyard_master.tier2_user_teams_folders AS utft2
      personal_account_type utft2
 
-     LEFT JOIN {{ ref('tier2_vidyard_user_entities') }} as vuet2
+    LEFT JOIN {{ ref('stg_vidyard_team_memberships') }} as tm
+        ON tm.userid = utft2.userid
+    LEFT JOIN {{ ref('stg_vidyard_teams') }} as t
+        ON t.teamid = tm.teamid
+            AND t.accountid = utft2.accountid
+            AND tm.inviteaccepted = true
+
+     --LEFT JOIN {{ ref('tier2_vidyard_user_entities') }} as vuet2
      --LEFT JOIN dbt_vidyard_master.tier2_vidyard_user_entities vuet2
-        ON vuet2.entity = 'team'
-               AND vuet2.userid = utft2.userid
-               AND vuet2.organizationid = utft2.accountid
-               AND vuet2.inviteaccepted = true
+        --ON vuet2.entity = 'team'
+               --AND vuet2.userid = utft2.userid
+               --AND vuet2.organizationid = utft2.accountid
+               --AND vuet2.inviteaccepted = true
 
 --WHERE
     --utft2.orgtype LIKE 'self_serve'
