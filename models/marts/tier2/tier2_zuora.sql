@@ -1,15 +1,15 @@
 SELECT a.accountid
          , CASE
-                WHEN (p.sku LIKE 'SS-010' AND s.status LIKE 'Active') THEN 'Active - Pro'
-                WHEN (p.sku LIKE 'SS-010' AND s.status LIKE 'Cancelled' AND s.termenddate >= getdate()) THEN 'Active - Pro'
-                WHEN (p.sku LIKE 'SS-010' AND s.status LIKE 'Cancelled' AND s.termenddate < getdate()) THEN 'Cancelled - Pro'
-                WHEN (prp.productrateplanid = '2c92a010786db3e001786fe1669267ad' AND s.status LIKE 'Active') THEN 'Active - Self Serve Enterprise'
-                WHEN (prp.productrateplanid = '2c92a010786db3e001786fe1669267ad' AND s.status LIKE 'Cancelled' AND s.termenddate >= getdate()) THEN 'Active - Self Serve Enterprise'
-                WHEN (prp.productrateplanid = '2c92a010786db3e001786fe1669267ad' AND s.status LIKE 'Cancelled' AND s.termenddate < getdate()) THEN 'Cancelled - Self Serve Enterprise'
-                WHEN (s.status LIKE 'Active') THEN 'Active - Others'
-                WHEN (s.status LIKE 'Cancelled' AND s.termenddate >= getdate()) THEN 'Active - Others'
-                WHEN (s.status LIKE 'Cancelled' AND s.termenddate < getdate()) THEN 'Cancelled - Others'
-                ELSE '--Not yet classified--'
+                WHEN (p.sku LIKE 'SS-010' AND s.status LIKE 'Active') THEN 'active - pro'
+                WHEN (p.sku LIKE 'SS-010' AND s.status LIKE 'Cancelled' AND s.termenddate >= getdate()) THEN 'active - pro'
+                WHEN (p.sku LIKE 'SS-010' AND s.status LIKE 'Cancelled' AND s.termenddate < getdate()) THEN 'cancelled - pro'
+                WHEN (prp.productrateplanid = '2c92a010786db3e001786fe1669267ad' AND s.status LIKE 'Active') THEN 'active - self serve enterprise'
+                WHEN (prp.productrateplanid = '2c92a010786db3e001786fe1669267ad' AND s.status LIKE 'Cancelled' AND s.termenddate >= getdate()) THEN 'active - self serve enterprise'
+                WHEN (prp.productrateplanid = '2c92a010786db3e001786fe1669267ad' AND s.status LIKE 'Cancelled' AND s.termenddate < getdate()) THEN 'cancelled - self serve enterprise'
+                WHEN (s.status LIKE 'Active') THEN 'active - others'
+                WHEN (s.status LIKE 'Cancelled' AND s.termenddate >= getdate()) THEN 'active - others'
+                WHEN (s.status LIKE 'Cancelled' AND s.termenddate < getdate()) THEN 'cancelled - others'
+                ELSE '--not yet classified--'
            END AS subscription_type
          , a.accountname
          , a.accountnumber

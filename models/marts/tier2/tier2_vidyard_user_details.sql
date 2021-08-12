@@ -1,4 +1,4 @@
-select
+SELECT
     -- User Teams Folders
     utft2.userid
     , utft2.organizationid
@@ -21,30 +21,28 @@ select
     , vostg.signup_source
 
     --first_view, first_view_videoid, total_seconds, videos_with_views, views_count
-    , vomstg.firstview
+    , vomstg.firstviewdate
     , vomstg.firstviewvideoid
     , vomstg.totalseconds
     , vomstg.videoswithviews
     , vomstg.viewscount
-from
+FROM
     --dbt_vidyard_master.tier2_user_teams_folders utft2
     {{ ref('tier2_user_teams_folders')}} as utft2
+
+    --left join dbt_vidyard_master.tier2_users_classification uc
+    LEFT JOIN {{ ref('tier2_users_classification') }} as uc
+        on uc.userid = utft2.userid and uc.accountid = utft2.accountid
+
     --left join dbt_vidyard_master.stg_vidyard_users vustg
-    left join {{ ref('stg_vidyard_users')}} as vustg
+    LEFT JOIN {{ ref('stg_vidyard_users')}} as vustg
         on vustg.userid = utft2.userid
 
     --left join dbt_vidyard_master.stg_vidyard_organizations vostg
-    left join {{ ref('stg_vidyard_organizations') }} as vostg
+    LEFT JOIN {{ ref('stg_vidyard_organizations') }} as vostg
         on vostg.organizationid = utft2.organizationid
 
     --left join dbt_vidyard_master.stg_vidyard_org_metrics vomstg
-    left join {{ ref('stg_vidyard_org_metrics') }} as vomstg
+    LEFT JOIN {{ ref('stg_vidyard_org_metrics') }} as vomstg
         on vomstg.organizationid = utft2.organizationid
-
-    --left join dbt_vidyard_master.tier2_users_classification uc
-    left join {{ ref('tier2_users_classification') }} as uc
-        on uc.userid = utft2.userid and uc.accountid = utft2.accountid
-
-
-
 
