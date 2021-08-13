@@ -1,6 +1,6 @@
 SELECT
         users.user_id as userID,
-        cast(users."identity" as varchar(10)) as "identity",
+        users."identity" as identifier,
         users.appcuesuserid as appcuesUserID,
         users.joindate as joinDate,
         users.last_modified as lastModifiedDate,

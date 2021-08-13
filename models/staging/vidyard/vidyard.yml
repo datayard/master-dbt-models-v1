@@ -45,6 +45,11 @@ sources:
       - name: vidyard_event_joins
 
       - name: vidyard_nps_surveys
+
+      - name: vidyard_chapters
+
+      - name: vidyard_referrals
+      
       
 
 models:
@@ -558,3 +563,47 @@ models:
 
       - name: updatedDate
         description: ' '
+
+ # Documentation for VIDYARD_CHAPTERS table from PUBLIC schema
+  - name: stg_vidyard_chapters
+    columns:
+
+      - name: chapterId
+        description: unique identifier for this table
+        tests:
+          - unique
+          - not_null
+
+      - name: playerId
+        description: use to join to vidyard_players table
+
+      - name: videoId
+        description: use to join to vidyard_videos table
+
+      - name: createdDate
+        description: ''  
+
+ # Documentation for VIDYARD_CHAPTERS table from PUBLIC schema
+  - name: stg_vidyard_referrals
+    columns:
+
+      - name: referralID
+        description: unique identifier for this table
+        tests:
+          - unique
+          - not_null
+
+      - name: referrerID
+        description: use to join to vidyard_players table
+
+      - name: referreID
+        description: use to join to vidyard_videos table
+
+      - name: referralStatus
+        description: ''     
+
+      - name: incentive
+        description: ''  
+
+      - name: updatedAt
+        description: ''             

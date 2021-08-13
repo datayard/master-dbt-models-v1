@@ -15,6 +15,7 @@ sources:
     tables:
 
       - name: fct_sfdc_accounts_use_case
+      - name: nps_survey_responses
       
 models:
   # Documentation for the Utils table
@@ -29,3 +30,11 @@ models:
     columns:
       - name: useCase
         description: The main use case this particular customer has indicated will be applied to their products
+
+  - name: nps_survey_responses
+    columns:
+      - name: npssurveyid
+        description: Unique identifier for the npssurvey submit
+        tests:
+          - unique
+          - not_null
