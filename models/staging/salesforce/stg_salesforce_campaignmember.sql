@@ -7,7 +7,7 @@ SELECT
 		sfdc_campaignmember.leadid as leadId,
 		sfdc_campaignmember.contactid as contactId,
 		sfdc_campaignmember.status as status,
-		sfdc_campaignmember.name as name,
+		sfdc_campaignmember.name as campaignMemberName,
 		sfdc_campaignmember.email as email,
 		sfdc_campaignmember.campaign_sourced_by__c as campaignSourcedBy,
 		sfdc_campaignmember.mql__c as mql,

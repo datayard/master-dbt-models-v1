@@ -10,7 +10,7 @@ SELECT
    		when email like '%vidyard.com' then 1
         when email like '%viewedit.com' then 1
    		else 0
-      end as email_to_exclude
+      end as excludeEmail
     , split_part(vidyard_users.email, '@', 2) as domain
 	, case
             when split_part(vidyard_users.email, '@', 2) like '%gmail.com%'
@@ -175,6 +175,6 @@ SELECT
                 or split_part(vidyard_users.email, '@', 2) like '%.net'
             then 'education'
             else 'business'
-        end as domain_type
+        end as domainType
  FROM 
 	{{ source('public', 'vidyard_users') }} as vidyard_users

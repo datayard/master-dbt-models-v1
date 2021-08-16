@@ -12,7 +12,7 @@ SELECT
     , sfdc_account.annualrevenue as annualRevenue
     , sfdc_account.ownerid as ownerId
     , sfdc_account.customer_tier__c as customerTier
-    , sfdc_account.email_domain__c as emailDomain
+    , sfdc_account.email_domain__c as sfdcEmailDomain
     , sfdc_account.website as website
     , sfdc_account.account_id__c as vidyardAccountId
     , sfdc_account.original_contract_date__c as originalContractDate
@@ -51,7 +51,7 @@ SELECT
         when sfdc_account.email_domain__c is not null then coalesce(nullif(split_part(sfdc_account.email_domain__c, '@', 2),''),sfdc_account.email_domain__c)
         when sfdc_account.email_domain__c is null and sfdc_account.personemail is not null then split_part(sfdc_account.personemail, '@', 2)
         else split_part(sfdc_account.website, 'www.', 2)    
-        end)) as email_domain
+        end)) as emailDomain
  FROM 
     {{ source('salesforce_production', 'account') }} as sfdc_account
 WHERE
