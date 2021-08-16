@@ -21,9 +21,9 @@ SELECT
     , vu.personal_account_type
     , vu.enterprise_access
     , vu.classification
-    , vu.email_to_exclude
+    , vu.excludeEmail
     , vu.domain
-    , vu.domain_type
+    , vu.domainType
     , vu.name
     , vu.createddate
     , vu.updateddate
@@ -32,7 +32,7 @@ SELECT
         when vu.signup_source is not null then vu.signup_source
         when fst.derived_channel is null then 'Direct'
         else fst.derived_channel 
-    end as signup_source    
+    end as signupsource    
     , vu.firstviewdate
     , vu.firstviewvideoid
     , vu.totalseconds
