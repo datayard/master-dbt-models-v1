@@ -38,6 +38,7 @@ SELECT
     , vu.totalseconds
     , vu.videoswithviews
     , vu.viewscount
+    , vu.activatedFlag
 
 FROM 
     {{ ref('tier2_vidyard_user_details') }} vu
