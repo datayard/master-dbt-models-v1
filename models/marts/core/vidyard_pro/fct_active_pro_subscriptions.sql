@@ -1,7 +1,7 @@
 SELECT 
 	account.accountID AS activeProaccounts,
 	account.accountname,
-	account.vidyardId,
+	account.vidyardAccountId,
 	subscription.status AS subscriptionstatus,
 	account.accountStatus,
 	productrateplan.name,

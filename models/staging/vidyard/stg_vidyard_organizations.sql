@@ -1,7 +1,7 @@
 SELECT 
 	vidyard_organizations.id as organizationID,
 	vidyard_organizations.name as name,
-	vidyard_organizations.org_type as orgtype,
+	vidyard_organizations.org_type as orgType,
 	vidyard_organizations.parent_id as parentID,
 	vidyard_organizations.locked as locked,
 	vidyard_organizations.created_by_client_id as createdByClientID,

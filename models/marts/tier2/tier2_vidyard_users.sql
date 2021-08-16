@@ -23,9 +23,9 @@ WITH user_groups AS (
 SELECT
     u.userid
     , u.email
-    , u.email_to_exclude
+    , u.excludeEmail
     , u.domain
-    , u.domain_type
+    , u.domainType
     , o.organizationid
     , o.ownerid
     , o.accountid

@@ -28,7 +28,7 @@ SELECT
 		when vidyard_videos.origin like '%sample%' then 'borrowed or sample video'
     	--when vidyard_videos.origin is null then 'unknown'
 		else 'unknown'
-  	   end as derived_origin
+  	   end as derivedOrigin
 	, vidyard_videos.milliseconds as milliseconds
 	, vidyard_videos.updated_at as updatedDate
 	, vidyard_videos.video_type as videoType

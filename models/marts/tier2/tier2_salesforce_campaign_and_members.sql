@@ -1,7 +1,7 @@
 SELECT
     sfcm.*
     , sfc.isdeleted AS campaign_isdeleted
-    , sfc.name AS campaign_name
+    , sfc.campaignName AS campaign_name
     , sfc.parentid AS campaign_parentid
     , sfc.type AS campaign_type
     , sfc.status AS campaign_status
