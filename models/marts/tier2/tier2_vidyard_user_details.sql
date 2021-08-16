@@ -26,6 +26,7 @@ SELECT
     , vomstg.totalseconds
     , vomstg.videoswithviews
     , vomstg.viewscount
+    , case when vomstg.firstviewdate is not null then 1 else 0 end as activatedflag
 FROM
     --dbt_vidyard_master.tier2_user_teams_folders utft2
     {{ ref('tier2_user_teams_folders')}} as utft2
