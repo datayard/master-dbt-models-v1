@@ -6,5 +6,6 @@ SELECT
 	, vidyard_org_metrics.first_view as firstView
 	, TIMESTAMP 'epoch' + vidyard_org_metrics.first_view * INTERVAL '1 second' as firstViewDate
 	, vidyard_org_metrics.first_view_video_id as firstViewVideoID
+	, case when vidyard_org_metrics.first_view is not null then 1 else 0 end as activatedFlag
  FROM 
 	{{ source('public', 'vidyard_org_metrics') }} as vidyard_org_metrics
