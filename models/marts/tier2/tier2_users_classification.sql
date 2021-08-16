@@ -7,6 +7,9 @@ with personal_account_type
                 --CASE WHEN organizationid NOT IN (SELECT * from active_subscriptions) AND folder_type is "personal enterprise" THEN 'Enterprise'
                 WHEN zt2.subscriptionid IS NULL AND lower(folder_type) = lower('personal enterprise') THEN 'enterprise'
 
+                --CASE WHEN organizationid IN (SELECT * from active_subscriptions) AND folder_type is 'active - pro' THEN 'account to investigate’
+                WHEN zt2.subscriptionid IS NOT NULL AND lower(zt2.subscription_type) LIKE lower('active - pro') AND lower(folder_type) = lower('personal enterprise') THEN '--Under Investigation--'
+
                 --CASE WHEN organizationid IN (SELECT * from active_subscriptions) AND folder_type is "personal enterprise" THEN 'Enterprise Self-Serve'
                 WHEN zt2.subscriptionid IS NOT NULL AND lower(zt2.subscription_type) LIKE lower('active - self serve enterprise') AND lower(folder_type) = lower('personal enterprise') THEN 'enterprise self serve'
 
