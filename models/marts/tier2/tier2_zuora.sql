@@ -22,8 +22,8 @@ SELECT a.accountid
          , a.createddate
          , a.crmid
          , a.customeracquisitiondate
-         , a.net_mrr
-         , a.vidyardid
+         , a.netMrr
+         , a.vidyardAccountId
          , s.cancelleddate
          , s.contractstartdate
          , s.currentterm
