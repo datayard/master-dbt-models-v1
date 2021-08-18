@@ -13,8 +13,11 @@ WITH
             ht.tracker = 'global_session'     
             --only include sessions 30 minutes prior to signup
             AND DATEDIFF('minute', ht.sessiontime, vu.createddate) BETWEEN 0 AND 30
-),
+)
+,
     use_case_data AS (
+        SELECT * FROM 
+        (
         SELECT
             vu.userid
             , vu.organizationid
@@ -23,7 +26,10 @@ WITH
         FROM 
             {{ ref('tier2_vidyard_user_details') }} vu
             JOIN {{ ref('stg_govideo_production_users') }} ht
-                ON  ht.vidyardUserId = vu.userid         
+                ON  ht.vidyardUserId = vu.userid 
+        ) a
+        where rn=1  and combined_usecase is not null      
+
 )
 SELECT 
     vu.userid
@@ -49,7 +55,7 @@ SELECT
     , vu.videoswithviews
     , vu.viewscount
     , vu.activatedFlag
-    . uc.combined_usecase
+    , uc.combined_usecase
 
 FROM 
     {{ ref('tier2_vidyard_user_details') }} vu
@@ -59,4 +65,3 @@ FROM
         ON vu.organizationid = uc.organizationid        
 WHERE 
     (fst.rn = 1 or fst.rn is null)
-    and uc.rn = 1 
