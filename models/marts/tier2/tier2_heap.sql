@@ -7,8 +7,9 @@
 
 SELECT
         gs.eventid
-        , u.identifier AS vy_userid
+        -- , u.identifier AS vy_userid
         , REGEXP_COUNT(u.identifier, '^[0-9]+$') AS is_vy_userid_integer
+        , u.vidyardUserId
         , gs.userid
         , gs.sessionid
         , gs.sessiontime
@@ -43,8 +44,9 @@ SELECT
 
     SELECT
         oe.eventid
-        , u.identifier AS vy_userid
+        -- , u.identifier AS vy_userid
         , REGEXP_COUNT(u.identifier, '^[0-9]+$') AS is_vy_userid_integer
+        , u.vidyardUserId
         , oe.userid
         , null AS sessionid
         , null AS sessiontime
@@ -70,8 +72,9 @@ SELECT
 
     SELECT
         pv.eventid
-        , u.identifier AS vy_userid
+        -- , u.identifier AS vy_userid
         , REGEXP_COUNT(u.identifier, '^[0-9]+$') AS is_vy_userid_integer
+        , u.vidyardUserId
         , pv.userid
         , NULL AS sessionid
         , NULL AS sessiontime
@@ -96,8 +99,9 @@ SELECT
 
     SELECT
         ps.eventid
-        , u.identifier AS vy_userid
+        -- , u.identifier AS vy_userid
         , REGEXP_COUNT(u.identifier, '^[0-9]+$') AS is_vy_userid_integer
+        , u.vidyardUserId
         , ps.userid
         , NULL AS sessionid
         , NULL AS sessiontime
@@ -122,8 +126,9 @@ SELECT
 
     SELECT
         ssc.eventid
-        , u.identifier AS vy_userid
+        -- , u.identifier AS vy_userid
         , REGEXP_COUNT(u.identifier, '^[0-9]+$') AS is_vy_userid_integer
+        , u.vidyardUserId
         , ssc.userid
         , ssc.sessionid
         , ssc.sessiontime
@@ -148,8 +153,9 @@ SELECT
 
     SELECT
         vidcompv.eventid
-        , u.identifier AS vy_userid
+        -- , u.identifier AS vy_userid
         , REGEXP_COUNT(u.identifier, '^[0-9]+$') AS is_vy_userid_integer
+        , u.vidyardUserId
         , vidcompv.userid
         , NULL AS sessionid
         , NULL AS sessiontime
@@ -174,8 +180,9 @@ SELECT
 
     SELECT
         vidcomss.eventid
-        , u.identifier AS vy_userid
+        -- , u.identifier AS vy_userid
         , REGEXP_COUNT(u.identifier, '^[0-9]+$') AS is_vy_userid_integer
+        , u.vidyardUserId
         , vidcomss.userid
         , vidcomss.sessionid
         , vidcomss.sessiontime
@@ -199,8 +206,9 @@ SELECT
 
     SELECT
         pv.eventid
-        , u.identifier AS vy_userid
+        -- , u.identifier AS vy_userid
         , REGEXP_COUNT(u.identifier, '^[0-9]+$') AS is_vy_userid_integer
+        , u.vidyardUserId
         , pv.userid
         , NULL AS sessionid
         , NULL AS sessiontime
@@ -225,8 +233,9 @@ SELECT
 
     SELECT
         pv.eventid
-        , u.identifier AS vy_userid
+        -- , u.identifier AS vy_userid
         , REGEXP_COUNT(u.identifier, '^[0-9]+$') AS is_vy_userid_integer
+        , u.vidyardUserId
         , pv.userid
         , NULL AS sessionid
         , NULL AS sessiontime

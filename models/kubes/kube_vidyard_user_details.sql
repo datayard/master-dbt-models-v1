@@ -8,12 +8,24 @@ WITH
         FROM 
             {{ ref('tier2_vidyard_user_details') }} vu
             JOIN {{ ref('tier2_heap') }} ht
-                ON  ht.vy_userid = vu.userid         
+                ON  ht.vidyardUserId = vu.userid         
                 AND ht.is_vy_userid_integer = 1
         WHERE 
             ht.tracker = 'global_session'     
             --only include sessions 30 minutes prior to signup
             AND DATEDIFF('minute', ht.sessiontime, vu.createddate) BETWEEN 0 AND 30
+),
+    use_case_data AS (
+        SELECT
+            vu.userid
+            , vu.organizationid
+            , uc.combined_usecase
+            , ROW_NUMBER() OVER(PARTITION BY vu.organizationid ORDER BY CASE WHEN uc.combined_usecase IS NULL THEN 99 ELSE 1 END ASC) AS rn
+        FROM 
+            {{ ref('tier2_vidyard_user_details') }} vu
+            JOIN {{ ref('stg_govideo_production_users') }} ht
+                ON  ht.vidyardUserId = vu.userid         
+                AND ht.is_vy_userid_integer = 1
 )
 SELECT 
     vu.userid
@@ -39,10 +51,14 @@ SELECT
     , vu.videoswithviews
     , vu.viewscount
     , vu.activatedFlag
+    . uc.combined_usecase
 
 FROM 
     {{ ref('tier2_vidyard_user_details') }} vu
     LEFT JOIN first_session_table fst
-        ON  vu.organizationid = fst.organizationid         
+        ON  vu.organizationid = fst.organizationid     
+    LEFT JOIN use_case_data uc
+        ON vu.organizationid = uc.organizationid        
 WHERE 
     (fst.rn = 1 or fst.rn is null)
+    and uc.rn = 1 
