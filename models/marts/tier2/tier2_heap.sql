@@ -7,7 +7,7 @@
 
 SELECT
         gs.eventid
-        , u.identifier 
+        , u.identifier AS vy_userid
         , REGEXP_COUNT(u.identifier, '^[0-9]+$') AS is_vy_userid_integer
         -- , u.vidyardUserId
         , gs.userid
