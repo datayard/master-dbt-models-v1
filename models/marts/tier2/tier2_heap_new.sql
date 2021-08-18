@@ -1,3 +1,9 @@
+{{
+    config(
+        materialized='incremental'
+    )
+}}
+
 SELECT
         gs.eventid
         , u.identifier 
@@ -27,7 +33,10 @@ SELECT
         {{ ref('stg_govideo_production_global_session') }} gs
             JOIN {{ ref('stg_govideo_production_users') }} u
                 ON gs.userid = u.userid AND u.identifier IS NOT NULL
-    where tracker = 'global_session' 
+      {% if is_incremental() %}
+    -- this filter will only be applied on an incremental run
+    WHERE gs.sessiontime > (select max(sessiontime) from {{ this }} where tracker = 'global_session' )
+    {% endif %}
 
     UNION ALL
 
@@ -51,7 +60,10 @@ SELECT
             JOIN {{ ref('stg_govideo_production_users') }} u
                 ON oe.userid = u.userid AND u.identifier IS NOT NULL
     -- this filter will only be applied on an incremental run
-    where tracker = 'opened_extension' 
+        {% if is_incremental() %}
+    -- this filter will only be applied on an incremental run
+    WHERE oe.eventtime > (select max(eventtime) from {{ this }} where tracker = 'opened_extension' )
+    {% endif %}
 
     UNION ALL
 
@@ -74,7 +86,10 @@ SELECT
         {{ ref('stg_govideo_production_pageviews') }} pv
             JOIN {{ ref('stg_govideo_production_users') }} u
                 ON pv.userid = u.userid AND u.identifier IS NOT NULL
-    where tracker = 'page_views' 
+     {% if is_incremental() %}
+    -- this filter will only be applied on an incremental run
+    WHERE pv.eventtime > (select max(eventtime) from {{ this }} where tracker = 'page_views' )
+    {% endif %}
 
     UNION ALL
 
@@ -97,7 +112,10 @@ SELECT
         {{ ref('stg_govideo_production_product_sessions') }} ps
             JOIN {{ ref('stg_govideo_production_users') }} u
                 ON ps.userid = u.userid AND u.identifier IS NOT NULL
-    where tracker = 'product_sessions'
+    {% if is_incremental() %}
+    -- this filter will only be applied on an incremental run
+    WHERE ps.eventtime > (select max(eventtime) from {{ this }} where tracker = 'product_sessions' )
+    {% endif %}
 
     UNION ALL
 
@@ -121,7 +139,10 @@ SELECT
         JOIN {{ ref('stg_govideo_production_users') }} u
             ON ssc.userid = u.userid AND u.identifier IS NOT NULL
 
-    where tracker = 'sharing_share_combo' 
+    {% if is_incremental() %}
+    -- this filter will only be applied on an incremental run
+    WHERE ssc.eventtime > (select max(eventtime) from {{ this }} where tracker = 'sharing_share_combo' )
+    {% endif %}
 
     UNION ALL
 
@@ -144,7 +165,10 @@ SELECT
         {{ ref('stg_govideo_production_vidyard_com_any_pageview') }} vidcompv
             JOIN {{ ref('stg_govideo_production_users') }} u
                 ON vidcompv.userid = u.userid AND u.identifier IS NOT NULL
-    where tracker = 'vy_com_page_view'
+    {% if is_incremental() %}
+    -- this filter will only be applied on an incremental run
+    WHERE vidcompv.eventtime > (select max(eventtime) from {{ this }} where tracker = 'vy_com_page_view' )
+    {% endif %}
 
     UNION ALL
 
@@ -166,7 +190,10 @@ SELECT
     FROM {{ ref('stg_govideo_production_vidyard_com_sessions') }} vidcomss
         JOIN {{ ref('stg_govideo_production_users') }} u
             ON vidcomss.userid = u.userid AND u.identifier IS NOT NULL
-    where tracker = 'vy_com_sessions' 
+    {% if is_incremental() %}
+    -- this filter will only be applied on an incremental run
+    WHERE vidcomss.sessiontime > (select max(sessiontime) from {{ this }} where tracker = 'vy_com_sessions' )
+    {% endif %}
 
     UNION ALL
 
@@ -189,7 +216,10 @@ SELECT
         {{ ref('stg_govideo_production_video_creation_started_to_create_or_upload_a_video_combo') }} pv
             JOIN {{ ref('stg_govideo_production_users') }} u
                 ON pv.userid = u.userid AND u.identifier IS NOT NULL
-    where tracker = 'video_creation'
+    {% if is_incremental() %}
+    -- this filter will only be applied on an incremental run
+    WHERE pv.eventtime > (select max(eventtime) from {{ this }} where tracker = 'video_creation' )
+    {% endif %}
 
     UNION ALL
 
@@ -212,4 +242,7 @@ SELECT
         {{ ref('stg_govideo_production_video_recorded_or_uploaded') }} pv
             JOIN {{ ref('stg_govideo_production_users') }} u
                 ON pv.userid = u.userid AND u.identifier IS NOT NULL
-    where tracker = 'video_upload'
+    {% if is_incremental() %}
+    -- this filter will only be applied on an incremental run
+    WHERE pv.eventtime > (select max(eventtime) from {{ this }} where tracker = 'video_upload' )
+    {% endif %}
