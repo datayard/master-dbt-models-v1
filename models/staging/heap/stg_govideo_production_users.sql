@@ -1,7 +1,7 @@
 SELECT
         users.user_id as userID,
         users."identity" as identifier,
-        cast("identity" as varchar(10)) as vidyardUserId,
+        cast(case when REGEXP_COUNT(identifier, '^[0-9]+$') = 1 then identifier else null end as integer) as vidyardUserId,
         users.appcuesuserid as appcuesUserID,
         users.joindate as joinDate,
         users.last_modified as lastModifiedDate,

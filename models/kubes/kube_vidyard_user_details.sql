@@ -7,9 +7,8 @@ WITH
             , ROW_NUMBER() OVER(PARTITION BY vu.organizationid ORDER BY ht.sessiontime) AS rn
         FROM 
             {{ ref('tier2_vidyard_user_details') }} vu
-            JOIN {{ ref('tier2_heap') }} ht
+            JOIN {{ ref('tier2_heap_new') }} ht
                 ON  ht.vidyardUserId = vu.userid         
-                AND ht.is_vy_userid_integer = 1
         WHERE 
             ht.tracker = 'global_session'     
             --only include sessions 30 minutes prior to signup
@@ -25,7 +24,6 @@ WITH
             {{ ref('tier2_vidyard_user_details') }} vu
             JOIN {{ ref('stg_govideo_production_users') }} ht
                 ON  ht.vidyardUserId = vu.userid         
-                AND ht.is_vy_userid_integer = 1
 )
 SELECT 
     vu.userid
