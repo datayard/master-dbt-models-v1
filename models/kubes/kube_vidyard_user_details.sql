@@ -19,8 +19,8 @@ WITH
         SELECT
             vu.userid
             , vu.organizationid
-            , uc.combined_usecase
-            , ROW_NUMBER() OVER(PARTITION BY vu.organizationid ORDER BY CASE WHEN uc.combined_usecase IS NULL THEN 99 ELSE 1 END ASC) AS rn
+            , ht.combined_usecase
+            , ROW_NUMBER() OVER(PARTITION BY vu.organizationid ORDER BY CASE WHEN ht.combined_usecase IS NULL THEN 99 ELSE 1 END ASC) AS rn
         FROM 
             {{ ref('tier2_vidyard_user_details') }} vu
             JOIN {{ ref('stg_govideo_production_users') }} ht
