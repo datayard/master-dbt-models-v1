@@ -44,7 +44,7 @@ LEFT JOIN
     --dbt_vidyard_master.stg_vidyard_org_metrics as vyom
 ON
     vyom.organizationid = vyo.organizationid
-JOIN
+LEFT JOIN
     personal_account_videos
 ON
     personal_account_videos.organizationid = vyo.organizationid
