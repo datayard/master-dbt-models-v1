@@ -76,7 +76,7 @@ SELECT
         , REGEXP_COUNT(u.identifier, '^[0-9]+$') AS is_vy_userid_integer
         -- , u.vidyardUserId
         , pv.userid
-        , NULL AS sessionid
+        , pv.sessionid AS sessionid
         , NULL AS sessiontime
         , pv.eventtime
         , pv.landingpage
