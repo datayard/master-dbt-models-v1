@@ -2,9 +2,9 @@ SELECT
     --USER
     vut2.userid
     , email
-    , email_to_exclude
+    , excludeEmail
     , vut2.domain
-    , domain_type
+    , domainType
 
     --ORGANIZATION
     , vut2.organizationid
@@ -62,7 +62,7 @@ SELECT
     , vyent.createdbyclientid
     , uuid
     , origin
-    , derived_origin
+    , derivedOrigin
     , source
     , status
     , issecure
