@@ -72,7 +72,7 @@ SELECT
         , u.identifier 
         , u.vidyardUserId
         , pv.userid
-        , NULL AS sessionid
+        , pv.sessionid AS sessionid
         , NULL AS sessiontime
         , pv.eventtime
         , pv.landingpage
