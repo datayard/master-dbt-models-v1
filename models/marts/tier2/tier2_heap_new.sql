@@ -69,6 +69,7 @@ SELECT
 
     SELECT
         pv.eventid
+        , pv.sessionid
         , u.identifier 
         , u.vidyardUserId
         , pv.userid
