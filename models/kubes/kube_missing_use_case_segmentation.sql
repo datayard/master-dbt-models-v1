@@ -24,7 +24,7 @@ with
                  else hu.general_use_case
                end as general_use_case_c
             , lower(coalesce(general_use_case_c,usecase_c)) as combined_usecase
-            , u.domain_type
+            , u.domainType
         from dbt_vidyard_master.stg_vidyard_organizations o
                  join dbt_vidyard_master.stg_vidyard_users u
                       on u.userid = o.ownerid
@@ -56,7 +56,7 @@ with
         where
             rn=1
             and combined_usecase is null
-            and domain_type = 'business'
+            and domainType = 'business'
             and activated_flag = 1
          ),
      product_usage as (
