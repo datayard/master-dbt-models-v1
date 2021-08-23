@@ -1,5 +1,7 @@
 SELECT 
         video_creation_started_to_create_or_upload_a_video_combo.event_id as eventID,
+        video_creation_started_to_create_or_upload_a_video_combo.session_id as sessionID,
+        video_creation_started_to_create_or_upload_a_video_combo.session_time as sessionTime,
         video_creation_started_to_create_or_upload_a_video_combo.user_id as userID,
         video_creation_started_to_create_or_upload_a_video_combo.time as eventTime,
         video_creation_started_to_create_or_upload_a_video_combo.continent as continent,

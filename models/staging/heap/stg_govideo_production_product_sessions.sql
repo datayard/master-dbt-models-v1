@@ -1,5 +1,7 @@
 SELECT
         product_sessions.event_id as eventID,
+        product_sessions.session_id as sessionId,
+        product_sessions.session_time as sessiontime,
         product_sessions.user_id as userID,
         product_sessions.time as eventTime,
         product_sessions.continent as continent,
