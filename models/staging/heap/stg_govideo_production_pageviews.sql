@@ -1,4 +1,5 @@
 SELECT
+        pageviews.session_id as sessionid,
         pageviews.event_id as eventID,
         pageviews.user_id as userID,
         pageviews.time as eventTime,

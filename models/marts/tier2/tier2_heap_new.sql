@@ -4,12 +4,10 @@
     )
 }}
 
-
 SELECT
         gs.eventid
-        , u.identifier AS vy_userid
-        , REGEXP_COUNT(u.identifier, '^[0-9]+$') AS is_vy_userid_integer
-        -- , u.vidyardUserId
+        , u.identifier 
+        , u.vidyardUserId
         , gs.userid
         , gs.sessionid
         , gs.sessiontime
@@ -35,7 +33,7 @@ SELECT
         {{ ref('stg_govideo_production_global_session') }} gs
             JOIN {{ ref('stg_govideo_production_users') }} u
                 ON gs.userid = u.userid AND u.identifier IS NOT NULL
-    {% if is_incremental() %}
+      {% if is_incremental() %}
     -- this filter will only be applied on an incremental run
     WHERE gs.sessiontime > (select max(sessiontime) from {{ this }} where tracker = 'global_session' )
     {% endif %}
@@ -44,9 +42,8 @@ SELECT
 
     SELECT
         oe.eventid
-        , u.identifier AS vy_userid
-        , REGEXP_COUNT(u.identifier, '^[0-9]+$') AS is_vy_userid_integer
-        -- , u.vidyardUserId
+        , u.identifier 
+        , u.vidyardUserId
         , oe.userid
         , null AS sessionid
         , null AS sessiontime
@@ -62,19 +59,18 @@ SELECT
         {{ ref('stg_govideo_production_opened_extension') }} oe
             JOIN {{ ref('stg_govideo_production_users') }} u
                 ON oe.userid = u.userid AND u.identifier IS NOT NULL
-    {% if is_incremental() %}
+    -- this filter will only be applied on an incremental run
+        {% if is_incremental() %}
     -- this filter will only be applied on an incremental run
     WHERE oe.eventtime > (select max(eventtime) from {{ this }} where tracker = 'opened_extension' )
     {% endif %}
-
 
     UNION ALL
 
     SELECT
         pv.eventid
-        , u.identifier AS vy_userid
-        , REGEXP_COUNT(u.identifier, '^[0-9]+$') AS is_vy_userid_integer
-        -- , u.vidyardUserId
+        , u.identifier 
+        , u.vidyardUserId
         , pv.userid
         , pv.sessionid AS sessionid
         , NULL AS sessiontime
@@ -90,7 +86,7 @@ SELECT
         {{ ref('stg_govideo_production_pageviews') }} pv
             JOIN {{ ref('stg_govideo_production_users') }} u
                 ON pv.userid = u.userid AND u.identifier IS NOT NULL
-    {% if is_incremental() %}
+     {% if is_incremental() %}
     -- this filter will only be applied on an incremental run
     WHERE pv.eventtime > (select max(eventtime) from {{ this }} where tracker = 'page_views' )
     {% endif %}
@@ -99,9 +95,8 @@ SELECT
 
     SELECT
         ps.eventid
-        , u.identifier AS vy_userid
-        , REGEXP_COUNT(u.identifier, '^[0-9]+$') AS is_vy_userid_integer
-        -- , u.vidyardUserId
+        , u.identifier 
+        , u.vidyardUserId
         , ps.userid
         , NULL AS sessionid
         , NULL AS sessiontime
@@ -126,9 +121,8 @@ SELECT
 
     SELECT
         ssc.eventid
-        , u.identifier AS vy_userid
-        , REGEXP_COUNT(u.identifier, '^[0-9]+$') AS is_vy_userid_integer
-        -- , u.vidyardUserId
+        , u.identifier 
+        , u.vidyardUserId
         , ssc.userid
         , ssc.sessionid
         , ssc.sessiontime
@@ -144,6 +138,7 @@ SELECT
         {{ ref('stg_govideo_production_sharing_share_combo') }} ssc
         JOIN {{ ref('stg_govideo_production_users') }} u
             ON ssc.userid = u.userid AND u.identifier IS NOT NULL
+
     {% if is_incremental() %}
     -- this filter will only be applied on an incremental run
     WHERE ssc.eventtime > (select max(eventtime) from {{ this }} where tracker = 'sharing_share_combo' )
@@ -153,9 +148,8 @@ SELECT
 
     SELECT
         vidcompv.eventid
-        , u.identifier AS vy_userid
-        , REGEXP_COUNT(u.identifier, '^[0-9]+$') AS is_vy_userid_integer
-        -- , u.vidyardUserId
+        , u.identifier 
+        , u.vidyardUserId
         , vidcompv.userid
         , NULL AS sessionid
         , NULL AS sessiontime
@@ -180,9 +174,8 @@ SELECT
 
     SELECT
         vidcomss.eventid
-        , u.identifier AS vy_userid
-        , REGEXP_COUNT(u.identifier, '^[0-9]+$') AS is_vy_userid_integer
-        -- , u.vidyardUserId
+        , u.identifier 
+        , u.vidyardUserId
         , vidcomss.userid
         , vidcomss.sessionid
         , vidcomss.sessiontime
@@ -206,9 +199,8 @@ SELECT
 
     SELECT
         pv.eventid
-        , u.identifier AS vy_userid
-        , REGEXP_COUNT(u.identifier, '^[0-9]+$') AS is_vy_userid_integer
-        -- , u.vidyardUserId
+        , u.identifier 
+        , u.vidyardUserId
         , pv.userid
         , NULL AS sessionid
         , NULL AS sessiontime
@@ -233,9 +225,8 @@ SELECT
 
     SELECT
         pv.eventid
-        , u.identifier AS vy_userid
-        , REGEXP_COUNT(u.identifier, '^[0-9]+$') AS is_vy_userid_integer
-        -- , u.vidyardUserId
+        , u.identifier 
+        , u.vidyardUserId
         , pv.userid
         , NULL AS sessionid
         , NULL AS sessiontime
