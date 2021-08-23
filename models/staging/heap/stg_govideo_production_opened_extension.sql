@@ -1,6 +1,8 @@
 SELECT
         opened_extension.event_id as eventID,
         opened_extension.user_id as userID,
+        opened_extension.session_id as sessionid,
+        opened_extension.session_time as sessiontime,
         opened_extension.time as eventTime,
         opened_extension.continent as continent,
         opened_extension.country as country,

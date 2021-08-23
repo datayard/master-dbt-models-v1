@@ -1,5 +1,7 @@
 SELECT
         video_recorded_or_uploaded.event_id as eventID,
+        video_recorded_or_uploaded.session_id as sessionId,
+        video_recorded_or_uploaded.session_time as sessionTime,
         video_recorded_or_uploaded.user_id as userID,
         video_recorded_or_uploaded.time as eventTime,
         video_recorded_or_uploaded.continent as continent,

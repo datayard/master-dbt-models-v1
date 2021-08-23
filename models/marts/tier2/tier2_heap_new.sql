@@ -11,7 +11,7 @@ SELECT
         , gs.userid
         , gs.sessionid
         , gs.sessiontime
-        , NULL         AS eventtime
+        , NULL AS eventtime
         , gs.landingpage
         , gs.domain
         , gs.channels
@@ -45,8 +45,8 @@ SELECT
         , u.identifier 
         , u.vidyardUserId
         , oe.userid
-        , null AS sessionid
-        , null AS sessiontime
+        , oe.sessionid
+        , oe.sessiontime
         , oe.eventtime
         , oe.landingpage
         , oe.domain
@@ -72,8 +72,8 @@ SELECT
         , u.identifier 
         , u.vidyardUserId
         , pv.userid
-        , pv.sessionid AS sessionid
-        , NULL AS sessiontime
+        , pv.sessionid
+        , pv.sessiontime
         , pv.eventtime
         , pv.landingpage
         , pv.domain
@@ -98,8 +98,8 @@ SELECT
         , u.identifier 
         , u.vidyardUserId
         , ps.userid
-        , NULL AS sessionid
-        , NULL AS sessiontime
+        , ps.sessionid
+        , ps.sessiontime
         , ps.eventtime
         , ps.landingpage
         , ps.domain
@@ -151,8 +151,8 @@ SELECT
         , u.identifier 
         , u.vidyardUserId
         , vidcompv.userid
-        , NULL AS sessionid
-        , NULL AS sessiontime
+        , vidcompv.sessionid
+        , vidcompv.sessiontime
         , vidcompv.eventtime
         , vidcompv.landingpage
         , vidcompv.domain
@@ -202,8 +202,8 @@ SELECT
         , u.identifier 
         , u.vidyardUserId
         , pv.userid
-        , NULL AS sessionid
-        , NULL AS sessiontime
+        , pv.sessionid
+        , pv.sessiontime
         , pv.eventtime
         , pv.landingpage
         , pv.domain
@@ -228,8 +228,8 @@ SELECT
         , u.identifier 
         , u.vidyardUserId
         , pv.userid
-        , NULL AS sessionid
-        , NULL AS sessiontime
+        , pv.sessionid
+        , pv.sessiontime
         , pv.eventtime
         , pv.landingpage
         , pv.domain
