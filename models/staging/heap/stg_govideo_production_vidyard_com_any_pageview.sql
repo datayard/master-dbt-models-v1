@@ -1,5 +1,7 @@
 SELECT
         vidyard_com_any_pageview.event_id as eventID,
+        vidyard_com_any_pageview.session_id as sessionId,
+        vidyard_com_any_pageview.session_time as sessionTime,
         vidyard_com_any_pageview.user_id as userID,
         vidyard_com_any_pageview.time as eventTime,
         vidyard_com_any_pageview.continent as continent,
