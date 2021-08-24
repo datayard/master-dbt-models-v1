@@ -27,7 +27,6 @@ SELECT
                    THEN 'Player'
                ELSE gs.channels
           END AS derived_channel
-        , gs.sessiontime AS column_for_distribution
         , 'global_session'  AS tracker
     FROM
         {{ ref('stg_govideo_production_global_session') }} gs
@@ -53,7 +52,6 @@ SELECT
         , oe.channels
         , oe.path
         , null AS derived_channel
-        , oe.eventtime AS column_for_distribution
         , 'opened_extension' AS tracker
     FROM
         {{ ref('stg_govideo_production_opened_extension') }} oe
@@ -80,7 +78,6 @@ SELECT
         , NULL AS channels
         , pv.path
         , NULL AS derived_channel
-        , pv.eventtime AS column_for_distribution
         , 'page_views' AS tracker
     FROM
         {{ ref('stg_govideo_production_pageviews') }} pv
@@ -106,7 +103,6 @@ SELECT
         , ps.channels
         , ps.path
         , NULL AS derived_channel
-        , ps.eventtime AS column_for_distribution
         , 'product_sessions' AS tracker
     FROM
         {{ ref('stg_govideo_production_product_sessions') }} ps
@@ -132,7 +128,6 @@ SELECT
         , ssc.channels
         , ssc.path
         , NULL AS derived_channel
-        , ssc.eventtime AS column_for_distribution
         , 'sharing_share_combo' AS tracker
     FROM
         {{ ref('stg_govideo_production_sharing_share_combo') }} ssc
@@ -159,7 +154,6 @@ SELECT
         , vidcompv.channels
         , vidcompv.path
         , NULL AS derived_channel
-        , vidcompv.eventtime AS column_for_distribution
         , 'vy_com_page_view' AS tracker
     FROM
         {{ ref('stg_govideo_production_vidyard_com_any_pageview') }} vidcompv
@@ -185,7 +179,6 @@ SELECT
         , vidcomss.channels
         , vidcomss.path
         , NULL AS derived_channel
-        , vidcomss.sessiontime AS column_for_distribution
         , 'vy_com_sessions' AS tracker
     FROM {{ ref('stg_govideo_production_vidyard_com_sessions') }} vidcomss
         JOIN {{ ref('stg_govideo_production_users') }} u
@@ -210,7 +203,6 @@ SELECT
         , NULL AS channels
         , pv.path
         , NULL AS derived_channel
-        , pv.eventtime AS column_for_distribution
         , 'video_creation' AS tracker
     FROM
         {{ ref('stg_govideo_production_video_creation_started_to_create_or_upload_a_video_combo') }} pv
@@ -236,7 +228,6 @@ SELECT
         , NULL AS channels
         , pv.path
         , NULL AS derived_channel
-        , pv.eventtime AS column_for_distribution
         , 'video_upload' AS tracker
     FROM
         {{ ref('stg_govideo_production_video_recorded_or_uploaded') }} pv
