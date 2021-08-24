@@ -7,7 +7,7 @@ WITH
             , ROW_NUMBER() OVER(PARTITION BY vu.organizationid ORDER BY ht.sessiontime) AS rn
         FROM 
             {{ ref('tier2_vidyard_user_details') }} vu
-            JOIN {{ ref('tier2_heap_new') }} ht
+            JOIN {{ ref('tier2_heap') }} ht
                 ON  ht.vidyardUserId = vu.userid         
         WHERE 
             ht.tracker = 'global_session'     
