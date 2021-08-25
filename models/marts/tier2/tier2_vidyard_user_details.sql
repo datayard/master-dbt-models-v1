@@ -9,9 +9,9 @@ SELECT
     , uc.classification
 
     --email_to_exclude, domain, domain_type
-    , vustg.email_to_exclude
+    , vustg.excludeEmail
     , vustg.domain
-    , vustg.domain_type
+    , vustg.domainType
 
     --org_name, created_date, updated_date, createdbyclientid, signup_source
     , vostg.name
@@ -26,6 +26,7 @@ SELECT
     , vomstg.totalseconds
     , vomstg.videoswithviews
     , vomstg.viewscount
+    , vomstg.activatedFlag
 FROM
     --dbt_vidyard_master.tier2_user_teams_folders utft2
     {{ ref('tier2_user_teams_folders')}} as utft2

@@ -1,7 +1,7 @@
 SELECT 
     sfdc_campaign.id as campaignId,
     sfdc_campaign.isdeleted as isDeleted,
-    sfdc_campaign.name as name,
+    sfdc_campaign.name as campaignName,
     sfdc_campaign.parentid as parentId,
     sfdc_campaign.type as type,
     sfdc_campaign.status as status,

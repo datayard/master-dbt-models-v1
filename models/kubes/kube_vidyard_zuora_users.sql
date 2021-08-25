@@ -45,7 +45,7 @@ SELECT
     , zt2.rateplanid
     , zt2.productrateplanid
     , zt2.productid
-    , zt2.net_mrr
+    , zt2.netMrr
     , zt2.status as subscriptionstatus
     , zt2.soldtocontactid
 

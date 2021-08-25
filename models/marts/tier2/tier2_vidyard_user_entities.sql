@@ -23,7 +23,7 @@ SELECT
     , NULL AS allowcontact                          --COL19
     , NULL AS cancelled                             --COL20
 
-	, NULL AS derived_origin                        --COL21
+	, NULL AS derivedOrigin                         --COL21
 	, NULL AS source		                        --COL22
 	, NULL AS isadmin								--COL23
 FROM
@@ -58,7 +58,7 @@ SELECT
     , NULL AS allowcontact                         --COL19
     , NULL AS cancelled                            --COL20
 
-	, v.derived_origin                        	   --COL21
+	, v.derivedOrigin                         	   --COL21
 	, v.source		                               --COL22
 	, NULL AS isadmin								--COL23
 FROM
@@ -97,7 +97,7 @@ SELECT
     , NULL AS allowcontact                         --COL19
     , NULL AS cancelled                            --COL20
 
-	, NULL AS derived_origin                       --COL21
+	, NULL AS derivedOrigin                       --COL21
 	, NULL AS source		                       --COL22
 	, NULL AS isadmin								--COL23
 FROM
@@ -132,7 +132,7 @@ SELECT
     , NULL AS allowcontact                         --COL19
     , NULL AS cancelled                            --COL20
 
-	, NULL AS derived_origin                       --COL21
+	, NULL AS derivedOrigin                       --COL21
 	, NULL AS source		                       --COL22
 	, t.isadmin		        					   --COL23
 FROM
@@ -169,7 +169,7 @@ SELECT
     , allowcontact                                 --COL19
     , cancelled                                    --COL20
 
-	, NULL AS derived_origin                       --COL21
+	, NULL AS derivedOrigin                       --COL21
 	, NULL AS source		                       --COL22
 	, NULL AS isadmin							   --COL23
 FROM
