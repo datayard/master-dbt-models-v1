@@ -1,3 +1,4 @@
+WITH PROMO_DATA AS (
 SELECT
     DISTINCT za.accountid as zuoraAccountID,
     zs.subscriptionid,
@@ -52,3 +53,14 @@ GROUP BY
     5,
     6,
     7
+)
+    SELECT
+           *
+        , CASE
+            WHEN promo like 'First Month Free' THEN add_months(promoStartDate, 1)
+            WHEN promo like 'Three Months Free' THEN add_months(promoStartDate, 3)
+            else getdate()
+          END AS promoEndDate
+        , datediff(day, getdate(), promoEndDate) as days_remaining
+    FROM PROMO_DATA
+    
