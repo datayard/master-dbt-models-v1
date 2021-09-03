@@ -1,4 +1,6 @@
+
 WITH PROMO_DATA AS (
+
 SELECT
     DISTINCT za.accountid as zuoraAccountID,
     zs.subscriptionid,
@@ -53,6 +55,7 @@ GROUP BY
     5,
     6,
     7
+
 )
     SELECT
            *
@@ -63,4 +66,4 @@ GROUP BY
           END AS promoEndDate
         , datediff(day, getdate(), promoEndDate) as days_remaining
     FROM PROMO_DATA
-    
+
