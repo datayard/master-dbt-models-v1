@@ -15,6 +15,29 @@ WITH
             AND DATEDIFF('minute', ht.sessiontime, vu.createddate) BETWEEN 0 AND 30
 )
 ,
+    used_chrome_extension AS (
+        SELECT DISTINCT
+            vu.organizationid
+        FROM 
+            {{ ref('tier2_vidyard_user_details') }} vu
+            JOIN {{ ref('tier2_heap') }} ht
+                ON  ht.vidyardUserId = vu.userid         
+        WHERE 
+            ht.tracker = 'opened_extension'     
+)
+,
+    created_video AS (
+        SELECT DISTINCT
+            vu.organizationid
+        FROM 
+            {{ ref('tier2_vidyard_user_details') }} vu
+            JOIN {{ ref('tier2_vidyard_user_entities') }} en
+                ON  en.userid = vu.userid         
+        WHERE 
+            en.entity = 'video'
+            and en.origin != 'sample'
+)
+,
     use_case_data AS (
         SELECT * FROM 
         (
@@ -56,12 +79,25 @@ SELECT
     , vu.viewscount
     , vu.activatedFlag
     , uc.combined_usecase
+    , case 
+        when ext.organizationid is not null then 1
+        else 0
+    end as usedchromeextensionflag
+    ,  case 
+        when cv.organizationid is not null then 1
+        else 0
+    end as createdvideoflag
+
 
 FROM 
     {{ ref('tier2_vidyard_user_details') }} vu
     LEFT JOIN first_session_table fst
         ON  vu.organizationid = fst.organizationid     
     LEFT JOIN use_case_data uc
-        ON vu.organizationid = uc.organizationid        
+        ON vu.organizationid = uc.organizationid 
+    LEFT JOIN used_chrome_extension ext
+        ON vu.organizationid = ext.organizationid 
+    LEFT JOIN created_video cv
+        ON vu.organizationid = cv.organizationid
 WHERE 
     (fst.rn = 1 or fst.rn is null)
