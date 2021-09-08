@@ -11,7 +11,7 @@ SELECT
         global_session.device_type as deviceType,
         global_session.browser as browser,
         --global_session.browser_type as browserType,
-        global_session.vidyard_platform as vidyardPlatform,
+        --global_session.vidyard_platform as vidyardPlatform,
         global_session.referrer as referrer,
         global_session.landing_page as landingPage,
         global_session.landing_page_query as landingPageQuery,
