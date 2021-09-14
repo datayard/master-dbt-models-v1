@@ -49,14 +49,14 @@ SELECT
       , cm.opportunityClosedWonDate
       , cm.campaign_sourcedby
       , c.campaignid as parentCampaignId
-      , coalesce(c.campaignName, cm.campaign_name) as parent_campaign
-      , coalesce(c.cta, cm.campaign_cta) as parent_cta_type
-      , coalesce (c.channelPicklist, cm.campaign_channelpicklist) as parent_channel
-      , c.ctasubtype as parent_ctasubtype
-      , coalesce(cm.campaign_name, c.campaignName) as child_campaign
-      , coalesce(cm.campaign_cta, c.cta) as child_cta_type
-      , coalesce (cm.campaign_channelpicklist, c.channelpicklist) as child_channel
-      , cm.campaign_ctasubtype as child_ctasubtype
+      , coalesce(c.campaignName, cm.campaign_name) as parentCampaign
+      , coalesce(c.cta, cm.campaign_cta) as parentCTAtype
+      , coalesce (c.channelPicklist, cm.campaign_channelpicklist) as parentChannel
+      , c.ctasubtype as parentCTAsubtype
+      , coalesce(cm.campaign_name, c.campaignName) as childCampaign
+      , coalesce(cm.campaign_cta, c.cta) as childCTAtype
+      , coalesce (cm.campaign_channelpicklist, c.channelpicklist) as childChannel
+      , cm.campaign_ctasubtype as childCTAsubtype
 
 FROM {{ ref('tier2_salesforce_contact') }} as u
 JOIN {{ ref('tier2_salesforce_campaign_and_members') }} as cm
