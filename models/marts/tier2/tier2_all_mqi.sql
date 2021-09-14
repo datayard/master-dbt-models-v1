@@ -23,6 +23,8 @@ SELECT
       , coalesce(cm.campaign_cta, c.cta) as childCTAtype
       , coalesce (cm.campaign_channelpicklist, c.channelpicklist) as childChannel
       , cm.campaign_ctasubtype as childCTAsubtype
+      , cm.response_status__c as response
+      , u.persona__c as persona
 
 FROM {{ ref('tier2_salesforce_lead') }} as u
 JOIN {{ ref('tier2_salesforce_campaign_and_members') }} as cm
@@ -57,6 +59,8 @@ SELECT
       , coalesce(cm.campaign_cta, c.cta) as childCTAtype
       , coalesce (cm.campaign_channelpicklist, c.channelpicklist) as childChannel
       , cm.campaign_ctasubtype as childCTAsubtype
+      , cm.response_status__c as response
+      , u.persona__c as persona
 
 FROM {{ ref('tier2_salesforce_contact') }} as u
 JOIN {{ ref('tier2_salesforce_campaign_and_members') }} as cm
