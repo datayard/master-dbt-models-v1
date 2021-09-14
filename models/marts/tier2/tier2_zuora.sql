@@ -67,8 +67,10 @@ SELECT a.accountid
          , rp.amendmenttype
          , rp.subscriptionversionamendmentid AS rpsubscriptionversionamendmentid
          , rp.triggersync
+         , rpc.mrr
     FROM {{ ref('stg_zuora_rate_plan') }} AS rp
              JOIN {{ ref('stg_zuora_subscription') }} AS s ON s.subscriptionid = rp.subscriptionid
+             JOIN {{ ref('stg_zuora_rate_plan_charge') }} AS rpc ON rpc.rateplanid = rp.rateplanid
              JOIN {{ ref('stg_zuora_account') }} AS a ON a.accountid = s.accountid
              JOIN {{ ref('stg_zuora_product_rate_plan') }} AS prp ON prp.productrateplanid = rp.productrateplanid
              JOIN {{ ref('stg_zuora_product') }} AS p ON p.productid = prp.productid
