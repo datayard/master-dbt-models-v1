@@ -1,5 +1,5 @@
 SELECT
-        u.leadid
+        u.leadid as id
       , u.email
       , u.domainType
       , cm.createdDate as mqi_date
@@ -33,7 +33,7 @@ WHERE
       u.isconverted = 'false' -- need to ignore leads that were converted to contact
 UNION
 SELECT
-        u.contactId
+        u.contactId as id
       , u.email
       , u.domainType
       , cm.createdDate as mqi_date
