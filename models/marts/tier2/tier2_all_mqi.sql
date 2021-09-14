@@ -15,10 +15,15 @@ SELECT
       , cm.opportunityClosedWonDate
       , cm.campaignSourcedBy
       , c.campaignid as parentCampaignId
-      , coalesce(c.campaignName, cm.campaign_name) as campaign
-      , coalesce(c.cta, cm.campaign_cta) as cta_type
-      , coalesce (c.channelPicklist, cm.campaign_channelpicklist) as channel
-      , c.campaign_ctasubtype
+      , coalesce(c.campaignName, cm.campaign_name) as parent_campaign
+      , coalesce(c.cta, cm.campaign_cta) as parent_cta_type
+      , coalesce (c.channelPicklist, cm.campaign_channelpicklist) as parent_channel
+      , c.ctasubtype as parent_ctasubtype
+      , coalesce(cm.campaign_name, c.campaignName) as child_campaign
+      , coalesce(cm.campaign_cta, c.cta) as child_cta_type
+      , coalesce (cm.campaign_channelpicklist, c.channelpicklist) as child_channel
+      , cm.campaign_ctasubtype as child_ctasubtype
+
 FROM {{ ref('tier2_salesforce_lead') }} as u
 JOIN {{ ref('tier2_salesforce_campaign_and_members') }} as cm
     ON cm.leadid = u.leadid
@@ -44,10 +49,15 @@ SELECT
       , cm.opportunityClosedWonDate
       , cm.campaign_sourcedby
       , c.campaignid as parentCampaignId
-      , coalesce(c.campaignName, cm.campaign_name) as campaign
-      , coalesce(c.cta, cm.campaign_cta) as cta_type
-      , coalesce (c.channelPicklist, cm.campaign_channelpicklist) as channel
-      , c.ctaSubtype
+      , coalesce(c.campaignName, cm.campaign_name) as parent_campaign
+      , coalesce(c.cta, cm.campaign_cta) as parent_cta_type
+      , coalesce (c.channelPicklist, cm.campaign_channelpicklist) as parent_channel
+      , c.ctasubtype as parent_ctasubtype
+      , coalesce(cm.campaign_name, c.campaignName) as child_campaign
+      , coalesce(cm.campaign_cta, c.cta) as child_cta_type
+      , coalesce (cm.campaign_channelpicklist, c.channelpicklist) as child_channel
+      , cm.campaign_ctasubtype as child_ctasubtype
+
 FROM {{ ref('tier2_salesforce_contact') }} as u
 JOIN {{ ref('tier2_salesforce_campaign_and_members') }} as cm
     ON cm.contactId = u.contactId
