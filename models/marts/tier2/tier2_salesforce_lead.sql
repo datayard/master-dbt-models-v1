@@ -21,6 +21,7 @@ SELECT leadId
          , statusReason
          , reasonUnqualified
          , ballerScore
+         , domainType
 
     FROM 
         {{ ref('stg_salesforce_lead') }}
