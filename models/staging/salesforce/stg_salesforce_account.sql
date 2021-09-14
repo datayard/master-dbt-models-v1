@@ -3,7 +3,7 @@ SELECT
     , LEFT(sfdc_account.id, 15) as accountId_trimmed
     , sfdc_account.name as accountName
     , sfdc_account.isdeleted as isDeleted
-    , sfdc_account.type
+    , sfdc_account.type as accountType
     , sfdc_account.parentid as parentAccountId
     , sfdc_account.phone as accountPhone
     , sfdc_account.industry as accountIndustry
