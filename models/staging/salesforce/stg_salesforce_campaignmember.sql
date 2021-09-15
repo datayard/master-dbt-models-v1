@@ -28,6 +28,7 @@ SELECT
 		, sfdc_campaignmember.opportunity__c as opportunityId
 		, sfdc_campaignmember.status_reason__c as statusReason
 		, sfdc_campaignmember.current_status_reason__c as currentStatusReason
+        , sfdc_campaignmember.response_status__c as responseStatus
 
  FROM 
  		{{ source ('salesforce_production' , 'campaignmember') }} as sfdc_campaignmember
