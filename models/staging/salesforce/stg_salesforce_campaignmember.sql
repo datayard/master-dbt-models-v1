@@ -12,13 +12,13 @@ SELECT
 		, sfdc_campaignmember.campaign_sourced_by__c as campaignSourcedBy
 		, sfdc_campaignmember.mql__c as mql
 		, sfdc_campaignmember.mql_date_and_time__c as mqlDateGMT
-		, convert_timezone('EDT', sfdc_campaignmember.mql_date_and_time__c::timestamp) as mqlDateEDT
+		, convert_timezone('EST', sfdc_campaignmember.mql_date_and_time__c::timestamp) as mqlDateEST
 		, sfdc_campaignmember.sal__c as sal
 		, sfdc_campaignmember.sal_date_and_time__c as salDateGMT
-		, convert_timezone('EDT', sfdc_campaignmember.sal_date_and_time__c::timestamp)as salDateEDT
+		, convert_timezone('EST', sfdc_campaignmember.sal_date_and_time__c::timestamp)as salDateEST
 		, sfdc_campaignmember.sql__c as sql
 		, sfdc_campaignmember.sql_date_and_time__c as sqlDateGMT
-		, convert_timezone('EDT', sfdc_campaignmember.sql_date_and_time__c::timestamp)as sqlDateEDT
+		, convert_timezone('EST', sfdc_campaignmember.sql_date_and_time__c::timestamp)as sqlDateEST
 		, sfdc_campaignmember.sqo__c as sqo
 		, sfdc_campaignmember.sqo_date__c as sqoDate
 		, sfdc_campaignmember.sqo_lost__c as sqoLost
