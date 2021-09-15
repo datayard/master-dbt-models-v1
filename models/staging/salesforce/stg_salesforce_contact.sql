@@ -28,6 +28,7 @@ SELECT
     , sfdc_contact.mailingstate as mailingState
     , sfdc_contact.mailingpostalcode as mailingPostalCode
     , sfdc_contact.mailingcountry as mailingCountry
+    , sfdc_contact.persona__c as persona
     , case
       when split_part (sfdc_contact.email, '@', 2) like '%gmail.com%'
       or split_part (sfdc_contact.email, '@', 2) like '%yahoo%'

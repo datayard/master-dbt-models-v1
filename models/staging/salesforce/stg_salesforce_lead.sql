@@ -23,6 +23,7 @@ SELECT
 		, sfdc_lead.status_reason__c as statusReason
 		, sfdc_lead.reason_unqualified__c as reasonUnqualified
 		, sfdc_lead.baller_score__c as ballerScore
+        , sfdc_lead.persona__c as persona
         , case
               when split_part(sfdc_lead.email, '@', 2) like '%gmail.com%'
               or split_part(sfdc_lead.email, '@', 2) like '%yahoo%'
