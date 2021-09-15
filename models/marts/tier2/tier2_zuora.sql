@@ -26,6 +26,7 @@ SELECT a.accountid
          , a.vidyardAccountId
          , s.cancelleddate
          , s.contractstartdate
+         , s.createddate AS subsCreatedDate
          , s.currentterm
          , s.currenttermperiodtype
          , s.defaultpaymentmethodid
