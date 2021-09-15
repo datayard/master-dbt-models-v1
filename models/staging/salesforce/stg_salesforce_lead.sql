@@ -23,6 +23,7 @@ SELECT
 		, sfdc_lead.status_reason__c as statusReason
 		, sfdc_lead.reason_unqualified__c as reasonUnqualified
 		, sfdc_lead.baller_score__c as ballerScore
+        , sfdc_lead.persona__c as persona
         , case
               when split_part(sfdc_lead.email, '@', 2) like '%gmail.com%'
               or split_part(sfdc_lead.email, '@', 2) like '%yahoo%'
@@ -54,6 +55,7 @@ SELECT
               or split_part(sfdc_lead.email, '@', 2) like '%web.de'
               or split_part(sfdc_lead.email, '@', 2) like '%wp.pl'
               or split_part(sfdc_lead.email, '@', 2) like '%getnada.com'
+              or split_part(sfdc_lead.email, '@', 2) like '%tutanota.com%'
                 then 'personal'
               when split_part(sfdc_lead.email, '@', 2) like '%.edu%'
               or split_part(sfdc_lead.email, '@', 2) like '%edsfdc_lead.%'

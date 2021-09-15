@@ -2,18 +2,22 @@ SELECT
         u.leadid as id
       , u.email
       , u.domainType
+      , u.persona
       , cm.createdDate as mqi_date
-      , cm.mqlDate as mql_date
+      , cm.mqlDateGMT
+      , cm.mqlDateEST
       , cm.mql
       , cm.sal
-      , cm.salDate
+      , cm.salDateGMT
+      , cm.salDateEST
       , cm.sql
-      , cm.sqlDate
+      , cm.sqlDateGMT
+      , cm.sqlDateEST
       , cm.sqo
       , cm.sqoDate
       , cm.won
       , cm.opportunityClosedWonDate
-      , cm.campaignSourcedBy
+      , cm.campaign_sourcedby
       , c.campaignid as parentCampaignId
       , coalesce(c.campaignName, cm.campaign_name) as parentCampaign
       , coalesce(c.cta, cm.campaign_cta) as parentCTAtype
@@ -22,10 +26,8 @@ SELECT
       , coalesce(cm.campaign_name, c.campaignName) as childCampaign
       , coalesce(cm.campaign_cta, c.cta) as childCTAtype
       , coalesce (cm.campaign_channelpicklist, c.channelpicklist) as childChannel
-      , cm.campaign_ctasubtype as childCTAsubtype
-      , cm.response_status__c as response
-      , u.persona__c as persona
-
+      , cm.campaign_ctasubtype as childCTAsubtype    
+      , cm.responseStatus
 FROM {{ ref('tier2_salesforce_lead') }} as u
 JOIN {{ ref('tier2_salesforce_campaign_and_members') }} as cm
     ON cm.leadid = u.leadid
@@ -38,13 +40,17 @@ SELECT
         u.contactId as id
       , u.email
       , u.domainType
+      , u.persona
       , cm.createdDate as mqi_date
-      , cm.mqlDate as mql_date
+      , cm.mqlDateGMT
+      , cm.mqlDateEST
       , cm.mql
       , cm.sal
-      , cm.salDate
+      , cm.salDateGMT
+      , cm.salDateEST
       , cm.sql
-      , cm.sqlDate
+      , cm.sqlDateGMT
+      , cm.sqlDateEST
       , cm.sqo
       , cm.sqoDate
       , cm.won
@@ -59,8 +65,8 @@ SELECT
       , coalesce(cm.campaign_cta, c.cta) as childCTAtype
       , coalesce (cm.campaign_channelpicklist, c.channelpicklist) as childChannel
       , cm.campaign_ctasubtype as childCTAsubtype
-      , cm.response_status__c as response
-      , u.persona__c as persona
+      , cm.responseStatus
+
 
 FROM {{ ref('tier2_salesforce_contact') }} as u
 JOIN {{ ref('tier2_salesforce_campaign_and_members') }} as cm
