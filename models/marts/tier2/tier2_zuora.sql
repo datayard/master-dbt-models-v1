@@ -69,6 +69,7 @@ SELECT a.accountid
          , rp.subscriptionversionamendmentid AS rpsubscriptionversionamendmentid
          , rp.triggersync
          , rpc.mrr
+         , row_number() over(partition by s.originalsubscriptionid order by (DATE(s.createddate))desc) = 1  as latest_subscription
     FROM {{ ref('stg_zuora_rate_plan') }} AS rp
              JOIN {{ ref('stg_zuora_subscription') }} AS s ON s.subscriptionid = rp.subscriptionid
              JOIN {{ ref('stg_zuora_rate_plan_charge') }} AS rpc ON rpc.rateplanid = rp.rateplanid
