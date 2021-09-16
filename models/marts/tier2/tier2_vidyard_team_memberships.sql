@@ -14,4 +14,4 @@ FROM
     JOIN {{ ref('stg_vidyard_team_memberships') }} tm
         ON tm.userid = vud2.userid
     JOIN {{ ref('stg_vidyard_teams') }} t
-        ON t.teamid = tm.teamid and t.accountid = vud2.accountid
+        ON t.teamid = tm.teamid
