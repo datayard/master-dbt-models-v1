@@ -26,9 +26,8 @@ SELECT
       , coalesce(cm.campaign_name, c.campaignName) as childCampaign
       , coalesce(cm.campaign_cta, c.cta) as childCTAtype
       , coalesce (cm.campaign_channelpicklist, c.channelpicklist) as childChannel
-      , cm.campaign_ctasubtype as childCTAsubtype
+      , cm.campaign_ctasubtype as childCTAsubtype    
       , cm.responseStatus
-
 FROM {{ ref('tier2_salesforce_lead') }} as u
 JOIN {{ ref('tier2_salesforce_campaign_and_members') }} as cm
     ON cm.leadid = u.leadid
@@ -38,7 +37,7 @@ WHERE
       u.isconverted = 'false' -- need to ignore leads that were converted to contact
 UNION
 SELECT
-        u.contactId
+        u.contactId as id
       , u.email
       , u.domainType
       , u.persona
@@ -67,6 +66,7 @@ SELECT
       , coalesce (cm.campaign_channelpicklist, c.channelpicklist) as childChannel
       , cm.campaign_ctasubtype as childCTAsubtype
       , cm.responseStatus
+
 
 FROM {{ ref('tier2_salesforce_contact') }} as u
 JOIN {{ ref('tier2_salesforce_campaign_and_members') }} as cm
