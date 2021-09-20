@@ -74,11 +74,11 @@ select
     sm.*,
     fm.mqi_date as firstMQIdate,
     rm.mqi_date as secondMQIdate,
-    fmql.mqldate,
-    fsal.saldate,
-    fsql.sqldate,
-    fsqo.sqodate,
-    fwon.wondate
+    fmql.mqldate as firstmqldate,
+    fsal.saldate as firstsaldate,
+    fsql.sqldate as firstsqldate,
+    fsqo.sqodate as firstsqodate,
+    fwon.wondate as firstwondate
 from {{ ref('tier2_sorted_mqi') }} sm
 left join first_mqi fm on sm.email = fm.email
 left join second_mqi rm on sm.email = rm.email
