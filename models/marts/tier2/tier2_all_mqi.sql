@@ -3,6 +3,7 @@ SELECT
       , u.email
       , u.domainType
       , u.persona
+      , u.accountId
       , cm.createdDate as mqi_date
       , cm.mqlDateGMT
       , cm.mqlDateEST
@@ -41,6 +42,7 @@ SELECT
       , u.email
       , u.domainType
       , u.persona
+      , u.accountId
       , cm.createdDate as mqi_date
       , cm.mqlDateGMT
       , cm.mqlDateEST
