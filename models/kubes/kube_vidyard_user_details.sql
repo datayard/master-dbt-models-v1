@@ -101,3 +101,4 @@ FROM
         ON vu.organizationid = cv.organizationid
 WHERE 
     (fst.rn = 1 or fst.rn is null)
+    and vu.classification NOT IN ('anomaly','orphan','unknown')
