@@ -2,6 +2,7 @@ SELECT
     -- User Teams Folders
     utft2.userid
     , utft2.organizationid
+    , utft2.accountid
 
     -- User Classification
     , uc.personal_account_type
@@ -15,6 +16,7 @@ SELECT
 
     --org_name, created_date, updated_date, createdbyclientid, signup_source
     , vostg.name
+    , vostg.orgType
     , vostg.createddate
     , vostg.updateddate
     , vostg.createdbyclientid
