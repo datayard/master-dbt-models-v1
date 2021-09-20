@@ -1,17 +1,16 @@
-SELECT
-    'team' AS entity                               
-    , vud2.userid                                  
-    , t.accountid AS organizationid                
-    , t.teamid AS entityid                         
-    , tm.teammembershipid AS childentityid         
-    , tm.createddate as createddate                
-    , tm.updateddate as updateddate                
-    , vud2.orgType                       
+SELECT                             
+    vud2.userid                                  
+    , t.accountid             
+    , t.teamid                         
+    , tm.teammembershipid    
+    , tm.createddate                
+    , tm.updateddate as inviteaccepteddate               
+    , vud2.orgtype                       
     , tm.inviteaccepted                            
     , t.isadmin                                    
 FROM
-    {{ ref('tier2_vidyard_user_details') }} vud2
-    JOIN {{ ref('stg_vidyard_team_memberships') }} tm
-        ON tm.userid = vud2.userid
-    JOIN {{ ref('stg_vidyard_teams') }} t
+    {{ ref('stg_vidyard_teams') }} t
+    LEFT JOIN {{ ref('stg_vidyard_team_memberships') }} tm
         ON t.teamid = tm.teamid
+    LEFT JOIN {{ ref('tier2_vidyard_user_details') }} vud2    
+        ON tm.userid = vud2.userid 
