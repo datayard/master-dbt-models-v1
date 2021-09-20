@@ -1,3 +1,4 @@
 target/
+tier2_sorted_mqi, tier2_first_mqi
 dbt_modules/
 logs/
