@@ -1,5 +1,6 @@
 SELECT 
         am.email
+      , am.accountId
       , am.id
       , am.domainType
       , am.domain
