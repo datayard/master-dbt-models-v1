@@ -2,6 +2,12 @@ SELECT
         u.leadid as id
       , u.email
       , u.domainType
+      , case
+   		when u.email like '%vidyard.com' then 1
+        when u.email like '%viewedit.com' then 1
+   		else 0
+      end as excludeEmail
+      , split_part(u.email, '@', 2) as domain
       , u.persona
       , u.accountId
       , cm.createdDate as mqi_date
@@ -41,6 +47,12 @@ SELECT
         u.contactId as id
       , u.email
       , u.domainType
+      , case
+   		when u.email like '%vidyard.com' then 1
+        when u.email like '%viewedit.com' then 1
+   		else 0
+      end as excludeEmail
+      , split_part(u.email, '@', 2) as domain
       , u.persona
       , u.accountId
       , cm.createdDate as mqi_date
