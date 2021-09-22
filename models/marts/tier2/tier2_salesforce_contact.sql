@@ -26,5 +26,7 @@ SELECT contactId
          , mailingState
          , mailingPostalCode
          , mailingCountry
+         , domainType
+         , persona
     FROM 
         {{ ref('stg_salesforce_contact') }}
