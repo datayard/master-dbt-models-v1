@@ -12,6 +12,6 @@ SELECT
         vidyard_events.CreatedDate as eventCreatedDate,
         vidyard_events.UpdatedDate as eventUpdatedDate
 FROM
-    {{ ref('stg_vidyard_event_joins') }} as vidyard_event_joins
-    left join {{ ref('stg_vidyard_events') }} as vidyard_events
-    on vidyard_event_joins.eventid = vidyard_events.eventid
+    {{ ref('stg_vidyard_events') }} as vidyard_events
+    LEFT JOIN {{ ref('stg_vidyard_event_joins') }} as vidyard_event_joins
+        ON vidyard_event_joins.eventid = vidyard_events.eventid
