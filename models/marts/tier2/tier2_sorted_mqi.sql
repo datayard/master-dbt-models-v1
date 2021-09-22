@@ -1,7 +1,10 @@
 SELECT 
         am.email
+      , am.accountId
       , am.id
       , am.domainType
+      , am.domain
+      , am.excludeemail
       , am.mqi_date
       , am.mqlDateGMT
       , am.mqlDateEST
