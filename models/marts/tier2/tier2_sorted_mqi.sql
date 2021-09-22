@@ -1,7 +1,10 @@
 SELECT 
         am.email
+      , am.accountId
       , am.id
       , am.domainType
+      , am.domain
+      , am.excludeemail
       , am.mqi_date
       , am.mqlDateGMT
       , am.mqlDateEST
@@ -57,7 +60,7 @@ SELECT
       
 FROM {{ ref('tier2_all_mqi') }} as am
 LEFT JOIN {{ ref('tier2_salesforce_account') }} as a
-    ON am.id = a.accountId
+    ON am.accountId = a.accountId
 /* LEFT JOIN {{ ref('stg_salesforce_account') }} as dt
          on dt.emailDomain = split_part(am.email, '@', 2) 
 */
