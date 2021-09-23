@@ -15,6 +15,14 @@ with first_mqi as (
     where sm.rn = 2
       and (sm.user_rn != 2 or sm.user_rn is null)
   )
+  , all_mqi as (
+    select
+      sm.email
+      , sm.mqi_date
+    from
+       {{ ref('tier2_sorted_mqi') }} sm
+    where (sm.user_rn != 2 or sm.user_rn is null)
+  )
   , first_mql as (
     select
       sm.email
@@ -76,6 +84,7 @@ select
     fm.email as firstMQIemail,
     rm.mqi_date as secondMQIdate,
     rm.email as secondMQIemail,
+    am.email as allmqiemail,
     fmql.mqldate as firstmqldate,
     fmql.email as firstmqlemail,
     fsal.saldate as firstsaldate,
@@ -89,6 +98,7 @@ select
 from {{ ref('tier2_sorted_mqi') }} sm
 left join first_mqi fm on sm.email = fm.email
 left join second_mqi rm on sm.email = rm.email
+left join all_mqi am on sm.email = am.email
 left join first_mql fmql on sm.email = fmql.email
 left join first_sal fsal on sm.email = fsal.email
 left join first_sql fsql on sm.email = fsql.email
