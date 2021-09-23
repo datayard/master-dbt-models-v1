@@ -16,6 +16,8 @@ sources:
 
       - name: kpis
 
+      - name: free_domain_list
+
 models:
   # Documentation for Staging Intercom table
   - name: kpis
@@ -32,3 +34,9 @@ models:
 
       - name: target
         description: numeric goal for kpi
+
+  - name: free_domain_list
+    columns: 
+
+      - name: domain
+        description: the known free domain
