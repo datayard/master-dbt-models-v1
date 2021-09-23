@@ -49,6 +49,8 @@ sources:
       - name: vidyard_chapters
 
       - name: vidyard_referrals
+
+      - name: vidyard_active_embeds
       
       
 
@@ -606,4 +608,17 @@ models:
         description: ''  
 
       - name: updatedAt
-        description: ''             
+        description: ''
+
+ # Documentation for VIDYARD_ACTIVE_EMBEDS table from PUBLIC schema
+  - name: stg_vidyard_active_embeds
+    columns:
+
+      - name: id
+        description: unique identifier for this table
+        tests:
+          - unique
+          - not_null
+
+      - name: account_id
+        description: use to join to vidyard_players table                      
