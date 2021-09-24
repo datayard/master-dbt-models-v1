@@ -27,6 +27,7 @@ FROM {{ ref('stg_vidyard_users') }} as u
 WHERE
     ((o.orgtype = 'self_serve' and o.organizationid = o.accountid)
     OR (o.orgtype IS NULL and o.organizationid != o.accountid)
+    OR (o.orgtype IS NULL and o.organizationid = o.accountid)
     OR (o.orgtype = 'self_serve' and o.organizationid != o.accountid)
     OR (o.orgtype IS NULL and o.organizationid IS NULL))
 
@@ -36,7 +37,7 @@ SELECT
     u.userid
     , NULL AS ownerid
     , NULL AS organizationid
-    , accountid
+    , t.accountid
     , NULL AS parentid
     , NULL AS orgtype
     , u.email
@@ -46,7 +47,7 @@ FROM
     --dbt_vidyard_master.stg_vidyard_users u
     JOIN {{ref ('stg_vidyard_team_memberships') }} as tm
     --JOIN dbt_vidyard_master.stg_vidyard_team_memberships tm
-        ON tm.userid = u.userid and tm.inviteaccepted = true
+        ON tm.userid = u.userid --and tm.inviteaccepted = true
     JOIN {{ ref('stg_vidyard_teams') }} as t
     --JOIN dbt_vidyard_master.stg_vidyard_teams t
         ON t.teamid = tm.teamid
