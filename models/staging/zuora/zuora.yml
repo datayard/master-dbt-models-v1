@@ -413,12 +413,14 @@ models:
 
         - name: mrr
 
+        - name: chargemodel
+
     - name: stg_zuora_rate_plan_charge_tier
       columns:
-        - name: id
+        - name: rateplanchargetierid
           tests:
             - unique
             - not_null
         
-        - name: discount_percentage
+        - name: discountpercentage
 
