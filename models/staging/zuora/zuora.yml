@@ -28,6 +28,8 @@ sources:
 
       - name: rate_plan_charge
 
+      - name: rate_plan_charge_tier
+
 models:
     # Documentation for ACCOUNT table from ZUORA schema
     - name: stg_zuora_account
@@ -410,4 +412,13 @@ models:
             - not_null
 
         - name: mrr
+
+    - name: stg_zuora_rate_plan_charge_tier
+      columns:
+        - name: id
+          tests:
+            - unique
+            - not_null
+        
+        - name: discount_percentage
 
