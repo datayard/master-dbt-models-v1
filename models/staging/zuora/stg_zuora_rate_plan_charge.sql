@@ -1,5 +1,6 @@
 SELECT 
-        rpc.rate_plan_id as rateplanid
+        rpc.id as rateplanchargeid
+        , rpc.rate_plan_id as rateplanid
         , rpc.mrr as mrr
         , rpc.charge_model as chargemodel
 FROM
