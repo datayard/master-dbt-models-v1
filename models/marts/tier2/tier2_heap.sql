@@ -237,3 +237,77 @@ SELECT
     -- this filter will only be applied on an incremental run
     WHERE pv.eventtime > (select max(eventtime) from {{ this }} where tracker = 'video_upload' )
     {% endif %}
+
+    UNION ALL
+
+    SELECT
+        ac.eventID
+        , u.identifier 
+        , u.vidyardUserId
+        , ac.userID
+        , ac.sessionID
+        , ac.sessionTime
+        , ac.eventTime
+        , ac.landingPage
+        , ac.domain
+        , ac.channels
+        , ac.path
+        , NULL AS derived_channel
+        , 'admin_combo' AS tracker
+    FROM
+        {{ ref('stg_govideo_production_admin_combo') }} ac
+        JOIN {{ ref('stg_govideo_production_users') }} u
+                    ON ac.userid = u.userid AND u.identifier IS NOT NULL
+        {% if is_incremental() %}
+        -- this filter will only be applied on an incremental run
+        WHERE ac.eventtime > (select max(eventtime) from {{ this }} where tracker = 'admin_combo' )
+        {% endif %}
+
+    UNION ALL
+
+    SELECT
+        iac.eventID
+        , u.identifier 
+        , u.vidyardUserId
+        , iac.userID
+        , iac.sessionID
+        , iac.sessionTime
+        , iac.eventTime
+        , iac.landingPage
+        , iac.domain
+        , iac.channels
+        , iac.path
+        , NULL AS derived_channel
+        , 'insights_analytics_combo' AS tracker
+    FROM
+        {{ ref('stg_govideo_production_insights_analytics_combo') }} iac
+        JOIN {{ ref('stg_govideo_production_users') }} u
+                    ON iac.userid = u.userid AND u.identifier IS NOT NULL
+        {% if is_incremental() %}
+        -- this filter will only be applied on an incremental run
+        WHERE iac.eventtime > (select max(eventtime) from {{ this }} where tracker = 'insights_analytics_combo' )
+        {% endif %}
+    UNION ALL
+
+    SELECT
+        mc.eventID
+        , u.identifier 
+        , u.vidyardUserId
+        , mc.userID
+        , mc.sessionID
+        , mc.sessionTime
+        , mc.eventTime
+        , mc.landingPage
+        , mc.domain
+        , mc.channels
+        , mc.path
+        , NULL AS derived_channel
+        , 'manage_combo' AS tracker
+    FROM
+        {{ ref('stg_govideo_production_manage_combo') }} mc
+        JOIN {{ ref('stg_govideo_production_users') }} u
+                    ON mc.userid = u.userid AND u.identifier IS NOT NULL
+        {% if is_incremental() %}
+        -- this filter will only be applied on an incremental run
+        WHERE mc.eventtime > (select max(eventtime) from {{ this }} where tracker = 'manage_combo' )
+        {% endif %}        
