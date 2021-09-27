@@ -422,11 +422,8 @@ models:
           tests:
             - unique
             - not_null
-<<<<<<< HEAD
 
         - name: rateplanchargeid
-=======
->>>>>>> 7d0853c2c25fb1a4e59259600d6b9ba8d6fe19ea
         
         - name: discountpercentage
 
