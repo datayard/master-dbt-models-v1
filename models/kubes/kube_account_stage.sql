@@ -76,9 +76,7 @@ with first_mqi as (
       sm.won = 'true'
     group by
       1
-  ),
-
-   x as (
+  )
 
 select
     fm.*,
@@ -94,6 +92,9 @@ left join first_mql fmql on fm.email = fmql.email
 left join first_sal fsal on fm.email = fsal.email
 left join first_sql fsql on fm.email = fsql.email
 left join first_sqo fsqo on fm.email = fsqo.email
-left join first_won fwon on fm.email = fwon.email)
+left join first_won fwon on fm.email = fwon.email
 
-select email from x group by email having count(*) > 1
+
+
+
+
