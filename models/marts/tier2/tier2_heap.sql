@@ -158,7 +158,7 @@ SELECT
     FROM
         {{ ref('stg_govideo_production_vidyard_com_any_pageview') }} vidcompv
             JOIN {{ ref('stg_govideo_production_users') }} u
-                ON vidcompv.userid = u.userid AND u.identifier IS NOT NULL
+                ON vidcompv.userid = u.userid
     {% if is_incremental() %}
     -- this filter will only be applied on an incremental run
     WHERE vidcompv.eventtime > (select max(eventtime) from {{ this }} where tracker = 'vy_com_page_view' )
