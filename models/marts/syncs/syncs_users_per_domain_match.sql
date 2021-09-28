@@ -8,14 +8,23 @@ WITH maus as (
         mau = 1
     GROUP BY
         mau.domain
-)
+),
+    WEU as (
+        SELECT
+            COUNT (distinct weu.userid) as weus,
+            weu.domain
+        FROM
+            dbt_vidyard_master.tier2_weu as weu
+        WHERE
+            true
+        GROUP BY
+            weu.domain
+    )
 
 SELECT
-    sfdcAccount.accountid,
-    sfdcAccount.accountname,
-    sfdcAccount.accounttype,
     usrdetails.domain,
     maus.maus,
+    WEU.weus,
     COUNT (CASE WHEN usrdetails.personal_account_type like 'free' then 1 end) as free,
     COUNT (CASE WHEN usrdetails.personal_account_type like 'pro' then 1 end) as pro,
     COUNT (CASE WHEN usrdetails.personal_account_type like 'enterprise' then 1 end) as enterprise,
@@ -28,20 +37,20 @@ LEFT JOIN
 ON
     maus.domain = usrdetails.domain
 LEFT JOIN
-    {{ ref('tier2_salesforce_account') }} sfdcAccount
-    --dbt_vidyard_master.tier2_salesforce_account as sfdcAccount
+    WEU
 ON
-    usrdetails.domain = sfdcAccount.emaildomain
+    WEU.domain = usrdetails.domain
 WHERE
     usrdetails.domaintype like 'business'
+    AND usrdetails.createddate  >= DATEADD(MONTH, -6, current_date)
 GROUP BY
-    sfdcAccount.accountid,
-    sfdcAccount.accountname,
-    sfdcAccount.accounttype,
     usrdetails.domain,
-    maus.maus
+    maus.maus,
+    WEU.weus
 ORDER BY
-    usrdetails.domain ASC
+    maus.maus ASC
+
+
 
 
 
