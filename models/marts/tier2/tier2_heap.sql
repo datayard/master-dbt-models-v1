@@ -6,7 +6,7 @@
 
 SELECT
         gs.eventid
-        , u.identifier 
+        , u.identifier
         , u.vidyardUserId
         , gs.userid
         , gs.sessionid
@@ -41,7 +41,7 @@ SELECT
 
     SELECT
         oe.eventid
-        , u.identifier 
+        , u.identifier
         , u.vidyardUserId
         , oe.userid
         , oe.sessionid
@@ -67,7 +67,7 @@ SELECT
 
     SELECT
         pv.eventid
-        , u.identifier 
+        , u.identifier
         , u.vidyardUserId
         , pv.userid
         , pv.sessionid
@@ -92,7 +92,7 @@ SELECT
 
     SELECT
         ps.eventid
-        , u.identifier 
+        , u.identifier
         , u.vidyardUserId
         , ps.userid
         , ps.sessionid
@@ -117,7 +117,7 @@ SELECT
 
     SELECT
         ssc.eventid
-        , u.identifier 
+        , u.identifier
         , u.vidyardUserId
         , ssc.userid
         , ssc.sessionid
@@ -143,7 +143,7 @@ SELECT
 
     SELECT
         vidcompv.eventid
-        , u.identifier 
+        , u.identifier
         , u.vidyardUserId
         , vidcompv.userid
         , vidcompv.sessionid
@@ -168,7 +168,7 @@ SELECT
 
     SELECT
         vidcomss.eventid
-        , u.identifier 
+        , u.identifier
         , u.vidyardUserId
         , vidcomss.userid
         , vidcomss.sessionid
@@ -192,7 +192,7 @@ SELECT
 
     SELECT
         pv.eventid
-        , u.identifier 
+        , u.identifier
         , u.vidyardUserId
         , pv.userid
         , pv.sessionid
@@ -217,7 +217,7 @@ SELECT
 
     SELECT
         pv.eventid
-        , u.identifier 
+        , u.identifier
         , u.vidyardUserId
         , pv.userid
         , pv.sessionid
@@ -242,7 +242,7 @@ SELECT
 
     SELECT
         ac.eventID
-        , u.identifier 
+        , u.identifier
         , u.vidyardUserId
         , ac.userID
         , ac.sessionID
@@ -267,7 +267,7 @@ SELECT
 
     SELECT
         iac.eventID
-        , u.identifier 
+        , u.identifier
         , u.vidyardUserId
         , iac.userID
         , iac.sessionID
@@ -291,7 +291,7 @@ SELECT
 
     SELECT
         mc.eventID
-        , u.identifier 
+        , u.identifier
         , u.vidyardUserId
         , mc.userID
         , mc.sessionID
@@ -310,4 +310,29 @@ SELECT
         {% if is_incremental() %}
         -- this filter will only be applied on an incremental run
         WHERE mc.eventtime > (select max(eventtime) from {{ this }} where tracker = 'manage_combo' )
-        {% endif %}        
+        {% endif %}
+
+    UNION ALL
+
+    SELECT
+        cc.eventID
+        , u.identifier
+        , u.vidyardUserId
+        , cc.userID
+        , cc.sessionID
+        , cc.sessionTime
+        , cc.eventTime
+        , cc.landingPage
+        , cc.domain
+        , cc.channels
+        , cc.path
+        , NULL AS derived_channel
+        , 'video_creation_create_combo' AS tracker
+    FROM
+        {{ ref('stg_govideo_production_video_creation_create_combo') }} cc
+        JOIN {{ ref('stg_govideo_production_users') }} u
+                    ON cc.userid = u.userid AND u.identifier IS NOT NULL
+        {% if is_incremental() %}
+        -- this filter will only be applied on an incremental run
+        WHERE cc.eventtime > (select max(eventtime) from {{ this }} where tracker = 'video_creation_create_combo' )
+        {% endif %}
