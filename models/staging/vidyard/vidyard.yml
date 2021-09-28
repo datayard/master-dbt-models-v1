@@ -51,6 +51,8 @@ sources:
       - name: vidyard_referrals
 
       - name: vidyard_active_embeds
+
+      - name: vidyard_invoiced_customers
       
       
 
@@ -621,4 +623,30 @@ models:
           - not_null
 
       - name: account_id
-        description: use to join to team_memberships table                      
+        description: use to join to team_memberships table     
+
+         
+# Documentation for VIDYARD_INVOICED_CUSTOMERS table from PUBLIC schema
+  - name: stg_vidyard_invoiced_customers
+    columns:
+
+      - name: id
+        description: unique identifier for this table
+        tests:
+          - unique
+          - not_null
+
+      - name: accountId
+        description: User Account ID          
+
+      - name: invoicedCustomerId
+        description: User Invoice No   
+
+      - name: active
+        description: User active or not   
+
+      - name: createdAt
+        description: Invoice creation date   
+
+      - name: updatedAt
+        description: Invoice updated at                            

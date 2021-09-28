@@ -16,7 +16,7 @@ SELECT
   split_part(vy_users.email, '@', 2) as email_domain,
   vy_users.userId as vy_user_ID,
   sfdc_contacts.contactId as sfdc_contact_ID,
-  sfdc_leads.id as sfdc_lead_ID,
+  sfdc_leads.leadId as sfdc_lead_ID,
   mkto_leads.leadId as mkto_lead_ID, 
   heap_users.userID as heap_id
 FROM
@@ -34,8 +34,8 @@ LEFT JOIN
 ON
   vy_users.email = mkto_leads.emailAddress
 LEFT JOIN
-  {{('stg_govideo_production_users')}} as  heap_users
+  {{ref('stg_govideo_production_users')}} as  heap_users
 ON
-  vy_users.id = cast(heap_users.identifier as varchar(10))
+  vy_users.userId = cast(heap_users.identifier as varchar(10))
 WHERE
   true
