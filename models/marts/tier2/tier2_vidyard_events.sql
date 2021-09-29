@@ -1,6 +1,6 @@
 SELECT
+        vidyard_events.eventID,
         vidyard_event_joins.eventJoinID,
-        vidyard_event_joins.eventID,
         vidyard_event_joins.ownerType,
         vidyard_event_joins.ownerID,
         vidyard_event_joins.second,
