@@ -1,3 +1,17 @@
+WITH lastSessionDate as (
+    SELECT
+            tier2heap.vidyarduserid,
+            MAX (tier2heap.sessionTime) as lastSessionDate
+        FROM
+            dbt_vidyard_master.tier2_heap as tier2heap
+        WHERE
+            tier2heap.tracker = 'global_session'
+            OR tier2heap.tracker = 'opened_extension'
+            OR tier2heap.tracker = 'product_sessions'
+        GROUP BY
+            1
+)
+
 SELECT
     -- User Teams Folders
     utft2.userid
@@ -29,6 +43,9 @@ SELECT
     , vomstg.videoswithviews
     , vomstg.viewscount
     , vomstg.activatedFlag
+
+    -- last session date
+    , lstsd.lastSessionDate
 FROM
     --dbt_vidyard_master.tier2_user_teams_folders utft2
     {{ ref('tier2_user_teams_folders')}} as utft2
@@ -48,4 +65,7 @@ FROM
     --left join dbt_vidyard_master.stg_vidyard_org_metrics vomstg
     LEFT JOIN {{ ref('stg_vidyard_org_metrics') }} as vomstg
         on vomstg.organizationid = utft2.organizationid
+
+    LEFT JOIN lastSessionDate as lstsd
+        on lstsd.vidyardUserId = utft2.userid
 
