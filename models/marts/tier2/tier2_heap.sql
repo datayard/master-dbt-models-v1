@@ -16,6 +16,7 @@ SELECT
         , gs.domain
         , gs.channels
         , gs.path
+        , gs.country
         , CASE
                WHEN gs.landingpage LIKE '%share.vidyard.com%'
                    THEN 'Product'
@@ -51,7 +52,9 @@ SELECT
         , oe.domain
         , oe.channels
         , oe.path
+        , oe.country
         , null AS derived_channel
+        , oe.country
         , 'opened_extension' AS tracker
     FROM
         {{ ref('stg_govideo_production_opened_extension') }} oe
@@ -77,7 +80,9 @@ SELECT
         , pv.domain
         , NULL AS channels
         , pv.path
+        , pv.country
         , NULL AS derived_channel
+        , pv.country
         , 'page_views' AS tracker
     FROM
         {{ ref('stg_govideo_production_pageviews') }} pv
@@ -102,7 +107,9 @@ SELECT
         , ps.domain
         , ps.channels
         , ps.path
+        , ps.country
         , NULL AS derived_channel
+        , ps.country
         , 'product_sessions' AS tracker
     FROM
         {{ ref('stg_govideo_production_product_sessions') }} ps
@@ -127,7 +134,9 @@ SELECT
         , ssc.domain
         , ssc.channels
         , ssc.path
+        , ssc.country
         , NULL AS derived_channel
+        , ssc.country
         , 'sharing_share_combo' AS tracker
     FROM
         {{ ref('stg_govideo_production_sharing_share_combo') }} ssc
@@ -153,7 +162,9 @@ SELECT
         , vidcompv.domain
         , vidcompv.channels
         , vidcompv.path
+        , vidcompv.country
         , NULL AS derived_channel
+        , vidcompv.country
         , 'vy_com_page_view' AS tracker
     FROM
         {{ ref('stg_govideo_production_vidyard_com_any_pageview') }} vidcompv
@@ -178,7 +189,9 @@ SELECT
         , vidcomss.domain
         , vidcomss.channels
         , vidcomss.path
+        , vidcomss.country
         , NULL AS derived_channel
+        , vidcomss.country
         , 'vy_com_sessions' AS tracker
     FROM {{ ref('stg_govideo_production_vidyard_com_sessions') }} vidcomss
         JOIN {{ ref('stg_govideo_production_users') }} u
@@ -202,7 +215,9 @@ SELECT
         , pv.domain
         , NULL AS channels
         , pv.path
+        , pv.country
         , NULL AS derived_channel
+        , pv.country
         , 'video_creation' AS tracker
     FROM
         {{ ref('stg_govideo_production_video_creation_started_to_create_or_upload_a_video_combo') }} pv
@@ -227,7 +242,9 @@ SELECT
         , pv.domain
         , NULL AS channels
         , pv.path
+        , pv.country
         , NULL AS derived_channel
+        , pv.country
         , 'video_upload' AS tracker
     FROM
         {{ ref('stg_govideo_production_video_recorded_or_uploaded') }} pv
@@ -252,6 +269,7 @@ SELECT
         , ac.domain
         , ac.channels
         , ac.path
+        , ac.country
         , NULL AS derived_channel
         , 'admin_combo' AS tracker
     FROM
@@ -277,6 +295,7 @@ SELECT
         , iac.domain
         , iac.channels
         , iac.path
+        , iac.country
         , NULL AS derived_channel
         , 'insights_analytics_combo' AS tracker
     FROM
@@ -301,6 +320,7 @@ SELECT
         , mc.domain
         , mc.channels
         , mc.path
+        , mc.country
         , NULL AS derived_channel
         , 'manage_combo' AS tracker
     FROM
@@ -326,6 +346,7 @@ SELECT
         , cc.domain
         , cc.channels
         , cc.path
+        , cc.country
         , NULL AS derived_channel
         , 'video_creation_create_combo' AS tracker
     FROM
