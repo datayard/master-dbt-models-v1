@@ -1,8 +1,5 @@
-<<<<<<< Updated upstream
-+with sfdc as
-=======
 with sfdc as
->>>>>>> Stashed changes
+
 (
   select * from {{ref('fintier2_sfdc_subscriptions')}}
 )
