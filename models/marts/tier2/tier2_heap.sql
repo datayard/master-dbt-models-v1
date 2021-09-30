@@ -6,7 +6,7 @@
 
 SELECT
         gs.eventid
-        , u.identifier 
+        , u.identifier
         , u.vidyardUserId
         , gs.userid
         , gs.sessionid
@@ -16,6 +16,7 @@ SELECT
         , gs.domain
         , gs.channels
         , gs.path
+        , gs.country
         , CASE
                WHEN gs.landingpage LIKE '%share.vidyard.com%'
                    THEN 'Product'
@@ -41,7 +42,7 @@ SELECT
 
     SELECT
         oe.eventid
-        , u.identifier 
+        , u.identifier
         , u.vidyardUserId
         , oe.userid
         , oe.sessionid
@@ -51,6 +52,7 @@ SELECT
         , oe.domain
         , oe.channels
         , oe.path
+        , oe.country
         , null AS derived_channel
         , 'opened_extension' AS tracker
     FROM
@@ -67,7 +69,7 @@ SELECT
 
     SELECT
         pv.eventid
-        , u.identifier 
+        , u.identifier
         , u.vidyardUserId
         , pv.userid
         , pv.sessionid
@@ -77,6 +79,7 @@ SELECT
         , pv.domain
         , NULL AS channels
         , pv.path
+        , pv.country
         , NULL AS derived_channel
         , 'page_views' AS tracker
     FROM
@@ -92,7 +95,7 @@ SELECT
 
     SELECT
         ps.eventid
-        , u.identifier 
+        , u.identifier
         , u.vidyardUserId
         , ps.userid
         , ps.sessionid
@@ -102,6 +105,7 @@ SELECT
         , ps.domain
         , ps.channels
         , ps.path
+        , ps.country
         , NULL AS derived_channel
         , 'product_sessions' AS tracker
     FROM
@@ -117,7 +121,7 @@ SELECT
 
     SELECT
         ssc.eventid
-        , u.identifier 
+        , u.identifier
         , u.vidyardUserId
         , ssc.userid
         , ssc.sessionid
@@ -127,6 +131,7 @@ SELECT
         , ssc.domain
         , ssc.channels
         , ssc.path
+        , ssc.country
         , NULL AS derived_channel
         , 'sharing_share_combo' AS tracker
     FROM
@@ -143,7 +148,7 @@ SELECT
 
     SELECT
         vidcompv.eventid
-        , u.identifier 
+        , u.identifier
         , u.vidyardUserId
         , vidcompv.userid
         , vidcompv.sessionid
@@ -153,12 +158,13 @@ SELECT
         , vidcompv.domain
         , vidcompv.channels
         , vidcompv.path
+        , vidcompv.country
         , NULL AS derived_channel
         , 'vy_com_page_view' AS tracker
     FROM
         {{ ref('stg_govideo_production_vidyard_com_any_pageview') }} vidcompv
             JOIN {{ ref('stg_govideo_production_users') }} u
-                ON vidcompv.userid = u.userid AND u.identifier IS NOT NULL
+                ON vidcompv.userid = u.userid
     {% if is_incremental() %}
     -- this filter will only be applied on an incremental run
     WHERE vidcompv.eventtime > (select max(eventtime) from {{ this }} where tracker = 'vy_com_page_view' )
@@ -168,7 +174,7 @@ SELECT
 
     SELECT
         vidcomss.eventid
-        , u.identifier 
+        , u.identifier
         , u.vidyardUserId
         , vidcomss.userid
         , vidcomss.sessionid
@@ -178,6 +184,7 @@ SELECT
         , vidcomss.domain
         , vidcomss.channels
         , vidcomss.path
+        , vidcomss.country
         , NULL AS derived_channel
         , 'vy_com_sessions' AS tracker
     FROM {{ ref('stg_govideo_production_vidyard_com_sessions') }} vidcomss
@@ -192,7 +199,7 @@ SELECT
 
     SELECT
         pv.eventid
-        , u.identifier 
+        , u.identifier
         , u.vidyardUserId
         , pv.userid
         , pv.sessionid
@@ -202,6 +209,7 @@ SELECT
         , pv.domain
         , NULL AS channels
         , pv.path
+        , pv.country
         , NULL AS derived_channel
         , 'video_creation' AS tracker
     FROM
@@ -217,7 +225,7 @@ SELECT
 
     SELECT
         pv.eventid
-        , u.identifier 
+        , u.identifier
         , u.vidyardUserId
         , pv.userid
         , pv.sessionid
@@ -227,6 +235,7 @@ SELECT
         , pv.domain
         , NULL AS channels
         , pv.path
+        , pv.country
         , NULL AS derived_channel
         , 'video_upload' AS tracker
     FROM
@@ -242,7 +251,7 @@ SELECT
 
     SELECT
         ac.eventID
-        , u.identifier 
+        , u.identifier
         , u.vidyardUserId
         , ac.userID
         , ac.sessionID
@@ -252,6 +261,7 @@ SELECT
         , ac.domain
         , ac.channels
         , ac.path
+        , ac.country
         , NULL AS derived_channel
         , 'admin_combo' AS tracker
     FROM
@@ -267,7 +277,7 @@ SELECT
 
     SELECT
         iac.eventID
-        , u.identifier 
+        , u.identifier
         , u.vidyardUserId
         , iac.userID
         , iac.sessionID
@@ -277,6 +287,7 @@ SELECT
         , iac.domain
         , iac.channels
         , iac.path
+        , iac.country
         , NULL AS derived_channel
         , 'insights_analytics_combo' AS tracker
     FROM
@@ -291,7 +302,7 @@ SELECT
 
     SELECT
         mc.eventID
-        , u.identifier 
+        , u.identifier
         , u.vidyardUserId
         , mc.userID
         , mc.sessionID
@@ -301,6 +312,7 @@ SELECT
         , mc.domain
         , mc.channels
         , mc.path
+        , mc.country
         , NULL AS derived_channel
         , 'manage_combo' AS tracker
     FROM
@@ -310,4 +322,30 @@ SELECT
         {% if is_incremental() %}
         -- this filter will only be applied on an incremental run
         WHERE mc.eventtime > (select max(eventtime) from {{ this }} where tracker = 'manage_combo' )
-        {% endif %}        
+        {% endif %}
+
+    UNION ALL
+
+    SELECT
+        cc.eventID
+        , u.identifier
+        , u.vidyardUserId
+        , cc.userID
+        , cc.sessionID
+        , cc.sessionTime
+        , cc.eventTime
+        , cc.landingPage
+        , cc.domain
+        , cc.channels
+        , cc.path
+        , cc.country
+        , NULL AS derived_channel
+        , 'video_creation_create_combo' AS tracker
+    FROM
+        {{ ref('stg_govideo_production_video_creation_create_combo') }} cc
+        JOIN {{ ref('stg_govideo_production_users') }} u
+                    ON cc.userid = u.userid AND u.identifier IS NOT NULL
+        {% if is_incremental() %}
+        -- this filter will only be applied on an incremental run
+        WHERE cc.eventtime > (select max(eventtime) from {{ this }} where tracker = 'video_creation_create_combo' )
+        {% endif %}
