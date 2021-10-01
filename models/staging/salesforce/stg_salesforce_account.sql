@@ -7,7 +7,13 @@ SELECT
     , sfdc_account.parentid as parentAccountId
     , sfdc_account.phone as accountPhone
     , sfdc_account.industry as accountIndustry
-    , sfdc_account.employee_segment__c as employeeSegment
+    , case
+        when sfdc_account.ispersonaccount is false and sfdc_account.self_serve_customer__c is true
+          then 'HubSpot Self Serve'
+        when sfdc_account.employee_segment__c = 'UNKNOWN'
+          then 'Emerging'
+        else sfdc_account.employee_segment__c
+      end  as employeeSegment
     , sfdc_account.numberofemployees as numberOfEmployees
     , sfdc_account.annualrevenue as annualRevenue
     , sfdc_account.ownerid as ownerId
