@@ -16,6 +16,7 @@ SELECT
         , gs.domain
         , gs.channels
         , gs.path
+        , gs.country
         , CASE
                WHEN gs.landingpage LIKE '%share.vidyard.com%'
                    THEN 'Product'
@@ -54,6 +55,7 @@ SELECT
         , oe.domain
         , oe.channels
         , oe.path
+        , oe.country
         , null AS derived_channel
         , NULL AS utmcampaign
         , NULL AS utmsource
@@ -83,6 +85,7 @@ SELECT
         , pv.domain
         , NULL AS channels
         , pv.path
+        , pv.country
         , NULL AS derived_channel
         , NULL AS utmcampaign
         , NULL AS utmsource
@@ -111,6 +114,7 @@ SELECT
         , ps.domain
         , ps.channels
         , ps.path
+        , ps.country
         , NULL AS derived_channel
         , NULL AS utmcampaign
         , NULL AS utmsource
@@ -139,6 +143,7 @@ SELECT
         , ssc.domain
         , ssc.channels
         , ssc.path
+        , ssc.country
         , NULL AS derived_channel
         , NULL AS utmcampaign
         , NULL AS utmsource
@@ -168,6 +173,7 @@ SELECT
         , vidcompv.domain
         , vidcompv.channels
         , vidcompv.path
+        , vidcompv.country
         , NULL AS derived_channel
         , vidcompv.utmcampaign
         , vidcompv.utmsource
@@ -196,6 +202,7 @@ SELECT
         , vidcomss.domain
         , vidcomss.channels
         , vidcomss.path
+        , vidcomss.country
         , NULL AS derived_channel
         , NULL AS utmcampaign
         , NULL AS utmsource
@@ -223,6 +230,7 @@ SELECT
         , pv.domain
         , NULL AS channels
         , pv.path
+        , pv.country
         , NULL AS derived_channel
         , NULL AS utmcampaign
         , NULL AS utmsource
@@ -251,6 +259,7 @@ SELECT
         , pv.domain
         , NULL AS channels
         , pv.path
+        , pv.country
         , NULL AS derived_channel
         , NULL AS utmcampaign
         , NULL AS utmsource
@@ -279,6 +288,7 @@ SELECT
         , ac.domain
         , ac.channels
         , ac.path
+        , ac.country
         , NULL AS derived_channel
         , NULL AS utmcampaign
         , NULL AS utmsource
@@ -307,6 +317,7 @@ SELECT
         , iac.domain
         , iac.channels
         , iac.path
+        , iac.country
         , NULL AS derived_channel
         , NULL AS utmcampaign
         , NULL AS utmsource
@@ -334,6 +345,7 @@ SELECT
         , mc.domain
         , mc.channels
         , mc.path
+        , mc.country
         , NULL AS derived_channel
         , NULL AS utmcampaign
         , NULL AS utmsource
@@ -362,6 +374,7 @@ SELECT
         , cc.domain
         , cc.channels
         , cc.path
+        , cc.country
         , NULL AS derived_channel
         , NULL AS utmcampaign
         , NULL AS utmsource
