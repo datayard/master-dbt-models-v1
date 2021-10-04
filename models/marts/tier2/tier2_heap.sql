@@ -16,6 +16,7 @@ SELECT
         , gs.domain
         , gs.channels
         , gs.path
+        , gs.country
         , CASE
                WHEN gs.landingpage LIKE '%share.vidyard.com%'
                    THEN 'Product'
@@ -51,6 +52,7 @@ SELECT
         , oe.domain
         , oe.channels
         , oe.path
+        , oe.country
         , null AS derived_channel
         , 'opened_extension' AS tracker
     FROM
@@ -77,6 +79,7 @@ SELECT
         , pv.domain
         , NULL AS channels
         , pv.path
+        , pv.country
         , NULL AS derived_channel
         , 'page_views' AS tracker
     FROM
@@ -102,6 +105,7 @@ SELECT
         , ps.domain
         , ps.channels
         , ps.path
+        , ps.country
         , NULL AS derived_channel
         , 'product_sessions' AS tracker
     FROM
@@ -127,6 +131,7 @@ SELECT
         , ssc.domain
         , ssc.channels
         , ssc.path
+        , ssc.country
         , NULL AS derived_channel
         , 'sharing_share_combo' AS tracker
     FROM
@@ -153,6 +158,7 @@ SELECT
         , vidcompv.domain
         , vidcompv.channels
         , vidcompv.path
+        , vidcompv.country
         , NULL AS derived_channel
         , 'vy_com_page_view' AS tracker
     FROM
@@ -178,6 +184,7 @@ SELECT
         , vidcomss.domain
         , vidcomss.channels
         , vidcomss.path
+        , vidcomss.country
         , NULL AS derived_channel
         , 'vy_com_sessions' AS tracker
     FROM {{ ref('stg_govideo_production_vidyard_com_sessions') }} vidcomss
@@ -202,6 +209,7 @@ SELECT
         , pv.domain
         , NULL AS channels
         , pv.path
+        , pv.country
         , NULL AS derived_channel
         , 'video_creation' AS tracker
     FROM
@@ -227,6 +235,7 @@ SELECT
         , pv.domain
         , NULL AS channels
         , pv.path
+        , pv.country
         , NULL AS derived_channel
         , 'video_upload' AS tracker
     FROM
@@ -252,6 +261,7 @@ SELECT
         , ac.domain
         , ac.channels
         , ac.path
+        , ac.country
         , NULL AS derived_channel
         , 'admin_combo' AS tracker
     FROM
@@ -277,6 +287,7 @@ SELECT
         , iac.domain
         , iac.channels
         , iac.path
+        , iac.country
         , NULL AS derived_channel
         , 'insights_analytics_combo' AS tracker
     FROM
@@ -301,6 +312,7 @@ SELECT
         , mc.domain
         , mc.channels
         , mc.path
+        , mc.country
         , NULL AS derived_channel
         , 'manage_combo' AS tracker
     FROM
@@ -326,6 +338,7 @@ SELECT
         , cc.domain
         , cc.channels
         , cc.path
+        , cc.country
         , NULL AS derived_channel
         , 'video_creation_create_combo' AS tracker
     FROM
