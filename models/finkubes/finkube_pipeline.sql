@@ -3,7 +3,7 @@ with dates_table as (
     yearmonthvalue
     , yearmonth
     , fiscalyearmonth
-    , fiscalperiod
+    , fiscalquarter
     , fiscalyear
     , 1 as connector
  from {{ ref('fct_sfdc_dates') }}
@@ -28,7 +28,7 @@ with dates_table as (
      , yearmonthvalue
      , yearmonthvalue - left(pipelinemonth, 4) * 12 - right(pipelinemonth, 2) * 1 as age
      , fiscalyearmonth
-     , fiscalperiod
+     , fiscalquarter
      , fiscalyear
 
      , pipelinearr

@@ -3,7 +3,7 @@ with dates_table as (
     yearmonthvalue
     , yearmonth
     , fiscalyearmonth
-    , fiscalperiod
+    , fiscalquarter
     , fiscalyear
    from {{ ref('fct_sfdc_dates') }}
    group by 1,2,3,4,5
@@ -36,7 +36,7 @@ with dates_table as (
     , d.yearmonthvalue
     , d.yearmonth
     , d.fiscalyearmonth
-    , d.fiscalperiod
+    , d.fiscalquarter
     , d.fiscalyear
     , case
       when stagename like '%dead%'
@@ -86,7 +86,7 @@ with dates_table as (
     , o.yearmonthvalue
     , o.yearmonth
     , o.fiscalyearmonth
-    , o.fiscalperiod
+    , o.fiscalquarter
     , o.fiscalyear
     , nvl(m.startyearmonth, '1900-01') as startyearmonth
     , sum(o.wonarr) as wonarr
@@ -126,7 +126,7 @@ with dates_table as (
     , yearmonth
     , yearmonthvalue
     , fiscalyearmonth
-    , fiscalperiod
+    , fiscalquarter
     , fiscalyear
     , sum(
       case

@@ -93,8 +93,8 @@ with all_mqi as (
       {{ ref('tier2_salesforce_contact') }} u
       join {{ref('tier2_salesforce_campaign_and_members')}} c using (contactid)
       join {{ref('tier2_salesforce_account')}} a using (accountid)
-      join opportunity using (accountid)
-      left join {{ref('fct_sfdc_country_to_region')}} r on r.country = u.mailingcountry
+      join {{ref('tier2_salesforce_opportunity')}} using (accountid)
+      left join {{ref('fct_sfdc_country_to_region')}} r on r.country = lower(u.mailingcountry)
   )
 
   , sorted_mqi as (
@@ -217,8 +217,8 @@ with all_mqi as (
       , ctasubtype
       , region
       , country
-      , mqidate
       , customertype
+      , mqidate
       , to_char(date_trunc('month', mqidate), 'YYYY-MM') as mqimonth
       , mqldate
       , to_char(date_trunc('month', mqldate), 'YYYY-MM') as mqlmonth
