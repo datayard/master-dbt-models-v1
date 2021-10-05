@@ -42,7 +42,8 @@ ON
     WEU.domain = usrdetails.domain
 WHERE
     usrdetails.domaintype like 'business'
-    AND usrdetails.createddate  >= DATEADD(MONTH, -6, current_date)
+    AND (usrdetails.createddate  >= DATEADD(MONTH, -6, current_date)
+    OR usrdetails.lastSessionDate >= DATEADD(MONTH, -6, current_date))
 GROUP BY
     usrdetails.domain,
     maus.maus,
