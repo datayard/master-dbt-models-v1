@@ -1,5 +1,4 @@
 with sfdc as
-
 (
   select * from {{ref('fintier2_sfdc_subscriptions')}}
 )
@@ -10,13 +9,14 @@ with sfdc as
 
 select
   accountid
+  , region
 --  , idtype
   , yearmonth
   , yearmonthvalue
   , fiscalyearmonth
-  , fiscalperiod
+  , fiscalquarter
   , fiscalyear
   , case when yearmonth <= '2020-11' then nvl(sarr,0) else nvl(zarr,0) end as arr
   , arr * 1.0 / 12 as mrr
 from zuora
-full outer join sfdc using (accountid, idtype, yearmonth, yearmonthvalue, fiscalyearmonth, fiscalperiod, fiscalyear)
+full outer join sfdc using (accountid, region, idtype, yearmonth, yearmonthvalue, fiscalyearmonth, fiscalquarter, fiscalyear)
