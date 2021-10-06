@@ -28,6 +28,10 @@ SELECT
                    THEN 'Player'
                ELSE gs.channels
           END AS derived_channel
+        , NULL AS utmcampaign
+        , NULL AS utmsource
+        , NULL AS utmterm
+        , NULL AS utmMedium
         , 'global_session'  AS tracker
     FROM
         {{ ref('stg_govideo_production_global_session') }} gs
@@ -54,7 +58,10 @@ SELECT
         , oe.path
         , oe.country
         , null AS derived_channel
-        , oe.country
+        , NULL AS utmcampaign
+        , NULL AS utmsource
+        , NULL AS utmterm
+        , NULL AS utmMedium
         , 'opened_extension' AS tracker
     FROM
         {{ ref('stg_govideo_production_opened_extension') }} oe
@@ -82,7 +89,10 @@ SELECT
         , pv.path
         , pv.country
         , NULL AS derived_channel
-        , pv.country
+        , NULL AS utmcampaign
+        , NULL AS utmsource
+        , NULL AS utmterm
+        , NULL AS utmMedium
         , 'page_views' AS tracker
     FROM
         {{ ref('stg_govideo_production_pageviews') }} pv
@@ -109,7 +119,10 @@ SELECT
         , ps.path
         , ps.country
         , NULL AS derived_channel
-        , ps.country
+        , NULL AS utmcampaign
+        , NULL AS utmsource
+        , NULL AS utmterm
+        , NULL AS utmMedium
         , 'product_sessions' AS tracker
     FROM
         {{ ref('stg_govideo_production_product_sessions') }} ps
@@ -136,7 +149,10 @@ SELECT
         , ssc.path
         , ssc.country
         , NULL AS derived_channel
-        , ssc.country
+        , NULL AS utmcampaign
+        , NULL AS utmsource
+        , NULL AS utmterm
+        , NULL AS utmMedium
         , 'sharing_share_combo' AS tracker
     FROM
         {{ ref('stg_govideo_production_sharing_share_combo') }} ssc
@@ -164,7 +180,10 @@ SELECT
         , vidcompv.path
         , vidcompv.country
         , NULL AS derived_channel
-        , vidcompv.country
+        , vidcompv.utmcampaign
+        , vidcompv.utmsource
+        , vidcompv.utmterm
+        , vidcompv.utmMedium
         , 'vy_com_page_view' AS tracker
     FROM
         {{ ref('stg_govideo_production_vidyard_com_any_pageview') }} vidcompv
@@ -191,7 +210,10 @@ SELECT
         , vidcomss.path
         , vidcomss.country
         , NULL AS derived_channel
-        , vidcomss.country
+        , NULL AS utmcampaign
+        , NULL AS utmsource
+        , NULL AS utmterm
+        , NULL AS utmMedium
         , 'vy_com_sessions' AS tracker
     FROM {{ ref('stg_govideo_production_vidyard_com_sessions') }} vidcomss
         JOIN {{ ref('stg_govideo_production_users') }} u
@@ -217,7 +239,10 @@ SELECT
         , pv.path
         , pv.country
         , NULL AS derived_channel
-        , pv.country
+        , NULL AS utmcampaign
+        , NULL AS utmsource
+        , NULL AS utmterm
+        , NULL AS utmMedium
         , 'video_creation' AS tracker
     FROM
         {{ ref('stg_govideo_production_video_creation_started_to_create_or_upload_a_video_combo') }} pv
@@ -244,7 +269,10 @@ SELECT
         , pv.path
         , pv.country
         , NULL AS derived_channel
-        , pv.country
+        , NULL AS utmcampaign
+        , NULL AS utmsource
+        , NULL AS utmterm
+        , NULL AS utmMedium
         , 'video_upload' AS tracker
     FROM
         {{ ref('stg_govideo_production_video_recorded_or_uploaded') }} pv
@@ -271,6 +299,10 @@ SELECT
         , ac.path
         , ac.country
         , NULL AS derived_channel
+        , NULL AS utmcampaign
+        , NULL AS utmsource
+        , NULL AS utmterm
+        , NULL AS utmMedium
         , 'admin_combo' AS tracker
     FROM
         {{ ref('stg_govideo_production_admin_combo') }} ac
@@ -297,6 +329,10 @@ SELECT
         , iac.path
         , iac.country
         , NULL AS derived_channel
+        , NULL AS utmcampaign
+        , NULL AS utmsource
+        , NULL AS utmterm
+        , NULL AS utmMedium
         , 'insights_analytics_combo' AS tracker
     FROM
         {{ ref('stg_govideo_production_insights_analytics_combo') }} iac
@@ -322,6 +358,10 @@ SELECT
         , mc.path
         , mc.country
         , NULL AS derived_channel
+        , NULL AS utmcampaign
+        , NULL AS utmsource
+        , NULL AS utmterm
+        , NULL AS utmMedium
         , 'manage_combo' AS tracker
     FROM
         {{ ref('stg_govideo_production_manage_combo') }} mc
@@ -348,6 +388,10 @@ SELECT
         , cc.path
         , cc.country
         , NULL AS derived_channel
+        , NULL AS utmcampaign
+        , NULL AS utmsource
+        , NULL AS utmterm
+        , NULL AS utmMedium
         , 'video_creation_create_combo' AS tracker
     FROM
         {{ ref('stg_govideo_production_video_creation_create_combo') }} cc
