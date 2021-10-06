@@ -21,7 +21,7 @@ with dates_table as (
      , opportunityattribution
      , opportunitytype
      , region
-
+     , contractlengthtype
      , pipelinemonth
      , exitmonth
      , yearmonth
@@ -30,7 +30,6 @@ with dates_table as (
      , fiscalyearmonth
      , fiscalquarter
      , fiscalyear
-
      , pipelinearr
      , newpipelinearr
      , renewalpipelinearr

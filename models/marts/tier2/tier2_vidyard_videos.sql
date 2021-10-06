@@ -15,7 +15,11 @@ SELECT
    , v.source
 FROM
 	{{ ref('stg_vidyard_videos')}} as v
+      LEFT JOIN {{ ref('stg_vidyard_chapters')}} as c
+      ON v.videoid = c.videoid
    	LEFT JOIN {{ ref('stg_vidyard_players')}} as p
-      ON p.organizationid = v.organizationid AND p.ownerid = v.userid
+      ON c.playerid = p.playerid
+      --ON p.organizationid = v.organizationid AND p.ownerid = v.userid
    	LEFT JOIN  {{ ref('tier2_vidyard_user_details') }} vud2
-      ON  v.organizationid = vud2.organizationid AND v.userid = vud2.userid
+      ON p.ownerid = vud2.userid
+      --ON  v.organizationid = vud2.organizationid AND v.userid = vud2.userid

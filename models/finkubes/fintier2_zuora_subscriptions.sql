@@ -38,13 +38,15 @@ select
 
 )
 , sfdc as (
-  select accountid from {{ref('tier2_salesforce_account')}}
+  select accountid, region from {{ref('tier2_salesforce_account')}} a
+  left join {{ref('fct_sfdc_country_to_region')}} c on lower(a.billingcountry) = c.country
 )
 
 --REPLACE ZUORA_PRO with ZUORA TABLES NOT ZUORA SUBSCRIPTION__C
 , zuora_sfdc_id_adjust as (
     select
       nvl(a.accountid , z.accountid15) as accountid
+      , a.region
       , z.idtype
       , z.startyearmonth
       , z.endyearmonth
@@ -55,6 +57,7 @@ select
 , zuora_final as (
   select
     z.accountid
+    , z.region
     , z.idtype
     , d.yearmonth
     , d.yearmonthvalue
