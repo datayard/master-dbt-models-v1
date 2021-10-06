@@ -12,6 +12,7 @@ with dates_table as (
   select
     accountid
     , opportunityid
+    , c.region
     , to_char(date_trunc('month', contractstartdate), 'YYYY-MM') as startyearmonth
     , to_char(date_trunc('month', contractenddate), 'YYYY-MM') as endyearmonth
     , lower(stagename) as stagename
@@ -23,6 +24,9 @@ with dates_table as (
     , nvl(renewallostarr, 0) as renewallostarr
   from
     {{ref('tier2_salesforce_opportunity')}}
+    left join
+      {{ref('tier2_salesforce_account')}} a using (accountid)
+    left join {{ref('fct_sfdc_country_to_region')}} c on lower(a.billingcountry) = c.country
   where
     (lower(stagename) like '%dead%' or lower(stagename) like '%close%')
     and contractstartdate <= contractenddate
@@ -31,6 +35,7 @@ with dates_table as (
   select
     s.accountid
     , s.opportunityid
+    , s.region
     , s.startyearmonth
     , s.endyearmonth
     , d.yearmonthvalue
@@ -83,6 +88,7 @@ with dates_table as (
   select
     o.accountid
     , o.opportunityid
+    , o.region
     , o.yearmonthvalue
     , o.yearmonth
     , o.fiscalyearmonth
@@ -123,6 +129,7 @@ with dates_table as (
   select
     accountid
     , 'accountid' as idtype
+    , region
     , yearmonth
     , yearmonthvalue
     , fiscalyearmonth
