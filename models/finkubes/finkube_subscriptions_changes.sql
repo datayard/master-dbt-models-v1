@@ -11,7 +11,7 @@ with subscriptions as (
     yearmonthvalue
     , yearmonth
     , fiscalyearmonth
-    , fiscalperiod
+    , fiscalquarter
     , fiscalyear
     , 1 as connector
  from {{ ref('fct_sfdc_dates') }}
@@ -24,7 +24,7 @@ with subscriptions as (
     , d.yearmonth
     , d.yearmonthvalue
     , d.fiscalyearmonth
-    , d.fiscalperiod
+    , d.fiscalquarter
     , d.fiscalyear
     , sum( case when d.yearmonth = s.yearmonth then nvl(mrr,0) else 0 end) as mrr
   from subscriptions s
@@ -45,7 +45,7 @@ with subscriptions as (
     , t0.yearmonth
     , t0.yearmonthvalue
     , t0.fiscalyearmonth
-    , t0.fiscalperiod
+    , t0.fiscalquarter
     , t0.fiscalyear
     , t0.cumulativemrr
     , t0.mrr
@@ -60,7 +60,7 @@ select
   , yearmonth
   , yearmonthvalue
   , fiscalyearmonth
-  , fiscalperiod
+  , fiscalquarter
   , fiscalyear
   , case when mrr > previousmrr and cumulativemrr = mrr then 'gross new'
     when mrr > previousmrr and cumulativemrr > mrr and previousmrr = 0 then 'winback'

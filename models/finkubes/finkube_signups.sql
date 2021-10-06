@@ -6,8 +6,8 @@ with
       , sessiontime
       , region
     from
-      {{ref('tier2_heap')}}
-    left join  {{ref('fct_sfdc_country_to_region')}} using (country)
+      {{ref('tier2_heap')}} h
+    left join  {{ref('fct_sfdc_country_to_region')}} c on lower(h.country) = c.country
     where identifier is not null and tracker = 'global_session'
   )
   , user_session_table as (

@@ -10,6 +10,8 @@
           else nvl(to_char(date_trunc('month',closedwondate),'yyyy-mm'),to_char(date_trunc('month',closedate),'yyyy-mm')) end) <= pipelinemonth then pipelinemonth else
           (case when stagename like '%Dead%' then to_char(date_trunc('month',deaddate),'yyyy-mm')
                else nvl(to_char(date_trunc('month',closedwondate),'yyyy-mm'),to_char(date_trunc('month',closedate),'yyyy-mm')) end)  end as exitmonth
+      , to_char(date_trunc('month',contractstartdate),'yyyy-mm') as contractstartmonth
+      , to_char(date_trunc('month',contractenddate),'yyyy-mm') as contractendmonth
 
      , nvl(lastyeararr,0) as previousarr
 
@@ -34,5 +36,5 @@
      {{ref('tier2_salesforce_opportunity')}}
    left join
      {{ref('tier2_salesforce_account')}} a using (accountid)
-   left join {{ref('fct_sfdc_country_to_region')}} c on a.billingcountry = c.country
+   left join {{ref('fct_sfdc_country_to_region')}} c on lower(a.billingcountry) = c.country
     where a.ispersonaccount = 'false' and (closedarr <> 0 or pipelinearr <> 0) and pipelinemonth is not null
