@@ -127,6 +127,8 @@ select
     else subchannel
   end as channel
   , region
+  , o.domain
+  , o.domaintype
   from
   {{ref('tier2_vidyard_user_details')}} o
   join {{ref('tier2_vidyard_users')}} u using (userid, organizationid)
