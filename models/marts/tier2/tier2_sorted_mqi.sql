@@ -5,7 +5,8 @@ SELECT
       , am.domainType
       , am.domain
       , am.excludeemail
-      , am.mqi_date
+      , am.mqiDateGMT
+      , am.mqiDateEST
       , am.mqlDateGMT
       , am.mqlDateEST
       , am.mql

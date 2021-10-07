@@ -32,6 +32,7 @@ SELECT
         , NULL AS utmsource
         , NULL AS utmterm
         , NULL AS utmMedium
+        , NULL AS new_visit_indicator
         , 'global_session'  AS tracker
     FROM
         {{ ref('stg_govideo_production_global_session') }} gs
@@ -220,7 +221,7 @@ SELECT
         , NULL AS utmterm
         , NULL AS utmMedium
         , case
-            when row_number() over(partition by vs.user_id order by vs.session_time) = 1 then true
+            when row_number() over(partition by vidcomss.userid order by vidcomss.sessiontime) = 1 then true
             else false
           end as new_visit_indicator
         , 'vy_com_sessions' AS tracker
