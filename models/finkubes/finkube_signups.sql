@@ -132,6 +132,7 @@ select
   , o.domain
   , o.domaintype
   , u.email
+
   from
   {{ref('tier2_vidyard_user_details')}} o
   join {{ref('tier2_vidyard_users')}} u using (userid, organizationid)
