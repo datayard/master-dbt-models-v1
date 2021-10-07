@@ -10,7 +10,8 @@ SELECT
       , split_part(u.email, '@', 2) as domain
       , u.persona
       , u.accountId
-      , cm.createdDate as mqi_date
+      , cm.createdDateGMT as mqiDateGMT
+      , cm.createdDateEST as mqiDateEST
       , cm.mqlDateGMT
       , cm.mqlDateEST
       , cm.mql
@@ -55,7 +56,8 @@ SELECT
       , split_part(u.email, '@', 2) as domain
       , u.persona
       , u.accountId
-      , cm.createdDate as mqi_date
+      , cm.createdDateGMT as mqiDateGMT
+      , cm.createdDateEST as mqiDateEST
       , cm.mqlDateGMT
       , cm.mqlDateEST
       , cm.mql
