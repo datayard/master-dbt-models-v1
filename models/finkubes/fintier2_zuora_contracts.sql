@@ -2,6 +2,7 @@ with zuora as (
 select
       case when a.crmid is null then a.accountnumber else left(a.crmid, 15) end as accountid15
       , case when a.crmid is null then 'zid' else 'accountid' end as idtype
+      , a.accountname
       , rpc.effective_start_date as contractstartdate
 
       , to_char(date_trunc('month', rpc.effective_start_date), 'yyyy-mm') as contractstartmonth
@@ -9,6 +10,8 @@ select
      , case when date_part('day',rpc.effective_end_date) >= 28 and date_part('day',rpc.effective_start_date) = 1
           then to_char(date_trunc('month', rpc.effective_end_date+4), 'yyyy-mm')
           else to_char(date_trunc('month', rpc.effective_end_date), 'yyyy-mm') end as contractendmonth
+          ,  datediff('month',rpc.effective_start_date,rpc.effective_end_date) as contractlength
+          , case when contractlength <= 1 then 'monthly' when contractlength <= 10 then 'subannually' when contractlength <= 18 then 'annually' else 'multiyear' end as contractlengthtype
 
       , sum(nvl(rpc.mrr * 12, 0)) as arr
       FROM {{ ref('stg_zuora_rate_plan') }} AS rp
@@ -26,7 +29,7 @@ select
     --  and rpc.end_date_condition <> 'OneTime'
     group by
       1
-      , 2,3,4,5,6
+      , 2,3,4,5,6,7,8,9
 
 )
 , sfdc as (
@@ -35,11 +38,14 @@ select
 
     select
       nvl(a.accountid , z.accountid15) as accountid
+      , z.accountname
       , z.idtype
       , z.contractstartdate
       , z.contractstartmonth
       , z.contractenddate
       , z.contractendmonth
+      , z.contractlength
+      , z.contractlengthtype
       , z.arr
     from zuora z
     left join sfdc a on left(a.accountid,15) = z.accountid15

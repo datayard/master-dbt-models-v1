@@ -1,6 +1,7 @@
 SELECT 
 		sfdc_campaignmember.id as campaignMemberId
-		, sfdc_campaignmember.createddate as createdDate
+		, sfdc_campaignmember.createddate as createdDateGMT
+		, convert_timezone('EST', sfdc_campaignmember.createddate::timestamp) as createdDateEST
 		, sfdc_campaignmember.isdeleted as isDeleted
 		, sfdc_campaignmember.campaignid as campaignId
 		, sfdc_campaignmember.type as type
