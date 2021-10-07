@@ -32,7 +32,7 @@ SELECT
       , am.childCTAsubtype
      /* , am.employeeSegment */
       , am.responseStatus
-      , row_number() over(partition by am.email order by am.mqi_date) as rn
+      , row_number() over(partition by am.email order by am.mqiDateGMT) as rn
 
       , case when am.persona like '%Decision Maker' then 'Decision Maker' 
              when (am.persona like '%Influencer' or am.persona like '%General') then 'Individual Contributor' 
@@ -50,7 +50,7 @@ SELECT
              when (am.childCTAtype='Organic Lead Score' or am.childCTAtype='Other') then 'Other' 
              else am.childCTAtype end as childCTAtype2
 
-      , case when am.parentCTAsubtype = 'User Signup' then row_number() over(partition by am.email order by am.mqi_date) end as user_rn
+      , case when am.parentCTAsubtype = 'User Signup' then row_number() over(partition by am.email order by am.mqiDateGMT) end as user_rn
      
       , case when a.employeeSegment is null then 'UNKNOWN' else a.employeeSegment end as employee_segment
       
