@@ -6,8 +6,8 @@ with
       , sessiontime
       , region
     from
-      {{ref('tier2_heap')}}
-    left join  {{ref('fct_sfdc_country_to_region')}} using (country)
+      {{ref('tier2_heap')}} h
+    left join  {{ref('fct_sfdc_country_to_region')}} c on lower(h.country) = c.country
     where identifier is not null and tracker = 'global_session'
   )
   , user_session_table as (
@@ -127,6 +127,8 @@ select
     else subchannel
   end as channel
   , region
+  , o.domain
+  , o.domaintype
   from
   {{ref('tier2_vidyard_user_details')}} o
   join {{ref('tier2_vidyard_users')}} u using (userid, organizationid)
