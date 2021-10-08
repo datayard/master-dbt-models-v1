@@ -13,14 +13,14 @@ with pipeline as (
     select
       *, 'won' as changetype
       from pipeline
-      where exitmonth = yearmonth and closedarr > 0
+      where exitmonth = yearmonth
   )
 
   , lost as (
     SELECT
      *, 'lost' as changetype
      from pipeline
-     where exitmonth = yearmonth and closedarr <= 0
+     where exitmonth = yearmonth
   )
 
   select * from gross_new union select * from won union select * from lost

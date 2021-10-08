@@ -23,6 +23,7 @@ SELECT leadId
          , ballerScore
          , domainType
          , persona
+         , numberofemployees
 
-    FROM 
+    FROM
         {{ ref('stg_salesforce_lead') }}
