@@ -113,6 +113,7 @@ with dates_table as (
     , 6
     , 7
     , 8
+    , 9
 )
 , max_of_max as (
   select
@@ -150,7 +151,7 @@ with dates_table as (
   group by
     1
     , 2
-    , 3,4,5,6,7
+    , 3,4,5,6,7,8
 )
 
 select *
