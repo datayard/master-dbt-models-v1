@@ -53,6 +53,8 @@ join
 
 select
   o.organizationid
+  , z.accountnumber
+  , left(z.crmid, 15) as accountid15
   , to_char(date_trunc('month', o.createddate), 'yyyy-mm') as signupmonth
   , date(o.createddate) as signupdate
   , case
@@ -129,10 +131,13 @@ select
   , region
   , o.domain
   , o.domaintype
+  , u.email
+
   from
   {{ref('tier2_vidyard_user_details')}} o
   join {{ref('tier2_vidyard_users')}} u using (userid, organizationid)
   left join user_session_table ust using (organizationid)
+  LEFT JOIN {{ ref('tier2_zuora') }} z  ON z.vidyardAccountIdid = o.organizationid
 where
   u.orgtype = 'self_serve'
   and o.createdbyclientid != 'Enterprise'

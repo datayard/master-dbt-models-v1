@@ -12,7 +12,8 @@ SELECT
     , sfc.actualcost AS campaign_actualcost
     , sfc.isactive AS campaign_isactive
     , sfc.description AS campaign_description
-    , sfc.createddate AS campaign_createddate
+    , sfc.createddateGMT AS campaign_createddateGMT
+    , sfc.createddateEST AS campaign_createddateEST
     , sfc.mediatype AS campaign_mediatype
     , sfc.inboundvsoutbound AS campaign_inboundvsoutbound
     , sfc.cta AS campaign_cta

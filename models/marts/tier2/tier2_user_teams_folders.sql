@@ -19,17 +19,19 @@ SELECT
             THEN 'orphan'
         ELSE NULL
     END AS folder_type
-FROM {{ ref('stg_vidyard_users') }} as u
---FROM dbt_vidyard_master.stg_vidyard_users u
-        LEFT JOIN {{ ref ('stg_vidyard_organizations') }} as o
+FROM {{ ref ('stg_vidyard_organizations') }} as o
+--FROM {{ ref('stg_vidyard_users') }} as u
+        LEFT JOIN {{ ref('stg_vidyard_users') }} as u
         --LEFT JOIN dbt_vidyard_master.stg_vidyard_organizations o
                 ON o.ownerid = u.userid
 WHERE
-    ((o.orgtype = 'self_serve' and o.organizationid = o.accountid)
+    true
+    /*((o.orgtype = 'self_serve' and o.organizationid = o.accountid)
     OR (o.orgtype IS NULL and o.organizationid != o.accountid)
     OR (o.orgtype IS NULL and o.organizationid = o.accountid)
     OR (o.orgtype = 'self_serve' and o.organizationid != o.accountid)
     OR (o.orgtype IS NULL and o.organizationid IS NULL))
+
 
 UNION ALL
 
@@ -43,11 +45,11 @@ SELECT
     , u.email
     , 'parent folder' as folder_type
 FROM
-    {{ ref('stg_vidyard_users') }} as u
+    {{ ref('stg_vidyard_teams') }} as t
     --dbt_vidyard_master.stg_vidyard_users u
     JOIN {{ref ('stg_vidyard_team_memberships') }} as tm
     --JOIN dbt_vidyard_master.stg_vidyard_team_memberships tm
-        ON tm.userid = u.userid --and tm.inviteaccepted = true
-    JOIN {{ ref('stg_vidyard_teams') }} as t
+        ON u.userid = tm.userid --and tm.inviteaccepted = true
+    JOIN {{ ref('stg_vidyard_users') }} as u
     --JOIN dbt_vidyard_master.stg_vidyard_teams t
-        ON t.teamid = tm.teamid
+        ON t.teamid = tm.teamid*/
