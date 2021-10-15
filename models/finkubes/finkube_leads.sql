@@ -10,7 +10,7 @@ with all_mqi as (
         else 'Other'
       end as campaignsourcecategory
       , c.campaignsourcedby as campaignsource
-      , c.createddate as mqidate
+      , c.campaign_createddateest as mqidate
       , c.campaign_cta as ctatype
       , c.campaign_ctasubtype as ctasubtype
       , date(c.sqodate) as sqodate
@@ -55,7 +55,7 @@ with all_mqi as (
         else 'Other'
       end as campaignsourcecategory
       , c.campaignsourcedby as campaignsource
-      , c.createddate as mqi_date
+      , c.campaign_createddateest as mqi_date
       , c.campaign_cta as ctatype
       , c.campaign_ctasubtype as ctasubtype
       , date(c.sqodate) as sqodate
@@ -83,7 +83,7 @@ with all_mqi as (
         when a.ispersonaccount is true
           then 'Vidyard Pro'
         when a.ispersonaccount is false
-        and a.isselfservecustomer is true
+        and a.isselfserve is true
           then 'HubSpot Self Serve'
         when a.employeesegment = 'UNKNOWN'
           then 'Emerging'
@@ -94,7 +94,7 @@ with all_mqi as (
       join {{ref('tier2_salesforce_campaign_and_members')}} c using (contactid)
       join {{ref('tier2_salesforce_account')}} a using (accountid)
       join {{ref('tier2_salesforce_opportunity')}} using (accountid)
-      left join {{ref('fct_sfdc_country_to_region')}} r on r.country = u.mailingcountry
+      left join {{ref('fct_sfdc_country_to_region')}} r on r.country = lower(u.mailingcountry)
   )
 
   , sorted_mqi as (
@@ -217,8 +217,8 @@ with all_mqi as (
       , ctasubtype
       , region
       , country
-      , mqidate
       , customertype
+      , mqidate
       , to_char(date_trunc('month', mqidate), 'YYYY-MM') as mqimonth
       , mqldate
       , to_char(date_trunc('month', mqldate), 'YYYY-MM') as mqlmonth
@@ -242,7 +242,7 @@ with all_mqi as (
         else false
       end as isnetnewdomain
       , firstdomainmqidate
-      , to_char(date_trunc('month', firstdomainmqidate), 'YYYY-MM') as firstmqimonth
+      , to_char(date_trunc('month', firstdomainmqidate), 'YYYY-MM') as firstdomainmqimonth
 
     from
       duplicate_signup_removed d

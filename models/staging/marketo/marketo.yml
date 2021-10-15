@@ -1,7 +1,7 @@
 version: 2
 
 sources:
-  - name: marketo_production
+  - name: marketo
     description: Marketo Production
     
     freshness:
@@ -28,19 +28,19 @@ models:
         - name: address
           description: Lead / Contact Street Address
 
-        - name: annualRevenue
+        - name: annual_revenue
           description: Roll down from Company level
 
-        - name: behaviorScore
+        - name: behavior_Score
           description: Activity/Engagement scoring, used to contribute to the Baller Score
 
-        - name: billingAddressA
+        - name: billing_Address
           description: Company Address Details
 
-        - name: billingCity
+        - name: billing_City
           description: Company Address Details
 
-        - name: billingCountry
+        - name: billing_Country
           description: Company Address Details
 
         - name: billingGeocodeAccuracy
@@ -58,7 +58,7 @@ models:
         - name: billingState
           description: Company Address Details
 
-        - name: billingAddress
+        - name: billing_address
           description: Company Address Details
 
         - name: blackListed

@@ -3,7 +3,7 @@ with dates_table as (
     yearmonthvalue
     , yearmonth
     , fiscalyearmonth
-    , fiscalperiod
+    , fiscalquarter
     , fiscalyear
    from {{ ref('fct_sfdc_dates') }}
    group by 1,2,3,4,5
@@ -12,6 +12,7 @@ with dates_table as (
   select
     accountid
     , opportunityid
+    , c.region
     , to_char(date_trunc('month', contractstartdate), 'YYYY-MM') as startyearmonth
     , to_char(date_trunc('month', contractenddate), 'YYYY-MM') as endyearmonth
     , lower(stagename) as stagename
@@ -23,6 +24,9 @@ with dates_table as (
     , nvl(renewallostarr, 0) as renewallostarr
   from
     {{ref('tier2_salesforce_opportunity')}}
+    left join
+      {{ref('tier2_salesforce_account')}} a using (accountid)
+    left join {{ref('fct_sfdc_country_to_region')}} c on lower(a.billingcountry) = c.country
   where
     (lower(stagename) like '%dead%' or lower(stagename) like '%close%')
     and contractstartdate <= contractenddate
@@ -31,12 +35,13 @@ with dates_table as (
   select
     s.accountid
     , s.opportunityid
+    , s.region
     , s.startyearmonth
     , s.endyearmonth
     , d.yearmonthvalue
     , d.yearmonth
     , d.fiscalyearmonth
-    , d.fiscalperiod
+    , d.fiscalquarter
     , d.fiscalyear
     , case
       when stagename like '%dead%'
@@ -83,10 +88,11 @@ with dates_table as (
   select
     o.accountid
     , o.opportunityid
+    , o.region
     , o.yearmonthvalue
     , o.yearmonth
     , o.fiscalyearmonth
-    , o.fiscalperiod
+    , o.fiscalquarter
     , o.fiscalyear
     , nvl(m.startyearmonth, '1900-01') as startyearmonth
     , sum(o.wonarr) as wonarr
@@ -107,6 +113,7 @@ with dates_table as (
     , 6
     , 7
     , 8
+    , 9
 )
 , max_of_max as (
   select
@@ -123,10 +130,11 @@ with dates_table as (
   select
     accountid
     , 'accountid' as idtype
+    , region
     , yearmonth
     , yearmonthvalue
     , fiscalyearmonth
-    , fiscalperiod
+    , fiscalquarter
     , fiscalyear
     , sum(
       case
@@ -143,7 +151,7 @@ with dates_table as (
   group by
     1
     , 2
-    , 3,4,5,6,7
+    , 3,4,5,6,7,8
 )
 
 select *
