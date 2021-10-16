@@ -39,10 +39,10 @@ SELECT distinct
     , CASE
 
         --CASE WHEN userId IN (SELECT user_id from tm join t) AND t.isadmin = true then 'admin' -- Case for admins
-        WHEN tm.teammembershipid IS NOT NULL AND t.isadmin = true THEN 'admin'
+        WHEN tm.teammembershipid IS NOT NULL AND tm.isadmin = true THEN 'admin'
 
         --CASE WHEN userId IN (SELECT user_id, from tm join t) AND t.isadmin = false then 'user' -- case for users (NOTE USERS CAN ONLY BE IN 1 GROUP AT THE TIME SO NO DUPES EXPECTED)
-        WHEN tm.teammembershipid IS NOT NULL AND t.isadmin = false THEN 'user'
+        WHEN tm.teammembershipid IS NOT NULL AND tm.isadmin = false THEN 'user'
 
       END AS enterprise_access
 
@@ -91,10 +91,13 @@ FROM
      --dbt_vidyard_master.tier2_user_teams_folders AS utft2
      personal_account_type pat
 
-    LEFT JOIN {{ ref('stg_vidyard_team_memberships') }} as tm
+    -- LEFT JOIN {{ ref('stg_vidyard_team_memberships') }} as tm
+    --     ON tm.userid = pat.userid
+    -- LEFT JOIN {{ ref('stg_vidyard_teams') }} as t
+    --     ON t.teamid = tm.teamid
+    --         AND t.accountid = pat.accountid
+    --         AND tm.inviteaccepted = true
+    LEFT JOIN {{ ref('tier2_vidyard_team_memberships') }} as tm
         ON tm.userid = pat.userid
-    LEFT JOIN {{ ref('stg_vidyard_teams') }} as t
-        ON t.teamid = tm.teamid
-            AND t.accountid = pat.accountid
-            AND tm.inviteaccepted = true
+        and tm.inviteaccepted = true
 
