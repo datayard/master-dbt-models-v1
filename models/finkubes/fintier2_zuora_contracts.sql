@@ -16,7 +16,7 @@ select
       , sum(nvl(rpc.mrr * 12, 0)) as arr
       FROM {{ ref('stg_zuora_rate_plan') }} AS rp
                JOIN {{ ref('stg_zuora_subscription') }} AS s ON s.subscriptionid = rp.subscriptionid
-               JOIN {{ source ('zuora', 'rate_plan_charge')}} AS rpc ON rpc.rateplanid = rp.rateplanid
+               JOIN {{ source ('zuora', 'rate_plan_charge')}} AS rpc ON rpc.id = rp.rateplanid
                JOIN {{ ref('stg_zuora_account') }} AS a ON a.accountid = s.accountid
                JOIN {{ ref('stg_zuora_product_rate_plan') }} AS prp ON prp.productrateplanid = rp.productrateplanid
                JOIN {{ ref('stg_zuora_product') }} AS p ON p.productid = prp.productid
