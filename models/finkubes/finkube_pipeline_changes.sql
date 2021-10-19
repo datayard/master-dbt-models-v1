@@ -23,4 +23,72 @@ with pipeline as (
      where exitmonth = yearmonth
   )
 
-  select * from gross_new union select * from won union select * from lost
+  select
+    accountid
+    , opportunityid
+    , opportunityattribution
+    , opportunitytype
+    , region
+    , contractlengthtype
+    , pipelinemonth
+    , exitmonth
+    , yearmonth
+    , yearmonthvalue
+    , age
+    , fiscalyearmonth
+    , fiscalquarter
+    , fiscalyearmonth
+    , pipelinearr
+    , newpipelinearr
+    , renewalpipelinearr
+    , upsellpipelinearr
+    , changetype
+  from gross_new
+
+  union
+
+select
+  accountid
+  , opportunityid
+  , opportunityattribution
+  , opportunitytype
+  , region
+  , contractlengthtype
+  , pipelinemonth
+  , exitmonth
+  , yearmonth
+  , yearmonthvalue
+  , age
+  , fiscalyearmonth
+  , fiscalquarter
+  , fiscalyearmonth
+  , pipelinearr
+  , newpipelinearr
+  , renewalpipelinearr
+  , upsellpipelinearr
+  , changetype
+from won
+
+  union
+
+select
+   accountid
+   , opportunityid
+   , opportunityattribution
+   , opportunitytype
+   , region
+   , contractlengthtype
+   , pipelinemonth
+   , exitmonth
+   , yearmonth
+   , yearmonthvalue
+   , age
+   , fiscalyearmonth
+   , fiscalquarter
+   , fiscalyearmonth
+   , pipelinearr
+   , newpipelinearr
+   , renewalpipelinearr
+   , upsellpipelinearr
+   , changetype
+ from lost

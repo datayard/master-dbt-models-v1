@@ -137,7 +137,7 @@ select
   {{ref('tier2_vidyard_user_details')}} o
   join {{ref('tier2_vidyard_users')}} u using (userid, organizationid)
   left join user_session_table ust using (organizationid)
-  LEFT JOIN {{ ref('tier2_zuora') }} z  ON z.vidyardAccountIdid = o.organizationid
+  LEFT JOIN {{ ref('tier2_zuora') }} z  ON z.vidyardaccountid = o.organizationid
 where
   u.orgtype = 'self_serve'
   and o.createdbyclientid != 'Enterprise'
