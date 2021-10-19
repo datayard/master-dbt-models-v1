@@ -10,7 +10,11 @@ with all_mqi as (
         else 'Other'
       end as campaignsourcecategory
       , c.campaignsourcedby as campaignsource
-      , c.campaign_createddateest as mqidate
+<<<<<<< Updated upstream
+      , c.createddate as mqidate
+=======
+      , date(c.campaign_createddateest) as mqidate
+>>>>>>> Stashed changes
       , c.campaign_cta as ctatype
       , c.campaign_ctasubtype as ctasubtype
       , date(c.sqodate) as sqodate
@@ -55,7 +59,11 @@ with all_mqi as (
         else 'Other'
       end as campaignsourcecategory
       , c.campaignsourcedby as campaignsource
-      , c.campaign_createddateest as mqi_date
+<<<<<<< Updated upstream
+      , c.createddate as mqi_date
+=======
+      , date(c.campaign_createddateest) as mqi_date
+>>>>>>> Stashed changes
       , c.campaign_cta as ctatype
       , c.campaign_ctasubtype as ctasubtype
       , date(c.sqodate) as sqodate
@@ -83,7 +91,7 @@ with all_mqi as (
         when a.ispersonaccount is true
           then 'Vidyard Pro'
         when a.ispersonaccount is false
-        and a.isselfserve is true
+        and a.isselfservecustomer is true
           then 'HubSpot Self Serve'
         when a.employeesegment = 'UNKNOWN'
           then 'Emerging'
