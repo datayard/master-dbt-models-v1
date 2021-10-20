@@ -53,6 +53,8 @@ sources:
       - name: vidyard_active_embeds
 
       - name: vidyard_invoiced_customers
+
+      - name: vidyard_roles
       
       
 
@@ -650,3 +652,23 @@ models:
 
       - name: updatedAt
         description: Invoice updated at                            
+
+
+# Documentation for VIDYARD_ROLES table from PUBLIC schema
+  - name: stg_vidyard_roles
+    columns:
+
+      - name: id
+        description: unique identifier for this table
+        tests:
+          - unique
+          - not_null
+
+      - name: organization_id
+        description: User Org ID          
+
+      - name: role_type
+        description: Role of the user on the folder
+
+      - name: can_create_roles
+        description: ' '                   
