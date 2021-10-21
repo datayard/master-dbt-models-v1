@@ -23,8 +23,8 @@ SELECT distinct
     , pat.accountid
     , pat.personal_account_type
     , CASE
-        WHEN tm.teammembershipid IS NOT NULL AND tm.isadmin = true THEN 'admin'
-        WHEN tm.teammembershipid IS NOT NULL AND tm.isadmin = false THEN 'user'
+        WHEN tm.teamid IS NOT NULL AND tm.isadmin = true THEN 'admin'
+        WHEN tm.teamid IS NOT NULL AND tm.isadmin = false THEN 'user'
       END AS enterprise_access
     , CASE
         WHEN lower(personal_account_type) = lower('free') AND enterprise_access IS NULL THEN 'free'
