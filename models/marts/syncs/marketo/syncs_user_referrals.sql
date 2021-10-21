@@ -1,7 +1,8 @@
-SELECT
+
+  SELECT
 	Distinct vy_referrals.referrerid,
 	vy_referrals.signed_up_referals,
-	vy_referrals.sent_referal,
+	vy_referrals.signed_up_referals + vy_referrals.sent_referal as total_sent_referral,
   master_user.mkto_lead_id,
   master_user.email
 FROM
