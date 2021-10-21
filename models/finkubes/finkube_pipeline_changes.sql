@@ -13,14 +13,14 @@ with pipeline as (
     select
       *, 'won' as changetype
       from pipeline
-      where exitmonth = yearmonth
+      where exitmonth = yearmonth and closedarr > 0
   )
 
   , lost as (
     SELECT
      *, 'lost' as changetype
      from pipeline
-     where exitmonth = yearmonth
+     where exitmonth = yearmonth and closedarr <= 0
   )
 
   select
