@@ -29,12 +29,12 @@ SELECT distinct
     , CASE
         WHEN lower(personal_account_type) = lower('free') AND enterprise_access IS NULL THEN 'free'
         WHEN lower(personal_account_type) = lower('pro') AND enterprise_access IS NULL THEN 'pro'
-        WHEN lower(personal_account_type) = lower('free') AND enterprise_access IS NOT NULL THEN 'hybrid'
+        WHEN lower(personal_account_type) in ('free','pro') AND enterprise_access IS NOT NULL THEN 'hybrid'
         WHEN lower(personal_account_type) = lower('enterprise') AND enterprise_access IS NOT NULL THEN 'enterprise user'
         WHEN lower(personal_account_type) = lower('enterprise') AND enterprise_access IS NULL THEN 'anomaly'
         WHEN lower(personal_account_type) = lower('enterprise self serve') AND enterprise_access IS NOT NULL THEN 'enterprise self serve'
         WHEN personal_account_type IS NULL AND enterprise_access IS NULL THEN 'orphan'
-        ELSE 'unknown'
+        ELSE 'under investigation'
       END as classification
 FROM
      personal_account_type pat
