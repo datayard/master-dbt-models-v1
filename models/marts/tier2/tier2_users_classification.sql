@@ -34,7 +34,7 @@ SELECT distinct
         WHEN lower(personal_account_type) = lower('enterprise') AND enterprise_access IS NULL THEN 'anomaly'
         WHEN lower(personal_account_type) = lower('enterprise self serve') AND enterprise_access IS NOT NULL THEN 'enterprise self serve'
         WHEN personal_account_type IS NULL AND enterprise_access IS NULL THEN 'orphan'
-        ELSE 'unknown'
+        ELSE 'under investigation'
       END as classification
 FROM
      personal_account_type pat
