@@ -35,7 +35,7 @@ with dates_table as (
      , renewalpipelinearr
      , upsellpipelinearr
 
-  --   , closedarr
+     , closedarr
   --   , newclosedarr
   --   , renewalclosedarr
   --   , upsellclosedarr
