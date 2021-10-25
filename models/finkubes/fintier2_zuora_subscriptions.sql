@@ -14,14 +14,14 @@ select
       , case when a.crmid is null then 'zid' else 'accountid' end as idtype
     --  , to_char(date_trunc('month', s.subscriptionstartdate), 'yyyy-mm') as startyearmonth
     --  , to_char(date_trunc('month', s.subscriptionenddate), 'yyyy-mm') as endyearmonth
-      , to_char(date_trunc('month', rpc.effective_start_date), 'yyyy-mm') as startyearmonth
-     , case when date_part('day',rpc.effective_end_date) >= 28 and date_part('day',rpc.effective_start_date) = 1
-          then to_char(date_trunc('month', rpc.effective_end_date+4), 'yyyy-mm')
-          else to_char(date_trunc('month', rpc.effective_end_date), 'yyyy-mm') end as endyearmonth
+      , to_char(date_trunc('month', rpc.effectivestartdate), 'yyyy-mm') as startyearmonth
+     , case when date_part('day',rpc.effectiveenddate) >= 28 and date_part('day',rpc.effectivestartdate) = 1
+          then to_char(date_trunc('month', rpc.effectiveenddate+4), 'yyyy-mm')
+          else to_char(date_trunc('month', rpc.effectiveenddate), 'yyyy-mm') end as endyearmonth
       , sum(nvl(rpc.mrr * 12, 0)) as arr
       FROM {{ ref('stg_zuora_rate_plan') }} AS rp
                JOIN {{ ref('stg_zuora_subscription') }} AS s ON s.subscriptionid = rp.subscriptionid
-               JOIN {{ source ('zuora', 'rate_plan_charge')}} AS rpc ON rpc.id = rp.rateplanid
+               JOIN {{ ref('stg_zuora_rate_plan_charge')}} AS rpc ON rpc.rateplanid = rp.rateplanid
                JOIN {{ ref('stg_zuora_account') }} AS a ON a.accountid = s.accountid
                JOIN {{ ref('stg_zuora_product_rate_plan') }} AS prp ON prp.productrateplanid = rp.productrateplanid
                JOIN {{ ref('stg_zuora_product') }} AS p ON p.productid = prp.productid
