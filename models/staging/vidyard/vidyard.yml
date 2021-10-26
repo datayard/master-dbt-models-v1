@@ -55,6 +55,8 @@ sources:
       - name: vidyard_invoiced_customers
 
       - name: vidyard_roles
+
+      - name: vidyard_onboarding_metadata
       
       
 
@@ -671,4 +673,30 @@ models:
         description: Role of the user on the folder
 
       - name: can_create_roles
-        description: ' '                   
+        description: ' '
+
+
+# Documentation for VIDYARD_ONBOARDING_METADATA table from PUBLIC schema
+  - name: stg_vidyard_onboarding_metadata
+    columns:
+
+      - name: id
+        description: unique identifier for this table
+        tests:
+          - unique
+          - not_null
+
+      - name: user_id
+        description: User ID          
+
+      - name: new_user_survey
+        description: ' '
+
+      - name: created_at
+        description: 'date the user filled the onboarding survey'     
+
+      - name: updated_at
+        description: ' '     
+
+      - name: general_use_case
+        description: ' '                                     
