@@ -45,7 +45,7 @@ with pipeline as (
     , changetype
   from gross_new
 
-  union
+  union all
 
 select
   accountid
@@ -69,7 +69,7 @@ select
   , changetype
 from won
 
-  union
+  union all
 
 select
    accountid
