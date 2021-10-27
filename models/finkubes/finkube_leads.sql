@@ -10,7 +10,7 @@ with all_mqi as (
         else 'Other'
       end as campaignsourcecategory
       , c.campaignsourcedby as campaignsource
-      , c.createdDate as mqidate
+      , date(c.createdDateest) as mqidate
       , c.campaign_cta as ctatype
       , c.campaign_ctasubtype as ctasubtype
       , date(c.sqodate) as sqodate
@@ -55,7 +55,7 @@ with all_mqi as (
         else 'Other'
       end as campaignsourcecategory
       , c.campaignsourcedby as campaignsource
-      , c.createdDate as mqi_date
+      , date(c.createdDateest) as mqi_date
       , c.campaign_cta as ctatype
       , c.campaign_ctasubtype as ctasubtype
       , date(c.sqodate) as sqodate
