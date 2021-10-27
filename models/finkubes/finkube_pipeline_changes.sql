@@ -1,5 +1,5 @@
 with pipeline as (
-   select *, 1 as connector from {{ref('finkube_pipeline')}}
+   select *from {{ref('finkube_pipeline')}}
  )
 
 , gross_new as (
@@ -37,7 +37,6 @@ with pipeline as (
     , age
     , fiscalyearmonth
     , fiscalquarter
-    , fiscalyearmonth
     , pipelinearr
     , newpipelinearr
     , renewalpipelinearr
@@ -61,7 +60,6 @@ select
   , age
   , fiscalyearmonth
   , fiscalquarter
-  , fiscalyearmonth
   , pipelinearr
   , newpipelinearr
   , renewalpipelinearr
@@ -85,7 +83,6 @@ select
    , age
    , fiscalyearmonth
    , fiscalquarter
-   , fiscalyearmonth
    , pipelinearr
    , newpipelinearr
    , renewalpipelinearr
