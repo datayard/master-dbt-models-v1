@@ -14,7 +14,7 @@
       , to_char(date_trunc('month',contractstartdate),'yyyy-mm') as contractstartmonth
       , to_char(date_trunc('month',contractenddate),'yyyy-mm') as contractendmonth
       ,  datediff('month',contractstartdate,contractenddate) as contractlength
-      , case when contractlength <= 1 then 'monthly' when contractlength <= 10 then 'subannually' when contractlength <= 18 then 'annually' else 'multiyear' end as contractlengthtype
+      , case when contractlength <= 1 or contractlength is null then 'monthly' when contractlength <= 10 then 'subannually' when contractlength <= 18 then 'annually' else 'multiyear' end as contractlengthtype
 
      , nvl(lastyeararr,0) as previousarr
 
