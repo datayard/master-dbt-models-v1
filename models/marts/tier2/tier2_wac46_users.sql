@@ -5,7 +5,7 @@ with users_summary_table as (
            date(date_trunc('week', dt.createddate))                      AS org_created_week,
            date(date_trunc('week', v.createddate))                       AS video_created_week,
            DATEDIFF(week, org_created_week, video_created_week)          AS week_diff,
-           dense_rank() over(partition by dt.organizationid order by video_created_week asc) as time_sort
+           dense_rank() over(partition by dt.userid order by video_created_week asc) as time_sort
     FROM {{ref ('kube_vidyard_user_details') }} AS dt
              JOIN {{ ref('tier2_vidyard_videos') }} AS v
                   ON dt.userid = v.userid
@@ -14,7 +14,7 @@ with users_summary_table as (
       and week_diff between 0 and 5
 ),
 t_summary as (
-    select  organizationid,
+    select  userid,
             count(distinct week_diff) as distinct_weeks
     from users_summary_table
     group by 1
@@ -22,9 +22,9 @@ t_summary as (
 )
 select distinct
   t.video_created_week
-  ,  s.organizationid
+  ,  s.userid
 from users_summary_table t
 join t_summary s
-  on t.organizationid = s.organizationid
+  on t.userid = s.userid
 where
    t.time_sort=4
