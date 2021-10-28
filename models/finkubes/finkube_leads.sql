@@ -83,7 +83,7 @@ with all_mqi as (
         when a.ispersonaccount is true
           then 'Vidyard Pro'
         when a.ispersonaccount is false
-        and a.isselfservecustomer is true
+        and a.isselfserve is true
           then 'HubSpot Self Serve'
         when a.employeesegment = 'UNKNOWN'
           then 'Emerging'
