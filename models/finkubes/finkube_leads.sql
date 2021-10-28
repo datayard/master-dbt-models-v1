@@ -42,13 +42,13 @@ with all_mqi as (
     where
       u.isconverted = 'false'
 
-    union
+    union all
 
     select
       contactid as leadcontactid
       , u.email
       , split_part(u.email, '@', 2) as domain
-      , domaintype
+      , u.domaintype
       , case
         when c.campaignsourcedby = 'Sales'
           then c.campaignsourcedby
