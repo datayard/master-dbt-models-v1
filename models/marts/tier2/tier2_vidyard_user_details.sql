@@ -27,6 +27,7 @@ SELECT
     , vustg.excludeEmail
     , vustg.domain
     , vustg.domainType
+    , vustg.email
 
     --org_name, created_date, updated_date, createdbyclientid, signup_source
     , vostg.name
