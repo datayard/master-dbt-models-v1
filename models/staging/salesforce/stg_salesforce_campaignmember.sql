@@ -176,6 +176,7 @@ SELECT
             else 'business'
         end as domainType		
 		, sfdc_campaignmember.campaign_sourced_by__c as campaignSourcedBy
+        , sfdc_campaignmember.inquiry__c as inquiry
 		, sfdc_campaignmember.mql__c as mql
 		, sfdc_campaignmember.mql_date_and_time__c as mqlDateGMT
 		, convert_timezone('EST', sfdc_campaignmember.mql_date_and_time__c::timestamp) as mqlDateEST
