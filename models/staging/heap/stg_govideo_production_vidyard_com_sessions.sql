@@ -30,4 +30,4 @@ FROM
         {{ source ('govideo_production' , 'vidyard_com_sessions')}} as vidyard_com_sessions
 
 WHERE
-        TRUE
+        vidyard_com_sessions.session_time < DATEADD(day, 1, current_date)

@@ -30,4 +30,4 @@ FROM
         {{ source ('govideo_production' , 'vidyard_com_any_pageview')}} as vidyard_com_any_pageview
 
 WHERE
-        TRUE
+        vidyard_com_any_pageview.time < DATEADD(day, 1, current_date)

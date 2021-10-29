@@ -24,4 +24,4 @@ SELECT
 FROM
         {{ source ('govideo_production' , 'video_creation_started_to_create_or_upload_a_video_combo')}} as video_creation_started_to_create_or_upload_a_video_combo
 WHERE
-        TRUE
+        video_creation_started_to_create_or_upload_a_video_combo.time < DATEADD(day, 1, current_date)
