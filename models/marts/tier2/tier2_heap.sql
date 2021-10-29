@@ -237,7 +237,7 @@ SELECT
     {% if is_incremental() %}
     -- this filter will only be applied on an incremental run
     WHERE vidcomss.sessiontime > (select max(sessiontime) from {{ this }} where tracker = 'vy_com_sessions' )
-            and vidcomss.eventtime < DATEADD(day, 1, current_date)
+            and vidcomss.sessiontime < DATEADD(day, 1, current_date)
     {% endif %}
 
     UNION ALL
