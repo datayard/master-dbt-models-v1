@@ -15,7 +15,7 @@ WITH heap_data AS (
     SELECT
         heap.vidyardUserId
         , heap.tracker AS event
-        , max(heap.sessiontime) AS lastsession
+        , max(heap.eventtime) AS lastsession
     FROM {{ ref('tier2_heap') }} AS heap
     WHERE heap.tracker in (
                 'video_creation_create_combo'   -- video creation
@@ -24,7 +24,7 @@ WITH heap_data AS (
                 , 'insights_analytics_combo'    -- used analytics
                 , 'admin_combo'                 -- admin action
         )
-        and heap.sessiontime >= DATEADD(DAY, -30, current_date)
+        and heap.eventtime >= DATEADD(DAY, -30, current_date)
     GROUP BY 1, 2
     ORDER BY 1
 )
