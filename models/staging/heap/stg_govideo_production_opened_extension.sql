@@ -24,4 +24,4 @@ SELECT
 FROM
         {{ source('govideo_production' ,'opened_extension') }} as opened_extension
 WHERE
-        TRUE
+        opened_extension.time < DATEADD(day, 1, current_date)

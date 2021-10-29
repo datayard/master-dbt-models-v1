@@ -60,6 +60,7 @@ SELECT
     , vu.personal_account_type
     , vu.enterprise_access
     , vu.classification
+    , vu.email
     , vu.excludeEmail
     , vu.domain
     , vu.domainType

@@ -26,4 +26,4 @@ SELECT
 FROM
         {{ source ('govideo_production' , 'pageviews')}} as pageviews
 WHERE
-        TRUE
+        pageviews.time < DATEADD(day, 1, current_date)

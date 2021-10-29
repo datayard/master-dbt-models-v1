@@ -42,13 +42,13 @@ with all_mqi as (
     where
       u.isconverted = 'false'
 
-    union
+    union all
 
     select
       contactid as leadcontactid
       , u.email
       , split_part(u.email, '@', 2) as domain
-      , domaintype
+      , u.domaintype
       , case
         when c.campaignsourcedby = 'Sales'
           then c.campaignsourcedby
@@ -83,7 +83,7 @@ with all_mqi as (
         when a.ispersonaccount is true
           then 'Vidyard Pro'
         when a.ispersonaccount is false
-        and a.isselfservecustomer is true
+        and a.isselfserve is true
           then 'HubSpot Self Serve'
         when a.employeesegment = 'UNKNOWN'
           then 'Emerging'
