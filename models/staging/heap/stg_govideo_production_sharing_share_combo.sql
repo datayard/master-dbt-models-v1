@@ -25,4 +25,4 @@ SELECT
 FROM
     {{ source ('govideo_production' , 'sharing_share_combo')}} as share_combo
 WHERE
-    TRUE
+    share_combo.time < DATEADD(day, 1, current_date)

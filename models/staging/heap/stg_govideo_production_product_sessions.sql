@@ -25,4 +25,4 @@ SELECT
 FROM
         {{ source ('govideo_production', 'product_sessions')}} as product_sessions
 WHERE
-        TRUE
+        product_sessions.time < DATEADD(day, 1, current_date)
