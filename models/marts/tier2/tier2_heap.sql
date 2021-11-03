@@ -133,8 +133,8 @@ SELECT
         , 'product_sessions' AS tracker
     FROM
         {{ ref('stg_govideo_production_product_sessions') }} ps
-            LEFT JOIN {{ ref('stg_govideo_production_users') }} u
-                ON ps.userid = u.userid
+            JOIN {{ ref('stg_govideo_production_users') }} u
+                ON ps.userid = u.userid AND u.identifier IS NOT NULL
     {% if is_incremental() %}
     -- this filter will only be applied on an incremental run
     WHERE ps.eventtime > (select max(eventtime) from {{ this }} where tracker = 'product_sessions' )
