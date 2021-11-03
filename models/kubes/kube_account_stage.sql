@@ -17,7 +17,8 @@ with first_mqi as (
   , second_mqi as (
     select
       sm.email
-      , sm.mqi_date
+      , sm.mqiDateEST
+      , sm.mqiDateGMT
     from
        {{ ref('tier2_sorted_mqi') }} sm
     where sm.rn = 2
@@ -81,7 +82,7 @@ with first_mqi as (
 
 select
     fm.*,
-    rm.mqi_date as secondMQIdate,
+    rm.mqidateest as secondMQIdate,
     fmql.mqldate as firstmqldate,
     fsal.saldate as firstsaldate,
     fsql.sqldate as firstsqldate,
