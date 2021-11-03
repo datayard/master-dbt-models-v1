@@ -25,4 +25,4 @@ SELECT
 FROM
         {{ source ( 'govideo_production' , 'video_recorded_or_uploaded')}} as video_recorded_or_uploaded
 WHERE
-        TRUE
+        video_recorded_or_uploaded.time < DATEADD(day, 1, current_date)
