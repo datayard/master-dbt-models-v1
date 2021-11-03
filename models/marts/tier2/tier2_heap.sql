@@ -8,6 +8,8 @@ SELECT
         gs.eventid
         , u.identifier
         , u.vidyardUserId
+        , u.generalUseCase
+        , u.specificUseCase
         , gs.userid
         , gs.sessionid
         , gs.sessiontime
@@ -50,6 +52,8 @@ SELECT
         oe.eventid
         , u.identifier
         , u.vidyardUserId
+        , u.generalUseCase
+        , u.specificUseCase
         , oe.userid
         , oe.sessionid
         , oe.sessiontime
@@ -83,6 +87,8 @@ SELECT
         pv.eventid
         , u.identifier
         , u.vidyardUserId
+        , u.generalUseCase
+        , u.specificUseCase
         , pv.userid
         , pv.sessionid
         , pv.sessiontime
@@ -115,6 +121,8 @@ SELECT
         ps.eventid
         , u.identifier
         , u.vidyardUserId
+        , u.generalUseCase
+        , u.specificUseCase
         , ps.userid
         , ps.sessionid
         , ps.sessiontime
@@ -147,6 +155,8 @@ SELECT
         ssc.eventid
         , u.identifier
         , u.vidyardUserId
+        , u.generalUseCase
+        , u.specificUseCase
         , ssc.userid
         , ssc.sessionid
         , ssc.sessiontime
@@ -180,6 +190,8 @@ SELECT
         vidcompv.eventid
         , u.identifier
         , u.vidyardUserId
+        , u.generalUseCase
+        , u.specificUseCase
         , vidcompv.userid
         , vidcompv.sessionid
         , vidcompv.sessiontime
@@ -212,6 +224,8 @@ SELECT
         vidcomss.eventid
         , u.identifier
         , u.vidyardUserId
+        , u.generalUseCase
+        , u.specificUseCase
         , vidcomss.userid
         , vidcomss.sessionid
         , vidcomss.sessiontime
@@ -246,6 +260,8 @@ SELECT
         pv.eventid
         , u.identifier
         , u.vidyardUserId
+        , u.generalUseCase
+        , u.specificUseCase
         , pv.userid
         , pv.sessionid
         , pv.sessiontime
@@ -278,6 +294,8 @@ SELECT
         pv.eventid
         , u.identifier
         , u.vidyardUserId
+        , u.generalUseCase
+        , u.specificUseCase
         , pv.userid
         , pv.sessionid
         , pv.sessiontime
@@ -310,6 +328,8 @@ SELECT
         ac.eventID
         , u.identifier
         , u.vidyardUserId
+        , u.generalUseCase
+        , u.specificUseCase
         , ac.userID
         , ac.sessionID
         , ac.sessionTime
@@ -342,6 +362,8 @@ SELECT
         iac.eventID
         , u.identifier
         , u.vidyardUserId
+        , u.generalUseCase
+        , u.specificUseCase
         , iac.userID
         , iac.sessionID
         , iac.sessionTime
@@ -373,6 +395,8 @@ SELECT
         mc.eventID
         , u.identifier
         , u.vidyardUserId
+        , u.generalUseCase
+        , u.specificUseCase
         , mc.userID
         , mc.sessionID
         , mc.sessionTime
@@ -405,6 +429,8 @@ SELECT
         cc.eventID
         , u.identifier
         , u.vidyardUserId
+        , u.generalUseCase
+        , u.specificUseCase
         , cc.userID
         , cc.sessionID
         , cc.sessionTime
