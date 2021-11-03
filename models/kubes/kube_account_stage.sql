@@ -1,7 +1,8 @@
 with first_mqi as (
     select
       sm.email
-      , sm.mqi_date
+      , sm.mqiDateEST
+      , sm.mqiDateGMT
       , sm.parentCampaign
       , sm.parentCTAtype
       , sm.parentChannel
