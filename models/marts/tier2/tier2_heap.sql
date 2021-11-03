@@ -36,8 +36,8 @@ SELECT
         , 'global_session'  AS tracker
     FROM
         {{ ref('stg_govideo_production_global_session') }} gs
-            JOIN {{ ref('stg_govideo_production_users') }} u
-                ON gs.userid = u.userid AND u.identifier IS NOT NULL
+            LEFT JOIN {{ ref('stg_govideo_production_users') }} u
+                ON gs.userid = u.userid
       {% if is_incremental() %}
     -- this filter will only be applied on an incremental run
     WHERE gs.sessiontime > (select max(sessiontime) from {{ this }} where tracker = 'global_session' )
@@ -133,8 +133,8 @@ SELECT
         , 'product_sessions' AS tracker
     FROM
         {{ ref('stg_govideo_production_product_sessions') }} ps
-            JOIN {{ ref('stg_govideo_production_users') }} u
-                ON ps.userid = u.userid AND u.identifier IS NOT NULL
+            LEFT JOIN {{ ref('stg_govideo_production_users') }} u
+                ON ps.userid = u.userid
     {% if is_incremental() %}
     -- this filter will only be applied on an incremental run
     WHERE ps.eventtime > (select max(eventtime) from {{ this }} where tracker = 'product_sessions' )
@@ -198,7 +198,7 @@ SELECT
         , 'vy_com_page_view' AS tracker
     FROM
         {{ ref('stg_govideo_production_vidyard_com_any_pageview') }} vidcompv
-            JOIN {{ ref('stg_govideo_production_users') }} u
+            LEFT JOIN {{ ref('stg_govideo_production_users') }} u
                 ON vidcompv.userid = u.userid
     {% if is_incremental() %}
     -- this filter will only be applied on an incremental run
@@ -232,8 +232,8 @@ SELECT
           end as new_visit_indicator
         , 'vy_com_sessions' AS tracker
     FROM {{ ref('stg_govideo_production_vidyard_com_sessions') }} vidcomss
-        JOIN {{ ref('stg_govideo_production_users') }} u
-            ON vidcomss.userid = u.userid AND u.identifier IS NOT NULL
+        LEFT JOIN {{ ref('stg_govideo_production_users') }} u
+            ON vidcomss.userid = u.userid
     {% if is_incremental() %}
     -- this filter will only be applied on an incremental run
     WHERE vidcomss.sessiontime > (select max(sessiontime) from {{ this }} where tracker = 'vy_com_sessions' )
