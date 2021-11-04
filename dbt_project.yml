@@ -33,5 +33,5 @@ models:
       marts:
         +materialized: table
       kubes:
-        +materialized: view
+        +materialized: table
 

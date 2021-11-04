@@ -10,7 +10,7 @@ WITH
           when 
             vy_limits.allotmentTypeID = 3
           then 
-            vy_limits.limit
+            vy_limits.allotmentLimit
           when
             (
               vy_orgs.accountId not in 
