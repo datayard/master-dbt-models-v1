@@ -8,6 +8,8 @@ SELECT
         gs.eventid
         , u.identifier
         , u.vidyardUserId
+        , u.generalUseCase
+        , u.specificUseCase
         , gs.userid
         , gs.sessionid
         , gs.sessiontime
@@ -36,8 +38,8 @@ SELECT
         , 'global_session'  AS tracker
     FROM
         {{ ref('stg_govideo_production_global_session') }} gs
-            JOIN {{ ref('stg_govideo_production_users') }} u
-                ON gs.userid = u.userid AND u.identifier IS NOT NULL
+            LEFT JOIN {{ ref('stg_govideo_production_users') }} u
+                ON gs.userid = u.userid
       {% if is_incremental() %}
     -- this filter will only be applied on an incremental run
     WHERE gs.sessiontime > (select max(sessiontime) from {{ this }} where tracker = 'global_session' )
@@ -50,6 +52,8 @@ SELECT
         oe.eventid
         , u.identifier
         , u.vidyardUserId
+        , u.generalUseCase
+        , u.specificUseCase
         , oe.userid
         , oe.sessionid
         , oe.sessiontime
@@ -83,6 +87,8 @@ SELECT
         pv.eventid
         , u.identifier
         , u.vidyardUserId
+        , u.generalUseCase
+        , u.specificUseCase
         , pv.userid
         , pv.sessionid
         , pv.sessiontime
@@ -101,8 +107,8 @@ SELECT
         , 'page_views' AS tracker
     FROM
         {{ ref('stg_govideo_production_pageviews') }} pv
-            JOIN {{ ref('stg_govideo_production_users') }} u
-                ON pv.userid = u.userid AND u.identifier IS NOT NULL
+            LEFT JOIN {{ ref('stg_govideo_production_users') }} u
+                ON pv.userid = u.userid
      {% if is_incremental() %}
     -- this filter will only be applied on an incremental run
     WHERE pv.eventtime > (select max(eventtime) from {{ this }} where tracker = 'page_views' )
@@ -115,6 +121,8 @@ SELECT
         ps.eventid
         , u.identifier
         , u.vidyardUserId
+        , u.generalUseCase
+        , u.specificUseCase
         , ps.userid
         , ps.sessionid
         , ps.sessiontime
@@ -147,6 +155,8 @@ SELECT
         ssc.eventid
         , u.identifier
         , u.vidyardUserId
+        , u.generalUseCase
+        , u.specificUseCase
         , ssc.userid
         , ssc.sessionid
         , ssc.sessiontime
@@ -180,6 +190,8 @@ SELECT
         vidcompv.eventid
         , u.identifier
         , u.vidyardUserId
+        , u.generalUseCase
+        , u.specificUseCase
         , vidcompv.userid
         , vidcompv.sessionid
         , vidcompv.sessiontime
@@ -198,7 +210,7 @@ SELECT
         , 'vy_com_page_view' AS tracker
     FROM
         {{ ref('stg_govideo_production_vidyard_com_any_pageview') }} vidcompv
-            JOIN {{ ref('stg_govideo_production_users') }} u
+            LEFT JOIN {{ ref('stg_govideo_production_users') }} u
                 ON vidcompv.userid = u.userid
     {% if is_incremental() %}
     -- this filter will only be applied on an incremental run
@@ -212,6 +224,8 @@ SELECT
         vidcomss.eventid
         , u.identifier
         , u.vidyardUserId
+        , u.generalUseCase
+        , u.specificUseCase
         , vidcomss.userid
         , vidcomss.sessionid
         , vidcomss.sessiontime
@@ -232,8 +246,8 @@ SELECT
           end as new_visit_indicator
         , 'vy_com_sessions' AS tracker
     FROM {{ ref('stg_govideo_production_vidyard_com_sessions') }} vidcomss
-        JOIN {{ ref('stg_govideo_production_users') }} u
-            ON vidcomss.userid = u.userid AND u.identifier IS NOT NULL
+        LEFT JOIN {{ ref('stg_govideo_production_users') }} u
+            ON vidcomss.userid = u.userid
     {% if is_incremental() %}
     -- this filter will only be applied on an incremental run
     WHERE vidcomss.sessiontime > (select max(sessiontime) from {{ this }} where tracker = 'vy_com_sessions' )
@@ -246,6 +260,8 @@ SELECT
         pv.eventid
         , u.identifier
         , u.vidyardUserId
+        , u.generalUseCase
+        , u.specificUseCase
         , pv.userid
         , pv.sessionid
         , pv.sessiontime
@@ -278,6 +294,8 @@ SELECT
         pv.eventid
         , u.identifier
         , u.vidyardUserId
+        , u.generalUseCase
+        , u.specificUseCase
         , pv.userid
         , pv.sessionid
         , pv.sessiontime
@@ -310,6 +328,8 @@ SELECT
         ac.eventID
         , u.identifier
         , u.vidyardUserId
+        , u.generalUseCase
+        , u.specificUseCase
         , ac.userID
         , ac.sessionID
         , ac.sessionTime
@@ -342,6 +362,8 @@ SELECT
         iac.eventID
         , u.identifier
         , u.vidyardUserId
+        , u.generalUseCase
+        , u.specificUseCase
         , iac.userID
         , iac.sessionID
         , iac.sessionTime
@@ -373,6 +395,8 @@ SELECT
         mc.eventID
         , u.identifier
         , u.vidyardUserId
+        , u.generalUseCase
+        , u.specificUseCase
         , mc.userID
         , mc.sessionID
         , mc.sessionTime
@@ -405,6 +429,8 @@ SELECT
         cc.eventID
         , u.identifier
         , u.vidyardUserId
+        , u.generalUseCase
+        , u.specificUseCase
         , cc.userID
         , cc.sessionID
         , cc.sessionTime

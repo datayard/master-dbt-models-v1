@@ -2,6 +2,7 @@ SELECT
     sfcm.*
     , sfc.isdeleted AS campaign_isdeleted
     , sfc.campaignName AS campaign_name
+    , case when sfc_p.campaignName is null then sfc.campaignName else sfc_p.campaignName end as campaign_parentname
     , sfc.parentid AS campaign_parentid
     , sfc.type AS campaign_type
     , sfc.status AS campaign_status
@@ -27,4 +28,6 @@ FROM
     {{ ref('stg_salesforce_campaignmember') }} sfcm
     JOIN {{ ref('stg_salesforce_campaign') }} sfc
         ON sfc.campaignid = sfcm.campaignid
+    LEFT JOIN {{ ref('stg_salesforce_campaign') }} sfc_p
+        ON sfc.parentid = sfc_p.campaignid
         

@@ -34,6 +34,8 @@ SELECT
       , am.responseStatus
       , row_number() over(partition by am.email order by am.mqiDateGMT) as rn
       , row_number() over(partition by am.domain order by am.mqiDateGMT) as domain_rn
+      , row_number() over(partition by am.accountID order by am.mqiDateGMT) as account_rn
+      , row_number() over(partition by am.accountID order by am.opportunityClosedWonDate) as account_won_rn
       , case when am.persona like '%Decision Maker' then 'Decision Maker' 
              when (am.persona like '%Influencer' or am.persona like '%General') then 'Individual Contributor' 
              else 'Other' end as persona
