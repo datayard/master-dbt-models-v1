@@ -394,6 +394,10 @@ models:
 
       - name: mailingCountry
         description: also used as billing information for the contact
+      
+      - name: acquisitationprogram
+        description: which marketing acquisition program the contact belongs to
+
 
   - name: stg_salesforce_campaign
     columns:
@@ -542,6 +546,9 @@ models:
 
       - name: ballerScore
         description: lead score calculated in salesforce
+
+      - name: acquisitationprogram
+        description: which marketing acquisition program the contact belongs to
 
   # Documentation for Staging Campaign Member table
   - name: stg_salesforce_campaignmember
