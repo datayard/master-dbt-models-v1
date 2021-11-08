@@ -24,6 +24,7 @@ SELECT leadId
          , domainType
          , persona
          , numberofemployees
+         ,acquisitationprogram
 
     FROM
         {{ ref('stg_salesforce_lead') }}
