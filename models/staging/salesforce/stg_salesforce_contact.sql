@@ -29,6 +29,7 @@ SELECT
     , sfdc_contact.mailingpostalcode as mailingPostalCode
     , sfdc_contact.mailingcountry as mailingCountry
     , sfdc_contact.persona__c as persona
+    , sfdc_contact.mkto2__Acquisition_Program__c  as acquisitationprogram
     , case
       when split_part (sfdc_contact.email, '@', 2) like '%gmail.com%'
       or split_part (sfdc_contact.email, '@', 2) like '%yahoo%'
