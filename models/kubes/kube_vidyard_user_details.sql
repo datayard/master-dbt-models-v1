@@ -79,7 +79,7 @@ SELECT
     , vu.videoswithviews
     , vu.viewscount
     , vu.activatedFlag
-    , uc.combined_usecase
+    , coalesce(om.generalUseCase,uc.combined_usecase) as combined_usecase
     , case 
         when ext.organizationid is not null then 1
         else 0
@@ -93,7 +93,9 @@ SELECT
 FROM 
     {{ ref('tier2_vidyard_user_details') }} vu
     LEFT JOIN first_session_table fst
-        ON  vu.organizationid = fst.organizationid     
+        ON  vu.organizationid = fst.organizationid    
+    LEFT JOIN {{ ref('stg_vidyard_onboarding_metadata') }} om     
+        ON vu.userid = om.userid
     LEFT JOIN use_case_data uc
         ON vu.organizationid = uc.organizationid 
     LEFT JOIN used_chrome_extension ext
