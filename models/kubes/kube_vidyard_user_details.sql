@@ -31,11 +31,10 @@ WITH
             vu.organizationid
         FROM 
             {{ ref('tier2_vidyard_user_details') }} vu
-            JOIN {{ ref('tier2_vidyard_user_entities') }} en
+            JOIN {{ ref('tier2_vidyard_videos') }} en
                 ON  en.userid = vu.userid         
         WHERE 
-            en.entity = 'video'
-            and en.origin != 'sample'
+            en.origin != 'sample'
 )
 ,
     use_case_data AS (
