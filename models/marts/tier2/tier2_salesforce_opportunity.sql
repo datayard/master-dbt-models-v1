@@ -38,5 +38,12 @@ SELECT opportunityId
          , redOpportunity
          , Assurance
          , useCase
+         , partnerAccountID
+         , partnerBuyingRelationship
+         , partnerPercentage
+         , partnerStackID
+         , partnerStackLeadID
+         , partnerStackPartnerID
+         , partnerRep         
     FROM 
         {{ ref('stg_salesforce_opportunity') }}
