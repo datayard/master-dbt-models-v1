@@ -9,6 +9,9 @@ with zuora_enterprise_accounts as (
 select
     o.organizationid
     , o.accountid
+    , o.name
+    , a.accountname
+    , o.orgtype    
     , om.totalseconds as totalSeconds
     , om.viewscount as viewsCount
     , om.videoswithviews as videosWithViews
@@ -19,10 +22,14 @@ select
 from {{ ref('stg_vidyard_organizations') }} o
 join zuora_enterprise_accounts z
     on o.accountid = z.vidyardaccountid
+join {{ ref('tier2_salesforce_account')}} a
+    on a.vidyardaccountid = o.accountid
+     and a.ispersonaccount = False    
 left join {{ ref('tier2_vidyard_videos') }} v
     on o.organizationid = v.organizationid
 left join {{ ref('tier2_vidyard_events') }} e
     on o.organizationid = e.organizationid
 left join {{ ref('stg_vidyard_org_metrics') }} om
     on om.organizationid = o.organizationid
-group by 1, 2, 3, 4, 5
+where o.orgtype != 'self_serve'    
+group by 1, 2, 3, 4, 5, 6, 7, 8
