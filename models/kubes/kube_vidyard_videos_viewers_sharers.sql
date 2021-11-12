@@ -3,15 +3,19 @@ select
    , vuv.userId as viewer_id
    , vus.createdDate as sharer_signup_date
    , vuv.createdDate as viewer_signup_date
+   , vus.email
    , case when datediff('minute', pv.eventTime, vuv.createdDate) between 0 and 30 then 1 else null end as viral_signups_flag
    , l.name
    , l.title
    , l.company
+   , pv.userID as pageview_id
    , pv.eventTime as event_time
    , pv.utmSource as utm_source
    , pv.utmMedium as utm_medium
    , pv.utmCampaign as utm_campaign
    , pv.utmTerm as utm_term
+   , split_part(pv.path, '/watch/', 2) as view_path
+   , p.createdDate as player_created_date
  
 from 
     {{ ref('stg_govideo_production_pageviews') }} pv 
