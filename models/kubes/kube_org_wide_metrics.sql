@@ -22,9 +22,8 @@ select
 from {{ ref('stg_vidyard_organizations') }} o
 join zuora_enterprise_accounts z
     on o.accountid = z.vidyardaccountid
-join {{ ref('tier2_salesforce_account')}} a
-    on a.vidyardaccountid = o.accountid
-     and a.ispersonaccount = False    
+join {{ ref('tier2_salesforce_account') }} a
+    on a.vidyardaccountid = o.accountid and a.ispersonaccount = False    
 left join {{ ref('tier2_vidyard_videos') }} v
     on o.organizationid = v.organizationid
 left join {{ ref('tier2_vidyard_events') }} e
