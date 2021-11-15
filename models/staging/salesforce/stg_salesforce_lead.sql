@@ -3,7 +3,7 @@ SELECT
 		, sfdc_lead.isdeleted as isDeleted
 		, sfdc_lead.account_id__c as accountId
 		, LEFT(sfdc_lead.account_id__c, 15) as accountId_trimmed
-		, sfdc_lead.vidyard_user__c as vidyardUserId
+		, sfdc_lead.vidyard_user_id__c as vidyardUserId
 		, sfdc_lead.isconverted as isConverted
 		, sfdc_lead.convertedcontactid as convertedContactId
 		, sfdc_lead.createddate as createdDate
