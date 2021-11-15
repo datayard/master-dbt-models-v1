@@ -40,5 +40,11 @@ SELECT accountId
          , primaryUseCase
          , qaStatus
          , arr
+         , partnerManager
+         , subType
+         , partnerTier
+         , partnerDesignation
+         , partnerStackStatus
+         , partnerStackID         
     FROM 
         {{ ref('stg_salesforce_account') }}

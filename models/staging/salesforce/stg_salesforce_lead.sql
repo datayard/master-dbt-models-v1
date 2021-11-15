@@ -24,7 +24,9 @@ SELECT
 		, sfdc_lead.reason_unqualified__c as reasonUnqualified
 		, sfdc_lead.baller_score__c as ballerScore
 		, sfdc_lead.numberofemployees as numberofemployees
-        , sfdc_lead.persona__c as persona
+    , sfdc_lead.persona__c as persona
+    , sfdc_lead.mkto71_Acquisition_Program__c as acquisitationprogram
+
         , case
               when split_part(sfdc_lead.email, '@', 2) like '%gmail.com%'
               or split_part(sfdc_lead.email, '@', 2) like '%yahoo%'
