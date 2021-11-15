@@ -1,9 +1,9 @@
-SELECT 
+SELECT
 		sfdc_lead.id as leadId
 		, sfdc_lead.isdeleted as isDeleted
 		, sfdc_lead.account_id__c as accountId
 		, LEFT(sfdc_lead.account_id__c, 15) as accountId_trimmed
-		, sfdc_lead.vidyard_user__c as vidyardUserId
+		, sfdc_lead.vidyard_user_id__c as vidyardUserId
 		, sfdc_lead.isconverted as isConverted
 		, sfdc_lead.convertedcontactid as convertedContactId
 		, sfdc_lead.createddate as createdDate
@@ -23,6 +23,7 @@ SELECT
 		, sfdc_lead.status_reason__c as statusReason
 		, sfdc_lead.reason_unqualified__c as reasonUnqualified
 		, sfdc_lead.baller_score__c as ballerScore
+		, sfdc_lead.numberofemployees as numberofemployees
         , sfdc_lead.persona__c as persona
         , case
               when split_part(sfdc_lead.email, '@', 2) like '%gmail.com%'
@@ -190,7 +191,7 @@ SELECT
               else 'business'
             end as domainType
 
-FROM 
+FROM
 		{{ source ('salesforce_production','lead') }} as sfdc_lead
 
 WHERE

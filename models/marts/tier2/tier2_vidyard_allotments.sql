@@ -1,7 +1,7 @@
 SELECT
         accountid
         , allotmentlimitid
-        , "limit"
+        , allotmentLimit
         , gracelimit
         , enforced
         , at.allotmenttypeid

@@ -1,5 +1,5 @@
 with pipeline as (
-   select *, 1 as connector from {{ref('finkube_pipeline')}}
+   select *from {{ref('finkube_pipeline')}}
  )
 
 , gross_new as (
@@ -23,4 +23,69 @@ with pipeline as (
      where exitmonth = yearmonth and closedarr <= 0
   )
 
-  select * from gross_new union select * from won union select * from lost
+  select
+    accountid
+    , opportunityid
+    , opportunityattribution
+    , opportunitytype
+    , region
+    , contractlengthtype
+    , pipelinemonth
+    , exitmonth
+    , yearmonth
+    , yearmonthvalue
+    , age
+    , fiscalyearmonth
+    , fiscalquarter
+    , pipelinearr
+    , newpipelinearr
+    , renewalpipelinearr
+    , upsellpipelinearr
+    , changetype
+  from gross_new
+
+  union all
+
+select
+  accountid
+  , opportunityid
+  , opportunityattribution
+  , opportunitytype
+  , region
+  , contractlengthtype
+  , pipelinemonth
+  , exitmonth
+  , yearmonth
+  , yearmonthvalue
+  , age
+  , fiscalyearmonth
+  , fiscalquarter
+  , pipelinearr
+  , newpipelinearr
+  , renewalpipelinearr
+  , upsellpipelinearr
+  , changetype
+from won
+
+  union all
+
+select
+   accountid
+   , opportunityid
+   , opportunityattribution
+   , opportunitytype
+   , region
+   , contractlengthtype
+   , pipelinemonth
+   , exitmonth
+   , yearmonth
+   , yearmonthvalue
+   , age
+   , fiscalyearmonth
+   , fiscalquarter
+   , pipelinearr
+   , newpipelinearr
+   , renewalpipelinearr
+   , upsellpipelinearr
+   , changetype
+ from lost

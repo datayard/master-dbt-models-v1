@@ -25,4 +25,4 @@ SELECT
 FROM
   {{ source ('govideo_production' , 'insights_analytics_combo')}} as insights_analytics_combo
 WHERE
-  TRUE
+  insights_analytics_combo.time < DATEADD(day, 1, current_date)

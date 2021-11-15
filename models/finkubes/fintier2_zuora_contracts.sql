@@ -3,20 +3,20 @@ select
       case when a.crmid is null then a.accountnumber else left(a.crmid, 15) end as accountid15
       , case when a.crmid is null then 'zid' else 'accountid' end as idtype
       , a.accountname
-      , rpc.effective_start_date as contractstartdate
+      , rpc.effectivestartdate as contractstartdate
 
-      , to_char(date_trunc('month', rpc.effective_start_date), 'yyyy-mm') as contractstartmonth
-                , rpc.effective_end_date as contractenddate
-     , case when date_part('day',rpc.effective_end_date) >= 28 and date_part('day',rpc.effective_start_date) = 1
-          then to_char(date_trunc('month', rpc.effective_end_date+4), 'yyyy-mm')
-          else to_char(date_trunc('month', rpc.effective_end_date), 'yyyy-mm') end as contractendmonth
-          ,  datediff('month',rpc.effective_start_date,rpc.effective_end_date) as contractlength
-          , case when contractlength <= 1 then 'monthly' when contractlength <= 10 then 'subannually' when contractlength <= 18 then 'annually' else 'multiyear' end as contractlengthtype
+      , to_char(date_trunc('month', rpc.effectivestartdate), 'yyyy-mm') as contractstartmonth
+                , rpc.effectiveenddate as contractenddate
+     , case when date_part('day',rpc.effectiveenddate) >= 28 and date_part('day',rpc.effectivestartdate) = 1
+          then to_char(date_trunc('month', rpc.effectiveenddate+4), 'yyyy-mm')
+          else to_char(date_trunc('month', rpc.effectiveenddate), 'yyyy-mm') end as contractendmonth
+          ,  datediff('month',rpc.effectivestartdate,rpc.effectiveenddate) as contractlength
+          , case when contractlength <= 1 or contractlength is null then 'monthly' when contractlength <= 10 then 'subannually' when contractlength <= 18 then 'annually' else 'multiyear' end as contractlengthtype
 
       , sum(nvl(rpc.mrr * 12, 0)) as arr
       FROM {{ ref('stg_zuora_rate_plan') }} AS rp
                JOIN {{ ref('stg_zuora_subscription') }} AS s ON s.subscriptionid = rp.subscriptionid
-               JOIN {{ source ('zuora', 'rate_plan_charge')}} AS rpc ON rpc.rateplanid = rp.rateplanid
+               JOIN {{ ref('stg_zuora_rate_plan_charge')}} AS rpc ON rpc.rateplanid = rp.rateplanid
                JOIN {{ ref('stg_zuora_account') }} AS a ON a.accountid = s.accountid
                JOIN {{ ref('stg_zuora_product_rate_plan') }} AS prp ON prp.productrateplanid = rp.productrateplanid
                JOIN {{ ref('stg_zuora_product') }} AS p ON p.productid = prp.productid
