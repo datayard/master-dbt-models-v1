@@ -58,6 +58,13 @@ SELECT
         when sfdc_account.email_domain__c is null and sfdc_account.personemail is not null then split_part(sfdc_account.personemail, '@', 2)
         else split_part(sfdc_account.website, 'www.', 2)    
         end)) as emailDomain
+    , sfdc_account.Partner_Manager__c as partnerManager
+    , sfdc_account.Sub_Type__c as subType
+    , sfdc_account.Partner_Tier__c as partnerTier
+    , sfdc_account.Partner_Designation__c as partnerDesignation
+    , sfdc_account.PartnerStack_Status__c as partnerStackStatus
+    , sfdc_account.PartnerStack_ID__c as partnerStackID
+
  FROM 
     {{ source('salesforce_production', 'account') }} as sfdc_account
 WHERE

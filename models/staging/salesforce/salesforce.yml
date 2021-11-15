@@ -148,6 +148,27 @@ models:
       - name: useCase
         description: The main purpose the client has stated this products will be used for
 
+      - name: partnerAccountID
+        description: ' '
+
+      - name: partnerBuyingRelationship
+        description: ' '
+
+      - name: partnerPercentage
+        description: ' '
+
+      - name: partnerStackID
+        description: ' '
+
+      - name: partnerStackLeadID
+        description: ' '
+
+      - name: partnerStackPartnerID
+        description: ' '
+
+      - name: partnerRep
+        description: ' '        
+
   - name: stg_salesforce_account
     columns:
       - name: accountId
@@ -301,6 +322,24 @@ models:
       - name: qaStatus
         description: status of an account that has been deemed qualified to act on by
           marketing (via a picklist)
+
+      - name: partnerManager
+        description: ' '
+
+      - name: subType
+        description: ' '
+
+      - name: partnerTier
+        description: ' '   
+
+      - name: partnerDesignation
+        description: ' '   
+
+      - name: partnerStackStatus
+        description: ' '      
+
+      - name: partnerStackID
+        description: ' '      
 
   - name: stg_salesforce_contact
     columns:
