@@ -44,6 +44,13 @@ SELECT opportunityId
          , partnerStackID
          , partnerStackLeadID
          , partnerStackPartnerID
-         , partnerRep         
+         , partnerRep    
+         , daysInStage1
+         , daysInStage2
+         , daysInStage3
+         , daysInStage4
+         , daysInStage5
+         , daysInStage6
+         , daysInStageCustom              
     FROM 
         {{ ref('stg_salesforce_opportunity') }}
