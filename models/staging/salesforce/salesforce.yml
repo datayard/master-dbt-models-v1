@@ -167,7 +167,28 @@ models:
         description: ' '
 
       - name: partnerRep
-        description: ' '        
+        description: ' '     
+
+      - name: daysInStage1
+        description: ' '      
+
+      - name: daysInStage2
+        description: ' '     
+
+      - name: daysInStage3
+        description: ' '     
+
+      - name: daysInStage4
+        description: ' '     
+
+      - name: daysInStage5
+        description: ' '     
+
+      - name: daysInStage6
+        description: ' '     
+
+      - name: daysInStageCustom
+        description: ' '                                                               
 
   - name: stg_salesforce_account
     columns:
