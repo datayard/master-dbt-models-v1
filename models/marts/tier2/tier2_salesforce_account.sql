@@ -45,6 +45,7 @@ SELECT accountId
          , partnerTier
          , partnerDesignation
          , partnerStackStatus
-         , partnerStackID         
+         , partnerStackID  
+         , row_number() over(partition by emailDomain order by createdDate) as rn       
     FROM 
         {{ ref('stg_salesforce_account') }}
