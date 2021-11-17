@@ -87,6 +87,7 @@ SELECT
         when cv.organizationid is not null then 1
         else 0
     end as createdvideoflag
+    , row_number() over(partition by vu.domain order by vu.createddate) as rn
 
 
 FROM 
