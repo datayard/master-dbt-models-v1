@@ -1065,7 +1065,7 @@ models:
           description: The ID of the associated session.
 
         - name : sessionTime
-            description: The timestamp of when the session began.
+          description: The timestamp of when the session began.
 
         - name : country
           description: "The user’s country, based on their geolocation data. https://heapanalytics.com/app/env/4242522408/definitions?view=properties&type=property&id=country-country%3Asession%3Abuiltin"
