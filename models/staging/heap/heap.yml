@@ -1114,7 +1114,7 @@ models:
           description: "The current website domain, including the subdomain, e.g. blog.heap.io. https://heapanalytics.com/app/env/4242522408/definitions?view=properties&type=property&id=domain-domain%3Apageview%3Abuiltin"
 
     # Documentation for VIEWED_BACKLINK_LANDING_PAGE table
-    - name : stg_govideo_production_viewed_backing_landing_page
+    - name : stg_govideo_production_viewed_backlink_landing_page
       columns :
         - name : eventID
           description: The ID of the event.
