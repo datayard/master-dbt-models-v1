@@ -2,7 +2,7 @@ with
   sessions as (
     select
       cast(identifier as varchar(50)) as userid
-      , channels
+      , derivedchannel as channels
       , sessiontime
       , region
     from
