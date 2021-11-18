@@ -31,11 +31,10 @@ WITH
             vu.organizationid
         FROM 
             {{ ref('tier2_vidyard_user_details') }} vu
-            JOIN {{ ref('tier2_vidyard_user_entities') }} en
+            JOIN {{ ref('tier2_vidyard_videos') }} en
                 ON  en.userid = vu.userid         
         WHERE 
-            en.entity = 'video'
-            and en.origin != 'sample'
+            en.origin != 'sample'
 )
 ,
     use_case_data AS (
@@ -60,6 +59,7 @@ SELECT
     , vu.personal_account_type
     , vu.enterprise_access
     , vu.classification
+    , vu.email
     , vu.excludeEmail
     , vu.domain
     , vu.domainType
@@ -78,7 +78,7 @@ SELECT
     , vu.videoswithviews
     , vu.viewscount
     , vu.activatedFlag
-    , uc.combined_usecase
+    , coalesce(om.generalUseCase,uc.combined_usecase) as combined_usecase
     , case 
         when ext.organizationid is not null then 1
         else 0
@@ -87,12 +87,15 @@ SELECT
         when cv.organizationid is not null then 1
         else 0
     end as createdvideoflag
+    , row_number() over(partition by vu.domain order by vu.createddate) as rn
 
 
 FROM 
     {{ ref('tier2_vidyard_user_details') }} vu
     LEFT JOIN first_session_table fst
-        ON  vu.organizationid = fst.organizationid     
+        ON  vu.organizationid = fst.organizationid    
+    LEFT JOIN {{ ref('stg_vidyard_onboarding_metadata') }} om     
+        ON vu.userid = om.userid
     LEFT JOIN use_case_data uc
         ON vu.organizationid = uc.organizationid 
     LEFT JOIN used_chrome_extension ext

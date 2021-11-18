@@ -8,6 +8,8 @@ SELECT
         gs.eventid
         , u.identifier
         , u.vidyardUserId
+        , u.generalUseCase
+        , u.specificUseCase
         , gs.userid
         , gs.sessionid
         , gs.sessiontime
@@ -36,11 +38,12 @@ SELECT
         , 'global_session'  AS tracker
     FROM
         {{ ref('stg_govideo_production_global_session') }} gs
-            JOIN {{ ref('stg_govideo_production_users') }} u
-                ON gs.userid = u.userid AND u.identifier IS NOT NULL
+            LEFT JOIN {{ ref('stg_govideo_production_users') }} u
+                ON gs.userid = u.userid
       {% if is_incremental() %}
     -- this filter will only be applied on an incremental run
     WHERE gs.sessiontime > (select max(sessiontime) from {{ this }} where tracker = 'global_session' )
+            and gs.sessiontime < DATEADD(day, 1, current_date)
     {% endif %}
 
     UNION ALL
@@ -49,6 +52,8 @@ SELECT
         oe.eventid
         , u.identifier
         , u.vidyardUserId
+        , u.generalUseCase
+        , u.specificUseCase
         , oe.userid
         , oe.sessionid
         , oe.sessiontime
@@ -73,6 +78,7 @@ SELECT
         {% if is_incremental() %}
     -- this filter will only be applied on an incremental run
     WHERE oe.eventtime > (select max(eventtime) from {{ this }} where tracker = 'opened_extension' )
+            and oe.eventtime < DATEADD(day, 1, current_date)
     {% endif %}
 
     UNION ALL
@@ -81,6 +87,8 @@ SELECT
         pv.eventid
         , u.identifier
         , u.vidyardUserId
+        , u.generalUseCase
+        , u.specificUseCase
         , pv.userid
         , pv.sessionid
         , pv.sessiontime
@@ -99,11 +107,12 @@ SELECT
         , 'page_views' AS tracker
     FROM
         {{ ref('stg_govideo_production_pageviews') }} pv
-            JOIN {{ ref('stg_govideo_production_users') }} u
-                ON pv.userid = u.userid AND u.identifier IS NOT NULL
+            LEFT JOIN {{ ref('stg_govideo_production_users') }} u
+                ON pv.userid = u.userid
      {% if is_incremental() %}
     -- this filter will only be applied on an incremental run
     WHERE pv.eventtime > (select max(eventtime) from {{ this }} where tracker = 'page_views' )
+            and pv.eventtime < DATEADD(day, 1, current_date)
     {% endif %}
 
     UNION ALL
@@ -112,6 +121,8 @@ SELECT
         ps.eventid
         , u.identifier
         , u.vidyardUserId
+        , u.generalUseCase
+        , u.specificUseCase
         , ps.userid
         , ps.sessionid
         , ps.sessiontime
@@ -135,6 +146,7 @@ SELECT
     {% if is_incremental() %}
     -- this filter will only be applied on an incremental run
     WHERE ps.eventtime > (select max(eventtime) from {{ this }} where tracker = 'product_sessions' )
+            and ps.eventtime < DATEADD(day, 1, current_date)
     {% endif %}
 
     UNION ALL
@@ -143,6 +155,8 @@ SELECT
         ssc.eventid
         , u.identifier
         , u.vidyardUserId
+        , u.generalUseCase
+        , u.specificUseCase
         , ssc.userid
         , ssc.sessionid
         , ssc.sessiontime
@@ -167,6 +181,7 @@ SELECT
     {% if is_incremental() %}
     -- this filter will only be applied on an incremental run
     WHERE ssc.eventtime > (select max(eventtime) from {{ this }} where tracker = 'sharing_share_combo' )
+            and ssc.eventtime < DATEADD(day, 1, current_date)
     {% endif %}
 
     UNION ALL
@@ -175,6 +190,8 @@ SELECT
         vidcompv.eventid
         , u.identifier
         , u.vidyardUserId
+        , u.generalUseCase
+        , u.specificUseCase
         , vidcompv.userid
         , vidcompv.sessionid
         , vidcompv.sessiontime
@@ -193,11 +210,12 @@ SELECT
         , 'vy_com_page_view' AS tracker
     FROM
         {{ ref('stg_govideo_production_vidyard_com_any_pageview') }} vidcompv
-            JOIN {{ ref('stg_govideo_production_users') }} u
+            LEFT JOIN {{ ref('stg_govideo_production_users') }} u
                 ON vidcompv.userid = u.userid
     {% if is_incremental() %}
     -- this filter will only be applied on an incremental run
     WHERE vidcompv.eventtime > (select max(eventtime) from {{ this }} where tracker = 'vy_com_page_view' )
+            and vidcompv.eventtime < DATEADD(day, 1, current_date)
     {% endif %}
 
     UNION ALL
@@ -206,6 +224,8 @@ SELECT
         vidcomss.eventid
         , u.identifier
         , u.vidyardUserId
+        , u.generalUseCase
+        , u.specificUseCase
         , vidcomss.userid
         , vidcomss.sessionid
         , vidcomss.sessiontime
@@ -226,11 +246,12 @@ SELECT
           end as new_visit_indicator
         , 'vy_com_sessions' AS tracker
     FROM {{ ref('stg_govideo_production_vidyard_com_sessions') }} vidcomss
-        JOIN {{ ref('stg_govideo_production_users') }} u
-            ON vidcomss.userid = u.userid AND u.identifier IS NOT NULL
+        LEFT JOIN {{ ref('stg_govideo_production_users') }} u
+            ON vidcomss.userid = u.userid
     {% if is_incremental() %}
     -- this filter will only be applied on an incremental run
     WHERE vidcomss.sessiontime > (select max(sessiontime) from {{ this }} where tracker = 'vy_com_sessions' )
+            and vidcomss.sessiontime < DATEADD(day, 1, current_date)
     {% endif %}
 
     UNION ALL
@@ -239,6 +260,8 @@ SELECT
         pv.eventid
         , u.identifier
         , u.vidyardUserId
+        , u.generalUseCase
+        , u.specificUseCase
         , pv.userid
         , pv.sessionid
         , pv.sessiontime
@@ -262,6 +285,7 @@ SELECT
     {% if is_incremental() %}
     -- this filter will only be applied on an incremental run
     WHERE pv.eventtime > (select max(eventtime) from {{ this }} where tracker = 'video_creation' )
+            and pv.eventtime < DATEADD(day, 1, current_date)
     {% endif %}
 
     UNION ALL
@@ -270,6 +294,8 @@ SELECT
         pv.eventid
         , u.identifier
         , u.vidyardUserId
+        , u.generalUseCase
+        , u.specificUseCase
         , pv.userid
         , pv.sessionid
         , pv.sessiontime
@@ -293,6 +319,7 @@ SELECT
     {% if is_incremental() %}
     -- this filter will only be applied on an incremental run
     WHERE pv.eventtime > (select max(eventtime) from {{ this }} where tracker = 'video_upload' )
+            and pv.eventtime < DATEADD(day, 1, current_date)
     {% endif %}
 
     UNION ALL
@@ -301,6 +328,8 @@ SELECT
         ac.eventID
         , u.identifier
         , u.vidyardUserId
+        , u.generalUseCase
+        , u.specificUseCase
         , ac.userID
         , ac.sessionID
         , ac.sessionTime
@@ -324,6 +353,7 @@ SELECT
         {% if is_incremental() %}
         -- this filter will only be applied on an incremental run
         WHERE ac.eventtime > (select max(eventtime) from {{ this }} where tracker = 'admin_combo' )
+                and ac.eventtime < DATEADD(day, 1, current_date)
         {% endif %}
 
     UNION ALL
@@ -332,6 +362,8 @@ SELECT
         iac.eventID
         , u.identifier
         , u.vidyardUserId
+        , u.generalUseCase
+        , u.specificUseCase
         , iac.userID
         , iac.sessionID
         , iac.sessionTime
@@ -355,6 +387,7 @@ SELECT
         {% if is_incremental() %}
         -- this filter will only be applied on an incremental run
         WHERE iac.eventtime > (select max(eventtime) from {{ this }} where tracker = 'insights_analytics_combo' )
+                and iac.eventtime < DATEADD(day, 1, current_date)
         {% endif %}
     UNION ALL
 
@@ -362,6 +395,8 @@ SELECT
         mc.eventID
         , u.identifier
         , u.vidyardUserId
+        , u.generalUseCase
+        , u.specificUseCase
         , mc.userID
         , mc.sessionID
         , mc.sessionTime
@@ -385,6 +420,7 @@ SELECT
         {% if is_incremental() %}
         -- this filter will only be applied on an incremental run
         WHERE mc.eventtime > (select max(eventtime) from {{ this }} where tracker = 'manage_combo' )
+                and mc.eventtime < DATEADD(day, 1, current_date)
         {% endif %}
 
     UNION ALL
@@ -393,6 +429,8 @@ SELECT
         cc.eventID
         , u.identifier
         , u.vidyardUserId
+        , u.generalUseCase
+        , u.specificUseCase
         , cc.userID
         , cc.sessionID
         , cc.sessionTime
@@ -416,4 +454,5 @@ SELECT
         {% if is_incremental() %}
         -- this filter will only be applied on an incremental run
         WHERE cc.eventtime > (select max(eventtime) from {{ this }} where tracker = 'video_creation_create_combo' )
+                and cc.eventtime < DATEADD(day, 1, current_date)
         {% endif %}

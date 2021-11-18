@@ -60,10 +60,9 @@ SELECT
              when a.accountType = 'Customer' then a.accountType 
              when a.accountType = 'Sub-Account' then a.accountType 
              else 'Other' end as type 
+      , am.mqi_date_new
+      , am.acquisition_source
       
-FROM {{ ref('tier2_all_mqi') }} as am
+FROM {{ ref('kube_new_all_mqi') }} as am
 LEFT JOIN {{ ref('tier2_salesforce_account') }} as a
     ON am.accountId = a.accountId
-/* LEFT JOIN {{ ref('stg_salesforce_account') }} as dt
-         on dt.emailDomain = split_part(am.email, '@', 2) 
-*/

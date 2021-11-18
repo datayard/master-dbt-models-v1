@@ -3,7 +3,7 @@ SELECT
 		, sfdc_lead.isdeleted as isDeleted
 		, sfdc_lead.account_id__c as accountId
 		, LEFT(sfdc_lead.account_id__c, 15) as accountId_trimmed
-		, sfdc_lead.vidyard_user__c as vidyardUserId
+		, sfdc_lead.vidyard_user_id__c as vidyardUserId
 		, sfdc_lead.isconverted as isConverted
 		, sfdc_lead.convertedcontactid as convertedContactId
 		, sfdc_lead.createddate as createdDate
@@ -24,7 +24,9 @@ SELECT
 		, sfdc_lead.reason_unqualified__c as reasonUnqualified
 		, sfdc_lead.baller_score__c as ballerScore
 		, sfdc_lead.numberofemployees as numberofemployees
-        , sfdc_lead.persona__c as persona
+    , sfdc_lead.persona__c as persona
+    , sfdc_lead.mkto71_Acquisition_Program__c as acquisitationprogram
+
         , case
               when split_part(sfdc_lead.email, '@', 2) like '%gmail.com%'
               or split_part(sfdc_lead.email, '@', 2) like '%yahoo%'

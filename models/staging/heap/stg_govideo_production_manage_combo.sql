@@ -25,4 +25,4 @@ SELECT
 FROM
         {{ source('govideo_production' ,'manage_combo') }} as manage_combo
 WHERE
-        TRUE
+        manage_combo.time < DATEADD(day, 1, current_date)

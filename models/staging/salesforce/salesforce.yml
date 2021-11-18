@@ -148,6 +148,48 @@ models:
       - name: useCase
         description: The main purpose the client has stated this products will be used for
 
+      - name: partnerAccountID
+        description: ' '
+
+      - name: partnerBuyingRelationship
+        description: ' '
+
+      - name: partnerPercentage
+        description: ' '
+
+      - name: partnerStackID
+        description: ' '
+
+      - name: partnerStackLeadID
+        description: ' '
+
+      - name: partnerStackPartnerID
+        description: ' '
+
+      - name: partnerRep
+        description: ' '     
+
+      - name: daysInStage1
+        description: ' '      
+
+      - name: daysInStage2
+        description: ' '     
+
+      - name: daysInStage3
+        description: ' '     
+
+      - name: daysInStage4
+        description: ' '     
+
+      - name: daysInStage5
+        description: ' '     
+
+      - name: daysInStage6
+        description: ' '     
+
+      - name: daysInStageCustom
+        description: ' '                                                               
+
   - name: stg_salesforce_account
     columns:
       - name: accountId
@@ -302,6 +344,24 @@ models:
         description: status of an account that has been deemed qualified to act on by
           marketing (via a picklist)
 
+      - name: partnerManager
+        description: ' '
+
+      - name: subType
+        description: ' '
+
+      - name: partnerTier
+        description: ' '   
+
+      - name: partnerDesignation
+        description: ' '   
+
+      - name: partnerStackStatus
+        description: ' '      
+
+      - name: partnerStackID
+        description: ' '      
+
   - name: stg_salesforce_contact
     columns:
       - name: contactId
@@ -394,6 +454,10 @@ models:
 
       - name: mailingCountry
         description: also used as billing information for the contact
+      
+      - name: acquisitationprogram
+        description: which marketing acquisition program the contact belongs to
+
 
   - name: stg_salesforce_campaign
     columns:
@@ -542,6 +606,9 @@ models:
 
       - name: ballerScore
         description: lead score calculated in salesforce
+
+      - name: acquisitationprogram
+        description: which marketing acquisition program the contact belongs to
 
   # Documentation for Staging Campaign Member table
   - name: stg_salesforce_campaignmember

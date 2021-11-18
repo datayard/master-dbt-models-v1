@@ -40,5 +40,19 @@ SELECT
         , op.red_opportunity__c as redOpportunity
         , op.assurance__c as Assurance
         , op.vy_use_case__c as useCase
+        , op.Partner_Account__c as partnerAccountID
+        , op.Partner_Buying_Relationship__c as partnerBuyingRelationship
+        , op.Partner_Percentage__c as partnerPercentage
+        , op.PartnerStack_ID__c as partnerStackID
+        , op.PartnerStack_Lead_ID__c as partnerStackLeadID
+        , op.PartnerStack_Partner_ID__c as partnerStackPartnerID
+        , op.Partner_Rep__c as partnerRep
+        , op.days_in_stage_1__c as daysInStage1
+        , op.days_in_stage_2__c as daysInStage2
+        , op.days_in_stage_3__c as daysInStage3
+        , op.days_in_stage_4__c as daysInStage4
+        , op.days_in_stage_5__c as daysInStage5
+        , op.days_in_stage_6__c as daysInStage6
+        , op.days_in_stage_custom__c as daysInStageCustom
 FROM 
     {{ source('salesforce_production', 'opportunity') }} as op

@@ -38,5 +38,19 @@ SELECT opportunityId
          , redOpportunity
          , Assurance
          , useCase
+         , partnerAccountID
+         , partnerBuyingRelationship
+         , partnerPercentage
+         , partnerStackID
+         , partnerStackLeadID
+         , partnerStackPartnerID
+         , partnerRep    
+         , daysInStage1
+         , daysInStage2
+         , daysInStage3
+         , daysInStage4
+         , daysInStage5
+         , daysInStage6
+         , daysInStageCustom              
     FROM 
         {{ ref('stg_salesforce_opportunity') }}

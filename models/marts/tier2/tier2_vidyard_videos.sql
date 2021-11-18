@@ -13,6 +13,7 @@ SELECT
    , v.milliseconds
    , v.derivedOrigin
    , v.source
+   , p.uuid
 FROM
 	{{ ref('stg_vidyard_videos')}} as v
       LEFT JOIN {{ ref('stg_vidyard_chapters')}} as c

@@ -42,7 +42,11 @@ sources:
 
       - name: manage_combo
 
-      - name: video_creation_create_combo            
+      - name: video_creation_create_combo
+
+      - name: acquisition_viewed_watermark_landing_page
+
+      - name: viewed_backlink_landing_page
 
 models:
     # Documentation for PRODUCT_SESSIONS table
@@ -828,7 +832,6 @@ models:
         - name : channels
           description: "Custom event property that groups all traffic into specific channels: email, paid, social, search, product and direct. https://heapanalytics.com/app/env/4242522408/definitions?view=properties&type=defined_property&id=Channels-300931"
 
-
     # Documentation for ADMIN_COMBO table
     - name: stg_govideo_production_admin_combo
       columns:
@@ -903,7 +906,6 @@ models:
 
         - name : channels
           description: "Custom event property that groups all traffic into specific channels: email, paid, social, search, product and direct. https://heapanalytics.com/app/env/4242522408/definitions?view=properties&type=defined_property&id=Channels-300931"
-
 
     # Documentation for MANAGE_COMBO table
     - name: stg_govideo_production_manage_combo
@@ -1054,3 +1056,118 @@ models:
 
         - name : channels
           description: "Custom event property that groups all traffic into specific channels: email, paid, social, search, product and direct. https://heapanalytics.com/app/env/4242522408/definitions?view=properties&type=defined_property&id=Channels-300931"
+
+    # Documentation for ACQUISITION_VIEWED_WATERMARK_LANDING_PAGE table
+    - name : stg_govideo_production_viewed_watermark_landing_page
+      columns:
+        - name : eventID
+          description: The ID of the event.
+          tests:
+            - not_null
+            - unique
+
+        - name : userID
+          description: A randomly generated user ID used to identify a user in Heap.
+
+        - name : sessionID
+          description: The ID of the associated session.
+
+        - name : sessionTime
+          description: The timestamp of when the session began.
+
+        - name : country
+          description: "The user’s country, based on their geolocation data. https://heapanalytics.com/app/env/4242522408/definitions?view=properties&type=property&id=country-country%3Asession%3Abuiltin"
+
+        - name : region
+          description: "The user’s region, based on their geolocation data. https://heapanalytics.com/app/env/4242522408/definitions?view=properties&type=property&id=region-region%3Asession%3Abuiltin"
+
+        - name : city
+          description: "The user’s city, based on their geolocation data. https://heapanalytics.com/app/env/4242522408/definitions?view=properties&type=property&id=city-city%3Asession%3Abuiltin"
+
+        - name : platform
+          description: "The user’s operating system. https://heapanalytics.com/app/env/4242522408/definitions?view=properties&type=property&id=platform-platform%3Asession%3Abuiltin"
+
+        - name : deviceType
+          description: "The device type, either Mobile, Tablet or Desktop. https://heapanalytics.com/app/env/4242522408/definitions?view=properties&type=property&id=device-type-device_type%3Asession%3Abuiltin"
+
+        - name: browser
+          description: "The user’s browser. https://heapanalytics.com/app/env/4242522408/definitions?view=properties&type=property&id=browser-browser%3Asession%3Abuiltin"
+
+        - name : landingPage
+
+        - name : utmSource
+          description: "UTM parameter attributing the source for the user's session. https://heapanalytics.com/app/env/4242522408/definitions?view=properties&type=property&id=utm-source-utm_source%3Asession%3Abuiltin"
+
+        - name : utmMedium
+          description: "UTM parameter attributing the medium for the user's session. https://heapanalytics.com/app/env/4242522408/definitions?view=properties&type=property&id=utm-medium-utm_medium%3Asession%3Abuiltin"
+
+        - name : utmCampaign
+          description: "UTM parameter attributing the campaign for the user's session. https://heapanalytics.com/app/env/4242522408/definitions?view=properties&type=property&id=utm-campaign-utm_campaign%3Asession%3Abuiltin "
+
+        - name : utmTerm
+          description: "UTM parameter attributing the keyword for the user's session. https://heapanalytics.com/app/env/4242522408/definitions?view=properties&type=property&id=utm-term-utm_term%3Asession%3Abuiltin"
+
+        - name : utmContent
+          description: "UTM parameter attributing the campaign content for the user's session. https://heapanalytics.com/app/env/4242522408/definitions?view=properties&type=property&id=utm-content-utm_content%3Asession%3Abuiltin"
+
+        - name: domain
+          description: "The current website domain, including the subdomain, e.g. blog.heap.io. https://heapanalytics.com/app/env/4242522408/definitions?view=properties&type=property&id=domain-domain%3Apageview%3Abuiltin"
+
+    # Documentation for VIEWED_BACKLINK_LANDING_PAGE table
+    - name : stg_govideo_production_viewed_backlink_landing_page
+      columns :
+        - name : eventID
+          description: The ID of the event.
+          tests:
+            - not_null
+            - unique
+
+        - name: userID
+          description: "A randomly generated user ID used to identify a user in Heap."
+
+        - name: sessionID
+          description: "The ID of the associated session."
+
+        - name: sessionTime
+          description: "The timestamp of when the session began."
+
+        - name: country
+          description: "The user’s country, based on their geolocation data. https://heapanalytics.com/app/env/4242522408/definitions?view=properties&type=property&id=country-country%3Asession%3Abuiltin"
+
+        - name: region
+          description: "The user’s region, based on their geolocation data. https://heapanalytics.com/app/env/4242522408/definitions?view=properties&type=property&id=region-region%3Asession%3Abuiltin"
+
+        - name: city
+          description: "The user’s city, based on their geolocation data. https://heapanalytics.com/app/env/4242522408/definitions?view=properties&type=property&id=city-city%3Asession%3Abuiltin"
+
+        - name: platform
+          description: "The user’s operating system. https://heapanalytics.com/app/env/4242522408/definitions?view=properties&type=property&id=platform-platform%3Asession%3Abuiltin"
+
+        - name: deviceType
+          description: "The device type, either Mobile, Tablet or Desktop. https://heapanalytics.com/app/env/4242522408/definitions?view=properties&type=property&id=device-type-device_type%3Asession%3Abuiltin"
+
+        - name: browser
+          description: "The user’s browser. https://heapanalytics.com/app/env/4242522408/definitions?view=properties&type=property&id=browser-browser%3Asession%3Abuiltin"
+
+        - name: landingPage
+
+        - name: utmSource
+          description: "UTM parameter attributing the source for the user's session. https://heapanalytics.com/app/env/4242522408/definitions?view=properties&type=property&id=utm-source-utm_source%3Asession%3Abuiltin"
+
+        - name: utmMedium
+          description: "UTM parameter attributing the medium for the user's session. https://heapanalytics.com/app/env/4242522408/definitions?view=properties&type=property&id=utm-medium-utm_medium%3Asession%3Abuiltin"
+
+        - name: utmCampaign
+          description: "UTM parameter attributing the campaign for the user's session. https://heapanalytics.com/app/env/4242522408/definitions?view=properties&type=property&id=utm-campaign-utm_campaign%3Asession%3Abuiltin "
+
+        - name: utmTerm
+          description: "UTM parameter attributing the keyword for the user's session. https://heapanalytics.com/app/env/4242522408/definitions?view=properties&type=property&id=utm-term-utm_term%3Asession%3Abuiltin"
+
+        - name: utmContent
+          description: "UTM parameter attributing the campaign content for the user's session. https://heapanalytics.com/app/env/4242522408/definitions?view=properties&type=property&id=utm-content-utm_content%3Asession%3Abuiltin"
+
+        - name: domain
+          description: "The current website domain, including the subdomain, e.g. blog.heap.io. https://heapanalytics.com/app/env/4242522408/definitions?view=properties&type=property&id=domain-domain%3Apageview%3Abuiltin"
+
+
+

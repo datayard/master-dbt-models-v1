@@ -11,7 +11,7 @@ select
           then to_char(date_trunc('month', rpc.effectiveenddate+4), 'yyyy-mm')
           else to_char(date_trunc('month', rpc.effectiveenddate), 'yyyy-mm') end as contractendmonth
           ,  datediff('month',rpc.effectivestartdate,rpc.effectiveenddate) as contractlength
-          , case when contractlength <= 1 then 'monthly' when contractlength <= 10 then 'subannually' when contractlength <= 18 then 'annually' else 'multiyear' end as contractlengthtype
+          , case when contractlength <= 1 or contractlength is null then 'monthly' when contractlength <= 10 then 'subannually' when contractlength <= 18 then 'annually' else 'multiyear' end as contractlengthtype
 
       , sum(nvl(rpc.mrr * 12, 0)) as arr
       FROM {{ ref('stg_zuora_rate_plan') }} AS rp
