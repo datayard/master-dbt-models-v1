@@ -1,3 +1,4 @@
+
 SELECT 
         am.email
       , am.accountId
@@ -60,7 +61,7 @@ SELECT
              when a.accountType = 'Customer' then a.accountType 
              when a.accountType = 'Sub-Account' then a.accountType 
              else 'Other' end as type 
-      , am.mqi_date_new
+      , am.mqi_date_new 
       , am.acquisition_source
       
 FROM {{ ref('kube_new_all_mqi') }} as am
