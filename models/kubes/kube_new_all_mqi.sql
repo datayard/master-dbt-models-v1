@@ -1,4 +1,5 @@
-SELECT
+
+  SELECT
         u.leadid as id
       , u.email
       , u.domainType
@@ -66,8 +67,6 @@ SELECT
             then cm.campaignsourcedby
         else acquisition_source1 end as acquisition_source
 
-
-
 FROM {{ ref('tier2_salesforce_lead') }} as u
 LEFT JOIN {{ ref('tier2_salesforce_campaign_and_members') }} as cm
     ON cm.leadid = u.leadid
@@ -76,6 +75,8 @@ LEFT JOIN {{ ref('stg_salesforce_campaign')}} as c
 WHERE
       u.isconverted = 'false' -- need to ignore leads that were converted to contact
       and (campaign_parentid NOT IN ('7014O000001m7h7QAA', '7014O000001m4XEQAY') or campaign_parentid is null)
+      and acquisition_source != 'exclude'
+
 UNION
 SELECT
         u.contactId as id
@@ -152,8 +153,11 @@ LEFT JOIN {{ ref('stg_salesforce_campaign') }} as c
     ON c.campaignId = cm.campaign_parentid
 -- JOIN {{ ref('tier2_salesforce_account') }} as a
 --     ON a.accountId = u.accountId
+where acquisition_source != 'exclude'
+and (campaign_parentid NOT IN ('7014O000001m7h7QAA', '7014O000001m4XEQAY') or campaign_parentid is null)
+
 UNION
-SELECT distinct
+SELECT 
           null as id
         , email
         , domaintype
@@ -164,7 +168,7 @@ SELECT distinct
         , split_part(u.email, '@', 2) as domain
         , null as persona
         , null as accountId
-        , u.createddate as mqiDateGMT
+        , null::timestamp as mqiDateGMT
         , null::timestamp as mqiDateEST
         , null::timestamp as mqlDateGMT
         , null::timestamp as mqlDateEST
@@ -190,7 +194,7 @@ SELECT distinct
         , null as childChannel
         , null as childCTAsubtype
         , null as responseStatus
-        , null::timestamp as mqi_date_new
+        , u.createddate as mqi_date_new
         , null as acquisition_source1
         , null as acquisition_source2
         , case
@@ -198,7 +202,7 @@ SELECT distinct
                 else 'Signups - Product' 
           end as acquisition_source 
 
-
     from dbt_vidyard_master.kube_vidyard_user_details u
     where excludeemail = 0
       and signupsource != 'Hubspot'
+
