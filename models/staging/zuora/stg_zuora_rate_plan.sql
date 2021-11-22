@@ -17,7 +17,8 @@ SELECT
         rate_plan.subscription_version_amendment_id as subscriptionVersionAmendmentId,
         rate_plan.default_payment_method_id as defaultPaymentMethodId,
         rate_plan.triggersync_c as triggerSync,
-        rate_plan.parent_account_id as parentAccountId
+        rate_plan.parent_account_id as parentAccountId,
+        rate_plan.product_id as productId
 
 FROM
         {{ source ('zuora', 'rate_plan')}} as rate_plan
