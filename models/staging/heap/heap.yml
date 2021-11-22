@@ -1335,6 +1335,6 @@ models:
           description: "UTM parameter attributing the campaign content for the user's session. https://heapanalytics.com/app/env/4242522408/definitions?view=properties&type=property&id=utm-content-utm_content%3Asession%3Abuiltin"
 
         - name: domain
-          description:
+          description: "The current website domain, including the subdomain, e.g. blog.heap.io. https://heapanalytics.com/app/env/4242522408/definitions?view=properties&type=property&id=domain-domain%3Apageview%3Abuiltin"
 
 
