@@ -56,7 +56,7 @@ sources:
 
       - name: sign_in_up_signed_up_on_video_end_screen
 
-      - name: sign_in_up_signed_up_on_video_pause_pause
+      - name: sign_in_up_signed_up_on_video_pause
 
 models:
     # Documentation for PRODUCT_SESSIONS table
