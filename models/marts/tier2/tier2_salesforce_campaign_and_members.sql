@@ -1,5 +1,6 @@
 SELECT
     sfcm.*
+    ,split_part(sfcm.email, '@', 2) as domain
     , sfc.isdeleted AS campaign_isdeleted
     , sfc.campaignName AS campaign_name
     , case when sfc_p.campaignName is null then sfc.campaignName else sfc_p.campaignName end as campaign_parentname
