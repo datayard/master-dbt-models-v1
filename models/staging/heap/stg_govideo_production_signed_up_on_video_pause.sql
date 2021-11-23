@@ -17,6 +17,6 @@ SELECT
         signed_up_on_video_pause.domain as domain,
         signed_up_on_video_pause.path as path
 FROM
-        {{ source ( 'govideo_production' , 'sign_in_up_signed_up_on_video_pause_pause') }} as signed_up_on_video_pause
+        {{ source ( 'govideo_production' , 'sign_in_up_signed_up_on_video_pause') }} as signed_up_on_video_pause
 WHERE
         signed_up_on_video_pause.time < DATEADD(day, 1, current_date)
