@@ -62,6 +62,10 @@ SELECT
              when a.accountType = 'Sub-Account' then a.accountType 
              else 'Other' end as type 
       , am.mqi_date_new 
+      , row_number() over(partition by am.email order by am.mqi_date_new) as rn_new
+      , row_number() over(partition by am.domain order by am.mqi_date_new) as domain_rn_new
+      , row_number() over(partition by am.accountID order by am.mqi_date_new) as account_rn_new
+      , case when am.parentCTAsubtype = 'User Signup' then row_number() over(partition by am.email order by am.mqi_date_new) end as user_rn_new
       , am.acquisition_source
       
 FROM {{ ref('kube_new_all_mqi') }} as am
