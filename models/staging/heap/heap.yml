@@ -48,6 +48,8 @@ sources:
 
       - name: viewed_backlink_landing_page
 
+      - name: sign_in_up_signed_up_on_video_embed_end_screen
+
 models:
     # Documentation for PRODUCT_SESSIONS table
     - name: stg_govideo_production_product_sessions
