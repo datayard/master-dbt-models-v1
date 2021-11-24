@@ -54,10 +54,6 @@ sources:
 
       - name: acquisition_viewed_landing_page_after_right_clicking_player_and_clicking_about
 
-      - name: sign_in_up_signed_up_on_video_embed_end_screen
-
-      - name: sign_in_up_signed_up_on_video_embed_pause
-
 models:
     # Documentation for PRODUCT_SESSIONS table
     - name: stg_govideo_production_product_sessions
