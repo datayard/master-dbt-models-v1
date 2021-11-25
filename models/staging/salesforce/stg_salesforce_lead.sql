@@ -7,6 +7,7 @@ SELECT
 		, sfdc_lead.isconverted as isConverted
 		, sfdc_lead.convertedcontactid as convertedContactId
 		, sfdc_lead.createddate as createdDate
+    , convert_timezone('EST', sfdc_lead.createddate::timestamp) as createdDateEST
 		, sfdc_lead.converteddate as convertedDate
 		, sfdc_lead.lead_owner_id__c as leadOwnerId
 		, sfdc_lead.lastname as lastName
