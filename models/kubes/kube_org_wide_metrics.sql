@@ -1,15 +1,28 @@
-with zuora_enterprise_accounts as (
-    select
-        distinct zuora.vidyardAccountId
-    -- from dbt_vidyard_master.tier2_zuora zuora
+with active_accounts as (
+    select distinct zuora.vidyardAccountId
     from {{ ref('tier2_zuora') }} zuora
-    where
-        zuora.sku not in ('SS-010', 'SKU-00000009', 'SKU-00000020')
-        and zuora.subscription_type  like '%Active%'
-),
-     kube_org_wide_metrics as (
+    where zuora.sku not in ('SS-010', 'SKU-00000009', 'SKU-00000020')
+      and zuora.subscription_type like '%Active%'
+      and zuora.vidyardaccountid is not null
+)
+, churned_accounts as (
+    select distinct z.vidyardAccountId
+    from {{ ref('tier2_zuora') }} z
+    where z.sku not in ('SS-010', 'SKU-00000009', 'SKU-00000020')
+      and z.vidyardaccountid NOT IN (select distinct vidyardAccountId from active_accounts)
+      and status != 'Active'
+)
+, zuora_enterprise_accounts as (    
+    select a.*, 'Active' as AccountStatus
+    from active_accounts a
+    union
+    select c.*, 'Churned' as AccountStatus
+    from churned_accounts c
+)
+    , kube_org_wide_metrics as (
          select o.organizationid
               , o.accountid
+              , z.AccountStatus
               , o.parentid
               , o.name as name
               , a.accountname
@@ -38,7 +51,7 @@ with zuora_enterprise_accounts as (
                 left join {{ ref('stg_vidyard_org_metrics') }} om                         
                 -- left join dbt_vidyard_master.stg_vidyard_org_metrics om
                     on om.organizationid = o.organizationid
-         group by 1, 2, 3, 4, 5, 6, 7, 8, 9
+         group by 1, 2, 3, 4, 5, 6, 7, 8, 9, 10
      ),
     self_serve_summary as (
         select
@@ -61,6 +74,7 @@ with zuora_enterprise_accounts as (
 select
     k.organizationid
     , k.accountid
+    , k.AccountStatus
     , k.parentid
     , k.name as name
     , k.accountname
