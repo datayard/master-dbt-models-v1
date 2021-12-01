@@ -21,6 +21,7 @@ with subscriptions as (
 , expand_dates as (
   select
     s.accountid
+    , s.customertype
     , d.yearmonth
     , d.yearmonthvalue
     , d.fiscalyearmonth
@@ -29,7 +30,7 @@ with subscriptions as (
     , sum( case when d.yearmonth = s.yearmonth then nvl(mrr,0) else 0 end) as mrr
   from subscriptions s
   left join dates_table d using (connector)
-  group by 1,2,3,4,5,6
+  group by 1,2,3,4,5,6,7
 )
 
 , cumulative_expand_dates as (
@@ -42,6 +43,7 @@ with subscriptions as (
 , self_join_for_prior_month as (
   select
     t0.accountid
+    , t0.customertype
     , t0.yearmonth
     , t0.yearmonthvalue
     , t0.fiscalyearmonth
@@ -57,6 +59,7 @@ with subscriptions as (
 
 select
   accountid
+  , customertype
   , yearmonth
   , yearmonthvalue
   , fiscalyearmonth

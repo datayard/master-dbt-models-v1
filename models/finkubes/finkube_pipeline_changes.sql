@@ -1,5 +1,5 @@
 with pipeline as (
-   select *from {{ref('finkube_pipeline')}}
+   select * from {{ref('finkube_pipeline')}}
  )
 
 , gross_new as (
@@ -28,6 +28,7 @@ with pipeline as (
     , opportunityid
     , opportunityattribution
     , opportunitytype
+    , customertype
     , region
     , contractlengthtype
     , pipelinemonth
@@ -51,6 +52,7 @@ select
   , opportunityid
   , opportunityattribution
   , opportunitytype
+  , customertype
   , region
   , contractlengthtype
   , pipelinemonth
@@ -74,6 +76,7 @@ select
    , opportunityid
    , opportunityattribution
    , opportunitytype
+   , customertype
    , region
    , contractlengthtype
    , pipelinemonth
