@@ -17,8 +17,12 @@ select
   , fiscalquarter
   , fiscalyear
   , case when a.ispersonaccount or a.isselfserve or a.ispersonaccount is null then 'Vidyard Pro' else a.employeesegment end as customertype
-  , case when yearmonth <= '2020-11' then nvl(sarr,0) else nvl(zarr,0) end as arr
-   , case when yearmonth <= '2020-11' then nvl(sarr/12,0) else nvl(zarr/12,0) end as mrr
+--  , case when yearmonth <= '2020-11' then nvl(sarr,0) else nvl(zarr,0) end as arr
+--   , case when yearmonth <= '2020-11' then nvl(sarr/12,0) else nvl(zarr/12,0) end as mrr
+  , nvl(sarr,0) as salesforcearr
+  , nvl(sarr,0)/12 as salesforcemrr
+  , nvl(zarr,0) as zuoraarr
+  , nvl(zarr,0)/12 as zuoramrr
 from zuora
 full outer join sfdc using (accountid, region, idtype, yearmonth, yearmonthvalue, fiscalyearmonth, fiscalquarter, fiscalyear)
 left join {{ref('tier2_salesforce_account')}} a using (accountid)
