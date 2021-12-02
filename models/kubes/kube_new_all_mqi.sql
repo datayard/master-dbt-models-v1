@@ -77,7 +77,7 @@ WHERE
       and (campaign_parentid NOT IN ('7014O000001m7h7QAA', '7014O000001m4XEQAY') or campaign_parentid is null)
       and acquisition_source != 'exclude'
 
-UNION
+UNION all
 SELECT
         u.contactId as id
       , u.email
@@ -156,11 +156,11 @@ LEFT JOIN {{ ref('stg_salesforce_campaign') }} as c
 where acquisition_source != 'exclude'
 and (campaign_parentid NOT IN ('7014O000001m7h7QAA', '7014O000001m4XEQAY') or campaign_parentid is null)
 
-UNION
+UNION all
 SELECT 
           null as id
-        , email
-        , domaintype
+        , u.email
+        , u.domaintype
         , case
    		when u.email like '%vidyard.com' or u.email like '%viewedit.com' then 1
    		else 0

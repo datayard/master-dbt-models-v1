@@ -42,6 +42,7 @@ SELECT
                 or split_part(sfdc_campaignmember.email, '@', 2) like '%wp.pl'
                 or split_part(sfdc_campaignmember.email, '@', 2) like '%getnada.com'
                 or split_part(sfdc_campaignmember.email, '@', 2) like '%tutanota.com%'
+                or split_part(sfdc_campaignmember.email, '@', 2) like '%gmx.com%'
             then 'personal'
             when split_part(sfdc_campaignmember.email, '@', 2) like '%.edu%'
                 or split_part(sfdc_campaignmember.email, '@', 2) like '%edu.%'
