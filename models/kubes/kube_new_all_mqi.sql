@@ -159,8 +159,8 @@ and (campaign_parentid NOT IN ('7014O000001m7h7QAA', '7014O000001m4XEQAY') or ca
 UNION
 SELECT 
           null as id
-        , email
-        , domaintype
+        , u.email
+        , u.domaintype
         , case
    		when u.email like '%vidyard.com' or u.email like '%viewedit.com' then 1
    		else 0
