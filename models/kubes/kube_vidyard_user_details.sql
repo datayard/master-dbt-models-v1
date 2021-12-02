@@ -56,6 +56,7 @@ WITH
 SELECT 
     vu.userid
     , vu.organizationid
+    , vu.parentid
     , vu.personal_account_type
     , vu.enterprise_access
     , vu.classification
