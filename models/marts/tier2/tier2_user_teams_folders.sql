@@ -39,4 +39,4 @@ JOIN {{ ref('stg_vidyard_users') }} as u
 LEFT JOIN {{ ref('stg_vidyard_org_metrics') }} as om
 	ON o.organizationid = om.organizationid	
 WHERE
-	orgtype = 'self_serve' or orgtype is null
+	orgtype = 'self_serve'
