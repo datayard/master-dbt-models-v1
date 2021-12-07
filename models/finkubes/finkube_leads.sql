@@ -2,6 +2,7 @@ with all_mqi as (
     select
       leadid as leadcontactid
       , u.email
+      , u.accountid
       , split_part(u.email, '@', 2) as domain
       , u.domaintype as domaintype
       , case
@@ -47,6 +48,7 @@ with all_mqi as (
     select
       contactid as leadcontactid
       , u.email
+      , u.accountid
       , split_part(u.email, '@', 2) as domain
       , u.domaintype
       , case
@@ -101,6 +103,7 @@ with all_mqi as (
     select
       leadcontactid
       , email
+      , accountid
       , domain
       , domaintype
       , campaignsourcecategory
@@ -186,6 +189,7 @@ with all_mqi as (
     select
       leadcontactid
       , email
+      , accountid
       , domain
       , domaintype
       , campaignsourcecategory
