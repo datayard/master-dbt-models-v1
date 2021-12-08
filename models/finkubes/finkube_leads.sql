@@ -198,7 +198,7 @@ with all_mqi as (
     select
       leadcontactid
       , email
-      , accountid
+      , lower(accountid) as accountid
       , domain
       , domaintype
       , campaignsourcecategory
