@@ -1,6 +1,6 @@
    select
      opportunityid
-     , accountid
+     , lower(accountid) as accountid
      , opportunitytype
      , stagename
       , lower(opportunityattribution) as opportunityattribution
