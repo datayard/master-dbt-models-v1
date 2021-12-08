@@ -27,10 +27,10 @@ SELECT
 		, sfdc_lead.numberofemployees as numberofemployees
     , sfdc_lead.persona__c as persona
     , sfdc_lead.mkto71_Acquisition_Program__c as acquisitationprogram
-    , split_part(u.email, '@', 2) as domain
+    , split_part(sfdc_lead.email, '@', 2) as domain
     , case
-          when u.email like '%vidyard.com' then 1
-          when u.email like '%viewedit.com' then 1
+          when sfdc_lead.email like '%vidyard.com' then 1
+          when sfdc_lead.email like '%viewedit.com' then 1
           else 0
       end as excludeEmail
 
