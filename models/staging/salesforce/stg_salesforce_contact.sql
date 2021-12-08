@@ -30,10 +30,10 @@ SELECT
     , sfdc_contact.mailingcountry as mailingCountry
     , sfdc_contact.persona__c as persona
     , sfdc_contact.mkto2__Acquisition_Program__c  as acquisitationprogram
-    , split_part(u.email, '@', 2) as domain
+    , split_part(sfdc_contact.email, '@', 2) as domain
      , case
-          when u.email like '%vidyard.com' then 1
-          when u.email like '%viewedit.com' then 1
+          when sfdc_contact.email like '%vidyard.com' then 1
+          when sfdc_contact.email like '%viewedit.com' then 1
           else 0
       end as excludeEmail
     , case
