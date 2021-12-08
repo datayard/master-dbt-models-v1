@@ -2,7 +2,7 @@ with
   sessions as (
     select
       cast(identifier as varchar(50)) as userid
-      , derivedchannel as channels
+      , derived_channel as channels
       , sessiontime
       , region
     from
@@ -54,7 +54,7 @@ join
 select
   o.organizationid
   , z.accountnumber
-  , left(z.crmid, 15) as accountid15
+  , lower(left(z.crmid, 15)) as accountid15
   , to_char(date_trunc('month', o.createddate), 'yyyy-mm') as signupmonth
   , date(o.createddate) as signupdate
   , case

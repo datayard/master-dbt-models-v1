@@ -1,9 +1,10 @@
    select
      opportunityid
-     , accountid
+     , lower(accountid) as accountid
      , opportunitytype
      , stagename
       , lower(opportunityattribution) as opportunityattribution
+      , case when a.ispersonaccount or a.isselfserve or a.ispersonaccount is null then 'Vidyard Pro' else a.employeesegment end as customertype
       , c.region
     --  , case when customertier is not null then customertier else (case when employeesegment = 'Emerging' then 'Tier 4' when numberofemployees >= 3000 then 'Tier 1' when numberofemployees >= 500 then 'Tier 2' when numberofemployees >= 200 then 'Tier 3' else '' end) end as customertier
      , to_char(date_trunc('month',case when enteredPipelineDate is null and (stagename like '%Closed%' or (opportunitytype in ('Renewals','Renewals + Add-On'))) then nvl(closedwondate,closedate) else enteredPipelineDate end),'yyyy-mm') as pipelinemonth

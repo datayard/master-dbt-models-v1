@@ -20,6 +20,7 @@ with dates_table as (
      , opportunityid
      , opportunityattribution
      , opportunitytype
+     , customertype
      , region
      , contractlengthtype
      , pipelinemonth
