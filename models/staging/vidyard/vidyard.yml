@@ -57,6 +57,8 @@ sources:
       - name: vidyard_roles
 
       - name: vidyard_onboarding_metadata
+
+      - name: vidyard_video_metrics      
       
       
 
@@ -700,3 +702,26 @@ models:
 
       - name: general_use_case
         description: ' '                                     
+
+
+# Documentation for VIDYARD_VIDEO_METRICS table from PUBLIC schema
+  - name: stg_vidyard_video_metrics
+    columns:
+
+      - name: id
+        description: unique identifier for this table
+        tests:
+          - unique
+          - not_null
+
+      - name: views_count
+        description: ' '        
+
+      - name: unique_viewers
+        description: ' '
+
+      - name: identified_viewers
+        description: ' '  
+
+      - name: identified_views
+        description: ' '     

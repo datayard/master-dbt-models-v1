@@ -42,6 +42,7 @@ SELECT
                 or split_part(sfdc_campaignmember.email, '@', 2) like '%wp.pl'
                 or split_part(sfdc_campaignmember.email, '@', 2) like '%getnada.com'
                 or split_part(sfdc_campaignmember.email, '@', 2) like '%tutanota.com%'
+                or split_part(sfdc_campaignmember.email, '@', 2) like '%gmx.com%'
             then 'personal'
             when split_part(sfdc_campaignmember.email, '@', 2) like '%.edu%'
                 or split_part(sfdc_campaignmember.email, '@', 2) like '%edu.%'
@@ -196,6 +197,7 @@ SELECT
 		, sfdc_campaignmember.status_reason__c as statusReason
 		, sfdc_campaignmember.current_status_reason__c as currentStatusReason
         , sfdc_campaignmember.response_status__c as responseStatus
+        , sfdc_campaignmember.persona_formula__c as persona
 
  FROM 
  		{{ source ('salesforce_production' , 'campaignmember') }} as sfdc_campaignmember

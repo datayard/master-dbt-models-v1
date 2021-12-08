@@ -36,6 +36,7 @@ SELECT
     , vostg.updateddate
     , vostg.createdbyclientid
     , vostg.signup_source
+    , vostg.parentid
 
     --first_view, first_view_videoid, total_seconds, videos_with_views, views_count
     , vomstg.firstviewdate

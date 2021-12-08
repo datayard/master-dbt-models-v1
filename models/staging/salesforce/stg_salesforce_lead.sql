@@ -27,6 +27,12 @@ SELECT
 		, sfdc_lead.numberofemployees as numberofemployees
     , sfdc_lead.persona__c as persona
     , sfdc_lead.mkto71_Acquisition_Program__c as acquisitationprogram
+    , split_part(u.email, '@', 2) as domain
+    , case
+          when u.email like '%vidyard.com' then 1
+          when u.email like '%viewedit.com' then 1
+          else 0
+      end as excludeEmail
 
         , case
               when split_part(sfdc_lead.email, '@', 2) like '%gmail.com%'
@@ -60,6 +66,7 @@ SELECT
               or split_part(sfdc_lead.email, '@', 2) like '%wp.pl'
               or split_part(sfdc_lead.email, '@', 2) like '%getnada.com'
               or split_part(sfdc_lead.email, '@', 2) like '%tutanota.com%'
+              or split_part(sfdc_lead.email, '@', 2) like '%gmx.com%'
                 then 'personal'
               when split_part(sfdc_lead.email, '@', 2) like '%.edu%'
               or split_part(sfdc_lead.email, '@', 2) like '%edsfdc_lead.%'
@@ -193,6 +200,7 @@ SELECT
                 then 'education'
               else 'business'
             end as domainType
+
 
 FROM
 		{{ source ('salesforce_production','lead') }} as sfdc_lead
