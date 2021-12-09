@@ -3,7 +3,7 @@ with subscriptions as (
     *
     , 1 as connector
   FROM
-    {{ref('finkube_subscriptions')}}
+    {{ref('fintier2_subscriptions')}}
 )
 
 , dates_table as (
@@ -57,6 +57,7 @@ with subscriptions as (
     t0.yearmonthvalue - 1 = t1.yearmonthvalue and t0.accountid = t1.accountid
 )
 
+, summary as (
 select
   accountid
   , customertype
@@ -79,3 +80,15 @@ select
   , mrr*12 as netarr
 from self_join_for_prior_month
 where mrr <> previousmrr
+)
+
+, gross_new_summary as (
+select accountid, yearmonth as grossnewmonth, yearmonthvalue as grossnewmonthvalue, changemrr as grossnewmrr, changearr as grossnewarr
+from summary
+where changetype = 'gross new'
+
+)
+
+select *
+from summary
+left join gross_new_summary using (accountid)
