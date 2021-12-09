@@ -29,6 +29,7 @@ SELECT contactId
          , acquisitationprogram
          , domainType
          , persona
-         
+         , domain
+         , excludeemail
     FROM 
         {{ ref('stg_salesforce_contact') }}
