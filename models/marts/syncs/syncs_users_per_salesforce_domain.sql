@@ -35,7 +35,7 @@ users.domain,
 usertype.free,
 usertype.pro,
 usertype.enterprise,
-sfdc.accountid,
+--sfdc.accountid,
 (CASE WHEN sfdc.accountid is NULL then 'NEW' end) as newaccount
 
 FROM
@@ -52,6 +52,18 @@ sfdc
 
 ON 
 users.domain = sfdc.emaildomain
+
+where users.domain NOT LIKE '%.edu' AND
+users.domain NOT LIKE '%.ru' AND
+users.domain NOT LIKE '%.br' AND
+users.domain NOT LIKE '%.se' AND
+users.domain NOT LIKE '%.cl' AND
+users.domain NOT LIKE '%.in' AND
+users.domain NOT LIKE '%.my' AND
+users.domain NOT LIKE '%.mx' AND
+
+users.domain not in ( Select emaildomain From dbt_vidyard_master.stg_free_domains) AND
+sfdc.accountid is NULL
 
 --WHERE  sfdc.accountid is NULL
 
