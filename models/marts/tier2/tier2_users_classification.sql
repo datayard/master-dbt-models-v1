@@ -50,3 +50,4 @@ with personal_account_type
             LEFT JOIN {{ ref('tier2_vidyard_team_memberships') }} as tm
                        ON tm.userid = pat.userid
                            and tm.inviteaccepted = true
+                           
