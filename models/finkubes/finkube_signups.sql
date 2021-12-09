@@ -33,8 +33,8 @@ with
   , row_number() over(partition by organizationid order by st.sessiontime) as rn
   from
   {{ref('tier2_vidyard_user_details')}} o
-  join {{ref('tier2_vidyard_users')}} u using (userid,organizationid)
-join
+  left join {{ref('tier2_vidyard_users')}} u using (userid,organizationid)
+left join
   sessions st on st.userid = o.userid
     where
       u.orgtype = 'self_serve'
