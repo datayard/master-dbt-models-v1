@@ -5,7 +5,6 @@ SELECT
       , am.id
       , am.domainType
       , am.domain
-      , am.excludeemail
       , am.mqiDateGMT
       , am.mqiDateEST
       , am.mqlDateGMT
@@ -33,7 +32,10 @@ SELECT
       , am.childCTAsubtype
      /* , am.employeeSegment */
       , am.responseStatus
-      , row_number() over(partition by am.email order by am.mqiDateGMT) as rn
+      , am.campaign_parentid
+--       , row_number() over(partition by am.email order by am.mqiDateGMT) as rn --old rn
+      , row_number() over (partition by case when (campaign_parentid NOT IN ('7014O000001m7h7QAA', '7014O000001m4XEQAY') or campaign_parentid is null) then
+              am.email end order by am.mqiDateGMT asc) as rn
       , row_number() over(partition by am.domain order by am.mqiDateGMT) as domain_rn
       , row_number() over(partition by am.accountID order by am.mqiDateGMT) as account_rn
       , row_number() over(partition by am.accountID order by am.opportunityClosedWonDate) as account_won_rn
@@ -61,12 +63,7 @@ SELECT
              when a.accountType = 'Customer' then a.accountType 
              when a.accountType = 'Sub-Account' then a.accountType 
              else 'Other' end as type 
-      , am.mqi_date_new 
-      , convert_timezone('EST',am.mqi_date_new ::timestamp) as mqi_date_new_EST
-      , row_number() over(partition by am.email order by am.mqi_date_new) as rn_new
-      , row_number() over(partition by am.domain order by am.mqi_date_new) as domain_rn_new
-      , row_number() over(partition by am.accountID order by am.mqi_date_new) as account_rn_new
-      , case when am.parentCTAsubtype = 'User Signup' then row_number() over(partition by am.email order by am.mqi_date_new) end as user_rn_new
+      , convert_timezone('EST',am.mqiDateGMT ::timestamp) as con_mqi_date_EST
       , am.acquisition_source
       
 FROM {{ ref('kube_new_all_mqi') }} as am
