@@ -38,6 +38,7 @@ group by 1,2,3,4,5,6,7
 
 , sfdc as (
   select lower(accountid) as accountid from {{ref('tier2_salesforce_account')}} a
+
 )
 
 , chosen_arr as (
