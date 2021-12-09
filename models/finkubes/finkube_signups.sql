@@ -51,10 +51,10 @@ left join
       -- only include sessions 30 minutes prior to signup
   )
 
+, summary as (
 select
   o.organizationid
-  , z.accountnumber
-  , lower(left(z.crmid, 15)) as accountid15
+  lower(case when a.crmid is null then a.accountnumber else left(a.crmid, 15) end) as accountid15
   , to_char(date_trunc('month', o.createddate), 'yyyy-mm') as signupmonth
   , date(o.createddate) as signupdate
   , case
@@ -151,3 +151,13 @@ where
   and (
     ust.rn = 1 or ust.rn is null
   )
+)
+
+, sfdc as (
+  select lower(accountid) as accountid
+  from {{ref('tier2_salesforce_account')}} a
+)
+
+select organizationid, nvl(accountid,accountid15) as accountid, signupmonth, signupdate, subchannel, channel, region, domain, domaintype, email
+from summary s
+left join sfdc a on left(a.accountid,15) = s.accountid15
