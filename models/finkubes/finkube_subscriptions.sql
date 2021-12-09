@@ -17,7 +17,7 @@ select
   , fiscalyearmonth
   , fiscalquarter
   , fiscalyear
-  , case when a.ispersonaccount or a.isselfserve or a.ispersonaccount is null then 'Vidyard Pro' else a.employeesegment end as customertype
+
 --  , case when yearmonth <= '2020-11' then nvl(sarr,0) else nvl(zarr,0) end as arr
 --   , case when yearmonth <= '2020-11' then nvl(sarr/12,0) else nvl(zarr/12,0) end as mrr
 --  , nvl(sarr,0) as salesforcearr
@@ -32,14 +32,16 @@ select
 
 from zuora
 full outer join sfdc using (accountid, region, idtype, yearmonth, yearmonthvalue, fiscalyearmonth, fiscalquarter, fiscalyear)
-left join {{ref('tier2_salesforce_account')}} a using (accountid)
-group by 1,2,3,4,5,6,7,8
+
+group by 1,2,3,4,5,6,7
 )
 
 , chosen_arr as (
-select accountid, region,yearmonth,yearmonthvalue,fiscalyearmonth,fiscalquarter,fiscalyear, customertype
+select accountid, region,yearmonth,yearmonthvalue,fiscalyearmonth,fiscalquarter,fiscalyear
+, case when a.ispersonaccount or a.isselfserve or a.ispersonaccount is null then 'Vidyard Pro' else a.employeesegment end as customertype
   , sum(case when sarr > 0 and yearmonth < '2020-12' then sarr when zarr > 0 then zarr else 0 end) as arr
-  from combined
+  from combined c
+  left join {{ref('tier2_salesforce_account')}} a on lower(a.accountid) = c.accountid
   group by 1,2,3,4,5,6,7,8
 )
 
