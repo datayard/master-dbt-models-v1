@@ -54,7 +54,7 @@ left join
 , summary as (
 select
   o.organizationid
-  , lower(case when a.crmid is null then a.accountnumber else left(a.crmid, 15) end) as accountid15
+  , lower(case when z.crmid is null then z.accountnumber else left(z.crmid, 15) end) as accountid15
   , to_char(date_trunc('month', o.createddate), 'yyyy-mm') as signupmonth
   , date(o.createddate) as signupdate
   , case
