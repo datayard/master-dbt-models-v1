@@ -44,7 +44,7 @@ with summary as (
    left join {{ref('fct_sfdc_country_to_region')}} c on lower(a.billingcountry) = c.country
     where a.ispersonaccount = 'false' and (closedarr <> 0 or pipelinearr <> 0) and pipelinemonth is not null)
 
-    select opportunityid, lower(accountid) as accountid, stagename, opportunityattribution, customertype, region, pipelinemonth, exitmonth, contractstartmonth, contractendmonth,
+    select opportunityid, lower(accountid) as accountid, stagename, opportunityattribution, opportunitytype, customertype, region, pipelinemonth, exitmonth, contractstartmonth, contractendmonth,
     contractlength, contractlengthtype, previousarr, renewalpipelinearr, upsellpipelinearr, newpipelinearr, pipelinearr, renewalclosedarr, upsellclosedarr, newclosedarr, newclosedarr
     ,closedarr
     from summary
