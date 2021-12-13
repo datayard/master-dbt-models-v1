@@ -1,6 +1,6 @@
 with zuora as (
 select
-      lower(case when a.crmid is null then a.accountnumber else left(a.crmid, 15) end) as accountid15
+      case when a.crmid is null then a.accountnumber else left(a.crmid, 15) end as accountid15
       , case when a.crmid is null then 'zid' else 'accountid' end as idtype
       , a.accountname
       , rpc.effectivestartdate as contractstartdate
@@ -33,7 +33,7 @@ select
 
 )
 , sfdc as (
-  select lower(accountid) as accountid, a.ispersonaccount, a.isselfserve, a.employeesegment  from {{ref('tier2_salesforce_account')}}
+  select accountid, a.ispersonaccount, a.isselfserve, a.employeesegment  from {{ref('tier2_salesforce_account')}}
 )
 
     select
