@@ -37,7 +37,7 @@ group by 1,2,3,4,5,6,7
 )
 
 , sfdc2 as (
-  select lower(accountid) as accountid, a.ispersonaccount, a.isselfserve, a.employeesegment  from {{ref('tier2_salesforce_account')}} a
+  select accountid, a.ispersonaccount, a.isselfserve, a.employeesegment  from {{ref('tier2_salesforce_account')}} a
 
 )
 

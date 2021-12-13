@@ -55,7 +55,7 @@ left join
 select
   o.organizationid
 
-  , lower(case when z.crmid is null then z.accountnumber else left(z.crmid, 15) end) as accountid15
+  , case when z.crmid is null then z.accountnumber else left(z.crmid, 15) end as accountid15
 
   , to_char(date_trunc('month', o.createddate), 'yyyy-mm') as signupmonth
   , date(o.createddate) as signupdate
@@ -156,7 +156,7 @@ where
 )
 
 , sfdc as (
-  select lower(accountid) as accountid
+  select accountid
   from {{ref('tier2_salesforce_account')}} a
 )
 
