@@ -133,7 +133,7 @@ SELECT
         , 'Signups - Product' as childCTAsubtype
         ,  null as responseStatus
         ,  'Signups - Product' as campaign_parentid
-        ,  null as campaign_member_status
+        ,  'Signups - Product' as campaign_member_status
 
     from {{ ref('kube_vidyard_user_details') }} u
     left join {{ ref('tier2_salesforce_account') }} a
