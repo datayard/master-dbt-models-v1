@@ -12,7 +12,7 @@ WITH lastSessionDate as (
             1
 )
 
-SELECT
+SELECT DISTINCT
     -- User Teams Folders
     utft2.userid
     , utft2.organizationid
@@ -24,27 +24,27 @@ SELECT
     , uc.classification
 
     --email_to_exclude, domain, domain_type
-    , vustg.excludeEmail
-    , vustg.domain
-    , vustg.domainType
-    , vustg.email
+    , utft2.excludeEmail
+    , utft2.domain
+    , utft2.domainType
+    , utft2.email
 
     --org_name, created_date, updated_date, createdbyclientid, signup_source
-    , vostg.name
-    , vostg.orgType
-    , vostg.createddate
-    , vostg.updateddate
-    , vostg.createdbyclientid
-    , vostg.signup_source
-    , vostg.parentid
+    , utft2.name
+    , utft2.orgType
+    , utft2.createddate
+    , utft2.updateddate
+    , utft2.createdbyclientid
+    , utft2.signup_source
+    , utft2.parentid
 
     --first_view, first_view_videoid, total_seconds, videos_with_views, views_count
-    , vomstg.firstviewdate
-    , vomstg.firstviewvideoid
-    , vomstg.totalseconds
-    , vomstg.videoswithviews
-    , vomstg.viewscount
-    , vomstg.activatedFlag
+    , utft2.firstviewdate
+    , utft2.firstviewvideoid
+    , utft2.totalseconds
+    , utft2.videoswithviews
+    , utft2.viewscount
+    , utft2.activatedFlag
 
     -- last session date
     , lstsd.lastSessionDate
@@ -56,18 +56,5 @@ FROM
     LEFT JOIN {{ ref('tier2_users_classification') }} as uc
         on uc.userid = utft2.userid and uc.accountid = utft2.accountid
 
-    --left join dbt_vidyard_master.stg_vidyard_users vustg
-    LEFT JOIN {{ ref('stg_vidyard_users')}} as vustg
-        on vustg.userid = utft2.userid
-
-    --left join dbt_vidyard_master.stg_vidyard_organizations vostg
-    LEFT JOIN {{ ref('stg_vidyard_organizations') }} as vostg
-        on vostg.organizationid = utft2.organizationid
-
-    --left join dbt_vidyard_master.stg_vidyard_org_metrics vomstg
-    LEFT JOIN {{ ref('stg_vidyard_org_metrics') }} as vomstg
-        on vomstg.organizationid = utft2.organizationid
-
     LEFT JOIN lastSessionDate as lstsd
         on lstsd.vidyardUserId = utft2.userid
-

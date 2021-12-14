@@ -2,6 +2,7 @@ with all_mqi as (
     select
       leadid as leadcontactid
       , u.email
+      , u.accountid
       , split_part(u.email, '@', 2) as domain
       , u.domaintype as domaintype
       , case
@@ -37,16 +38,21 @@ with all_mqi as (
        , case when numberofemployees >= 200 then 'Commercial' when numberofemployees < 200 then 'Emerging' else '' end as customertype
     from
       {{ ref('tier2_salesforce_lead') }} u
-      join
+      left join
       {{ ref('tier2_salesforce_campaign_and_members')}} c using (leadid)
+      LEFT JOIN {{ ref('stg_salesforce_campaign')}} as cc
+          ON cc.campaignId = c.campaign_parentid
     where
       u.isconverted = 'false'
+      and (campaign_parentid NOT IN ('7014O000001m7h7QAA', '7014O000001m4XEQAY') or campaign_parentid is null)
+    --  and acquisition_source != 'exclude'
 
     union all
 
     select
       contactid as leadcontactid
       , u.email
+      , u.accountid
       , split_part(u.email, '@', 2) as domain
       , u.domaintype
       , case
@@ -91,16 +97,22 @@ with all_mqi as (
       end,'') as customertype
     from
       {{ ref('tier2_salesforce_contact') }} u
-      join {{ref('tier2_salesforce_campaign_and_members')}} c using (contactid)
-      join {{ref('tier2_salesforce_account')}} a using (accountid)
-      join {{ref('tier2_salesforce_opportunity')}} using (accountid)
+      left join {{ref('tier2_salesforce_campaign_and_members')}} c using (contactid)
+      LEFT JOIN {{ ref('stg_salesforce_campaign') }} as cc
+          ON cc.campaignId = c.campaign_parentid
+      left join {{ref('tier2_salesforce_account')}} a using (accountid)
+      left join {{ref('tier2_salesforce_opportunity')}} using (accountid)
       left join {{ref('fct_sfdc_country_to_region')}} r on r.country = lower(u.mailingcountry)
+      where --acquisition_source != 'exclude'
+      --and
+      (campaign_parentid NOT IN ('7014O000001m7h7QAA', '7014O000001m4XEQAY') or campaign_parentid is null)
   )
 
   , sorted_mqi as (
     select
       leadcontactid
       , email
+      , accountid
       , domain
       , domaintype
       , campaignsourcecategory
@@ -186,6 +198,7 @@ with all_mqi as (
     select
       leadcontactid
       , email
+      , accountid
       , domain
       , domaintype
       , campaignsourcecategory

@@ -25,6 +25,8 @@ SELECT leadId
          , domainType
          , persona
          , numberofemployees
+         , domain
+         , excludeemail
         
 
     FROM

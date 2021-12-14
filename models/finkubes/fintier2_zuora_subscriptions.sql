@@ -38,7 +38,10 @@ select
 
 )
 , sfdc as (
-  select accountid, region from {{ref('tier2_salesforce_account')}} a
+  select
+    accountid
+    , region
+  from {{ref('tier2_salesforce_account')}} a
   left join {{ref('fct_sfdc_country_to_region')}} c on lower(a.billingcountry) = c.country
 )
 
