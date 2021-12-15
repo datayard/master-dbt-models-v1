@@ -154,5 +154,6 @@ with dates_table as (
     , 3,4,5,6,7,8
 )
 
-select lower(accountid) as accountid, idtype, region, yearmonth, yearmonthvalue, fiscalyearmonth, fiscalquarter, fiscalyear
+
+select accountid, idtype, region, yearmonth, yearmonthvalue, fiscalyearmonth, fiscalquarter, fiscalyear,sarr
 from salesforce_final
