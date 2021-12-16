@@ -33,11 +33,12 @@ select
 
 )
 , sfdc as (
-  select accountid from {{ref('tier2_salesforce_account')}}
+  select accountid, a.ispersonaccount, a.isselfserve, a.employeesegment  from {{ref('tier2_salesforce_account')}}
 )
 
     select
       nvl(a.accountid , z.accountid15) as accountid
+      , case when a.ispersonaccount or a.isselfserve or a.ispersonaccount is null then 'Vidyard Pro' else a.employeesegment end as customertype
       , z.accountname
       , z.idtype
       , z.contractstartdate

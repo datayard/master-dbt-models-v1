@@ -73,6 +73,9 @@ SELECT a.accountid
          , rpct.discountpercentage
          , row_number() over(partition by s.originalsubscriptionid order by (DATE(s.createddate))desc) = 1  as latest_subscription
          , c.personalEmail
+         , s.contractEffectiveDate
+         , s.serviceActivationDate
+
     FROM {{ ref('stg_zuora_rate_plan') }} AS rp
              JOIN {{ ref('stg_zuora_subscription') }} AS s ON s.subscriptionid = rp.subscriptionid
              JOIN {{ ref('stg_zuora_rate_plan_charge') }} AS rpc ON rpc.rateplanid = rp.rateplanid

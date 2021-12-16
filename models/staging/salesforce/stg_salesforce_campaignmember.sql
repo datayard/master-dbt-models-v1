@@ -197,6 +197,7 @@ SELECT
 		, sfdc_campaignmember.status_reason__c as statusReason
 		, sfdc_campaignmember.current_status_reason__c as currentStatusReason
         , sfdc_campaignmember.response_status__c as responseStatus
+        , sfdc_campaignmember.persona_formula__c as persona
 
  FROM 
  		{{ source ('salesforce_production' , 'campaignmember') }} as sfdc_campaignmember
