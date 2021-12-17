@@ -65,7 +65,7 @@ SELECT
              else 'Other' end as type 
       , convert_timezone('EST',am.mqiDateGMT ::timestamp) as con_mqi_date_EST
       , am.acquisition_source
-      
+      , am.campaign_member_status
 FROM {{ ref('kube_new_all_mqi') }} as am
 LEFT JOIN {{ ref('tier2_salesforce_account') }} as a
     ON am.accountId = a.accountId
