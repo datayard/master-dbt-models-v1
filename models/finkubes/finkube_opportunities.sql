@@ -46,6 +46,6 @@ with summary as (
 
     select opportunityid, accountid, stagename, opportunityattribution, opportunitytype
     , customertype, region, pipelinemonth, exitmonth, contractstartmonth, contractendmonth,
-    contractlength, contractlengthtype, previousarr, renewalpipelinearr, upsellpipelinearr, newpipelinearr, pipelinearr, renewalclosedarr, upsellclosedarr, newclosedarr, newclosedarr
+    contractlength, contractlengthtype, previousarr, renewalpipelinearr, upsellpipelinearr, newpipelinearr, pipelinearr, renewalclosedarr, upsellclosedarr, newclosedarr
     ,closedarr
     from summary
