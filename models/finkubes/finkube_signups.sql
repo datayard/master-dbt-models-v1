@@ -163,3 +163,4 @@ where
 select organizationid, nvl(accountid,accountid15) as accountid, signupmonth, signupdate, subchannel, channel, region, domain, domaintype, email
 from summary s
 left join sfdc a on left(a.accountid,15) = s.accountid15
+group by 1,2,3,4,5,6,7,8,9,10
