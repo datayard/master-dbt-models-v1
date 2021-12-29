@@ -33,7 +33,7 @@ select
 
 )
 , sfdc as (
-  select accountid, a.ispersonaccount, a.isselfserve, a.employeesegment  from {{ref('tier2_salesforce_account')}}
+  select accountid, ispersonaccount, isselfserve, employeesegment  from {{ref('tier2_salesforce_account')}}
 )
 
     select
