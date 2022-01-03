@@ -1,71 +1,196 @@
-WITH usertype AS
+WITH userType AS  -- User types
 
 (
-SELECT 
-usrdetails.domain,
-COUNT (CASE WHEN usrdetails.personal_account_type like 'free' then 1 end) as free,
-COUNT (CASE WHEN usrdetails.personal_account_type like 'pro' then 1 end) as pro,
-COUNT (CASE WHEN usrdetails.personal_account_type like 'enterprise' then 1 end) as enterprise,
-COUNT (CASE WHEN usrdetails.personal_account_type like 'enterprise self serve' then 1 end) AS enterprise_self_serve
-  
-FROM 
-{{ ref('tier2_vidyard_user_details') }} usrdetails
-  
+SELECT
+    usrdetails.domain,
+    COUNT (CASE WHEN usrdetails.personal_account_type like 'free' then 1 end) as free,
+    COUNT (CASE WHEN usrdetails.personal_account_type like 'pro' then 1 end) as pro,
+    COUNT (CASE WHEN usrdetails.personal_account_type like 'enterprise' then 1 end) as enterprise,
+    COUNT (CASE WHEN usrdetails.personal_account_type like 'enterprise self serve' then 1 end) AS enterprise_self_serve
+FROM
+    {{ ref('tier2_vidyard_user_details') }} usrdetails
 GROUP BY
-usrdetails.domain
+    usrdetails.domain
   ),
 
 
-sfdc AS
-
+mktoPerson AS  -- Marketo Persons
 (
 SELECT
-sfdcaccount.accountid, 
-sfdcaccount.emaildomain
-
+    DISTINCT mktoLeads.leadid,
+    substring (mktoLeads.emailaddress, charindex( '@', mktoLeads.emailaddress) + 1,
+    len(mktoLeads.emailaddress)) AS Domain
 FROM
-{{ref('tier2_salesforce_account')}} sfdcaccount
-
+     {{ ref('stg_marketo_lead') }} mktoLeads
 WHERE
-sfdcaccount.ispersonaccount = FALSE
-)
+    mktoLeads.leadid NOT IN (SELECT merged_lead FROM  {{ source('marketo', 'merged_lead') }} ) --AND
+),
+
+
+mktoPersonDomain AS -- Marketo persons grouped by domains
+(
+    SELECT
+    count(DISTINCT mktoPerson.leadid) as marketoLeads,
+    domain
+FROM
+    mktoPerson
+GROUP BY
+    domain
+),
+
+
+sfdcContactsDomain AS  --SFDC contacts grouped by domains
+(
 
 SELECT
-users.domain,
-usertype.free,
-usertype.pro,
-usertype.enterprise,
---sfdc.accountid,
-(CASE WHEN sfdc.accountid is NULL then 'NEW' end) as newaccount
+    count(distinct contactid) AS sfdcContacts, domain
+FROM
+    {{ ref('stg_salesforce_contact') }}
+GROUP BY
+    domain
+),
+
+
+sfdcLeadsAttachedDomain AS   -- SFDC leads attached to a company
+(
+SELECT
+    count (distinct leadid) as sfLeadsAttached, domain
+FROM
+     {{ ref('stg_salesforce_lead') }}
+WHERE
+      isconverted is false AND
+      isdeleted is false AND
+      company is NOT NULL AND
+      company NOT LIKE '%Unknown%' AND
+      company NOT LIKE '%outlook%' AND
+      company NOT LIKE '%gmail%' AND
+      company NOT LIKE '%hotmail%' AND
+      company NOT LIKE '%yahoo%'
+GROUP BY
+         domain
+),
+
+sfdcLeadsUnattachedDomain AS (
+
+SELECT
+    count(distinct leadid) AS SfLeadsUnattached, domain
+FROM
+     {{ ref('stg_salesforce_lead') }}
+WHERE
+      isconverted is false AND
+      isdeleted is false AND
+      company is NULL
+GROUP BY
+         domain
+    ),
+
+
+forceCreate AS              -- Force create when a lead is member of marketo Madison Logic list
+(
+    SELECT
+        domain,
+        (CASE WHEN mktoPerson.leadid IN (
+        SELECT
+            id
+        FROM
+             {{ source('marketo', 'list_membership') }}
+        WHERE
+            list_id = 18072
+        ) then 1 else 0
+        end ) as forceCreatefromCampaign
+    FROM
+        mktoPerson
+    where forceCreatefromCampaign = 1
+    ),
+
+
+sfdc AS                 -- SFDC Account domain
+(
+SELECT
+    sfdcaccount.accountid,
+    sfdcaccount.emaildomain
 
 FROM
-{{ ref('tier2_vidyard_users')}}  users
+    {{ ref('tier2_salesforce_account') }} sfdcaccount 
+WHERE
+    sfdcaccount.ispersonaccount = FALSE
+)
+
+
+SELECT
+    users.domain,
+    userType.free,
+    userType.pro,
+    userType.enterprise,
+    mktoPersonDomain.marketoLeads,
+    sfdcContactsDomain.sfdcContacts,
+    sfdcLeadsAttachedDomain.sfLeadsAttached,
+    sfdcLeadsUnattachedDomain.SfLeadsUnattached,
+    --sfdc.accountid
+    (CASE WHEN sfdc.accountid is NULL then 'null' else sfdc.accountid end) as sfdcAccountID,
+    forceCreate.forceCreatefromCampaign
+
+FROM
+    {{ ref('tier2_vidyard_users') }} users 
 
 LEFT JOIN
-usertype
+    userType
+ON
+    users.domain = usertype.domain
 
-ON 
-users.domain = usertype.domain
+FULL JOIN
+    mktoPersonDomain
+ON
+    users.domain = mktoPersonDomain.domain
 
-LEFT JOIN
-sfdc
+FULL JOIN
+    sfdcContactsDomain
+ON
+    users.domain = sfdcContactsDomain.domain
 
-ON 
-users.domain = sfdc.emaildomain
+FULL JOIN
+    sfdcLeadsAttachedDomain
+ON
+    users.domain = sfdcLeadsAttachedDomain.domain
 
-where users.domain NOT LIKE '%.edu' AND
-users.domain NOT LIKE '%.ru' AND
-users.domain NOT LIKE '%.br' AND
-users.domain NOT LIKE '%.se' AND
-users.domain NOT LIKE '%.cl' AND
-users.domain NOT LIKE '%.in' AND
-users.domain NOT LIKE '%.my' AND
-users.domain NOT LIKE '%.mx' AND
+FULL JOIN
+    sfdcLeadsUnattachedDomain
+ON
+    users.domain = sfdcLeadsUnattachedDomain.domain
 
-users.domain not in ( Select emaildomain From dbt_vidyard_master.stg_free_domains) AND
-sfdc.accountid is NULL
+FULL JOIN
+    sfdc
+ON
+    users.domain = sfdc.emaildomain
+
+FULL JOIN
+    forceCreate
+ON
+    users.domain = forceCreate.Domain
+
+WHERE
+    users.domain NOT LIKE '%.edu' AND
+    users.domain NOT LIKE '%.ru' AND
+    users.domain NOT LIKE '%.br' AND
+    users.domain NOT LIKE '%.se' AND
+    users.domain NOT LIKE '%.cl' AND
+    users.domain NOT LIKE '%.in' AND
+    users.domain NOT LIKE '%.my' AND
+    users.domain NOT LIKE '%.mx' AND
+    users.domain not in ( Select emaildomain From dbt_vidyard_master.stg_free_domains)
+    --forceCreate.forceCreatefromCampaign is NOT NULL
 
 --WHERE  sfdc.accountid is NULL
 
 
-group by 1,2,3,4,5
+GROUP BY
+         1,
+         2,
+         3,
+         4,
+         5,
+         6,
+         7,
+         8,
+         9,
+         10
