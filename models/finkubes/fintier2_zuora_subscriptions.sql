@@ -10,7 +10,7 @@ with dates_table as (
  )
  , zuora as (
 select
-      lower(case when a.crmid is null then a.accountnumber else left(a.crmid, 15) end) as accountid15
+      case when a.crmid is null then a.accountnumber else left(a.crmid, 15) end as accountid15
       , case when a.crmid is null then 'zid' else 'accountid' end as idtype
     --  , to_char(date_trunc('month', s.subscriptionstartdate), 'yyyy-mm') as startyearmonth
     --  , to_char(date_trunc('month', s.subscriptionenddate), 'yyyy-mm') as endyearmonth
@@ -38,7 +38,10 @@ select
 
 )
 , sfdc as (
-  select lower(accountid) as accountid, region from {{ref('tier2_salesforce_account')}} a
+  select
+    accountid
+    , region
+  from {{ref('tier2_salesforce_account')}} a
   left join {{ref('fct_sfdc_country_to_region')}} c on lower(a.billingcountry) = c.country
 )
 

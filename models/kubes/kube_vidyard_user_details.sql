@@ -15,6 +15,20 @@ WITH
             AND DATEDIFF('minute', ht.sessiontime, vu.createddate) BETWEEN 0 AND 30
 )
 ,
+   last_product_session AS (
+        SELECT
+            vu.organizationid
+            , max(ht.sessiontime) AS last_session
+        FROM
+            {{ ref('tier2_vidyard_user_details') }} vu
+            JOIN {{ ref('tier2_heap') }} ht
+                ON  ht.vidyardUserId = vu.userid
+        WHERE
+            ht.tracker = 'product_sessions'
+        GROUP BY 1
+
+)
+,
     used_chrome_extension AS (
         SELECT DISTINCT
             vu.organizationid
@@ -89,12 +103,15 @@ SELECT
         else 0
     end as createdvideoflag
     , row_number() over(partition by vu.domain order by vu.createddate) as rn
+    , lps.last_session as lastsession
 
 
 FROM 
     {{ ref('tier2_vidyard_user_details') }} vu
     LEFT JOIN first_session_table fst
-        ON  vu.organizationid = fst.organizationid    
+        ON  vu.organizationid = fst.organizationid
+    LEFT JOIN last_product_session lps
+        ON vu.organizationid = lps.organizationid
     LEFT JOIN {{ ref('stg_vidyard_onboarding_metadata') }} om     
         ON vu.userid = om.userid
     LEFT JOIN use_case_data uc

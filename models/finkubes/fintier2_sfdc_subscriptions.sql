@@ -10,7 +10,7 @@ with dates_table as (
  )
 , salesforce as (
   select
-    lower(accountid) as accountid
+    accountid
     , opportunityid
     , c.region
     , to_char(date_trunc('month', contractstartdate), 'YYYY-MM') as startyearmonth
@@ -154,5 +154,6 @@ with dates_table as (
     , 3,4,5,6,7,8
 )
 
-select *
+
+select accountid, idtype, region, yearmonth, yearmonthvalue, fiscalyearmonth, fiscalquarter, fiscalyear,sarr
 from salesforce_final
