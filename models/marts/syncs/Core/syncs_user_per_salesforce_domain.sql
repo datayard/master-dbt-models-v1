@@ -61,14 +61,11 @@ WHERE
       isconverted is false AND
       isdeleted is false AND
       company is NOT NULL AND
-      company NOT LIKE '%Unknown%' AND
-      company NOT LIKE '%outlook%' AND
-      company NOT LIKE '%gmail%' AND
-      company NOT LIKE '%hotmail%' AND
-      company NOT LIKE '%yahoo%'
+      domain NOT IN (SELECT emaildomain from {{ ref('stg_free_domains') }} )
 GROUP BY
          domain
 ),
+
 
 sfdcLeadsUnattachedDomain AS (
 
@@ -79,7 +76,8 @@ FROM
 WHERE
       isconverted is false AND
       isdeleted is false AND
-      company is NULL
+      company is NULL AND
+      domain NOT IN (SELECT emaildomain from {{ ref('stg_free_domains') }} )
 GROUP BY
          domain
     ),
