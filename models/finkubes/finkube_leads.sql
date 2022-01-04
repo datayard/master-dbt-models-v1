@@ -12,8 +12,8 @@ with all_mqi as (
       end as campaignsourcecategory
       , c.campaignsourcedby as campaignsource
       , date(c.createdDateest) as mqidate
-      , coalesce(cc.cta, c.campaign_cta) as ctatype
-      , coalesce(cc.ctasubtype, c.campaign_ctasubtype) as ctasubtype
+      , c.campaign_cta as ctatype
+      , c.campaign_ctasubtype as ctasubtype
       , date(c.sqodate) as sqodate
       , case
         when sqodate is not null
@@ -65,8 +65,8 @@ with all_mqi as (
       end as campaignsourcecategory
       , c.campaignsourcedby as campaignsource
       , date(c.createdDateest) as mqi_date
-      , coalesce(cc.cta, c.campaign_cta) as ctatype
-      , coalesce(cc.ctasubtype, c.campaign_ctasubtype) as ctasubtype
+      , c.campaign_cta as ctatype
+      , c.campaign_ctasubtype as ctasubtype
       , date(c.sqodate) as sqodate
       , case
         when sqodate is not null
@@ -104,7 +104,7 @@ with all_mqi as (
       LEFT JOIN {{ ref('stg_salesforce_campaign') }} as cc
           ON cc.campaignId = c.campaign_parentid
       left join {{ref('tier2_salesforce_account')}} a using (accountid)
-    --  left join {{ref('tier2_salesforce_opportunity')}} using (accountid)
+      left join {{ref('tier2_salesforce_opportunity')}} using (accountid)
       left join {{ref('fct_sfdc_country_to_region')}} r on r.country = lower(u.mailingcountry)
       where --acquisition_source != 'exclude'
       --and
