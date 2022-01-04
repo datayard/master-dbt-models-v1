@@ -34,4 +34,6 @@ models:
         +materialized: table
       kubes:
         +materialized: table
+      finkubes:
+        +materialized: table
 
