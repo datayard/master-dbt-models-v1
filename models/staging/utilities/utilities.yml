@@ -18,6 +18,8 @@ sources:
 
       - name: free_domain_list
 
+      - name: free_domains
+
 models:
   # Documentation for Staging Intercom table
   - name: kpis
