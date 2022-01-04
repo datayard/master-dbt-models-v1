@@ -45,7 +45,8 @@ WHERE
     and (parentCampaign not ilike '%Hubspot%' or parentCampaign is null)
     and (childCampaign not ilike '%Hubspot%' or childCampaign is null)
     and excludeemail = 0
-    and parentCampaign!='Sales Sourced - ZoomInfo'
+    and (parentCampaign not ilike '%ZoomInfo%' or parentCampaign is null)
+    
 UNION
 SELECT
         u.contactId as id
@@ -92,7 +93,7 @@ LEFT JOIN {{ref ('stg_salesforce_campaign')}} as c
 where (parentCampaign not ilike '%Hubspot%' or parentCampaign is null)
  and (childCampaign not ilike '%Hubspot%' or childCampaign is null)
  and excludeemail = 0
- and parentCampaign!='Sales Sourced - ZoomInfo'
+ and (parentCampaign not ilike '%ZoomInfo%' or parentCampaign is null)
 
 UNION
 SELECT
