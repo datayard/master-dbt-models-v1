@@ -12,8 +12,8 @@ with all_mqi as (
       end as campaignsourcecategory
       , c.campaignsourcedby as campaignsource
       , date(c.createdDateest) as mqidate
-      , c.campaign_cta as ctatype
-      , c.campaign_ctasubtype as ctasubtype
+      , coalesce(cc.cta, c.campaign_cta) as ctatype
+      , coalesce(cc.ctasubtype, c.campaign_ctasubtype) as ctasubtype
       , date(c.sqodate) as sqodate
       , case
         when sqodate is not null
@@ -44,7 +44,10 @@ with all_mqi as (
           ON cc.campaignId = c.campaign_parentid
     where
       u.isconverted = 'false'
-      and (campaign_parentid NOT IN ('7014O000001m7h7QAA', '7014O000001m4XEQAY') or campaign_parentid is null)
+    --  and (parentCampaign not ilike '%Hubspot%' or parentCampaign is null)
+  --    and (childCampaign not ilike '%Hubspot%' or childCampaign is null)
+     and excludeemail = 0
+  --    and parentCampaign!='Sales Sourced - ZoomInfo'
     --  and acquisition_source != 'exclude'
 
     union all
@@ -62,8 +65,8 @@ with all_mqi as (
       end as campaignsourcecategory
       , c.campaignsourcedby as campaignsource
       , date(c.createdDateest) as mqi_date
-      , c.campaign_cta as ctatype
-      , c.campaign_ctasubtype as ctasubtype
+      , coalesce(cc.cta, c.campaign_cta) as ctatype
+      , coalesce(cc.ctasubtype, c.campaign_ctasubtype) as ctasubtype
       , date(c.sqodate) as sqodate
       , case
         when sqodate is not null
@@ -101,11 +104,15 @@ with all_mqi as (
       LEFT JOIN {{ ref('stg_salesforce_campaign') }} as cc
           ON cc.campaignId = c.campaign_parentid
       left join {{ref('tier2_salesforce_account')}} a using (accountid)
-      left join {{ref('tier2_salesforce_opportunity')}} using (accountid)
+    --  left join {{ref('tier2_salesforce_opportunity')}} using (accountid)
       left join {{ref('fct_sfdc_country_to_region')}} r on r.country = lower(u.mailingcountry)
       where --acquisition_source != 'exclude'
       --and
-      (campaign_parentid NOT IN ('7014O000001m7h7QAA', '7014O000001m4XEQAY') or campaign_parentid is null)
+    --  (parentCampaign not ilike '%Hubspot%' or parentCampaign is null)
+      -- and (childCampaign not ilike '%Hubspot%' or childCampaign is null)
+    --   and
+    excludeemail = 0
+    --   and parentCampaign!='Sales Sourced - ZoomInfo'
   )
 
   , sorted_mqi as (
