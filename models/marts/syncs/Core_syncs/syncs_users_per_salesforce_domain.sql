@@ -82,26 +82,6 @@ GROUP BY
          domain
     ),
 
-
-forceCreate AS              -- Force create when a lead is member of marketo Madison Logic list
-(
-    SELECT
-        domain,
-        (CASE WHEN mktoPerson.leadid IN (
-        SELECT
-            id
-        FROM
-             {{ source('marketo', 'list_membership') }}
-        WHERE
-            list_id = 18072
-        ) then 1 else 0
-        end ) as forceCreatefromCampaign
-    FROM
-        mktoPerson
-    where forceCreatefromCampaign = 1
-    ),
-
-
 sfdc AS                 -- SFDC Account domain
 (
 SELECT
@@ -124,10 +104,8 @@ SELECT
     sfdcContactsDomain.sfdcContacts,
     sfdcLeadsAttachedDomain.sfLeadsAttached,
     sfdcLeadsUnattachedDomain.SfLeadsUnattached,
-    --sfdc.accountid
     (CASE WHEN sfdc.accountid is NULL then 'null' else sfdc.accountid end) as sfdcAccountID,
-    forceCreate.forceCreatefromCampaign
-
+    (CASE WHEN users.domain in (SELECT domain from {{ ref('tier2_marketo_madisonlogiclist') }}) THEN 1 ELSE 0 end) as forceCreatefromCampaign
 FROM
     {{ ref('tier2_vidyard_users') }} users 
 
@@ -160,26 +138,6 @@ FULL JOIN
     sfdc
 ON
     users.domain = sfdc.emaildomain
-
-FULL JOIN
-    forceCreate
-ON
-    users.domain = forceCreate.Domain
-
-WHERE
-    users.domain NOT LIKE '%.edu' AND
-    users.domain NOT LIKE '%.ru' AND
-    users.domain NOT LIKE '%.br' AND
-    users.domain NOT LIKE '%.se' AND
-    users.domain NOT LIKE '%.cl' AND
-    users.domain NOT LIKE '%.in' AND
-    users.domain NOT LIKE '%.my' AND
-    users.domain NOT LIKE '%.mx' AND
-    users.domain not in ( Select emaildomain From dbt_vidyard_master.stg_free_domains)
-    --forceCreate.forceCreatefromCampaign is NOT NULL
-
---WHERE  sfdc.accountid is NULL
-
 
 GROUP BY
          1,
