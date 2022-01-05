@@ -24,6 +24,8 @@ sources:
 
       - name: audience_stats
 
+      - name: campaign_history
+
       - name: campaign_hourly_stats
 
       - name: expanded_dynamic_search_ad_history
@@ -206,6 +208,25 @@ models:
 
         - name: clicks
           description: Clicks received during the day
+  
+  # Documentation for campaign_history
+  - name: campaign_history
+    columns:
+
+        - name: id
+          description: Campaign ID
+        
+        - name: name
+          description: Campaign Name
+
+        - name: start_date
+          description: Campaign start date
+
+        - name: end_date
+          description: Camapiagn end date
+
+        - name: campaign_trial_type
+          description: Trail campaign or Base campaign
 
   # Documentation for campaign_hourly_stats table
   - name: campaign_hourly_stats
