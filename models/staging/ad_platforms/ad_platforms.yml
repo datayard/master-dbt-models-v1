@@ -227,6 +227,15 @@ models:
 
         - name: campaign_trial_type
           description: Trail campaign or Base campaign
+        
+        - name: base_campaign_id
+          description: ID of base campaign
+        
+        - name: advertising_channel_type
+          description: ''
+
+        - name: tracking_url_template
+          description: ''
 
   # Documentation for campaign_hourly_stats table
   - name: campaign_hourly_stats
