@@ -15,6 +15,8 @@ sources:
     tables:
 
       - name: lead
+      - name: list_membership
+      - name: merged_lead
   
 
 models:
