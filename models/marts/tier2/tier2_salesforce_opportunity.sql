@@ -51,6 +51,12 @@ SELECT opportunityId
          , daysInStage4
          , daysInStage5
          , daysInStage6
-         , daysInStageCustom              
+         , daysInStageCustom   
+         , preQualificationDate
+         , initiationDate
+         , valuePropositionDate
+         , solutionEvaluationDate
+         , DecisionDate
+         , negotiationDate                    
     FROM 
         {{ ref('stg_salesforce_opportunity') }}

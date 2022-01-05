@@ -188,7 +188,29 @@ models:
         description: ' '     
 
       - name: daysInStageCustom
-        description: ' '                                                               
+        description: ' '    
+
+      - name: daysInStageCustom
+        description: ' '
+
+      - name: preQualificationDate
+        description: ' '
+
+      - name: initiationDate
+        description: ' '
+
+      - name: valuePropositionDate
+        description: ' '
+
+      - name: solutionEvaluationDate
+        description: ' '     
+        
+      - name: DecisionDate
+        description: ' '  
+
+      - name: negotiationDate
+        description: ' '                                           
+
 
   - name: stg_salesforce_account
     columns:
