@@ -8,7 +8,8 @@ SELECT opportunityId
          , isClosed
          , isWon
          , campaignId
-         , createdDate
+         , createdDate as createddatewithtimezone
+         , cast(createdDate as date)
          , enteredPipelineDate
          , deadReason
          , closedWonDate
