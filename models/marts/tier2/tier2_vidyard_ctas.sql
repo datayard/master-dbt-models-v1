@@ -51,4 +51,5 @@ LEFT JOIN
 ON
   vyorgs.accountId = ctas_applied.accountid
 WHERE
-  true
+  --true
+  vyorgs.accountId = '12449'
