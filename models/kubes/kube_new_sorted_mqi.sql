@@ -5,7 +5,7 @@ SELECT
       , am.id
       , am.domainType
       , am.domain
-      , am.excludeemail
+      --, am.excludeemail
       , am.mqiDateGMT
       , am.mqiDateEST
       , am.mqlDateGMT
@@ -44,16 +44,14 @@ SELECT
              when (am.persona like '%Influencer' or am.persona like '%General') then 'Individual Contributor' 
              else 'Other' end as persona
           
-      , case when am.parentCTAtype is null then 'Blank' 
-             when (parentCTAtype = 'Content Asset' or parentCTAtype =  'Video') then 'Content/Video' 
-             when (am.parentCTAtype='Tradeshow' or am.parentCTAtype='Webinar') then 'Event/Webinar' 
-             when (am.parentCTAtype='Organic Lead Score' or am.parentCTAtype='Other') then 'Other' 
+      , case when (am.parentCTAtype = 'Content Asset' or am.parentCTAtype =  'Video') then 'Content/Video' 
+             when (am.parentCTAtype='Tradeshow' or am.parentCTAtype='Webinar' or am.parentCTAtype='Events') then 'Event/Webinar' 
+             when (am.parentCTAtype is null or am.parentCTAtype='Organic Lead Score' or am.parentCTAtype='Other' or am.parentCTAtype='Lead List') then 'Other' 
              else am.parentCTAtype end as parentCTAtype2
 
-      , case when am.childCTAtype is null then 'Blank' 
-             when (childCTAtype = 'Content Asset' or childCTAtype =  'Video') then 'Content/Video' 
-             when (am.childCTAtype='Tradeshow' or am.childCTAtype='Webinar') then 'Event/Webinar' 
-             when (am.childCTAtype='Organic Lead Score' or am.childCTAtype='Other') then 'Other' 
+      , case when (am.childCTAtype = 'Content Asset' or am.childCTAtype =  'Video') then 'Content/Video' 
+             when (am.childCTAtype='Tradeshow' or am.childCTAtype='Webinar' or am.childCTAtype='Events') then 'Event/Webinar' 
+             when (am.childCTAtype is null or am.childCTAtype='Organic Lead Score' or am.childCTAtype='Other' or am.childCTAtype='Lead List') then 'Other' 
              else am.childCTAtype end as childCTAtype2
 
       , case when am.parentCTAsubtype = 'User Signup' then row_number() over(partition by am.email order by am.mqiDateGMT) end as user_rn
