@@ -40,20 +40,7 @@ WHERE
       domain NOT IN (SELECT emaildomain from {{ ref('stg_free_domains') }} )
 GROUP BY
          domain
-    ),
-
-sfdc AS                 -- SFDC Account domain
-(
-SELECT
-    sfdcaccount.accountid,
-    sfdcaccount.emaildomain
-
-FROM
-    {{ ref('tier2_salesforce_account') }} sfdcaccount 
-WHERE
-    sfdcaccount.ispersonaccount = FALSE
-)
-
+    )
 
 SELECT
     users.domain,
@@ -64,7 +51,7 @@ SELECT
     sfdcContactsDomain.sfdcContacts,
     sfdcLeadsAttachedDomain.sfLeadsAttached,
     sfdcLeadsUnattachedDomain.SfLeadsUnattached,
-    (CASE WHEN sfdc.accountid is NULL then 'null' else sfdc.accountid end) as sfdcAccountID,
+    (CASE WHEN sfdcdomains.accountid is NULL then NULL else sfdcdomains.accountid end) as sfdcAccountID,
     (CASE WHEN users.domain in (SELECT domain from {{ ref('tier2_marketo_madisonlogiclist') }}) THEN 1 ELSE 0 end) as forceCreatefromCampaign
 FROM
     {{ ref('tier2_users_per_domain') }} users 
@@ -85,9 +72,9 @@ FULL JOIN
 ON
     users.domain = sfdcLeadsUnattachedDomain.domain
 FULL JOIN
-    sfdc
+    {{ ref('tier2_salesforce_domain_matching') }} sfdcdomains
 ON
-    users.domain = sfdc.emaildomain
+    users.domain = sfdcdomains.emaildomain
 GROUP BY
          1,
          2,
