@@ -704,7 +704,10 @@ models:
         description: ' '     
 
       - name: general_use_case
-        description: ' '                                     
+        description: ' '     
+
+      - name: specific_use_case
+        description: ' '                                             
 
 
 # Documentation for VIDYARD_VIDEO_METRICS table from PUBLIC schema
