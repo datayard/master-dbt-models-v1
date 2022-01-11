@@ -67,6 +67,22 @@ WITH
         where rn=1  and combined_usecase is not null      
 
 )
+  , specific_use_case_data as (
+        SELECT * FROM
+        (
+        SELECT
+            vu.userid
+            , vu.organizationid
+            , ht.specificUseCase
+            , ROW_NUMBER() OVER(PARTITION BY vu.organizationid ORDER BY CASE WHEN ht.specificUseCase IS NULL THEN 99 ELSE 1 END ASC) AS rn
+        FROM
+            {{ ref('tier2_vidyard_user_details') }} vu
+            JOIN {{ ref('stg_govideo_production_users') }} ht
+                ON  ht.vidyardUserId = vu.userid
+        ) a
+        where rn=1  and specificUseCase is not null
+    )
+
 SELECT 
     vu.userid
     , vu.organizationid
@@ -94,6 +110,7 @@ SELECT
     , vu.viewscount
     , vu.activatedFlag
     , coalesce(om.generalUseCase,uc.combined_usecase) as combined_usecase
+    , coalesce(om.specificUseCase,suc.specificUseCase) as specific_usecase
     , case 
         when ext.organizationid is not null then 1
         else 0
@@ -116,6 +133,8 @@ FROM
         ON vu.userid = om.userid
     LEFT JOIN use_case_data uc
         ON vu.organizationid = uc.organizationid 
+    LEFT JOIN specific_use_case_data suc
+        ON vu.organizationid = suc.organizationid
     LEFT JOIN used_chrome_extension ext
         ON vu.organizationid = ext.organizationid 
     LEFT JOIN created_video cv
