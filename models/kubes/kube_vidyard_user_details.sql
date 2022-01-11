@@ -61,7 +61,7 @@ WITH
             , ROW_NUMBER() OVER(PARTITION BY vu.organizationid ORDER BY CASE WHEN ht.combined_usecase IS NULL THEN 99 ELSE 1 END ASC) AS rn
         FROM 
             {{ ref('tier2_vidyard_user_details') }} vu
-            JOIN {{ ref('stg_govideo_production_users') }} ht
+            JOIN {{ ref('tier2_heap_users') }} ht
                 ON  ht.vidyardUserId = vu.userid 
         ) a
         where rn=1  and combined_usecase is not null      
@@ -77,7 +77,7 @@ WITH
             , ROW_NUMBER() OVER(PARTITION BY vu.organizationid ORDER BY CASE WHEN ht.specificUseCase IS NULL THEN 99 ELSE 1 END ASC) AS rn
         FROM
             {{ ref('tier2_vidyard_user_details') }} vu
-            JOIN {{ ref('stg_govideo_production_users') }} ht
+            JOIN {{ ref('tier2_heap_users') }} ht
                 ON  ht.vidyardUserId = vu.userid
         ) a
         where rn=1  and specificUseCase is not null
