@@ -61,11 +61,20 @@ with allotment_summary as (
      ),
 
      admin_summary as (
-             select accountid,
-                    sum(case when isadmin = True then 1 else 0 end) as admin_count
-             from dbt_vidyard_master.tier2_vidyard_team_memberships
-             group by 1
+         select accountid,
+                sum(case when isadmin = True then 1 else 0 end) as admin_count
+         from dbt_vidyard_master.tier2_vidyard_team_memberships
+         group by 1
+     ),
+
+     team_summary as (
+         select accountid,
+                count(distinct teamid) as teams_count
+         from dbt_vidyard_master.tier2_vidyard_team_memberships
+         group by 1
      )
+
+
 
 select distinct o.accountid,
                 asum.seats_allotted,
@@ -86,6 +95,7 @@ select distinct o.accountid,
                 es.remaining_embeds,
                 es.embed_limit,
                 admin.admin_count,
+                ts.teams_count,
                 case when afs.seo = 0 then False else True end as seo_enabled,
                 case when afs.gdp = 0 then False else True end as gdp_enabled,
                 case when afs.sso = 0 then False else True end as sso_enabled
@@ -104,3 +114,4 @@ left join dbt_vidyard_master.tier2_vidyard_organization_features vof on vof.acco
 left join embed_summary es on es.accountid = o.accountid
 left join account_feature_summary afs on afs.accountid = o.accountid
 left join admin_summary admin on admin.accountid = o.accountid
+left join team_summary ts on ts.accountid = o.accountid
