@@ -79,7 +79,7 @@ with allotment_summary as (
 select distinct o.accountid,
                 asum.seats_allotted,
                 asum.seats_used,
-                asum.seats_allotted - asum.seats_used as seats_available
+                asum.seats_allotted - asum.seats_used as seats_available,
                 hs.hub_count,
                 hs.bsp_count,
                 vs.videos as video_count,
