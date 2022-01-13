@@ -72,6 +72,24 @@ with allotment_summary as (
                 count(distinct teamid) as teams_count
          from dbt_vidyard_master.tier2_vidyard_team_memberships
          group by 1
+     ),
+
+     free_pro_mau_summary as (
+         select m.accountid,
+                count(distinct m.userid) as mau_count
+        from dbt_vidyard_master.tier2_mau m
+        left join dbt_vidyard_master.tier2_users_classification uc on uc.userid = m.userid
+        where m.classification in ('pro','free')
+        group by 1
+     ),
+
+     parent_nve_summary as (
+         select accountid,
+                nve_activated,
+                nveactivateddate
+         from dbt_vidyard_master.tier2_vidyard_organization_features
+         -- from {{ ref('tier2_vidyard_organization_features') }}
+         where organizationid = accountid
      )
 
 
@@ -79,9 +97,9 @@ with allotment_summary as (
 select distinct o.accountid,
                 asum.seats_allotted,
                 asum.seats_used,
-                asum.seats_allotted - asum.seats_used as seats_available,
                 hs.hub_count,
                 hs.bsp_count,
+                case when hs.bsp_count = 0 then False else True end as bsp_setup,
                 vs.videos as video_count,
                 vs.last_video_date as last_video_created_date,
                 o.locked,
@@ -89,7 +107,7 @@ select distinct o.accountid,
                 vc.cta as cta_created,
                 vc.cta_applied as videos_with_cta,
                 vof.nve_activated,
---                 vof.nveactivateddate as nve_activated_date,
+                vof.nveactivateddate as nve_activated_date,
                 awms.videos_with_views,
                 awms.viewscount,
                 es.active_embeds,
@@ -97,6 +115,7 @@ select distinct o.accountid,
                 es.embed_limit,
                 admin.admin_count,
                 ts.teams_count,
+                mau.mau_count as free_pro_mau,
                 case when afs.seo = 0 then False else True end as seo_enabled,
                 case when afs.gdp = 0 then False else True end as gdp_enabled,
                 case when afs.sso = 0 then False else True end as sso_enabled
@@ -110,9 +129,9 @@ left join account_wide_metrics_summary awms on awms.accountid = o.accountid
 left join dbt_vidyard_master.tier2_vidyard_ctas vc on vc.accountid = o.accountid
 -- left join {{ ref('tier2_vidyard_ctas') }} vc on vc.accountid = o.accountid
 left join video_summary vs on vs.accountid = o.accountid
-left join dbt_vidyard_master.tier2_vidyard_organization_features vof on vof.accountid = o.accountid
--- left join {{ ref('tier2_vidyard_organization_features') }} vof on vof.accountid = o.accountid
+left join parent_nve_summary vof on vof.accountid = o.accountid
 left join embed_summary es on es.accountid = o.accountid
 left join account_feature_summary afs on afs.accountid = o.accountid
 left join admin_summary admin on admin.accountid = o.accountid
 left join team_summary ts on ts.accountid = o.accountid
+left join free_pro_mau_summary mau on mau.accountid = o.accountid
