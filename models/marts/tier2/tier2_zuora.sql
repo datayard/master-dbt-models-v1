@@ -53,8 +53,8 @@ SELECT a.accountid
          , prp.activecurrencies
          , prp.billingperiod
          , prp.description
-         , prp.effectiveenddate
-         , prp.effectivestartdate
+         , prp.effectiveenddate_prp
+         , prp.effectivestartdate_prp
          , prp.name AS productrateplanname
          , prp.productid
          , p.sku
