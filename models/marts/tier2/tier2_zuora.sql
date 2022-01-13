@@ -53,8 +53,8 @@ SELECT a.accountid
          , prp.activecurrencies
          , prp.billingperiod
          , prp.description
-         , prp.effectiveenddate_prp
-         , prp.effectivestartdate_prp
+         , prp.effectiveenddate
+         , prp.effectivestartdate
          , prp.name AS productrateplanname
          , prp.productid
          , p.sku
@@ -70,8 +70,8 @@ SELECT a.accountid
          , rp.triggersync
          , rpc.mrr
          , rpc.chargemodel
-         , rpc.effectivestartdate
-         , rpc.effectiveenddate
+         , rpc.effectivestartdate as rpc_effectivestartdate
+         , rpc.effectiveenddate as rpc_effectiveenddate
          , rpct.discountpercentage
          , row_number() over(partition by s.originalsubscriptionid order by (DATE(s.createddate))desc) = 1  as latest_subscription
          , c.personalEmail
