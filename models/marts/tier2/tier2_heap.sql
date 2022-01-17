@@ -90,8 +90,8 @@ SELECT
 
         {% elif 'dbt_cloud_pr_' in this.schema %}
 
-            WHERE gs.sessiontime > DATEADD(day, -3, current_date)
-                and gs.sessiontime < DATEADD(day, 1, current_date)
+            WHERE oe.eventtime > DATEADD(day, -3, current_date)
+                and oe.eventtime < DATEADD(day, 1, current_date)
                 
     {% endif %}
 
@@ -131,8 +131,8 @@ SELECT
 
         {% elif 'dbt_cloud_pr_' in this.schema %}
 
-            WHERE gs.sessiontime > DATEADD(day, -3, current_date)
-                and gs.sessiontime < DATEADD(day, 1, current_date)
+            WHERE pv.eventtime > DATEADD(day, -3, current_date)
+                and pv.eventtime < DATEADD(day, 1, current_date)
                 
     {% endif %}
 
@@ -172,8 +172,8 @@ SELECT
 
         {% elif 'dbt_cloud_pr_' in this.schema %}
 
-            WHERE gs.sessiontime > DATEADD(day, -3, current_date)
-                and gs.sessiontime < DATEADD(day, 1, current_date)
+            WHERE ps.eventtime > DATEADD(day, -3, current_date)
+                and ps.eventtime < DATEADD(day, 1, current_date)
                 
     {% endif %}
 
@@ -214,8 +214,8 @@ SELECT
 
         {% elif 'dbt_cloud_pr_' in this.schema %}
 
-            WHERE gs.sessiontime > DATEADD(day, -3, current_date)
-                and gs.sessiontime < DATEADD(day, 1, current_date)
+            WHERE ssc.eventtime > DATEADD(day, -3, current_date)
+                and ssc.eventtime < DATEADD(day, 1, current_date)
                 
     {% endif %}
 
@@ -255,8 +255,8 @@ SELECT
 
         {% elif 'dbt_cloud_pr_' in this.schema %}
 
-            WHERE gs.sessiontime > DATEADD(day, -3, current_date)
-                and gs.sessiontime < DATEADD(day, 1, current_date)
+            WHERE vidcompv.eventtime > DATEADD(day, -3, current_date)
+                and vidcompv.eventtime < DATEADD(day, 1, current_date)
                 
     {% endif %}
 
@@ -298,8 +298,8 @@ SELECT
 
         {% elif 'dbt_cloud_pr_' in this.schema %}
 
-            WHERE gs.sessiontime > DATEADD(day, -3, current_date)
-                and gs.sessiontime < DATEADD(day, 1, current_date)
+            WHERE vidcomss.sessiontime > DATEADD(day, -3, current_date)
+                and vidcomss.sessiontime < DATEADD(day, 1, current_date)
                 
     {% endif %}
 
@@ -339,8 +339,8 @@ SELECT
 
         {% elif 'dbt_cloud_pr_' in this.schema %}
 
-            WHERE gs.sessiontime > DATEADD(day, -3, current_date)
-                and gs.sessiontime < DATEADD(day, 1, current_date)
+            WHERE pv.eventtime > DATEADD(day, -3, current_date)
+                and pv.eventtime < DATEADD(day, 1, current_date)
                 
     {% endif %}
 
@@ -380,8 +380,8 @@ SELECT
 
         {% elif 'dbt_cloud_pr_' in this.schema %}
 
-            WHERE gs.sessiontime > DATEADD(day, -3, current_date)
-                and gs.sessiontime < DATEADD(day, 1, current_date)
+            WHERE pv.eventtime > DATEADD(day, -3, current_date)
+                and pv.eventtime < DATEADD(day, 1, current_date)
                 
     {% endif %}
 
@@ -421,8 +421,8 @@ SELECT
 
         {% elif 'dbt_cloud_pr_' in this.schema %}
 
-            WHERE gs.sessiontime > DATEADD(day, -3, current_date)
-                and gs.sessiontime < DATEADD(day, 1, current_date)
+            WHERE ac.eventtime > DATEADD(day, -3, current_date)
+                and ac.eventtime < DATEADD(day, 1, current_date)
                 
         {% endif %}
 
@@ -462,8 +462,8 @@ SELECT
 
         {% elif 'dbt_cloud_pr_' in this.schema %}
 
-            WHERE gs.sessiontime > DATEADD(day, -3, current_date)
-                and gs.sessiontime < DATEADD(day, 1, current_date)
+            WHERE iac.eventtime > DATEADD(day, -3, current_date)
+                and iac.eventtime < DATEADD(day, 1, current_date)
                 
         {% endif %}
     UNION ALL
@@ -502,8 +502,8 @@ SELECT
 
         {% elif 'dbt_cloud_pr_' in this.schema %}
 
-            WHERE gs.sessiontime > DATEADD(day, -3, current_date)
-                and gs.sessiontime < DATEADD(day, 1, current_date)
+            WHERE mc.eventtime > DATEADD(day, -3, current_date)
+                and mc.eventtime < DATEADD(day, 1, current_date)
                 
         {% endif %}
 
@@ -543,7 +543,7 @@ SELECT
 
         {% elif 'dbt_cloud_pr_' in this.schema %}
 
-            WHERE gs.sessiontime > DATEADD(day, -3, current_date)
-                and gs.sessiontime < DATEADD(day, 1, current_date)
+            WHERE cc.eventtime > DATEADD(day, -3, current_date)
+                and cc.eventtime < DATEADD(day, 1, current_date)
                 
         {% endif %}
