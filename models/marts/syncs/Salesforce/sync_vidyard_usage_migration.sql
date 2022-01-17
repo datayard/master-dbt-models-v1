@@ -43,11 +43,11 @@ with allotment_summary as (
      embed_summary as (
          select accountid,
                 allotmentlimit as embed_limit,
-                sum(activeembeds) as active_embeds,
-                sum(remaininembeds) as remaining_embeds
+                case when allotmentlimit = -1 then -1 else remaininembeds end as remaining_embeds,
+                sum(activeembeds) as active_embeds
 --          from dbt_vidyard_master.tier2_embeds
          from {{ ref('tier2_embeds') }}
-         group by 1,2
+         group by 1,2,3
      ),
 
      account_feature_summary as(
