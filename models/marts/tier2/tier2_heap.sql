@@ -41,11 +41,17 @@ SELECT
         {{ ref('stg_govideo_production_global_session') }} gs
             LEFT JOIN {{ ref('stg_govideo_production_users') }} u
                 ON gs.userid = u.userid
-      {% if is_incremental() %}
-    -- this filter will only be applied on an incremental run
-    WHERE gs.sessiontime > (select max(sessiontime) from {{ this }} where tracker = 'global_session' )
-            and gs.sessiontime < DATEADD(day, 1, current_date)
-    {% endif %}
+        {% if is_incremental() %}
+            -- this filter will only be applied on an incremental run
+            WHERE gs.sessiontime > (select max(sessiontime) from {{ this }} where tracker = 'global_session' )
+                and gs.sessiontime < DATEADD(day, 1, current_date)
+
+        {% elif 'dbt_cloud_pr_' in this.schema %}
+
+            WHERE gs.sessiontime > DATEADD(day, -3, current_date)
+                and gs.sessiontime < DATEADD(day, 1, current_date)
+
+        {% endif %}
 
     UNION ALL
 
@@ -76,12 +82,19 @@ SELECT
         {{ ref('stg_govideo_production_opened_extension') }} oe
             JOIN {{ ref('stg_govideo_production_users') }} u
                 ON oe.userid = u.userid AND u.identifier IS NOT NULL
-    -- this filter will only be applied on an incremental run
+    
         {% if is_incremental() %}
-    -- this filter will only be applied on an incremental run
-    WHERE oe.eventtime > (select max(eventtime) from {{ this }} where tracker = 'opened_extension' )
-            and oe.eventtime < DATEADD(day, 1, current_date)
-    {% endif %}
+
+            -- this filter will only be applied on an incremental run
+            WHERE oe.eventtime > (select max(eventtime) from {{ this }} where tracker = 'opened_extension' )
+                and oe.eventtime < DATEADD(day, 1, current_date)
+
+        {% elif 'dbt_cloud_pr_' in this.schema %}
+
+            WHERE oe.eventtime > DATEADD(day, -3, current_date)
+                and oe.eventtime < DATEADD(day, 1, current_date)
+                
+        {% endif %}
 
     UNION ALL
 
@@ -112,11 +125,19 @@ SELECT
         {{ ref('stg_govideo_production_pageviews') }} pv
             LEFT JOIN {{ ref('stg_govideo_production_users') }} u
                 ON pv.userid = u.userid
-     {% if is_incremental() %}
-    -- this filter will only be applied on an incremental run
-    WHERE pv.eventtime > (select max(eventtime) from {{ this }} where tracker = 'page_views' )
-            and pv.eventtime < DATEADD(day, 1, current_date)
-    {% endif %}
+        
+        {% if is_incremental() %}
+
+            -- this filter will only be applied on an incremental run
+            WHERE pv.eventtime > (select max(eventtime) from {{ this }} where tracker = 'page_views' )
+                and pv.eventtime < DATEADD(day, 1, current_date)
+
+        {% elif 'dbt_cloud_pr_' in this.schema %}
+
+            WHERE pv.eventtime > DATEADD(day, -3, current_date)
+                and pv.eventtime < DATEADD(day, 1, current_date)
+                
+        {% endif %}
 
     UNION ALL
 
@@ -147,11 +168,19 @@ SELECT
         {{ ref('stg_govideo_production_product_sessions') }} ps
             JOIN {{ ref('stg_govideo_production_users') }} u
                 ON ps.userid = u.userid AND u.identifier IS NOT NULL
-    {% if is_incremental() %}
-    -- this filter will only be applied on an incremental run
-    WHERE ps.eventtime > (select max(eventtime) from {{ this }} where tracker = 'product_sessions' )
-            and ps.eventtime < DATEADD(day, 1, current_date)
-    {% endif %}
+
+        {% if is_incremental() %}
+
+            -- this filter will only be applied on an incremental run
+            WHERE ps.eventtime > (select max(eventtime) from {{ this }} where tracker = 'product_sessions' )
+                and ps.eventtime < DATEADD(day, 1, current_date)
+
+        {% elif 'dbt_cloud_pr_' in this.schema %}
+
+            WHERE ps.eventtime > DATEADD(day, -3, current_date)
+                and ps.eventtime < DATEADD(day, 1, current_date)
+                
+        {% endif %}
 
     UNION ALL
 
@@ -183,11 +212,18 @@ SELECT
         JOIN {{ ref('stg_govideo_production_users') }} u
             ON ssc.userid = u.userid AND u.identifier IS NOT NULL
 
-    {% if is_incremental() %}
-    -- this filter will only be applied on an incremental run
-    WHERE ssc.eventtime > (select max(eventtime) from {{ this }} where tracker = 'sharing_share_combo' )
-            and ssc.eventtime < DATEADD(day, 1, current_date)
-    {% endif %}
+        {% if is_incremental() %}
+    
+            -- this filter will only be applied on an incremental run
+            WHERE ssc.eventtime > (select max(eventtime) from {{ this }} where tracker = 'sharing_share_combo' )
+                and ssc.eventtime < DATEADD(day, 1, current_date)
+
+        {% elif 'dbt_cloud_pr_' in this.schema %}
+
+            WHERE ssc.eventtime > DATEADD(day, -3, current_date)
+                and ssc.eventtime < DATEADD(day, 1, current_date)
+                
+        {% endif %}
 
     UNION ALL
 
@@ -218,11 +254,18 @@ SELECT
         {{ ref('stg_govideo_production_vidyard_com_any_pageview') }} vidcompv
             LEFT JOIN {{ ref('stg_govideo_production_users') }} u
                 ON vidcompv.userid = u.userid
-    {% if is_incremental() %}
-    -- this filter will only be applied on an incremental run
-    WHERE vidcompv.eventtime > (select max(eventtime) from {{ this }} where tracker = 'vy_com_page_view' )
-            and vidcompv.eventtime < DATEADD(day, 1, current_date)
-    {% endif %}
+
+        {% if is_incremental() %}
+            -- this filter will only be applied on an incremental run
+            WHERE vidcompv.eventtime > (select max(eventtime) from {{ this }} where tracker = 'vy_com_page_view' )
+                and vidcompv.eventtime < DATEADD(day, 1, current_date)
+
+        {% elif 'dbt_cloud_pr_' in this.schema %}
+
+            WHERE vidcompv.eventtime > DATEADD(day, -3, current_date)
+                and vidcompv.eventtime < DATEADD(day, 1, current_date)
+                
+        {% endif %}
 
     UNION ALL
 
@@ -255,11 +298,18 @@ SELECT
     FROM {{ ref('stg_govideo_production_vidyard_com_sessions') }} vidcomss
         LEFT JOIN {{ ref('stg_govideo_production_users') }} u
             ON vidcomss.userid = u.userid
-    {% if is_incremental() %}
-    -- this filter will only be applied on an incremental run
-    WHERE vidcomss.sessiontime > (select max(sessiontime) from {{ this }} where tracker = 'vy_com_sessions' )
-            and vidcomss.sessiontime < DATEADD(day, 1, current_date)
-    {% endif %}
+    
+        {% if is_incremental() %}
+            -- this filter will only be applied on an incremental run
+            WHERE vidcomss.sessiontime > (select max(sessiontime) from {{ this }} where tracker = 'vy_com_sessions' )
+                and vidcomss.sessiontime < DATEADD(day, 1, current_date)
+
+        {% elif 'dbt_cloud_pr_' in this.schema %}
+
+            WHERE vidcomss.sessiontime > DATEADD(day, -3, current_date)
+                and vidcomss.sessiontime < DATEADD(day, 1, current_date)
+                
+        {% endif %}
 
     UNION ALL
 
@@ -290,11 +340,19 @@ SELECT
         {{ ref('stg_govideo_production_video_creation_started_to_create_or_upload_a_video_combo') }} pv
             JOIN {{ ref('stg_govideo_production_users') }} u
                 ON pv.userid = u.userid AND u.identifier IS NOT NULL
-    {% if is_incremental() %}
-    -- this filter will only be applied on an incremental run
-    WHERE pv.eventtime > (select max(eventtime) from {{ this }} where tracker = 'video_creation' )
-            and pv.eventtime < DATEADD(day, 1, current_date)
-    {% endif %}
+    
+        {% if is_incremental() %}
+            
+            -- this filter will only be applied on an incremental run
+            WHERE pv.eventtime > (select max(eventtime) from {{ this }} where tracker = 'video_creation' )
+                and pv.eventtime < DATEADD(day, 1, current_date)
+
+        {% elif 'dbt_cloud_pr_' in this.schema %}
+
+            WHERE pv.eventtime > DATEADD(day, -3, current_date)
+                and pv.eventtime < DATEADD(day, 1, current_date)
+                
+        {% endif %}
 
     UNION ALL
 
@@ -325,11 +383,19 @@ SELECT
         {{ ref('stg_govideo_production_video_recorded_or_uploaded') }} pv
             JOIN {{ ref('stg_govideo_production_users') }} u
                 ON pv.userid = u.userid AND u.identifier IS NOT NULL
-    {% if is_incremental() %}
-    -- this filter will only be applied on an incremental run
-    WHERE pv.eventtime > (select max(eventtime) from {{ this }} where tracker = 'video_upload' )
-            and pv.eventtime < DATEADD(day, 1, current_date)
-    {% endif %}
+    
+        {% if is_incremental() %}
+    
+            -- this filter will only be applied on an incremental run
+            WHERE pv.eventtime > (select max(eventtime) from {{ this }} where tracker = 'video_upload' )
+                and pv.eventtime < DATEADD(day, 1, current_date)
+
+        {% elif 'dbt_cloud_pr_' in this.schema %}
+
+            WHERE pv.eventtime > DATEADD(day, -3, current_date)
+                and pv.eventtime < DATEADD(day, 1, current_date)
+                
+        {% endif %}
 
     UNION ALL
 
@@ -360,10 +426,18 @@ SELECT
         {{ ref('stg_govideo_production_admin_combo') }} ac
         JOIN {{ ref('stg_govideo_production_users') }} u
                     ON ac.userid = u.userid AND u.identifier IS NOT NULL
+        
         {% if is_incremental() %}
-        -- this filter will only be applied on an incremental run
-        WHERE ac.eventtime > (select max(eventtime) from {{ this }} where tracker = 'admin_combo' )
+            
+            -- this filter will only be applied on an incremental run
+            WHERE ac.eventtime > (select max(eventtime) from {{ this }} where tracker = 'admin_combo' )
                 and ac.eventtime < DATEADD(day, 1, current_date)
+
+        {% elif 'dbt_cloud_pr_' in this.schema %}
+
+            WHERE ac.eventtime > DATEADD(day, -3, current_date)
+                and ac.eventtime < DATEADD(day, 1, current_date)
+                
         {% endif %}
 
     UNION ALL
@@ -395,10 +469,17 @@ SELECT
         {{ ref('stg_govideo_production_insights_analytics_combo') }} iac
         JOIN {{ ref('stg_govideo_production_users') }} u
                     ON iac.userid = u.userid AND u.identifier IS NOT NULL
+
         {% if is_incremental() %}
-        -- this filter will only be applied on an incremental run
-        WHERE iac.eventtime > (select max(eventtime) from {{ this }} where tracker = 'insights_analytics_combo' )
+            -- this filter will only be applied on an incremental run
+            WHERE iac.eventtime > (select max(eventtime) from {{ this }} where tracker = 'insights_analytics_combo' )
                 and iac.eventtime < DATEADD(day, 1, current_date)
+
+        {% elif 'dbt_cloud_pr_' in this.schema %}
+
+            WHERE iac.eventtime > DATEADD(day, -3, current_date)
+                and iac.eventtime < DATEADD(day, 1, current_date)
+                
         {% endif %}
     UNION ALL
 
@@ -429,10 +510,18 @@ SELECT
         {{ ref('stg_govideo_production_manage_combo') }} mc
         JOIN {{ ref('stg_govideo_production_users') }} u
                     ON mc.userid = u.userid AND u.identifier IS NOT NULL
+        
         {% if is_incremental() %}
-        -- this filter will only be applied on an incremental run
-        WHERE mc.eventtime > (select max(eventtime) from {{ this }} where tracker = 'manage_combo' )
+        
+            -- this filter will only be applied on an incremental run
+            WHERE mc.eventtime > (select max(eventtime) from {{ this }} where tracker = 'manage_combo' )
                 and mc.eventtime < DATEADD(day, 1, current_date)
+
+        {% elif 'dbt_cloud_pr_' in this.schema %}
+
+            WHERE mc.eventtime > DATEADD(day, -3, current_date)
+                and mc.eventtime < DATEADD(day, 1, current_date)
+                
         {% endif %}
 
     UNION ALL
@@ -464,8 +553,16 @@ SELECT
         {{ ref('stg_govideo_production_video_creation_create_combo') }} cc
         JOIN {{ ref('stg_govideo_production_users') }} u
                     ON cc.userid = u.userid AND u.identifier IS NOT NULL
+        
         {% if is_incremental() %}
-        -- this filter will only be applied on an incremental run
-        WHERE cc.eventtime > (select max(eventtime) from {{ this }} where tracker = 'video_creation_create_combo' )
+        
+            -- this filter will only be applied on an incremental run
+            WHERE cc.eventtime > (select max(eventtime) from {{ this }} where tracker = 'video_creation_create_combo' )
                 and cc.eventtime < DATEADD(day, 1, current_date)
+
+        {% elif 'dbt_cloud_pr_' in this.schema %}
+
+            WHERE cc.eventtime > DATEADD(day, -3, current_date)
+                and cc.eventtime < DATEADD(day, 1, current_date)
+                
         {% endif %}
