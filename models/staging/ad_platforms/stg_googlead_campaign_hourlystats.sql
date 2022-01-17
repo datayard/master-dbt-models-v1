@@ -19,4 +19,4 @@ SELECT
 FROM 
 	{{ source('google_adwords', 'campaign_hourly_stats') }} as campaignstat
 WHERE
-    campaignstat.date >= '2020-01-01'
+    campaignstat.date >= '2020-12-01'
