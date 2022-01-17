@@ -47,7 +47,7 @@ when country in ('Anguilla','Antigua and Barbuda','Argentina','Aruba','Bahamas',
                 'Turks and Caicos Islands','Uruguay',' Bolivarian Republic of Venezuela','Venezuela','British Virgin Islands','Virgin Islands, U.S.','U.S. Virgin Islands'
                 ) then 'LATAM'
 
-else 'Other' 
+else 'other' 
 end as gregion
 FROM
   {{ source ('govideo_production' , 'admin_combo') }} as admin_combo
