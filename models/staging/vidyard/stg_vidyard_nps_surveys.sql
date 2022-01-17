@@ -9,6 +9,7 @@ SELECT
 	vidyard_nps_surveys.filled as filled,
 	vidyard_nps_surveys.allow_contact as allowContact,
 	vidyard_nps_surveys.survey_type as surveyType,
-	vidyard_nps_surveys.cancelled as cancelled
+	vidyard_nps_surveys.cancelled as cancelled,
+	vidyard_nps_surveys.props
  FROM 
 	{{ source('public', 'vidyard_nps_surveys') }} as vidyard_nps_surveys

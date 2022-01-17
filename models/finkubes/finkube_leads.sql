@@ -44,10 +44,10 @@ with all_mqi as (
           ON cc.campaignId = c.campaign_parentid
     where
       u.isconverted = 'false'
-      and (parentCampaign not ilike '%Hubspot%' or parentCampaign is null)
-      and (childCampaign not ilike '%Hubspot%' or childCampaign is null)
-      and excludeemail = 0
-      and parentCampaign!='Sales Sourced - ZoomInfo'
+    --  and (parentCampaign not ilike '%Hubspot%' or parentCampaign is null)
+  --    and (childCampaign not ilike '%Hubspot%' or childCampaign is null)
+     and excludeemail = 0
+  --    and parentCampaign!='Sales Sourced - ZoomInfo'
     --  and acquisition_source != 'exclude'
 
     union all
@@ -108,10 +108,11 @@ with all_mqi as (
       left join {{ref('fct_sfdc_country_to_region')}} r on r.country = lower(u.mailingcountry)
       where --acquisition_source != 'exclude'
       --and
-      (parentCampaign not ilike '%Hubspot%' or parentCampaign is null)
-       and (childCampaign not ilike '%Hubspot%' or childCampaign is null)
-       and excludeemail = 0
-       and parentCampaign!='Sales Sourced - ZoomInfo'
+    --  (parentCampaign not ilike '%Hubspot%' or parentCampaign is null)
+      -- and (childCampaign not ilike '%Hubspot%' or childCampaign is null)
+    --   and
+    excludeemail = 0
+    --   and parentCampaign!='Sales Sourced - ZoomInfo'
   )
 
   , sorted_mqi as (

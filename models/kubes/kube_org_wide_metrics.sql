@@ -33,7 +33,7 @@ with active_accounts as (
               , count(distinct case when v.origin != 'sample' then v.childentityid else null end)           as videos_count
               , count(distinct e.eventid)                                                                   as events_count
               , count(distinct case when e.eventjoinid is not null then e.eventid else null end)            as applied_events_count
-              , count(distinct case when e.eventtype not like '%simple%' then e.eventjoinid else null end)  as custom_videos
+              , count(distinct case when e.eventtype not like '%simple%' then e.ownerid else null end)      as custom_videos
         --  from dbt_vidyard_master.stg_vidyard_organizations o
         from {{ ref('stg_vidyard_organizations') }} o
                 join zuora_enterprise_accounts z
