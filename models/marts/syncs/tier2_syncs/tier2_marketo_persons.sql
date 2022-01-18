@@ -11,7 +11,7 @@ WHERE
 )
 
 SELECT
-    count(DISTINCT mktoPerson.leadid) as marketoLeads,
+    count(DISTINCT mktoPerson.leadid) as leads,
     domain
 FROM
     mktoPerson

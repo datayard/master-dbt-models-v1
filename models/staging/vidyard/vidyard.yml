@@ -32,6 +32,8 @@ sources:
 
       - name: vidyard_features
 
+      - name: vidyard_feature_usages
+
       - name: vidyard_players
 
       - name: vidyard_allotment_limits
@@ -363,6 +365,23 @@ models:
       - name: updatedDate
         description: ''
 
+  - name: stg_vidyard_feature_usage
+    columns:
+
+      - name: featureUsageID
+        description: unique identifier for the table
+        tests:
+          - unique
+          - not_null
+
+      - name: organizationID
+        description: ' '
+        tests:
+          - unique
+          - not_null
+
+      - name: featureID
+        description: which feature the organization has access to, used to join with vidyard_features to get the feature information
 
   - name: stg_vidyard_features
     columns:
@@ -704,7 +723,10 @@ models:
         description: ' '     
 
       - name: general_use_case
-        description: ' '                                     
+        description: ' '     
+
+      - name: specific_use_case
+        description: ' '                                             
 
 
 # Documentation for VIDYARD_VIDEO_METRICS table from PUBLIC schema

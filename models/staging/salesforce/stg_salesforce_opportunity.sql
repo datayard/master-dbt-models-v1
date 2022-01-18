@@ -54,5 +54,11 @@ SELECT
         , op.days_in_stage_5__c as daysInStage5
         , op.days_in_stage_6__c as daysInStage6
         , op.days_in_stage_custom__c as daysInStageCustom
+        , op.x1_pre_qualification_date__c as preQualificationDate
+        , op.x2_initiate_date__c as initiationDate
+        , op.x3_value_proposition_date__c as valuePropositionDate
+        , op.x4_solution_evaluation_date__c as solutionEvaluationDate
+        , op.x5_decision_date__c as DecisionDate
+        , op.x6_negotiate_date__c as negotiationDate
 FROM 
     {{ source('salesforce_production', 'opportunity') }} as op
