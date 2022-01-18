@@ -34,7 +34,7 @@ select u.userid,
        u.combined_usecase,
        rs.count_people_referred,
        rs.count_referrals_accepted,
-       case when admin_status.admin_flag = 0 then False else True end as admin_flag,
+       case when admin_status.admin_flag = 0 or null then False else True end as admin_flag,
        svs.shared_count
 from {{ ref('kube_vidyard_user_details') }} u
 -- from dbt_vidyard_master.kube_vidyard_user_details u
