@@ -54,6 +54,24 @@ sources:
 
       - name: ad_history
 
+  - name: linkedin_ads
+    description: linkedin ad historical data
+    
+    freshness:
+      warn_after:
+        period: hour
+        count: 12
+      error_after:
+        period: hour
+        count: 24
+
+    tables:
+
+      - name: ad_analytics_by_creative
+
+      - name: creative_history
+
+
 models:
   # Documentation for campaign_history
   - name: campaign_history
@@ -139,6 +157,12 @@ models:
           description: Clicks received during the hour
 
         - name: week
+          description: ''
+        
+        - name: conversions
+          description: ''
+
+        - name: interactions
           description: ''
 
 # Documentation for campaign_custom_parameter_history table
@@ -241,6 +265,57 @@ models:
         - name: ad_source_id
           description: ''
         
+# Documentation for ad analytics creative table
+  - name: ad_analytics_by_creative
+    columns:
 
-  
+        - name: creative_id
+          description: creative id
 
+        - name: day
+          description: date
+
+        - name: impressions
+          description: ''
+
+        - name: clicks
+          description: ''
+
+        - name: company_page_clicks
+          description: ''
+        
+        - name: cost_in_usd
+          description: ''
+
+        - name: follows
+          description: ''
+        
+        - name: likes
+          description: ''
+      
+        - name: opens
+          description: ''
+
+        - name: shares
+          description: ''
+
+        - name: total_engagements
+          description: ''
+
+# Documentation for creative_history table
+  - name: creative_history
+    columns:
+
+        - name: id
+          description: creative id
+
+        - name: campaign_id
+          description: ''
+
+        - name: created_time
+          description: creative created time
+
+        - name: status
+          description: ''
+
+     
