@@ -25,7 +25,7 @@ with allotment_summary as (
 --          from dbt_vidyard_master.stg_vidyard_organizations o
          from {{ ref('stg_vidyard_organizations') }} o
 --          left join dbt_vidyard_master.kube_org_wide_metrics om on om.organizationid = o.organizationid
-         left join {{ ref('kube_org_wide_metrics') }} om on om.organizationid = o.organizationid
+         left join {{ ref('stg_vidyard_org_metrics') }} om on om.organizationid = o.organizationid
          group by 1
      ),
 
