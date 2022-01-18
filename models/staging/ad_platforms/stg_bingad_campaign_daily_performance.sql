@@ -7,6 +7,7 @@ SELECT
     dp.network,
     dp.custom_parameters,
     dp.date
+    
 
 FROM 
 	{{ source('bingads', 'campaign_performance_daily_report') }} as dp
