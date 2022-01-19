@@ -44,11 +44,13 @@ with dates_table as (
     , case when date_part('day',rpc.effectiveenddate) >= 28 and date_part('day',rpc.effectivestartdate) = 1
         then to_char(date_trunc('month', rpc.effectiveenddate+4), 'yyyy-mm')
         else to_char(date_trunc('month', rpc.effectiveenddate), 'yyyy-mm') end as endyearmonth
-    , case when lower(rp.name) in ('three months free','first month free','12 month discount','free forever','first month free - advisor group','100% annual discount')
-        then 1.0 when lower(rp.name) in ('aflac annual','annual') then 0.5 else 1.0 end as discountpercent
+    --, case when lower(rp.name) in ('three months free','first month free','12 month discount','free forever','first month free - advisor group','100% annual discount')
+    --    then 1.0 when lower(rp.name) in ('aflac annual','annual') then 0.5 else 1.0 end as discountpercent
+    , rpct.discountpercentage * 1.0 / 100 as discountpercent
   FROM {{ ref('stg_zuora_rate_plan') }} AS rp
     JOIN {{ ref('stg_zuora_subscription') }} AS s ON s.subscriptionid = rp.subscriptionid
     JOIN {{ ref('stg_zuora_rate_plan_charge')}} AS rpc ON rpc.rateplanid = rp.rateplanid
+    JOIN {{ ref('stg_zuora_rate_plan_charge_tier')}} as rpct ON rpct.rateplanchargeid = rpc.rateplanchargeid
     JOIN {{ ref('stg_zuora_account') }} AS a ON a.accountid = s.accountid
     JOIN {{ ref('stg_zuora_product_rate_plan') }} AS prp ON prp.productrateplanid = rp.productrateplanid
     JOIN {{ ref('stg_zuora_product') }} AS p ON p.productid = prp.productid
