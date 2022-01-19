@@ -20,6 +20,8 @@ sources:
 
       - name: free_domains
 
+      - name: campaign_reference
+
 models:
   # Documentation for Staging Intercom table
   - name: kpis
@@ -42,3 +44,23 @@ models:
 
       - name: domain
         description: the known free domain
+
+  # Documentation for marketing Campaign Reference table
+  - name: campaign_reference
+    columns:
+
+      - name: full_name
+        description: Full name of campaigns shows on ad platforms
+
+      - name: source
+        description: Platforms the campaigns were placed on
+
+      - name: id 
+        description: Campaign ids
+
+      - name: custom_parameter
+        description: custom defined campaign tracking parameters
+
+      - name: tracking_url
+        description: full tracking url of campaigns
+  

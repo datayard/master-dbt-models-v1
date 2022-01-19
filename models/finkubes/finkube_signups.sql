@@ -4,7 +4,7 @@ with
       cast(identifier as varchar(50)) as userid
       , derived_channel as channels
       , sessiontime
-      , region
+      , c.region
     from
       {{ref('tier2_heap')}} h
     left join  {{ref('fct_sfdc_country_to_region')}} c on lower(h.country) = c.country
