@@ -85,7 +85,7 @@ SELECT
     
         {% if is_incremental() %}
 
-            -- this filter will only be applied on an incremental run
+            -- this filter will only be applied on an incremental run!
             WHERE oe.eventtime > (select max(eventtime) from {{ this }} where tracker = 'opened_extension' )
                 and oe.eventtime < DATEADD(day, 1, current_date)
 
