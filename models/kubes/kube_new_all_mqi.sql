@@ -35,6 +35,7 @@
       , cm.responseStatus
       , cm.campaign_parentid
       , cm.status as campaign_member_status
+      , cm.accountregion
 FROM {{ ref('tier2_salesforce_lead') }} as u
 JOIN {{ ref('tier2_salesforce_campaign_and_members') }} as cm
     ON cm.leadid = u.leadid
@@ -83,7 +84,8 @@ SELECT
       , cm.campaign_ctasubtype as childCTAsubtype
       , cm.responseStatus
       , cm.campaign_parentid
-      , cm. status as campaign_member_status
+      , cm.status as campaign_member_status
+      , cm.accountregion
 
 FROM {{ ref('tier2_salesforce_contact') }} as u
 JOIN {{ ref('tier2_salesforce_campaign_and_members') }} as cm
@@ -135,6 +137,7 @@ SELECT
         ,  null as responseStatus
         ,  'Signups - Product' as campaign_parentid
         ,  'Signups - Product' as campaign_member_status
+        , a.accountRegion
 
     from {{ ref('kube_vidyard_user_details') }} u
     left join {{ ref('tier2_salesforce_account') }} a
