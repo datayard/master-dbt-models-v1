@@ -25,7 +25,7 @@ with allotment_summary as (
 --          from dbt_vidyard_master.stg_vidyard_organizations o
          from {{ ref('stg_vidyard_organizations') }} o
 --          left join dbt_vidyard_master.kube_org_wide_metrics om on om.organizationid = o.organizationid
-         left join {{ ref('kube_org_wide_metrics') }} om on om.organizationid = o.organizationid
+         left join {{ ref('stg_vidyard_org_metrics') }} om on om.organizationid = o.organizationid
          group by 1
      ),
 
@@ -41,13 +41,15 @@ with allotment_summary as (
      ),
 
      embed_summary as (
-         select accountid,
+         select 
+                distinct accountid,
                 allotmentlimit as embed_limit,
                 case when allotmentlimit = -1 then -1 else remaininembeds end as remaining_embeds,
-                sum(activeembeds) as active_embeds
+                activeembeds as active_embeds
+                --sum(activeembeds) as active_embeds
 --          from dbt_vidyard_master.tier2_embeds
          from {{ ref('tier2_embeds') }}
-         group by 1,2,3
+         group by 1,2,3,4
      ),
 
      account_feature_summary as(
