@@ -30,8 +30,23 @@ with all_domains as (
 --         from dbt_vidyard_master.tier2_weu w
         from {{ ref('tier2_weu') }} w
         group by 1
-    )
+    ),
+    latest_video as (
+        select v.userid,
+               v.domain,
+               max(v.createddate) as last_video_time
+--         from dbt_vidyard_master.tier2_vidyard_videos v
+        from {{ ref('tier2_vidyard_videos') }} v
+        group by 1,2
+    ),
 
+    wac_summary as (
+        select v.domain,
+               count(distinct case when v.last_video_time >= dateadd(day, -7, current_date) then v.userid end) as wac_count,
+               count(distinct case when last_video_time >= dateadd(day, -30, current_date) then v.userid end) as mac_count
+        from latest_video v
+        group by 1
+    )
 
 
 select ad.domain,
@@ -42,11 +57,16 @@ select ad.domain,
        weu.weu_count,
        counts.free as free_user_count,
        counts.pro as pro_user_count,
-       counts.free + counts.pro as free_pro_total
+       counts.free + counts.pro as free_pro_total,
+       wac.wac_count,
+       wac.mac_count
+
+
 from all_domains ad
 left join mau_summary mau on mau.domain = ad.domain
 left join meu_summary meu on meu.domain = ad.domain
 left join weu_summary weu on weu.domain = ad.domain
+left join wac_summary wac on wac.domain = ad.domain
 -- left join dbt_vidyard_master.syncs_users_per_domain_match counts on counts.domain = ad.domain
 left join {{ ref('syncs_users_per_domain_match') }} counts on counts.domain = ad.domain
 
