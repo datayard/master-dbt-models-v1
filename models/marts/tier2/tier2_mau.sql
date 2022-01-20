@@ -19,11 +19,11 @@ select
     , case
         when hps.last_session >= dateadd(day, -365, current_date) then 1
         else 0
-      end as MAU
+      end as YAU
     , case
         when hps.last_session >= dateadd(day, -7, current_date) then 1
         else 0
-      end as MAU
+      end as WAU
     , usrdet.organizationid
     , usrdet.accountid
     , usrdet.personal_account_type
