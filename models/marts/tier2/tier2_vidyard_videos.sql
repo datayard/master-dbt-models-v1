@@ -1,5 +1,6 @@
 SELECT
    vud2.userid
+   , vud2.domain
    , v.organizationid
    , p.playerid AS entityid
    , v.videoid AS childentityid
@@ -15,6 +16,7 @@ SELECT
    , v.source
    , p.uuid
    , case when v.origin != 'sample' then dense_rank() over(partition by vud2.userid order by v.videoid) end as milestone_rk
+
 FROM
 	{{ ref('stg_vidyard_videos')}} as v
       LEFT JOIN {{ ref('stg_vidyard_chapters')}} as c
