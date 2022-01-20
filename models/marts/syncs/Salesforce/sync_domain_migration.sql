@@ -1,7 +1,7 @@
 with all_domains as (
     select distinct u.domain
 --     from dbt_vidyard_master.kube_vidyard_user_details u
-    from {{ ref('kube_vidyard_user_details') }}
+    from {{ ref('kube_vidyard_user_details') }} u
     ),
 
      mau_summary as (
