@@ -14,201 +14,65 @@ sources:
 
     tables:
 
-      - name: ad_group_history
-
-      - name: ad_group_hourly_stats
-
-      - name: ad_history
-
-      - name: ad_stats
-
-      - name: audience_stats
-
       - name: campaign_history
 
       - name: campaign_hourly_stats
 
-      - name: expanded_dynamic_search_ad_history
+  - name: bingads
+    description: bing ad historical data
+    
+    freshness:
+      warn_after:
+        period: hour
+        count: 12
+      error_after:
+        period: hour
+        count: 24
 
-      - name: expanded_text_ad_history
+    tables:
 
-      - name: keyword_stats
-  
+      - name: campaign_history
+
+      - name: campaign_custom_parameter_history
+
+      - name: campaign_performance_daily_report
+
+  - name: facebook_ads
+    description: facebook ad historical data
+    
+    freshness:
+      warn_after:
+        period: hour
+        count: 12
+      error_after:
+        period: hour
+        count: 24
+
+    tables:
+
+      - name: facebook_report
+
+      - name: ad_history
+
+  - name: linkedin_ads
+    description: linkedin ad historical data
+    
+    freshness:
+      warn_after:
+        period: hour
+        count: 12
+      error_after:
+        period: hour
+        count: 24
+
+    tables:
+
+      - name: ad_analytics_by_creative
+
+      - name: creative_history
+
 
 models:
-  # Documentation for ad_group_history table
-  - name: ad_group_history
-    columns:
-
-        - name: adgroupID
-          description: ID of the ad group
-
-        - name: adgroupName
-          description: Name of the ad group
-
-        - name: adgroupStatus
-          description: Status of the ad group
-
-        - name: adgroupType
-          description: Type of the ad group
-
-        - name: campaignName
-          description: Name of the campaign the ad group belongs to
-
-        - name: campaignID
-          description: ID of the campaign the ad group belongs to
-  
-  # Documentation for ad_group_hourly_stats table
-  - name: ad_group_hourly_stats
-    columns:
-
-        - name: date
-          description: ''
-
-        - name: quarter
-          description: ''
-
-        - name: networkType1
-          description: ''
-
-        - name: month_of_year
-          description: ''
-
-        - name: networkType2
-          description: ''
-
-        - name: hour_of_day
-          description: ''
-
-        - name: cost
-          description: Cost occured for the ad group during the hour
-
-        - name: month
-          description: ''
-
-        - name: clickType
-          description: ''
-
-        - name: campaignID
-          description: ID of the campaign the ad group belongs to
-
-        - name: day_of_week
-          description: ''
-
-        - name: impressions
-          description: Impressions received during the hour
-
-        - name: device
-          description: ''
-
-        - name: conversions
-          description: Conversions received during the hour
-
-        - name: year
-          description: ''
-
-        - name: adgroupID
-          description: ID of the adgroup
-
-        - name: clicks
-          description: Clilks received during the hour
-
-        - name: week
-          description: ''
-
-  # Documentation for ad_history table
-  - name: ad_history
-    columns:
-
-        - name: adgroupID
-          description: The ID of adgroup that ad belongs to
-
-        - name: adID
-          description: The ID of the ad
-
-        - name: adType
-          description: The type of the ad
-
-        - name: adStatus
-          description: The status of the ad
-
-  # Documentation for ad_stats table
-  - name: ad_stats
-    columns:
-
-        - name: date
-          description: ''
-
-        - name: networkType1
-          description: ''
-
-        - name: networkType2
-          description: ''
-
-        - name: cost
-          description: Cost of the ad during the day
-
-        - name: campaignID
-          description: ID of the campaign the ad belongs to
-
-        - name: impressions
-          description: Impressions received during the day
-
-        - name: device
-          description: ''
-
-        - name: conversions
-          description: Conversions received during the day
-
-        - name: adSlot
-          description: Display area of the ad
-
-        - name: adID
-          description: ID of the ad
-
-        - name: adgroupID
-          description: ID of the adgroup the ad belongs to
-
-        - name: clicks
-          description: Clicks received during the day
-
-  # Documentation for audience_stats table
-  - name: audience_stats
-    columns:
-
-        - name: date
-          description: ''
-
-        - name: networkType1
-          description: ''
-
-        - name: networkType2
-          description: ''
-
-        - name: cost
-          description: Cost occured for the audience group during the day
-
-        - name: campaignID
-          description: ID of the campaign the audience group related to
-
-        - name: impressions
-          description: Impressions received during the day
-
-        - name: audienceSlot
-          description: Web display area
-
-        - name: audienceID
-          description: ID of the audience group
-
-        - name: interactions
-          description: Interactions occured during the day
-
-        - name: adgroupID
-          description: ID of the adgroup the aduience group related to
-
-        - name: clicks
-          description: Clicks received during the day
-  
   # Documentation for campaign_history
   - name: campaign_history
     columns:
@@ -235,6 +99,12 @@ models:
           description: ''
 
         - name: tracking_url_template
+          description: ''
+
+        - name: type
+          description: type of Campaign
+
+        - name: tracking_template
           description: ''
 
   # Documentation for campaign_hourly_stats table
@@ -288,94 +158,164 @@ models:
 
         - name: week
           description: ''
+        
+        - name: conversions
+          description: ''
 
-  # Documentation for cexpanded_dynamic_search_ad_history table
-  - name: expanded_dynamic_search_ad_history
+        - name: interactions
+          description: ''
+
+# Documentation for campaign_custom_parameter_history table
+  - name: campaign_custom_parameter_history
     columns:
 
-        - name: adgroupID
-          description: ID of the ad group the ad belongs to
+        - name: campaign_id
+          description: ''
+        
+        - name: key
+          description: custom parameter key type
+        
+        - name: value
+          description: content in the custome parameter
 
-        - name: adID
-          description: ID of the ad
-
-        - name: description1
-          description: Ad description part 1
-
-        - name: description2
-          description: Ad description part 2
-
-  # Documentation for expanded_text_ad_history table
-  - name: expanded_text_ad_history
+# Documentation for campaign_performance_daily_report table
+  - name: campaign_performance_daily_report
     columns:
 
-        - name: adgroupID
-          description: ID of the ad group the ad belongs to
+        - name: campaign_id
+          description: ''
+        
+        - name: impressions
+          description: ''
+        
+        - name: clicks
+          description: ''
+          
+        - name: spend
+          description: ''
 
-        - name: adID
-          description: ID of the ad
+        - name: conversions
+          description: ''
 
-        - name: description1
-          description: Ad description part 1
+        - name: network 
+          description: ''
 
-        - name: description2
-          description: Ad description part 2
-
-        - name: headline1
-          description: Ad headline part 1
-
-        - name: headline2
-          description: Ad headline part 2
-
-        - name: headline3
-          description: Ad headline part 3
-
-        - name: path1
-          description: Ad path part 1
-
-        - name: path2
-          description: Ad path part 2
-
-  # Documentation for keyword_stats table
-  - name: keyword_stats
-    columns:
+        - name: custom_parameters
+          description: ''
 
         - name: date
           description: ''
 
-        - name: networkType1
+# Documentation for facebook_report table
+  - name: facebook_report
+    columns:
+
+        - name: ad_id
           description: ''
 
-        - name: networkType2
+        - name: date
           description: ''
-
-        - name: cost
-          description: Cost occured for the keyword during the day
-
-        - name: campaignID
-          description: ID of the campaign the keyword related to
         
         - name: impressions
-          description: Impressions received during the day
-
-        - name: device
           description: ''
 
-        - name: conversions
-          description: Conversions occured during the day
+        - name: inline_link_clicks
+          description: ''
 
-        - name: kwSlot
-          description: Web display area
+        - name: reach
+          description: ''
 
-        - name: kwID
-          description: ID of the keyword
+        - name: cpc
+          description: ''
 
-        - name: interactions
-          description: Interactions occured during the day
+        - name: spend
+          description: ''
 
-        - name: adgroupID
-          description: ID of the adgroup the keyword related to
+        - name: ad_name
+          description: ''
+
+        - name: adset_name
+          description: ''
+
+        - name: campaign_name
+          description: ''
+
+# Documentation for ad_history table
+  - name: ad_history
+    columns:
+
+        - name: id
+          description: ad id
+
+        - name: campaign_id
+          description: ''
+
+        - name: creative_id
+          description: ''
+
+        - name: created_time
+          description: ad created time
+
+        - name: name
+          description: ad name
+        
+        - name: ad_set_id
+          description: ''
+
+        - name: ad_source_id
+          description: ''
+        
+# Documentation for ad analytics creative table
+  - name: ad_analytics_by_creative
+    columns:
+
+        - name: creative_id
+          description: creative id
+
+        - name: day
+          description: date
+
+        - name: impressions
+          description: ''
 
         - name: clicks
-          description: Clicks received during the day
+          description: ''
 
+        - name: company_page_clicks
+          description: ''
+        
+        - name: cost_in_usd
+          description: ''
+
+        - name: follows
+          description: ''
+        
+        - name: likes
+          description: ''
+      
+        - name: opens
+          description: ''
+
+        - name: shares
+          description: ''
+
+        - name: total_engagements
+          description: ''
+
+# Documentation for creative_history table
+  - name: creative_history
+    columns:
+
+        - name: id
+          description: creative id
+
+        - name: campaign_id
+          description: ''
+
+        - name: created_time
+          description: creative created time
+
+        - name: status
+          description: ''
+
+     

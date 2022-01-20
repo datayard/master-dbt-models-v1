@@ -14,9 +14,12 @@ SELECT
     campaignstat.year as year,
     campaignstat.interactions as interactions,
     campaignstat.clicks as clicks,
-    campaignstat.week as week
+    campaignstat.week as week,
+    campaignstat.conversions,
+    campaignstat.interactions
+
 
 FROM 
 	{{ source('google_adwords', 'campaign_hourly_stats') }} as campaignstat
 WHERE
-    campaignstat.date >= '2020-01-01'
+    campaignstat.date >= '2020-12-01'

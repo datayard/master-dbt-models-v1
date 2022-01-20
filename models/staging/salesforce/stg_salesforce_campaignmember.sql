@@ -10,6 +10,7 @@ SELECT
 		, sfdc_campaignmember.status as status
 		, sfdc_campaignmember.name as campaignMemberName
 		, sfdc_campaignmember.email as email
+        , sfdc_campaignmember.account_region__c as accountregion
 	, case
             when split_part(sfdc_campaignmember.email, '@', 2) like '%gmail.com%'
                 or split_part(sfdc_campaignmember.email, '@', 2) like '%yahoo%'
