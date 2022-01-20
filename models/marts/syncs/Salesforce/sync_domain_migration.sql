@@ -6,7 +6,10 @@ with all_domains as (
 
      mau_summary as (
         select m.domain,
-               count(distinct case when m.mau = 1 then m.userid end) as mau_count
+               count(distinct case when m.mau = 1 then m.userid end) as mau_count,
+               count(distinct case when m.yau = 1 then m.userid end) as yau_count,
+               count(distinct case when m.wau = 1 then m.userid end) as wau_count
+
 --         from dbt_vidyard_master.tier2_mau m
         from {{ ref('tier2_mau') }} m
         group by 1
@@ -32,7 +35,9 @@ with all_domains as (
 
 
 select ad.domain,
+       mau.wau_count,
        mau.mau_count,
+       mau.yau_count,
        meu.meu_count,
        weu.weu_count,
        counts.free as free_user_count,
@@ -44,5 +49,4 @@ left join meu_summary meu on meu.domain = ad.domain
 left join weu_summary weu on weu.domain = ad.domain
 -- left join dbt_vidyard_master.syncs_users_per_domain_match counts on counts.domain = ad.domain
 left join {{ ref('syncs_users_per_domain_match') }} counts on counts.domain = ad.domain
-where ad.domain like '%zoominfo%'
 
