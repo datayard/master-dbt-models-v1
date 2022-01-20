@@ -31,20 +31,12 @@ with all_domains as (
         from {{ ref('tier2_weu') }} w
         group by 1
     ),
-    latest_video as (
-        select v.userid,
-               v.domain,
-               max(v.createddate) as last_video_time
---         from dbt_vidyard_master.tier2_vidyard_videos v
-        from {{ ref('tier2_vidyard_videos') }} v
-        group by 1,2
-    ),
-
     wac_summary as (
         select v.domain,
-               count(distinct case when v.last_video_time >= dateadd(day, -7, current_date) then v.userid end) as wac_count,
-               count(distinct case when last_video_time >= dateadd(day, -30, current_date) then v.userid end) as mac_count
-        from latest_video v
+               count(distinct case when v.createddate >= dateadd(day, -7, current_date) then v.userid end) as wac_count,
+               count(distinct case when v.createddate >= dateadd(day, -30, current_date) then v.userid end) as mac_count
+--         from dbt_vidyard_master.tier2_vidyard_videos v
+        from {{ ref('tier2_vidyard_videos') }} v
         group by 1
     )
 
