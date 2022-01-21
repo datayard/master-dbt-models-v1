@@ -30,15 +30,16 @@ with referrals_summary as (
                max(o.createddate) as last_video_created_date
 --         from dbt_vidyard_master.tier2_vidyard_videos v
         from {{ ref('tier2_vidyard_videos') }} v
---         inner join dbt_vidyard_master.stg_vidyard_organizations o on o.organizationid  = v.organizationid
-        inner join {{ ref('stg_vidyard_organizations') }} o on o.organizationid  = v.organizationid
+--         inner join dbt_vidyard_master.stg_vidyard_organizations o on o.ownerid = v.userid
+        inner join {{ ref('stg_vidyard_organizations') }} o on  o.ownerid = v.userid
 --         inner join dbt_vidyard_master.stg_vidyard_org_metrics om on om.organizationid = v.organizationid
         inner join {{ ref('stg_vidyard_org_metrics') }} om on om.organizationid = v.organizationid
         where o.orgtype = 'self_serve'
         group by 1
     )
 
-select u.userid,
+select distinct
+       u.userid,
        u.organizationid,
        u.createddate,
        u.lastsession,
@@ -56,9 +57,15 @@ select u.userid,
        u.viewscount,
        u.activatedflag,
        ms.mau,
-       case when z.subscription_type = 'Active - Pro' then True else false end as Pro_upgrade
+       case when z.subscription_type = 'Active - Pro' then True else false end as Pro_upgrade,
+       e.allotmentlimit,
+       e.remaininembeds,
+       case when orgtype = 'self_serve' then o.createddate end as signup_date,
+       o.createdbyclientid as signup_url
 from {{ ref('kube_vidyard_user_details') }} u
 -- from dbt_vidyard_master.kube_vidyard_user_details u
+inner join {{ ref('stg_vidyard_organizations') }} o on o.ownerid = u.userid
+-- inner join dbt_vidyard_master.stg_vidyard_organizations o on o.ownerid = u.userid
 left join referrals_summary rs on rs.userid = u.userid
 left join admin_status on admin_status.userid = u.userid
 left join shared_video_summary svs on svs.sharer_id = u.userid
@@ -67,3 +74,7 @@ left join vidyard_videos_summary vvs on vvs.userid = u.userid
 left join {{ ref('tier2_mau') }} ms on ms.userid = u.userid
 -- left join dbt_vidyard_master.tier2_zuora z on z.vidyardaccountid = u.organizationid
 left join {{ ref('tier2_zuora') }} z on z.vidyardaccountid = u.organizationid
+-- left join dbt_vidyard_master.tier2_embeds e on e.accountid = u.organizationid
+left join {{ ref('tier2_embeds') }} e on e.accountid = u.organizationid
+
+
