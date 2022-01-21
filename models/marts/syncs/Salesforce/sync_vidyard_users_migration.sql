@@ -55,7 +55,7 @@ select distinct
        u.viewscount,
        u.activatedflag,
        ms.mau,
-       case when z.subscription_type = 'Active - Pro' then True else false end as Pro_upgrade,
+       case when z.subscription_type = 'Active - Pro' then subscriptionstartdate end as Pro_upgrade,
        e.allotmentlimit,
        e.remaininembeds,
        case when orgtype = 'self_serve' then o.createddate end as signup_date,
