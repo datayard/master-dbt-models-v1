@@ -56,7 +56,9 @@ select u.userid,
        u.viewscount,
        u.activatedflag,
        ms.mau,
-       case when z.subscription_type = 'Active - Pro' then True else false end as Pro_upgrade
+       case when z.subscription_type = 'Active - Pro' then True else false end as Pro_upgrade,
+       e.allotmentlimit,
+       e.remaininembeds
 from {{ ref('kube_vidyard_user_details') }} u
 -- from dbt_vidyard_master.kube_vidyard_user_details u
 left join referrals_summary rs on rs.userid = u.userid
@@ -67,3 +69,5 @@ left join vidyard_videos_summary vvs on vvs.userid = u.userid
 left join {{ ref('tier2_mau') }} ms on ms.userid = u.userid
 -- left join dbt_vidyard_master.tier2_zuora z on z.vidyardaccountid = u.organizationid
 left join {{ ref('tier2_zuora') }} z on z.vidyardaccountid = u.organizationid
+-- left join dbt_vidyard_master.tier2_embeds e on e.accountid = u.organizationid
+left join {{ ref('tier2_embeds') }} e on e.accountid = u.organizationid
