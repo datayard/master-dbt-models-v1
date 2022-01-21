@@ -27,13 +27,11 @@ with referrals_summary as (
     vidyard_videos_summary as (
         select v.userid,
                count(distinct v.childentityid) as number_of_videos,
-               max(o.createddate) as last_video_created_date
+               max(v.createddate) as last_video_created_date
 --         from dbt_vidyard_master.tier2_vidyard_videos v
         from {{ ref('tier2_vidyard_videos') }} v
 --         inner join dbt_vidyard_master.stg_vidyard_organizations o on o.ownerid = v.userid
-        inner join {{ ref('stg_vidyard_organizations') }} o on  o.ownerid = v.userid
---         inner join dbt_vidyard_master.stg_vidyard_org_metrics om on om.organizationid = v.organizationid
-        inner join {{ ref('stg_vidyard_org_metrics') }} om on om.organizationid = v.organizationid
+        inner join {{ ref('stg_vidyard_organizations') }} o on o.ownerid = v.userid
         where o.orgtype = 'self_serve'
         group by 1
     )
