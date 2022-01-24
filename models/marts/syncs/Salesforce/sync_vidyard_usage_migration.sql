@@ -104,6 +104,7 @@ with allotment_summary as (
 select distinct o.accountid,
                 asum.seats_allotted,
                 asum.seats_used,
+                asum.seats_allotted - asum.seats_used as unused_seats,
                 hs.hub_count,
                 hs.bsp_count,
                 case when hs.bsp_count = 0 then False else True end as bsp_setup,
