@@ -1,15 +1,15 @@
 SELECT
-    orgs.account_id,
-    listagg (distinct tokens.token_type,';') as useCase
+    orgs.accountid,
+    listagg (distinct tokens.token_type,';') as integration
 FROM
     {{ ref('stg_vidyard_api_tokens') }} as tokens
 JOIN
     {{ ref('stg_vidyard_organizations') }} as orgs
 ON
-    tokens.organization_id = orgs.id
+    tokens.organizationid = orgs.organizationid
 WHERE
-    tokens.is_valid = true
+    tokens.isvalid = true
 GROUP BY
-  orgs.account_id
+  orgs.accountid
 LIMIT
     100
