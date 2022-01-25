@@ -44,7 +44,7 @@ with referrals_summary as (
     )
 
 select distinct
-        u.userid,
+       u.userid,
        o.organizationid,
        u.createddate,
        u.lastsession,
