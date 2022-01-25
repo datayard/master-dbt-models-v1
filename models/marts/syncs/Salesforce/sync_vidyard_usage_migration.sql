@@ -31,17 +31,19 @@ with allotment_summary as (
 
      video_summary as (
          select o.accountid,
+                count(distinct case when origin != 'sample' and uc.classification in ('pro','free') then childentityid end) as free_pro_videos,
                 count(distinct case when origin != 'sample' then childentityid end) as videos,
                 max(v.createddate) as last_video_date
 --          from dbt_vidyard_master.stg_vidyard_organizations o
          from {{ ref('stg_vidyard_organizations') }} o
 --          left join dbt_vidyard_master.tier2_vidyard_videos v on v.organizationid = o.organizationid
          left join {{ ref('tier2_vidyard_videos') }} v on v.organizationid = o.organizationid
+         left join {{ ref('tier2_users_classification') }} uc on uc.userid = v.userid
          group by 1
      ),
 
      embed_summary as (
-         select 
+         select
                 distinct accountid,
                 allotmentlimit as embed_limit,
                 case when allotmentlimit = -1 then -1 else remaininembeds end as remaining_embeds,
@@ -81,12 +83,12 @@ with allotment_summary as (
 
      free_pro_mau_summary as (
          select m.accountid,
-                count(distinct m.userid) as mau_count
+                count(distinct case when mau = 1 then m.userid end) as mau_count
 --         from dbt_vidyard_master.tier2_mau m
         from {{ ref('tier2_mau') }} m
 --         left join dbt_vidyard_master.tier2_users_classification uc on uc.userid = m.userid
         left join {{ ref('tier2_users_classification') }} uc on uc.userid = m.userid
-        where m.classification in ('pro','free')
+        where uc.classification in ('pro','free')
         group by 1
      ),
 
@@ -97,8 +99,35 @@ with allotment_summary as (
          from dbt_vidyard_master.tier2_vidyard_organization_features
          -- from {{ ref('tier2_vidyard_organization_features') }}
          where organizationid = accountid
-     )
+     ),
 
+     hub_allotment_summary as (
+         select distinct accountid,
+                         allotmentlimit
+         from dbt_vidyard_master.tier2_vidyard_allotments
+         -- from {{ ref('tier2_vidyard_allotments') }}
+         where allotmenttypeid = 5
+     ),
+
+     free_pro_meu_summary as (
+         select m.accountid,
+                count(distinct m.userid) as meu_count
+--         from dbt_vidyard_master.tier2_mau m
+        from {{ ref('tier2_meu') }} m
+--         left join dbt_vidyard_master.tier2_users_classification uc on uc.userid = m.userid
+        left join {{ ref('tier2_users_classification') }} uc on uc.userid = m.userid
+        where uc.classification in ('pro','free')
+        group by 1
+     ),
+
+     video_share_summary as (
+        select uc.accountid,
+               count(distinct case when uc.classification in ('free','pro') then pageview_id end ) as free_pro_shared_count,
+               count(distinct pageview_id) as shared_count
+        from {{ ref('kube_vidyard_videos_viewers_sharers') }} vs
+        inner join {{ ref('tier2_users_classification') }} uc on uc.userid = vs.sharer_id
+        group by 1
+     )
 
 
 select distinct o.accountid,
@@ -109,6 +138,9 @@ select distinct o.accountid,
                 hs.bsp_count,
                 case when hs.bsp_count = 0 then False else True end as bsp_setup,
                 vs.videos as video_count,
+                vs.free_pro_videos as free_pro_video_count,
+                vss.shared_count,
+                vss.free_pro_shared_count,
                 vs.last_video_date as last_video_created_date,
                 o.locked,
                 o.lockeddate,
@@ -127,7 +159,9 @@ select distinct o.accountid,
                 case when afs.seo = 0 then False else True end as seo_enabled,
                 case when afs.gdp = 0 then False else True end as gdp_enabled,
                 case when afs.sso = 0 then False else True end as sso_enabled,
-                sfuse.usecase
+                sfuse.usecase,
+                has.allotmentlimit as hub_allotments,
+                meu.meu_count as free_pro_meu
 
 
 
@@ -147,3 +181,6 @@ left join team_summary ts on ts.accountid = o.accountid
 left join free_pro_mau_summary mau on mau.accountid = o.accountid
 -- left join dbt_vidyard_master.sync_use_case_from_opps sfuse on sfuse.vidyardaccountid = o.accountid
 left join {{ ref('sync_use_case_from_opps') }} sfuse on sfuse.vidyardaccountid = o.accountid
+left join hub_allotment_summary has on has.accountid = o.accountid
+left join free_pro_meu_summary meu on meu.accountid = o.accountid
+left join video_share_summary vss on vss.accountid = o.accountid
