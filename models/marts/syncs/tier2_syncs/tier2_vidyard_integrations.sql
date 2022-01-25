@@ -1,6 +1,6 @@
 SELECT
     orgs.accountid,
-    listagg (distinct tokens.token_type,';') as integration
+    listagg (distinct tokens.tokentype,';') as integration
 FROM
     {{ ref('stg_vidyard_api_tokens') }} as tokens
 JOIN
