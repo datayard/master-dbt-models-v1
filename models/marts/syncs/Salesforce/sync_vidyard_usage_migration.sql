@@ -88,7 +88,7 @@ with allotment_summary as (
         from {{ ref('tier2_mau') }} m
 --         left join dbt_vidyard_master.tier2_users_classification uc on uc.userid = m.userid
         left join {{ ref('tier2_users_classification') }} uc on uc.userid = m.userid
-        where uc.classification in ('pro','free')
+        where uc.classification in ('enterprise user','enterprise self serve', 'hybrid')
         group by 1
      ),
 
@@ -116,7 +116,7 @@ with allotment_summary as (
         from {{ ref('tier2_meu') }} m
 --         left join dbt_vidyard_master.tier2_users_classification uc on uc.userid = m.userid
         left join {{ ref('tier2_users_classification') }} uc on uc.userid = m.userid
-        where uc.classification in ('pro','free')
+        where uc.classification in ('enterprise user','enterprise self serve', 'hybrid')
         group by 1
      ),
 
