@@ -83,12 +83,14 @@ with allotment_summary as (
 
      free_pro_mau_summary as (
          select m.accountid,
-                count(distinct case when mau = 1 then m.userid end) as mau_count
+                count(distinct case when mau = 1 and uc.classification in ('enterprise user','enterprise self serve', 'hybrid') then m.userid end) as enterprise_mau_count,
+                count(distinct case when yau = 1 and uc.classification in ('enterprise user','enterprise self serve', 'hybrid') then m.userid end) as enterprise_yau_count,
+                count(distinct case when wau = 1 and uc.classification in ('enterprise user','enterprise self serve', 'hybrid') then m.userid end) as enterprise_wau_count,
+                count(distinct case when mau = 1 and uc.classification in ('pro','free') then m.userid end) as fp_mau_count
 --         from dbt_vidyard_master.tier2_mau m
         from {{ ref('tier2_mau') }} m
 --         left join dbt_vidyard_master.tier2_users_classification uc on uc.userid = m.userid
         left join {{ ref('tier2_users_classification') }} uc on uc.userid = m.userid
-        where uc.classification in ('enterprise user','enterprise self serve', 'hybrid')
         group by 1
      ),
 
@@ -111,7 +113,8 @@ with allotment_summary as (
 
      free_pro_meu_summary as (
          select m.accountid,
-                count(distinct m.userid) as meu_count
+                count(distinct case when uc.classification in ('enterprise user','enterprise self serve', 'hybrid') then m.userid end) as enterprise_meu_count,
+                count(distinct case when uc.classification in ('pro','free') then m.userid end) as fp_meu_count
 --         from dbt_vidyard_master.tier2_mau m
         from {{ ref('tier2_meu') }} m
 --         left join dbt_vidyard_master.tier2_users_classification uc on uc.userid = m.userid
@@ -120,14 +123,6 @@ with allotment_summary as (
         group by 1
      ),
 
-/*     video_share_summary as (
-        select uc.accountid,
-               count(distinct case when uc.classification in ('free','pro') then pageview_id end ) as free_pro_shared_count,
-               count(distinct pageview_id) as shared_count
-        from {{ ref('kube_vidyard_videos_viewers_sharers') }} vs
-        inner join {{ ref('tier2_users_classification') }} uc on uc.userid = vs.sharer_id
-        group by 1
-     ),*/
 
      video_share_summary as (
        SELECT
@@ -190,8 +185,12 @@ select distinct o.accountid,
                 es.embed_limit,
                 admin.admin_count,
                 ts.teams_count,
-                mau.mau_count as free_pro_mau,
-                meu.meu_count as free_pro_meu,
+                mau.enterprise_mau_count,
+                mau.enterprise_yau_count,
+                mau.enterprise_wau_count,
+                mau.fp_mau_count,
+                meu.enterprise_meu_count,
+                meu.fp_meu_count,
                 case when afs.seo = 0 then False else True end as seo_enabled,
                 case when afs.gdp = 0 then False else True end as gdp_enabled,
                 case when afs.sso = 0 then False else True end as sso_enabled,
