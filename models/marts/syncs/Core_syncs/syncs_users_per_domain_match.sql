@@ -26,9 +26,13 @@ SELECT
     maus.maus,
     WEU.weus,
     COUNT (CASE WHEN usrdetails.personal_account_type like 'free' then 1 end) as free,
+    COUNT (CASE WHEN usrdetails.personal_account_type like 'free' AND (usrdetails.createddate >= DATEADD(MONTH, -6, current_date) OR usrdetails.lastSessionDate >= DATEADD(MONTH, -6, current_date)) then 1 end) as free_6months,
     COUNT (CASE WHEN usrdetails.personal_account_type like 'pro' then 1 end) as pro,
+    COUNT (CASE WHEN usrdetails.personal_account_type like 'pro' AND (usrdetails.createddate >= DATEADD(MONTH, -6, current_date) OR usrdetails.lastSessionDate >= DATEADD(MONTH, -6, current_date)) then 1 end) as pro_6months,
     COUNT (CASE WHEN usrdetails.personal_account_type like 'enterprise' then 1 end) as enterprise,
-    COUNT (CASE WHEN usrdetails.personal_account_type like 'enterprise self serve' then 1 end) as enterprise_self_serve
+    COUNT (CASE WHEN usrdetails.personal_account_type like 'enterprise' AND (usrdetails.createddate >= DATEADD(MONTH, -6, current_date) OR usrdetails.lastSessionDate >= DATEADD(MONTH, -6, current_date)) then 1 end) as enterprise_6months,
+    COUNT (CASE WHEN usrdetails.personal_account_type like 'enterprise self serve' then 1 end) as enterprise_self_serve,
+    COUNT (CASE WHEN usrdetails.personal_account_type like 'enterprise self serve' AND (usrdetails.createddate >= DATEADD(MONTH, -6, current_date) OR usrdetails.lastSessionDate >= DATEADD(MONTH, -6, current_date)) then 1 end) as enterprise_ss_6months
 FROM
     {{ ref('tier2_vidyard_user_details') }} usrdetails
     --dbt_vidyard_master.tier2_vidyard_user_details as usrdetails
@@ -42,8 +46,6 @@ ON
     WEU.domain = usrdetails.domain
 WHERE
     usrdetails.domaintype like 'business'
-    AND (usrdetails.createddate  >= DATEADD(MONTH, -6, current_date)
-    OR usrdetails.lastSessionDate >= DATEADD(MONTH, -6, current_date))
 GROUP BY
     usrdetails.domain,
     maus.maus,
