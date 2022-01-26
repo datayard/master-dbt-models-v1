@@ -88,7 +88,7 @@ with allotment_summary as (
         from {{ ref('tier2_mau') }} m
 --         left join dbt_vidyard_master.tier2_users_classification uc on uc.userid = m.userid
         left join {{ ref('tier2_users_classification') }} uc on uc.userid = m.userid
-        where uc.classification in ('pro','free')
+        where uc.classification in ('enterprise user','enterprise self serve', 'hybrid')
         group by 1
      ),
 
@@ -116,17 +116,33 @@ with allotment_summary as (
         from {{ ref('tier2_meu') }} m
 --         left join dbt_vidyard_master.tier2_users_classification uc on uc.userid = m.userid
         left join {{ ref('tier2_users_classification') }} uc on uc.userid = m.userid
-        where uc.classification in ('pro','free')
+        where uc.classification in ('enterprise user','enterprise self serve', 'hybrid')
         group by 1
      ),
 
-     video_share_summary as (
+/*     video_share_summary as (
         select uc.accountid,
                count(distinct case when uc.classification in ('free','pro') then pageview_id end ) as free_pro_shared_count,
                count(distinct pageview_id) as shared_count
         from {{ ref('kube_vidyard_videos_viewers_sharers') }} vs
         inner join {{ ref('tier2_users_classification') }} uc on uc.userid = vs.sharer_id
         group by 1
+     ),*/
+
+     video_share_summary as (
+       SELECT
+          uc.accountid,
+          COUNT(DISTINCT heap.eventid  ) AS shared_count,
+          count(distinct case when uc.classification in ('free','pro') then heap.eventid end ) as free_pro_shared_count
+      FROM
+          dbt_vidyard_master.tier2_heap AS heap
+       INNER JOIN 
+              {{ ref('tier2_users_classification') }} uc 
+       ON uc.userid = heap.vidyarduserid
+      WHERE
+          heap.tracker  = 'sharing_share_combo'
+      GROUP BY
+          1
      ),
 
      free_signups as (
