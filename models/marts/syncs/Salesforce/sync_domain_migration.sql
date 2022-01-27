@@ -42,7 +42,7 @@ with all_domains as (
 
     video_summary as (
          select u.domain,
-                count(distinct case when origin != 'sample' and u.classification in ('pro','free', 'hybrid') then childentityid end) as free_pro_videos,
+                count(distinct case when origin != 'sample' and u.classification in ('pro','free') then childentityid end) as free_pro_videos,
                 count(distinct case when origin != 'sample' and u.classification in ('pro') then childentityid end) as pro_videos,
                 count(distinct case when origin != 'sample' then childentityid end) as videos,
                 max(v.createddate) as last_video_date
