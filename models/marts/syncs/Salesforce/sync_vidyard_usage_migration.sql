@@ -29,17 +29,6 @@ with allotment_summary as (
          group by 1
      ),
 
---      video_summary as (
---          select o.accountid,
---                 count(distinct case when origin != 'sample' and uc.classification in ('pro','free') then childentityid end) as free_pro_videos,
---                 count(distinct case when origin != 'sample' then childentityid end) as videos,
---                 max(v.createddate) as last_video_date
--- --          from dbt_vidyard_master.stg_vidyard_organizations o
---          from  {{ ref('tier2_vidyard_videos') }} v
---          left join {{ ref('tier2_users_classification') }} uc on uc.userid = v.userid
---          group by 1
---      ),
-
      embed_summary as (
          select
                 distinct accountid,
@@ -122,22 +111,6 @@ with allotment_summary as (
      ),
 
 
-     video_share_summary as (
-       SELECT
-          uc.accountid,
-          COUNT(DISTINCT heap.eventid  ) AS shared_count,
-          count(distinct case when uc.classification in ('free','pro') then heap.eventid end ) as free_pro_shared_count
-      FROM
-          dbt_vidyard_master.tier2_heap AS heap
-       INNER JOIN 
-              {{ ref('tier2_users_classification') }} uc 
-       ON uc.userid = heap.vidyarduserid
-      WHERE
-          heap.tracker  = 'sharing_share_combo'
-      GROUP BY
-          1
-     ),
-
      free_signups as (
          select uc.accountid,
                 count(distinct case when datediff(day, createddate, getdate()) <=  30 then u.userid end) as last_30_days,
@@ -167,8 +140,8 @@ select distinct o.accountid,
                 case when hs.bsp_count = 0 then False else True end as bsp_setup,
 --                 vs.videos as video_count,
 --                 vs.free_pro_videos as free_pro_video_count,
-                vss.shared_count,
-                vss.free_pro_shared_count,
+--                 vss.shared_count,
+--                 vss.free_pro_shared_count,
                 o.locked,
                 o.lockeddate,
                 vc.cta as cta_created,
@@ -218,7 +191,6 @@ left join free_pro_mau_summary mau on mau.accountid = o.accountid
 left join {{ ref('sync_use_case_from_opps') }} sfuse on sfuse.vidyardaccountid = o.accountid
 left join hub_allotment_summary has on has.accountid = o.accountid
 left join free_pro_meu_summary meu on meu.accountid = o.accountid
-left join video_share_summary vss on vss.accountid = o.accountid
 left join free_signups fs on fs.accountid = o.accountid
 left join {{ ref('tier2_vidyard_integrations') }} vi on vi.accountid = o.accountid
 left join free_pro_embeds fpe on fpe.accountid = o.accountid

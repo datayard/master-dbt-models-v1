@@ -49,10 +49,33 @@ with all_domains as (
          left join {{ ref('tier2_users_classification') }} uc on uc.userid = u.userid
          left join {{ ref('tier2_vidyard_videos') }} v on u.userid = v.userid
          group by 1
-    )
+    ),
 
-
-
+    video_share_summary as (
+          SELECT
+              --uc.accountid,
+                vud.domain,
+--             sfdca.vidyardaccountid,
+              COUNT(DISTINCT heap.eventid  ) AS shared_count,
+              count(distinct case when uc.classification in ('free','pro') then heap.eventid end ) as free_pro_shared_count
+          FROM
+              dbt_vidyard_master.tier2_heap AS heap
+           INNER JOIN
+                  dbt_vidyard_master.tier2_users_classification uc --{{ ref('tier2_users_classification') }} uc
+           ON uc.userid = heap.vidyarduserid
+          JOIN
+                  dbt_vidyard_master.tier2_vidyard_user_details vud
+          ON uc.userid = vud.userid
+--           JOIN dbt_vidyard_master.tier2_salesforce_account sfdca
+--           ON vud.domain like sfdca.emaildomain
+          WHERE
+              heap.tracker  = 'sharing_share_combo'
+            --AND uc.accountid = '229413'
+            AND vud.domain like 'zoominfo.com'
+--             AND sfdca.vidyardaccountid is not null
+          GROUP BY
+              1
+     )
 
 select ad.domain,
        mau.wau_count,
@@ -67,7 +90,9 @@ select ad.domain,
        wac.mac_count,
        vs.free_pro_videos,
        vs.videos,
-       vs.last_video_date
+       vs.last_video_date,
+       vss.shared_count,
+       vss.free_pro_shared_count
 from all_domains ad
 left join mau_summary mau on mau.domain = ad.domain
 left join meu_summary meu on meu.domain = ad.domain
@@ -76,3 +101,4 @@ left join wac_summary wac on wac.domain = ad.domain
 -- left join dbt_vidyard_master.syncs_users_per_domain_match counts on counts.domain = ad.domain
 left join {{ ref('syncs_users_per_domain_match') }} counts on counts.domain = ad.domain
 left join video_summary vs on vs.domain = ad.domain
+left join video_share_summary vss on vss.domain = ad.domain
