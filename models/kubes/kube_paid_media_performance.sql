@@ -54,7 +54,7 @@ with
             , sum(cp.impressions) as totalDailyImpressions
             , sum(cp.clicks) as totalDailyClicks
           from campaignad_performance as cp
-            join {{ ref('tier_2_campaign_reference')}} cr
+            join {{ ref('tier2_campaign_reference')}} cr
               on cp.campaignAdId = cr.campaignAdId
           group by
               1,
