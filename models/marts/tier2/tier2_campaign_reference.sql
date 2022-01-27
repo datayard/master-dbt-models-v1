@@ -1,5 +1,6 @@
 with 
      original as (
+          
           select
                campaignadid
                , campaignadfullname
@@ -27,6 +28,7 @@ with
       ),
 
      utms_available as (
+          
           select 
                campaignadid
                , campaignadfullname
@@ -77,19 +79,88 @@ with
           
           from original
           -- where len(campaignadid)>4
+     ),
+
+     full_reference as (
+          
+          select
+               campaignadid
+               , campaignadfullname
+               , adplatform
+               , case when utm_campaign is null then campaignadfullname else utm_campaign end as utm_campaign
+               , case when utm_source is null and adplatform = 'google' then 'google-unknown' 
+                    when utm_source is null and adplatform = 'facebook' then 'facebook-unknown'
+                    else utm_source end as utm_source
+               , case when utm_medium is null and adplatform = 'google' and lower(campaignadfullname) like '%youtube%' then 'google-youtube' 
+                    when utm_medium is null then 'unknown'
+                    else utm_medium end as utm_medium
+          
+          from 
+               utms_available
+     ),
+
+     campaignad_performance as (
+               
+          select 
+               gs.date as date
+               , cast(gs.campaignID as char(256)) as campaignAdId 
+               , sum(gs.cost) as spend
+               , sum(gs.impressions) as impressions
+               , sum(gs.clicks) as clicks
+               -- , gs.conversions
+
+          from {{ ref('stg_googlead_campaign_hourlystats')}} as gs
+          group by 1,2
+
+          union all
+
+          select
+               bs.date as date
+               , cast(bs.campaignId as char(256)) as campaignAdId 
+               , sum(bs.dailySpend) as spend
+               , sum(bs.dailyImpressions) as impressions
+               , sum(bs.dailyClicks) as clicks
+               -- , bs.dailyConversions
+
+          from {{ ref('stg_bingad_campaign_daily_performance')}} as bs
+          group by 1,2
+
+               union all 
+
+          select
+               fs.date as date
+               , fs.adId as campaignAdId
+               , sum(dailySpend) as spend
+               , sum(dailyImpressions) as impressions
+               , sum(cast(round(dailySpend*1/nullif(dailyCpc,0)) as bigint)) as clicks
+
+          from {{ ref('stg_facebook_report')}} as fs
+          group by 1,2
      )
 
-select
-     campaignadid
-     , campaignadfullname
-     , adplatform
-     , case when utm_campaign is null then campaignadfullname else utm_campaign end as utm_campaign
-     , case when utm_source is null and adplatform = 'google' then 'google-unknown' 
-            when utm_source is null and adplatform = 'facebook' then 'facebook-unknown'
-            else utm_source end as utm_source
-     , case when utm_medium is null and adplatform = 'google' and lower(campaignadfullname) like '%youtube%' then 'google-youtube' 
-            when utm_medium is null then 'unknown'
-            else utm_medium end as utm_medium
-from 
-     utms_available
+-- campaign_performance_summary --
+          
+     select 
+          cp.date
+          , cp.campaignAdId
+          , fr.campaignadfullname
+          , fr.utm_campaign
+          , fr.utm_source
+          , fr.utm_medium
+          , sum(cp.spend) as totalDailySpend
+          , sum(cp.impressions) as totalDailyImpressions
+          , sum(cp.clicks) as totalDailyClicks
+     
+     from campaignad_performance as cp
+          join full_reference fr
+              on cp.campaignAdId = fr.campaignadid
+     group by
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+     
+
           
