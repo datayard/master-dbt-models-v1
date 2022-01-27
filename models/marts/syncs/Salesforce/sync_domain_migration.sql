@@ -106,7 +106,8 @@ select ad.domain,
        vs.last_video_date,
        vss.shared_count,
        vss.free_pro_shared_count,
-       fs.domain
+       fs.last_7_days,
+       fs.last_30_days
 from all_domains ad
 left join mau_summary mau on mau.domain = ad.domain
 left join meu_summary meu on meu.domain = ad.domain
