@@ -76,6 +76,18 @@ with all_domains as (
 --             AND sfdca.vidyardaccountid is not null
           GROUP BY
               1
+     ),
+
+      free_signups as (
+         select u.domain,
+                count(distinct case when datediff(day, createddate, getdate()) <=  30 then u.userid end) as last_30_days,
+                count(distinct case when datediff(day, createddate, getdate()) <=  7 then u.userid end) as last_7_days
+         -- from dbt_vidyard_master.kube_vidyard_user_details u
+         from {{ ref('kube_vidyard_user_details') }} u
+         -- left join dbt_vidyard_master.tier2_users_classification uc on uc.userid = u.userid
+         left join {{ ref('tier2_users_classification') }} uc on uc.userid = u.userid
+         where uc.classification = 'free'
+         group by 1
      )
 
 select ad.domain,
@@ -93,7 +105,8 @@ select ad.domain,
        vs.videos,
        vs.last_video_date,
        vss.shared_count,
-       vss.free_pro_shared_count
+       vss.free_pro_shared_count,
+       fs.domain
 from all_domains ad
 left join mau_summary mau on mau.domain = ad.domain
 left join meu_summary meu on meu.domain = ad.domain
@@ -103,3 +116,4 @@ left join wac_summary wac on wac.domain = ad.domain
 left join {{ ref('syncs_users_per_domain_match') }} counts on counts.domain = ad.domain
 left join video_summary vs on vs.domain = ad.domain
 left join video_share_summary vss on vss.domain = ad.domain
+left join free_signups fs on fs.domain = ad.domain

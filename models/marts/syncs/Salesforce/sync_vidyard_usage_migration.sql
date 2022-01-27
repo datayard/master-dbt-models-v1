@@ -110,18 +110,6 @@ with allotment_summary as (
         group by 1
      ),
 
-
-     free_signups as (
-         select uc.accountid,
-                count(distinct case when datediff(day, createddate, getdate()) <=  30 then u.userid end) as last_30_days,
-                count(distinct case when datediff(day, createddate, getdate()) <=  7 then u.userid end) as last_7_days
-         -- from dbt_vidyard_master.kube_vidyard_user_details u
-         from {{ ref('kube_vidyard_user_details') }} u
-         -- left join dbt_vidyard_master.tier2_users_classification uc on uc.userid = u.userid
-         left join {{ ref('tier2_users_classification') }} uc on uc.userid = u.userid
-         where uc.classification = 'free'
-         group by 1
-     ),
      free_pro_embeds as (
          select e.accountid,
                 allotmentlimit
@@ -166,8 +154,6 @@ select distinct o.accountid,
                 case when afs.sso = 0 then False else True end as sso_enabled,
                 sfuse.usecase,
                 has.allotmentlimit as hub_allotments,
-                fs.last_7_days as free_signups_last_7_days,
-                fs.last_30_days as free_signups_last_30_days,
                 vi.integration,
                 fpe.allotmentlimit as free_pro_embed_limit
 
@@ -191,6 +177,5 @@ left join free_pro_mau_summary mau on mau.accountid = o.accountid
 left join {{ ref('sync_use_case_from_opps') }} sfuse on sfuse.vidyardaccountid = o.accountid
 left join hub_allotment_summary has on has.accountid = o.accountid
 left join free_pro_meu_summary meu on meu.accountid = o.accountid
-left join free_signups fs on fs.accountid = o.accountid
 left join {{ ref('tier2_vidyard_integrations') }} vi on vi.accountid = o.accountid
 left join free_pro_embeds fpe on fpe.accountid = o.accountid
