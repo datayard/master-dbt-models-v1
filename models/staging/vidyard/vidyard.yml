@@ -61,7 +61,8 @@ sources:
       - name: vidyard_onboarding_metadata
 
       - name: vidyard_video_metrics      
-      
+
+      - name: vidyard_api_tokens
       
 
 models:
@@ -750,3 +751,34 @@ models:
 
       - name: identified_views
         description: ' '     
+
+# Documentation for Vidyard_API_Tokens table from PUBLIC schema
+  - name: stg_vidyard_api_tokens
+    columns:
+
+      - name: activeTokenID
+        description: unique identifier for this table
+        tests:
+          - unique
+          - not_null
+
+      - name: organizationID
+        description: ' '        
+
+      - name: tokenType
+        description: ' '
+
+      - name: uuid
+        description: ' '  
+
+      - name: tokendata
+        description: ' '     
+
+      - name: createdAt
+        description: ' '     
+
+      - name: updatedAt
+        description: ' '
+
+      - name: isValid
+        description: ' '
