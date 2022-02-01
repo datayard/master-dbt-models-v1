@@ -27,6 +27,8 @@ sources:
       - name: campaignmember
 
       - name: user
+
+      - name: partner_program__c
       
 
 models:
@@ -729,4 +731,33 @@ models:
       
       - name: full_name__c
         description: User full name
+  # Documentation for Staging Partner Program table
+  - name: stg_salesforce_partnerprogram
+    columns:
+      - name: partnerprogramid
+        description: Unique identifier of partner program
+      
+      - name: partnerprogramname
+        description: Name of partner program
+
+      - name: partneraccount
+        description: ID of patner account
+
+      - name: opportunityid
+        description: ID of opportuntiy partner program is on
+      
+      - name: partnertype
+        description: Type of partner
+      
+      - name: partnermanager
+        description: Partner manager for partner account
+      
+      - name: partnerecosystem
+        description: Ecosystem partner is in
+
+      - name: proportionalarr
+        description: ARR owed to partner
+
+      - name: partnersourced
+        description: Indicated if opportunity was partner sourced
 
