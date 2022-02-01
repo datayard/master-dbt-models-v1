@@ -66,6 +66,8 @@ SELECT
       , am.acquisition_source
       , am.campaign_member_status
       , a.isPersonAccount
+      , am.accountregion
+      , a.abmTier
 FROM {{ ref('kube_new_all_mqi') }} as am
 LEFT JOIN {{ ref('tier2_salesforce_account') }} as a
     ON am.accountId = a.accountId
