@@ -211,7 +211,10 @@ models:
         description: ' '  
 
       - name: negotiationDate
-        description: ' '                                           
+        description: ' '  
+
+      - name: probability
+        description: Probability that an opportunity is won                                        
 
 
   - name: stg_salesforce_account
