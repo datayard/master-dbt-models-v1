@@ -387,6 +387,9 @@ models:
         description: ' '      
 
       - name: partnerStackID
+        description: ' '
+
+      - name: salesProspectingTool
         description: ' '      
 
   - name: stg_salesforce_contact

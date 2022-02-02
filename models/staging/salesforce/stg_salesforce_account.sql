@@ -64,6 +64,7 @@ SELECT
     , sfdc_account.Partner_Designation__c as partnerDesignation
     , sfdc_account.PartnerStack_Status__c as partnerStackStatus
     , sfdc_account.PartnerStack_ID__c as partnerStackID
+    , sfdc_account.sales_prospecting_tool__c as salesProspectingTool
 
  FROM 
     {{ source('salesforce_production', 'account') }} as sfdc_account
