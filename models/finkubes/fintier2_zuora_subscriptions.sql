@@ -32,7 +32,7 @@ with dates_table as (
     and p.name <> 'Open Balance'
     and nvl(rpc.mrr, 0) <> 0
     and (termenddate > serviceactivationdate or termenddate is null)
-    and (amendmenttype <> 'RemoveProduct' or amendmenttype is null)
+  --  and (amendmenttype <> 'RemoveProduct' or amendmenttype is null)
   group by 1,2,3,4
 
 )
