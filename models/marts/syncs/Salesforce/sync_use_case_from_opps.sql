@@ -13,6 +13,4 @@ JOIN
 ON
     usecase.accountid = account.accountid
 WHERE
-    --true
-    account.primaryusecase NOT LIKE usecase.usecase
-    OR account.primaryusecase is null
+    true
