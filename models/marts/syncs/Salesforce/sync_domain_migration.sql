@@ -50,7 +50,6 @@ with all_domains as (
          left join {{ ref('tier2_vidyard_videos') }} v on u.userid = v.userid
          group by 1
     ),
-
     video_share_summary as (
           SELECT
               --uc.accountid,
@@ -101,6 +100,7 @@ with all_domains as (
         inner join {{ ref('kube_vidyard_user_details') }} u on o.ownerid = u.userid
         where u.classification in ('free','pro')
         group by 1
+
      )
 
 select ad.domain,
@@ -133,3 +133,4 @@ left join video_summary vs on vs.domain = ad.domain
 left join video_share_summary vss on vss.domain = ad.domain
 left join free_signups fs on fs.domain = ad.domain
 left join free_pro_cta fpc on fpc.domain = ad.domain
+
