@@ -47,7 +47,6 @@ with all_domains as (
                 count(distinct case when origin != 'sample' then childentityid end) as videos,
                 max(v.createddate) as last_video_date
          from  {{ ref('kube_vidyard_user_details') }} u
-         left join {{ ref('tier2_users_classification') }} uc on uc.userid = u.userid
          left join {{ ref('tier2_vidyard_videos') }} v on u.userid = v.userid
          group by 1
     ),
@@ -88,6 +87,20 @@ with all_domains as (
          left join {{ ref('tier2_users_classification') }} uc on uc.userid = u.userid
          where uc.classification = 'free'
          group by 1
+     ),
+
+     free_pro_cta as (
+         select
+            u.domain,
+            count(distinct e.eventid) as free_pro_cta
+--         from dbt_vidyard_master.stg_vidyard_events e
+        from {{ ref('stg_vidyard_events') }} e
+--         left join dbt_vidyard_master.stg_vidyard_organizations o on e.organizationid = o.organizationid
+        left join {{ ref('stg_vidyard_organizations') }} o on e.organizationid = o.organizationid
+--         inner join dbt_vidyard_master.kube_vidyard_user_details u on o.ownerid = u.userid
+        inner join {{ ref('kube_vidyard_user_details') }} u on o.ownerid = u.userid
+        where u.classification in ('free','pro')
+        group by 1
      )
 
 select ad.domain,
@@ -119,3 +132,4 @@ left join {{ ref('syncs_users_per_domain_match') }} counts on counts.domain = ad
 left join video_summary vs on vs.domain = ad.domain
 left join video_share_summary vss on vss.domain = ad.domain
 left join free_signups fs on fs.domain = ad.domain
+left join free_pro_cta fpc on fpc.domain = ad.domain
