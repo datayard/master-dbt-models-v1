@@ -41,7 +41,34 @@ with referrals_summary as (
         inner join {{ ref('stg_vidyard_organizations') }} o on o.ownerid = v.userid
         where o.orgtype = 'self_serve'
         group by 1
+    ),
+    ranked_players as (
+        select organizationid,
+               uuid,
+               row_number() over (partition by organizationid order by createddate desc) as rn
+--         from dbt_vidyard_master.stg_vidyard_players
+        from {{ ref('stg_vidyard_players') }}
+    ),
+
+    highlight_uuid as (
+        select organizationid,
+               uuid
+        from ranked_players
+        where rn = 1
+    ),
+
+    chrome_summary as (
+        select vidyarduserid,
+               max(chrome.sessiontime) as last_chrome_extension_session
+        --from dbt_vidyard_master.stg_govideo_production_opened_extension chrome
+        from {{ ref('stg_govideo_production_opened_extension') }} chrome
+--         left join dbt_vidyard_master.stg_govideo_production_users u
+        left join {{ ref('stg_govideo_production_users') }} u
+        on chrome.userid = u.userid
+        and u.identifier is not null
+        group by 1
     )
+
 
 select distinct
        u.userid,
@@ -66,7 +93,10 @@ select distinct
        e.allotmentlimit,
        e.remaininembeds,
        case when orgtype = 'self_serve' then o.createddate end as signup_date,
-       o.createdbyclientid as signup_url
+       o.createdbyclientid as signup_url,
+       case when t2_meu.userid is not null then True else False end as meu,
+       hu.uuid as highlight_video,
+       cs.last_chrome_extension_session
 from {{ ref('stg_vidyard_organizations') }} o
 -- from dbt_vidyard_master.stg_vidyard_organizations o
 inner join {{ ref('kube_vidyard_user_details') }} u on o.ownerid = u.userid
@@ -81,5 +111,9 @@ left join {{ ref('tier2_mau') }} ms on ms.organizationid = o.organizationid
 left join {{ ref('tier2_zuora') }} z on z.vidyardaccountid = o.organizationid
 -- left join dbt_vidyard_master.tier2_embeds e on e.accountid = o.organizationid
 left join {{ ref('tier2_embeds') }} e on e.accountid = o.organizationid
+left join {{ ref('tier2_meu') }} t2_meu on t2_meu.organizationid = o.organizationid
+-- left join dbt_vidyard_master.tier2_meu t2_meu on t2_meu.vidyardaccountid = o.organizationid
+left join highlight_uuid hu on hu.organizationid = o.organizationid
+left join chrome_summary cs on cs.vidyarduserid = o.ownerid
 where o.orgtype = 'self_serve'
 
