@@ -63,7 +63,7 @@ with referrals_summary as (
         --from dbt_vidyard_master.stg_govideo_production_opened_extension chrome
         from {{ ref('stg_govideo_production_opened_extension') }} chrome
         left join dbt_vidyard_master.stg_govideo_production_users u
-        from {{ ref('stg_govideo_production_users')} } u
+        from {{ ref('stg_govideo_production_users') }} u
         on chrome.userid = u.userid
         and u.identifier is not null
         group by 1
