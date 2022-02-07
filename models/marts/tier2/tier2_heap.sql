@@ -1,5 +1,9 @@
 {{
     config(
+        pre_hook= [
+                    "{% if is_incremental() %} DELETE FROM {{ this }} WHERE sessiontime >= DATEADD(day, -1, current_date) {% endif %}",
+                    "{% if is_incremental() %} DELETE FROM {{ this }} WHERE eventtime >= DATEADD(day, -1, current_date) {% endif %}"
+                ],
         materialized='incremental'
     )
 }}
