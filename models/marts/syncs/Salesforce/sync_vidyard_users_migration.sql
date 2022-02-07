@@ -62,8 +62,8 @@ with referrals_summary as (
                max(chrome.sessiontime) as last_chrome_extension_session
         --from dbt_vidyard_master.stg_govideo_production_opened_extension chrome
         from {{ ref('stg_govideo_production_opened_extension') }} chrome
-        left join dbt_vidyard_master.stg_govideo_production_users u
-        from {{ ref('stg_govideo_production_users') }} u
+--         left join dbt_vidyard_master.stg_govideo_production_users u
+        left join {{ ref('stg_govideo_production_users') }} u
         on chrome.userid = u.userid
         and u.identifier is not null
         group by 1
@@ -114,6 +114,6 @@ left join {{ ref('tier2_embeds') }} e on e.accountid = o.organizationid
 left join {{ ref('tier2_meu') }} t2_meu on t2_meu.organizationid = o.organizationid
 -- left join dbt_vidyard_master.tier2_meu t2_meu on t2_meu.vidyardaccountid = o.organizationid
 left join highlight_uuid hu on hu.organizationid = o.organizationid
-left join chrome_summary cs on cd.vidyarduserid = o.ownerid
+left join chrome_summary cs on cs.vidyarduserid = o.ownerid
 where o.orgtype = 'self_serve'
 
