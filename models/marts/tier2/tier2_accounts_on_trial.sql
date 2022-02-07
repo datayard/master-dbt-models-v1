@@ -1,6 +1,7 @@
 WITH accounts_on_trial as (
     SELECT MAX(zuorasub.subscriptionversion),
            zuorasub.accountid,
+           zuorasub.subscriptionId,
            zuorasub.contractEffectiveDate,
            zuorasub.serviceActivationDate,
            zuorasub.serviceActivationDate - zuorasub.contractEffectiveDate as initialtrial,
@@ -32,7 +33,8 @@ WITH accounts_on_trial as (
     GROUP BY zuorasub.accountId,
              zuorasub.contractEffectiveDate,
              zuorasub.serviceActivationDate,
-             zuorasub.status
+             zuorasub.status,
+             zuorasub.subscriptionId
 )
 
 SELECT
