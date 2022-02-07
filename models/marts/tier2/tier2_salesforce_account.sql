@@ -45,6 +45,7 @@ SELECT accountId
          , partnerTier
          , partnerDesignation
          , partnerStackStatus
-         , partnerStackID        
+         , partnerStackID
+         , salesProspectingTool        
     FROM 
         {{ ref('stg_salesforce_account') }}
