@@ -37,8 +37,8 @@ with referrals_summary as (
                max(v.createddate) as last_video_created_date
 --         from dbt_vidyard_master.tier2_vidyard_videos v
         from {{ ref('tier2_vidyard_videos') }} v
---         inner join dbt_vidyard_master.stg_vidyard_organizations o on o.ownerid = v.userid
-        inner join {{ ref('stg_vidyard_organizations') }} o on o.ownerid = v.userid
+--         inner join dbt_vidyard_master.stg_vidyard_organizations o on o.organizationid = v.organizationid
+        inner join {{ ref('stg_vidyard_organizations') }} o on o.organizationid = v.organizationid
         where o.orgtype = 'self_serve'
         group by 1
     ),
