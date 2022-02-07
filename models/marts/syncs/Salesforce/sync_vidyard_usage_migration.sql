@@ -116,6 +116,15 @@ with allotment_summary as (
          from {{ ref('tier2_embeds') }} e
          left join {{ ref('tier2_users_classification') }} uc on uc.organizationid = e.organizationid
          where uc.classification in ('free','pro')
+     ),
+
+     folders_summary as (
+         select accountid,
+                count(distinct organizationid) as folders
+--         from dbt_vidyard_master.stg_vidyard_organizations
+        from {{ ref('stg_vidyard_organizations') }}
+        group by 1
+
      )
 
 
@@ -155,7 +164,8 @@ select distinct o.accountid,
                 sfuse.usecase,
                 has.allotmentlimit as hub_allotments,
                 vi.integration,
-                fpe.allotmentlimit as free_pro_embed_limit
+                fpe.allotmentlimit as free_pro_embed_limit,
+                fs.folders
 
 
 
@@ -179,3 +189,4 @@ left join hub_allotment_summary has on has.accountid = o.accountid
 left join free_pro_meu_summary meu on meu.accountid = o.accountid
 left join {{ ref('tier2_vidyard_integrations') }} vi on vi.accountid = o.accountid
 left join free_pro_embeds fpe on fpe.accountid = o.accountid
+left join folders_summary fs on fs.accountid = o.accountid
