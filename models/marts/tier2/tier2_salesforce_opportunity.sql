@@ -59,6 +59,7 @@ SELECT opportunityId
          , solutionEvaluationDate
          , DecisionDate
          , negotiationDate 
-         , probability                   
+         , probability 
+         , originatingContactId                  
     FROM 
         {{ ref('stg_salesforce_opportunity') }}

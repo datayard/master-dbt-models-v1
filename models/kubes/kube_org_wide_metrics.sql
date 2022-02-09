@@ -48,6 +48,7 @@ with active_accounts as (
                 left join {{ ref('tier2_vidyard_events') }} e                     
                 -- left join dbt_vidyard_master.tier2_vidyard_events e
                     on o.organizationid = e.organizationid
+                
                 left join {{ ref('stg_vidyard_org_metrics') }} om                         
                 -- left join dbt_vidyard_master.stg_vidyard_org_metrics om
                     on om.organizationid = o.organizationid
