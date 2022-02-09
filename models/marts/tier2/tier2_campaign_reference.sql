@@ -138,11 +138,9 @@ with
           from {{ ref('stg_facebook_report')}} as fs
           group by 1,2
             
-<<<<<<< HEAD
-            union all
-=======
+
           union all
->>>>>>> 71352a06cfc8dd05ecabc4f398e7e86c27726385
+
 
           select
                lc.date as date
