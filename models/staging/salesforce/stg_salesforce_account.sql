@@ -39,6 +39,7 @@ SELECT
     , sfdc_account.created_datetime__c as createdDate
     , sfdc_account.new_territory__c as accountTerritory
     , sfdc_account.region__c as accountRegion
+    , sfdc_account.geography__c as geography
     , sfdc_account.non_contract__c as nonContract
     , sfdc_account.vidyard_user_id__pc as vidyardUserId
     , sfdc_account.crm__c as crmPlatform
@@ -65,6 +66,8 @@ SELECT
     , sfdc_account.PartnerStack_Status__c as partnerStackStatus
     , sfdc_account.PartnerStack_ID__c as partnerStackID
     , sfdc_account.sales_prospecting_tool__c as salesProspectingTool
+    , sfdc_account.notes__pc as notes
+    
 
  FROM 
     {{ source('salesforce_production', 'account') }} as sfdc_account
