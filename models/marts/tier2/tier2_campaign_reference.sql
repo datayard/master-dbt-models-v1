@@ -126,7 +126,7 @@ with
           from {{ ref('stg_bingad_campaign_daily_performance')}} as bs
           group by 1,2
 
-               union all 
+          union all 
 
           select
                fs.date as date
@@ -138,7 +138,11 @@ with
           from {{ ref('stg_facebook_report')}} as fs
           group by 1,2
             
+<<<<<<< HEAD
             union all
+=======
+          union all
+>>>>>>> 71352a06cfc8dd05ecabc4f398e7e86c27726385
 
           select
                lc.date as date
@@ -155,6 +159,7 @@ with
           
      select 
           cp.date
+          , fr.adplatform
           , cp.campaignAdId
           , fr.campaignadfullname
           , fr.utm_campaign
@@ -173,7 +178,8 @@ with
           3,
           4,
           5,
-          6
+          6,
+          7
      
 
           

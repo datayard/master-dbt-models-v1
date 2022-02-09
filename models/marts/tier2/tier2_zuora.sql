@@ -44,6 +44,7 @@ SELECT a.accountid
          , s.subscriptionid
          , s.subscriptionstartdate
          , s.subscriptionversionamendmentid AS subscriptionversionamendmentid
+         , s.subscriptionversion
          , s.termenddate
          , s.termstartdate
          , s.termtype
