@@ -46,6 +46,7 @@ SELECT accountId
          , partnerDesignation
          , partnerStackStatus
          , partnerStackID
-         , salesProspectingTool        
+         , salesProspectingTool  
+         , notes      
     FROM 
         {{ ref('stg_salesforce_account') }}
