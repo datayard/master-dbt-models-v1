@@ -156,7 +156,7 @@ with
 -- campaign_performance_summary --
           
      select 
-          cp.date
+          convert_timezone('GMT', cp.date::timestamp) as gmttime
           , fr.adplatform
           , cp.campaignAdId
           , fr.campaignadfullname
