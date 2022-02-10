@@ -138,7 +138,9 @@ with
           from {{ ref('stg_facebook_report')}} as fs
           group by 1,2
             
+
           union all
+
 
           select
                lc.date as date

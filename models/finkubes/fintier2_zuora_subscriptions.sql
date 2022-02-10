@@ -9,15 +9,26 @@ with dates_table as (
    group by 1,2,3,4,5
  )
 
+ , sfdc as (
+   select
+     accountid
+     , region
+     , case when a.ispersonaccount or a.isselfserve or a.ispersonaccount is null then 'Vidyard Pro' else a.employeesegment end as customertype
+   from {{ref('tier2_salesforce_account')}} a
+   left join {{ref('fct_sfdc_country_to_region')}} c on lower(a.billingcountry) = c.country
+ )
+
 , zuora as (
   select
-    case when a.crmid is null then a.accountnumber else left(a.crmid, 15) end as accountid15
+  --  case when a.crmid is null then a.accountnumber else left(a.crmid, 15) end as accountid15
+  case when sfdc.customertype = 'Vidyard Pro' or a.crmid is null then a.accountnumber else nvl(sfdc.accountid,a.crmid) end as accountid
     , case when a.crmid is null then 'zid' else 'accountid' end as idtype
     , to_char(date_trunc('month', (case when s.serviceactivationdate > rpc.effectivestartdate then s.serviceactivationdate else rpc.effectivestartdate end)), 'yyyy-mm') as startyearmonth
     , case when date_part('day',rpc.effectiveenddate) >= 28
         and date_part('day',case when s.serviceactivationdate > rpc.effectivestartdate then s.serviceactivationdate else rpc.effectivestartdate end) = 1
         then to_char(date_trunc('month', rpc.effectiveenddate+4), 'yyyy-mm')
         else to_char(date_trunc('month', rpc.effectiveenddate), 'yyyy-mm') end as endyearmonth
+        , sfdc.region
     , sum(nvl(rpc.mrr * 12, 0)) as arr
   FROM {{ ref('stg_zuora_rate_plan') }} AS rp
     JOIN {{ ref('stg_zuora_subscription') }} AS s ON s.subscriptionid = rp.subscriptionid
@@ -26,6 +37,7 @@ with dates_table as (
     JOIN {{ ref('stg_zuora_product_rate_plan') }} AS prp ON prp.productrateplanid = rp.productrateplanid
     JOIN {{ ref('stg_zuora_product') }} AS p ON p.productid = prp.productid
     JOIN {{ ref('stg_zuora_contact') }} c ON c.contactid = s.soldtocontactid
+    left join sfdc on left(sfdc.accountid,15) = left(a.crmid,15)
   where
     s.fivetrandeleted = 'f'
     and s.status <> 'Expired'
@@ -33,13 +45,14 @@ with dates_table as (
     and nvl(rpc.mrr, 0) <> 0
     and (termenddate > serviceactivationdate or termenddate is null)
   --  and (amendmenttype <> 'RemoveProduct' or amendmenttype is null)
-  group by 1,2,3,4
+  group by 1,2,3,4,5
 
 )
 
 , zuora_discount as (
   select
-    case when a.crmid is null then a.accountnumber else left(a.crmid, 15) end as accountid15
+  --  case when a.crmid is null then a.accountnumber else left(a.crmid, 15) end as accountid15
+  case when sfdc.customertype = 'Vidyard Pro' or a.crmid is null then a.accountnumber else nvl(sfdc.accountid,a.crmid) end as accountid
     , to_char(date_trunc('month', rpc.effectivestartdate), 'yyyy-mm') as startyearmonth
     , case when date_part('day',rpc.effectiveenddate) >= 28 and date_part('day',rpc.effectivestartdate) = 1
         then to_char(date_trunc('month', rpc.effectiveenddate+4), 'yyyy-mm')
@@ -55,6 +68,7 @@ with dates_table as (
     JOIN {{ ref('stg_zuora_product_rate_plan') }} AS prp ON prp.productrateplanid = rp.productrateplanid
     JOIN {{ ref('stg_zuora_product') }} AS p ON p.productid = prp.productid
     JOIN {{ ref('stg_zuora_contact') }} c ON c.contactid = s.soldtocontactid
+    left join sfdc on left(sfdc.accountid,15) = left(a.crmid,15)
   where
     s.fivetrandeleted = 'f'
     and s.status <> 'Expired'
@@ -64,35 +78,29 @@ with dates_table as (
     1,2,3,4
 )
 
-, sfdc as (
-  select
-    accountid
-    , region
-  from {{ref('tier2_salesforce_account')}} a
-  left join {{ref('fct_sfdc_country_to_region')}} c on lower(a.billingcountry) = c.country
-)
+
 
 --REPLACE ZUORA_PRO with ZUORA TABLES NOT ZUORA SUBSCRIPTION__C
 , zuora_sfdc_id_adjust as (
   select
-    nvl(a.accountid , z.accountid15) as accountid
-    , a.region
+    z.accountid
+    , z.region
     , z.idtype
     , z.startyearmonth
     , z.endyearmonth
     , z.arr
   from zuora z
-  left join sfdc a on left(a.accountid,15) = z.accountid15
+--  left join sfdc a on left(a.accountid,15) = z.accountid15
 )
 
 , zuora_discount_sfdc_id_adjust as (
   select
-    nvl(a.accountid , z.accountid15) as accountid
+    z.accountid
     , z.startyearmonth
     , z.endyearmonth
     , z.discountpercent
   from zuora_discount z
-  left join sfdc a on left(a.accountid,15) = z.accountid15
+--  left join sfdc a on left(a.accountid,15) = z.accountid15
 )
 
 , zuora_pre_discount as (
