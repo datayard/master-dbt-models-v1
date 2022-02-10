@@ -88,8 +88,9 @@ with
                , campaignadfullname
                , adplatform
                , case when utm_campaign is null then campaignadfullname else utm_campaign end as utm_campaign
-               , case when utm_source is null and adplatform = 'google' then 'google-unknown' 
-                    when utm_source is null and adplatform = 'facebook' then 'facebook-unknown'
+               , case when utm_source is null and adplatform = 'google' then 'google' 
+                    when utm_source is null and adplatform = 'facebook' then 'facebook'
+                    when utm_source is null and adplatform = 'linkedin' then 'linkedin'
                     else utm_source end as utm_source
                , case when utm_medium is null and adplatform = 'google' and lower(campaignadfullname) like '%youtube%' then 'google-youtube' 
                     when utm_medium is null then 'unknown'
@@ -104,7 +105,7 @@ with
           select 
                gs.date as date
                , cast(gs.campaignID as char(256)) as campaignAdId 
-               , sum(gs.cost) as spend
+               , sum(gs.cost)*0.8 as spend
                , sum(gs.impressions) as impressions
                , sum(gs.clicks) as clicks
                -- , gs.conversions
@@ -125,7 +126,7 @@ with
           from {{ ref('stg_bingad_campaign_daily_performance')}} as bs
           group by 1,2
 
-               union all 
+          union all 
 
           select
                fs.date as date
@@ -136,12 +137,27 @@ with
 
           from {{ ref('stg_facebook_report')}} as fs
           group by 1,2
+            
+
+          union all
+
+
+          select
+               lc.date as date
+               , cast(lc.creativeId as char(256)) as campaignAdId
+               , sum(costInUSD) as spend
+               , sum(impressions) as impressions
+               , sum(clicks) as clicks
+
+          from {{ ref('stg_linkedinads_creative')}} as lc
+          group by 1,2
      )
 
 -- campaign_performance_summary --
           
      select 
           cp.date
+          , fr.adplatform
           , cp.campaignAdId
           , fr.campaignadfullname
           , fr.utm_campaign
@@ -160,7 +176,8 @@ with
           3,
           4,
           5,
-          6
+          6,
+          7
      
 
           
