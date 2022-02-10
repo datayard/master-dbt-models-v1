@@ -1,7 +1,7 @@
 with allotment_summary as (
          select va.accountid,
                 sum(distinct case when va.allotmenttypeid = 1 then va.allotmentlimit end) as seats_allotted,
-                count(distinct case when vtm.inviteaccepted  = 'yes' then vtm.userid end ) as seats_used
+                count(distinct case when vtm.inviteaccepted  = 'yes' AND source = 'team_memberships' then vtm.userid end ) as seats_used
 --          from dbt_vidyard_master.tier2_vidyard_allotments va
          from {{ ref('tier2_vidyard_allotments') }} va
 --          left join dbt_vidyard_master.tier2_vidyard_team_memberships vtm on vtm.accountid = va.accountid
