@@ -5,7 +5,6 @@ SELECT
       , am.id
       , am.domainType
       , am.domain
-      --, am.excludeemail
       , am.mqiDateGMT
       , am.mqiDateEST
       , am.mqlDateGMT
@@ -41,8 +40,8 @@ SELECT
       , row_number() over(partition by am.accountID order by am.mqiDateGMT) as account_rn
       , row_number() over(partition by am.accountID order by am.opportunityClosedWonDate) as account_won_rn
       , am.persona as original_persona --Marketing needs this for the Quarterly planning
-      , case when (am.persona like '%Decision Maker' or am.persona like '%Decision Makers') then 'Decision Maker' 
-             when (am.persona like '%Influencer' or am.persona like '%General') then 'Individual Contributor' 
+      , case when  am.persona like '%Decision Maker%' then 'Decision Maker' 
+             when (am.persona like '%Influencer%' or am.persona like '%General%') then 'Individual Contributor' 
              else 'Other' end as persona
           
       , case when (am.parentCTAtype = 'Content Asset' or am.parentCTAtype =  'Video') then 'Content/Video' 
