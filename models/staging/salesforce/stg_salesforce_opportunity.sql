@@ -61,5 +61,6 @@ SELECT
         , op.x5_decision_date__c as DecisionDate
         , op.x6_negotiate_date__c as negotiationDate
         , probability as probability
+        , op.originating_contact__c as originatingContactId
 FROM 
     {{ source('salesforce_production', 'opportunity') }} as op
