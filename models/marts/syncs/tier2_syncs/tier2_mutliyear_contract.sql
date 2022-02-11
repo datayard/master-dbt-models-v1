@@ -25,7 +25,7 @@ with
 select
   accountid,
   accountname,
-  accounttypee,
+  accountType,
   case
     when termlength >= 729
       then 1
