@@ -10,11 +10,11 @@ with
       o.termlength,
       row_number() over(partition by o.accountid order by o.termlength desc)
     from
-        --{{ ref('stg_salesforce_account') }} a
-        dbt_vidyard_master.stg_salesforce_account a
+        {{ ref('stg_salesforce_account') }} a
+        --dbt_vidyard_master.stg_salesforce_account a
     left join
-        --{{ ref('stg_salesforce_opportunity') }} o
-        dbt_vidyard_master.stg_salesforce_opportunity o
+        {{ ref('stg_salesforce_opportunity') }} o
+        --dbt_vidyard_master.stg_salesforce_opportunity o
     on
         o.accountid = a.accountid
     where
