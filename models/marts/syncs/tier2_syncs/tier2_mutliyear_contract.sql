@@ -3,7 +3,7 @@ with
     select
       a.accountid,
       a.accountname,
-      a.accounttypee,
+      a.accountType,
       o.opportunityname,
       o.contractstartdate,
       o.contractenddate,
