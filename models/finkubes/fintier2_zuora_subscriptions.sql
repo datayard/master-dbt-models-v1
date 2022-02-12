@@ -21,12 +21,12 @@ with dates_table as (
 , zuora as (
   select
   --  case when a.crmid is null then a.accountnumber else left(a.crmid, 15) end as accountid15
-  case when sfdc.customertype = 'Vidyard Pro' or a.crmid is null then a.accountnumber else nvl(sfdc.accountid,a.crmid) end as accountid
+  case when sfdc.customertype = 'Vidyard Pro' or sfdc.customertype is null then a.accountnumber else nvl(sfdc.accountid,a.crmid) end as accountid
     , case when a.crmid is null then 'zid' else 'accountid' end as idtype
     , to_char(date_trunc('month', (case when s.serviceactivationdate > rpc.effectivestartdate then s.serviceactivationdate else rpc.effectivestartdate end)), 'yyyy-mm') as startyearmonth
     , case when date_part('day',rpc.effectiveenddate) >= 28
         and date_part('day',case when s.serviceactivationdate > rpc.effectivestartdate then s.serviceactivationdate else rpc.effectivestartdate end) = 1
-        then to_char(date_trunc('month', rpc.effectiveenddate+4), 'yyyy-mm')
+        then to_char(date_trunc('month', rpc.effectiveenddate), 'yyyy-mm')
         else to_char(date_trunc('month', rpc.effectiveenddate), 'yyyy-mm') end as endyearmonth
         , sfdc.region
     , sum(nvl(rpc.mrr * 12, 0)) as arr
@@ -52,7 +52,7 @@ with dates_table as (
 , zuora_discount as (
   select
   --  case when a.crmid is null then a.accountnumber else left(a.crmid, 15) end as accountid15
-  case when sfdc.customertype = 'Vidyard Pro' or a.crmid is null then a.accountnumber else nvl(sfdc.accountid,a.crmid) end as accountid
+  case when sfdc.customertype = 'Vidyard Pro' or sfdc.customertype is null is null then a.accountnumber else nvl(sfdc.accountid,a.crmid) end as accountid
     , to_char(date_trunc('month', rpc.effectivestartdate), 'yyyy-mm') as startyearmonth
     , case when date_part('day',rpc.effectiveenddate) >= 28 and date_part('day',rpc.effectivestartdate) = 1
         then to_char(date_trunc('month', rpc.effectiveenddate+4), 'yyyy-mm')

@@ -5,7 +5,6 @@ SELECT
       , am.id
       , am.domainType
       , am.domain
-      --, am.excludeemail
       , am.mqiDateGMT
       , am.mqiDateEST
       , am.mqlDateGMT
@@ -40,8 +39,9 @@ SELECT
       , row_number() over(partition by am.domain order by am.mqiDateGMT) as domain_rn
       , row_number() over(partition by am.accountID order by am.mqiDateGMT) as account_rn
       , row_number() over(partition by am.accountID order by am.opportunityClosedWonDate) as account_won_rn
-      , case when am.persona like '%Decision Maker' then 'Decision Maker' 
-             when (am.persona like '%Influencer' or am.persona like '%General') then 'Individual Contributor' 
+      , am.persona as original_persona --Marketing needs this for the Quarterly planning
+      , case when  am.persona like '%Decision Maker%' then 'Decision Maker' 
+             when (am.persona like '%Influencer%' or am.persona like '%General%') then 'Individual Contributor' 
              else 'Other' end as persona
           
       , case when (am.parentCTAtype = 'Content Asset' or am.parentCTAtype =  'Video') then 'Content/Video' 
@@ -68,7 +68,6 @@ SELECT
       , a.isPersonAccount
       , am.accountregion
       , a.abmTier
-      , am.persona as original_persona --Marketing needs this for the Quarterly planning
 FROM {{ ref('kube_new_all_mqi') }} as am
 LEFT JOIN {{ ref('tier2_salesforce_account') }} as a
     ON am.accountId = a.accountId
