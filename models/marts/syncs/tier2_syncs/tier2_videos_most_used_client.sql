@@ -28,36 +28,7 @@ SELECT
 	muc.userid,
 	muc.most_frequent_client,
 	muc.videos_from_client,
-	CASE
-		WHEN muc.most_frequent_client LIKE 'secure.vidyard.com'
-    		then 'Vidyard Platform'
-   		WHEN muc.most_frequent_client LIKE 'app.salesloft.com'
-    		then 'Salesloft'
-    	WHEN muc.most_frequent_client LIKE 'auth.viewedit.com'
-    		then 'GoVideo Extension'
-    	WHEN muc.most_frequent_client LIKE 'mixmax.com'
-    		then 'Mixmax'
-    	WHEN muc.most_frequent_client LIKE 'app.hubspot.com'
-    		then 'Hubspot App'
-    	WHEN muc.most_frequent_client LIKE 'sales.hubspot.com'
-    		then 'Hubspot sales'
-    	WHEN muc.most_frequent_client LIKE 'support.hubspot.com'
-    		then 'Hubspot support'
-    	WHEN muc.most_frequent_client LIKE 'outlook.vidyard.com'
-    		then 'Outlook'
-    	WHEN muc.most_frequent_client LIKE 'govideo-mobile.vidyard.com'
-    		then 'GoVideo Mobile'
-    	WHEN muc.most_frequent_client LIKE 'quip.com'
-    		then 'Quip'
-    	WHEN muc.most_frequent_client LIKE 'drift.com'
-    		then 'Drift'
-    	WHEN muc.most_frequent_client LIKE 'allbound.com'
-    		then 'Allbound'
-    	WHEN muc.most_frequent_client LIKE 'prod.outreach.io'
-    		then 'Outreach'
-  ELSE muc.most_frequent_client
-END AS client_name,
-  muc.videos_from_client  + CAST(' in ' AS varchar) + muc.most_frequent_client as videos_in_most_used_client
+	muc.videos_from_client  + CAST(' in ' AS varchar) + muc.most_frequent_client as videos_in_most_used_client
 FROM
 	most_used_clients as muc
 WHERE
