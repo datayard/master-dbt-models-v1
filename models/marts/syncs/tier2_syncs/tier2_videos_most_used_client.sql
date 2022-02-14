@@ -56,7 +56,8 @@ SELECT
     	WHEN muc.most_frequent_client LIKE 'prod.outreach.io'
     		then 'Outreach'
   ELSE muc.most_frequent_client
-END AS client_name
+END AS client_name,
+  muc.videos_from_client  + CAST(' in ' AS varchar) + muc.videos_from_client as videos_in_most_used_client
 FROM
 	most_used_clients as muc
 WHERE
