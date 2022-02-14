@@ -106,7 +106,8 @@ select distinct
        cs.last_chrome_extension_session,
        heapu.generalUseCase,
        heapu.specificUseCase,
-       heapu.confidence_survey
+       heapu.confidence_survey,
+       t2vmuc.videos_in_most_used_client
 from {{ ref('stg_vidyard_organizations') }} o
 -- from dbt_vidyard_master.stg_vidyard_organizations o
 inner join {{ ref('kube_vidyard_user_details') }} u on o.ownerid = u.userid
@@ -126,4 +127,5 @@ left join {{ ref('tier2_meu') }} t2_meu on t2_meu.organizationid = o.organizatio
 left join highlight_uuid hu on hu.organizationid = o.organizationid
 left join chrome_summary cs on cs.vidyarduserid = o.ownerid
 left join {{ ref('tier2_heap_users') }} heapu on heapu.vidyarduserid = o.ownerid
+left join {{ ref('tier2_videos_most_used_client') }} t2vmuc on t2vmuc.organizationid = o.organizationid
 where o.orgtype = 'self_serve'
