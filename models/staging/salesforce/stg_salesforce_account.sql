@@ -68,6 +68,7 @@ SELECT
     , sfdc_account.PartnerStack_ID__c as partnerStackID
     , sfdc_account.sales_prospecting_tool__c as salesProspectingTool
     , sfdc_account.notes__pc as notes
+    , sfdc_account.days_since_last_activity_account__c as daysSinceLastActivityAccount
     
 
  FROM 
