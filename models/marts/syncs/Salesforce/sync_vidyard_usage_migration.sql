@@ -165,7 +165,8 @@ select distinct o.accountid,
                 has.allotmentlimit as hub_allotments,
                 vi.integration,
                 fpe.allotmentlimit as free_pro_embed_limit,
-                fs.folders
+                fs.folders,
+                my.multi_year
 
 
 
@@ -190,3 +191,4 @@ left join free_pro_meu_summary meu on meu.accountid = o.accountid
 left join {{ ref('tier2_vidyard_integrations') }} vi on vi.accountid = o.accountid
 left join free_pro_embeds fpe on fpe.accountid = o.accountid
 left join folders_summary fs on fs.accountid = o.accountid
+left join {{ref('tier2_mutliyear_contract')}} my on my.vidyardaccountid = o.accountid
