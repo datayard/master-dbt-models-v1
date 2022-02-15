@@ -14,6 +14,7 @@ SELECT
           then 'Emerging'
         else sfdc_account.employee_segment__c
       end  as employeeSegment
+    , sfdc_account.account_segment__c as accountSegment
     , sfdc_account.numberofemployees as numberOfEmployees
     , sfdc_account.annualrevenue as annualRevenue
     , sfdc_account.ownerid as ownerId
