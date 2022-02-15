@@ -6,6 +6,7 @@ SELECT accountId
          , accountPhone
          , accountIndustry
          , employeeSegment
+         , accountSegment
          , numberOfEmployees
          , annualRevenue
          , ownerId
