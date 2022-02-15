@@ -26,7 +26,7 @@ with dates_table as (
     , to_char(date_trunc('month', (case when s.serviceactivationdate > rpc.effectivestartdate then s.serviceactivationdate else rpc.effectivestartdate end)), 'yyyy-mm') as startyearmonth
     , case when date_part('day',rpc.effectiveenddate) >= 28
         and date_part('day',case when s.serviceactivationdate > rpc.effectivestartdate then s.serviceactivationdate else rpc.effectivestartdate end) = 1
-        then to_char(date_trunc('month', rpc.effectiveenddate+4), 'yyyy-mm')
+        then to_char(date_trunc('month', rpc.effectiveenddate), 'yyyy-mm')
         else to_char(date_trunc('month', rpc.effectiveenddate), 'yyyy-mm') end as endyearmonth
         , sfdc.region
     , sum(nvl(rpc.mrr * 12, 0)) as arr
