@@ -4,6 +4,7 @@ with
       a.accountid,
       a.accountname,
       a.accountType,
+      a.vidyardaccountid,
       o.opportunityname,
       o.contractstartdate,
       o.contractenddate,
@@ -26,6 +27,7 @@ select
   accountid,
   accountname,
   accountType,
+  vidyardaccountid,
   case
     when termlength >= 729
       then 1
