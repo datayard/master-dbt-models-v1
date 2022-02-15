@@ -127,7 +127,7 @@ SELECT
     , row_number() over(partition by vu.domain order by vu.createddate asc) as rn
     , lps.last_session as lastsession
     , fst.acquisition_channel
-    , fst.acquistiion_event
+    , fst.acquisition_event
 
 
 FROM 
