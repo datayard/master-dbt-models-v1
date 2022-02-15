@@ -103,7 +103,7 @@ SELECT
         , u.email
         , u.domaintype
         , u.domain
-        , 'Signups - Product' as persona
+        , cm.persona as persona
         , a.accountId as accountId
         , u.createddate as mqiDateGMT
         , null::timestamp as mqiDateEST
@@ -142,6 +142,8 @@ SELECT
     from {{ ref('kube_vidyard_user_details') }} u
     left join {{ ref('tier2_salesforce_account') }} a
           on a.emaildomain=u.domain
+    left join {{ ref('tier2_salesforce_campaign_and_members') }} cm
+          on cm.email=u.email
     where excludeemail = 0
       and signupsource != 'Hubspot'
 
