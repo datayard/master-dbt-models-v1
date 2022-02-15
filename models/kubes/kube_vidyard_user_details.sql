@@ -5,6 +5,8 @@ WITH
             , ht.sessionid
             , ht.derived_channel 
             , ht.sessiontime
+            , ae.acquisition_channel
+            , ae.acquisition_event
             , ROW_NUMBER() OVER(PARTITION BY vu.organizationid ORDER BY ht.sessiontime) AS rn
         FROM 
             {{ ref('tier2_vidyard_user_details') }} vu
@@ -124,6 +126,8 @@ SELECT
     end as createdvideoflag
     , row_number() over(partition by vu.domain order by vu.createddate asc) as rn
     , lps.last_session as lastsession
+    , fst.acquisition_channel
+    , fst.acquistiion_event
 
 
 FROM 
