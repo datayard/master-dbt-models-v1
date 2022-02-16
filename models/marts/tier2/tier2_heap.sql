@@ -604,7 +604,7 @@ SELECT
         {% if is_incremental() %}
         
             -- this filter will only be applied on an incremental run
-            WHERE vpa.eventtime > (select max(vpa.eventtime) from {{ this }} where vpa.tracker = 'video_from_partner_app' )
+            WHERE vpa.eventtime > (select max(eventtime) from {{ this }} where tracker = 'video_from_partner_app' )
                 and vpa.eventtime < DATEADD(day, 1, current_date)
 
         {% elif 'dbt_cloud_pr_' in this.schema %}
