@@ -570,3 +570,46 @@ SELECT
                 and cc.eventtime < DATEADD(day, 1, current_date)
                 
         {% endif %}
+
+    UNION ALL
+
+    SELECT
+        vpa.eventID
+        , u.identifier
+        , u.vidyardUserId
+        , u.generalUseCase
+        , u.specificUseCase
+        , vpa.userID
+        , vpa.sessionID
+        , vpa.sessionTime
+        , vpa.eventTime
+        , vpa.landingPage
+        , vpa.domain
+        , NULL AS channels
+        , vpa.path
+        , vpa.country
+        , NULL AS derived_channel
+        , NULL AS utmcampaign
+        , NULL AS utmsource
+        , NULL AS utmterm
+        , NULL AS utmMedium
+        , NULL AS new_visit_indicator
+        , vpa.gregion as region
+        , 'video_from_partner_app' AS tracker
+    FROM
+        {{ ref('stg_sharing_inserted_video_from_partner_app') }} vpa
+        JOIN {{ ref('stg_govideo_production_users') }} u
+                    ON vpa.userid = u.userid AND u.identifier IS NOT NULL
+        
+        {% if is_incremental() %}
+        
+            -- this filter will only be applied on an incremental run
+            WHERE vpa.eventtime > (select max(vpa.eventtime) from {{ this }} where vpa.tracker = 'video_from_partner_app' )
+                and vpa.eventtime < DATEADD(day, 1, current_date)
+
+        {% elif 'dbt_cloud_pr_' in this.schema %}
+
+            WHERE vpa.eventtime > DATEADD(day, -3, current_date)
+                and vpa.eventtime < DATEADD(day, 1, current_date)
+                
+        {% endif %}
