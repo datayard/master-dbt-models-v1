@@ -585,7 +585,7 @@ SELECT
         , vpa.eventTime
         , vpa.landingPage
         , vpa.domain
-        , vpa.channels
+        , NULL AS channels
         , vpa.path
         , vpa.country
         , NULL AS derived_channel
