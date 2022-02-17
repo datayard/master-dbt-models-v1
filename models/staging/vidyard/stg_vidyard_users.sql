@@ -45,6 +45,7 @@ SELECT
                 or split_part(vidyard_users.email, '@', 2) like '%getnada.com'
                 or split_part(vidyard_users.email, '@', 2) like '%tutanota.com%'
                 or split_part(vidyard_users.email, '@', 2) like '%gmx.com%'
+                or split_part(vidyard_users.email, '@', 2) like 'mailnesia.com'
             then 'personal'
             when split_part(vidyard_users.email, '@', 2) like '%.edu%'
                 or split_part(vidyard_users.email, '@', 2) like '%edu.%'
