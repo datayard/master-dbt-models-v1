@@ -49,6 +49,7 @@ SELECT
     , sfdc_account.online_video_platform__c as onlineVideoPlatform
     , sfdc_account.primary_use_case__c as primaryUseCase
     , sfdc_account.qa_status__c as qaStatus
+    , sfdc_account.engagio__Status__c as engagioStatus
     , sfdc_account.arr__c as arr
     , trim(lower(case 
         when lower(sfdc_account.email_domain__c) like '%error%' then sfdc_account.email_domain_formula__c
