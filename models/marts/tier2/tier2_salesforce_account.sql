@@ -48,6 +48,7 @@ SELECT accountId
          , partnerStackStatus
          , partnerStackID
          , salesProspectingTool  
-         , notes      
+         , notes 
+         , daysSinceLastActivityAccount     
     FROM 
         {{ ref('stg_salesforce_account') }}
