@@ -1346,7 +1346,7 @@ models:
 
     # Documentation for ACQUISITION_VIEWED_LANDING_PAGE_AFTER_LOGO_LINK_CLICK_SHARE_PAGE table
     - name: stg_govideo_production_logo_link_click_share_page
-        columns:
+      columns:
             - name: eventID
               description: The ID of the event.
               tests:
