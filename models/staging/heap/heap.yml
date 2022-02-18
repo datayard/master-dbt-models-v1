@@ -1403,7 +1403,6 @@ models:
                 - name: domain
                   description: "The current website domain, including the subdomain, e.g. blog.heap.io. https://heapanalytics.com/app/env/4242522408/definitions?view=properties&type=property&id=domain-domain%3Apageview%3Abuiltin"
 
-=
     # Documentation for sharing_inserted_video_from_partner_app table
     - name: stg_sharing_inserted_video_from_partner_app
       columns:
