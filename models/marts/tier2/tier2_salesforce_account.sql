@@ -40,6 +40,7 @@ SELECT accountId
          , onlineVideoPlatform
          , primaryUseCase
          , qaStatus
+         , engagioStatus
          , arr
          , partnerManager
          , subType
