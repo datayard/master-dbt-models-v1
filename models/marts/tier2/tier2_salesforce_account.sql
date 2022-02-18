@@ -6,6 +6,7 @@ SELECT accountId
          , accountPhone
          , accountIndustry
          , employeeSegment
+         , accountSegment
          , numberOfEmployees
          , annualRevenue
          , ownerId
@@ -39,6 +40,7 @@ SELECT accountId
          , onlineVideoPlatform
          , primaryUseCase
          , qaStatus
+         , engagioStatus
          , arr
          , partnerManager
          , subType
@@ -47,6 +49,7 @@ SELECT accountId
          , partnerStackStatus
          , partnerStackID
          , salesProspectingTool  
-         , notes      
+         , notes 
+         , daysSinceLastActivityAccount     
     FROM 
         {{ ref('stg_salesforce_account') }}
