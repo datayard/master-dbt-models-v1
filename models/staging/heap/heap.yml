@@ -1,6 +1,21 @@
 version: 2
 
 sources:
+  - name: ops_utility_tables
+    description: Utility Tables
+
+    freshness:
+      warn_after:
+        period: hour
+        count: 12
+      error_after:
+        period: hour
+        count: 24
+
+    tables:
+
+      - name: country_names_with_region
+
   - name: govideo_production
     description: Heap Tables
     
