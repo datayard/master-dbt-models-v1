@@ -240,6 +240,9 @@ models:
 
         - name: billToContactId
           description: ID of contact who should be billed for subscription
+        
+        - name: promocode
+          description: Promo code on subscription or null if no promo code exists
 
     # Documentation for PRODUCT table from ZUORA 
     - name: stg_zuora_product
