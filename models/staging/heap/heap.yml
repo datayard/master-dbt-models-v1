@@ -58,6 +58,7 @@ sources:
 
       - name: sharing_inserted_video_from_partner_app
 
+      - name: acquisition_clicked_share_page_signup_cta_top_nav_bar_
 models:
     # Documentation for PRODUCT_SESSIONS table
     - name: stg_govideo_production_product_sessions
