@@ -31,7 +31,8 @@ SELECT
         subscription.subscription_version_amendment_id as subscriptionVersionAmendmentId,
         subscription.default_payment_method_id as defaultPaymentMethodId,
         subscription.bill_to_contact_id as billToContactId,
-        subscription.version as subscriptionversion
+        subscription.version as subscriptionversion,
+        subscription.promocode_c as promocode
 
 FROM
     {{ source ('zuora', 'subscription')}} as subscription

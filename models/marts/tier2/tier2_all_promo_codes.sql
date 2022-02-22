@@ -3,6 +3,7 @@ select
     za.accountid as zuoraAccountID
     , zs.subscriptionid
     , zrp.name as promo
+    , zs.promocode
     , zs.subscriptionstartdate as promoStartDate
     , rpc.effectivestartdate
     , rpc.effectiveenddate
