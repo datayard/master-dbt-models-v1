@@ -2,13 +2,18 @@ WITH
     first_session_table AS (
         SELECT
             vu.organizationid
+            , ht.sessionid
             , ht.derived_channel 
             , ht.sessiontime
+            , ae.acquisition_channel
+            , ae.acquisition_event
             , ROW_NUMBER() OVER(PARTITION BY vu.organizationid ORDER BY ht.sessiontime) AS rn
         FROM 
             {{ ref('tier2_vidyard_user_details') }} vu
             JOIN {{ ref('tier2_heap') }} ht
-                ON  ht.vidyardUserId = vu.userid         
+                ON  ht.vidyardUserId = vu.userid
+            JOIN {{ ref('tier2_acquisition_events') }} ae
+                ON ae.sessionid = ht.sessionid
         WHERE 
             ht.tracker = 'global_session'     
             --only include sessions 30 minutes prior to signup
@@ -119,8 +124,10 @@ SELECT
         when cv.organizationid is not null then 1
         else 0
     end as createdvideoflag
-    , row_number() over(partition by vu.domain order by vu.createddate) as rn
+    , row_number() over(partition by vu.domain order by vu.createddate asc) as rn
     , lps.last_session as lastsession
+    , fst.acquisition_channel
+    , fst.acquisition_event
 
 
 FROM 

@@ -44,6 +44,7 @@ SELECT a.accountid
          , s.subscriptionid
          , s.subscriptionstartdate
          , s.subscriptionversionamendmentid AS subscriptionversionamendmentid
+         , s.subscriptionversion
          , s.termenddate
          , s.termstartdate
          , s.termtype
@@ -70,6 +71,8 @@ SELECT a.accountid
          , rp.triggersync
          , rpc.mrr
          , rpc.chargemodel
+         , rpc.effectivestartdate as rpc_effectivestartdate
+         , rpc.effectiveenddate as rpc_effectiveenddate
          , rpct.discountpercentage
          , row_number() over(partition by s.originalsubscriptionid order by (DATE(s.createddate))desc) = 1  as latest_subscription
          , c.personalEmail

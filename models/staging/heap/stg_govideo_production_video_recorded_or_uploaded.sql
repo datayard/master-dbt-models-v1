@@ -21,8 +21,11 @@ SELECT
         video_recorded_or_uploaded.domain as domain,
         video_recorded_or_uploaded.path as path,
         video_recorded_or_uploaded.title as title,
-        video_recorded_or_uploaded.channels as channels
+        video_recorded_or_uploaded.channels as channels,
+        isnull(cr.region, 'Other') as gregion
 FROM
         {{ source ( 'govideo_production' , 'video_recorded_or_uploaded')}} as video_recorded_or_uploaded
+        left join {{ source('ops_utility_tables', 'country_names_with_region') }} cr
+                on video_recorded_or_uploaded.country = cr.country_name
 WHERE
         video_recorded_or_uploaded.time < DATEADD(day, 1, current_date)

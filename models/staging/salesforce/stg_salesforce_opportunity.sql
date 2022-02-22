@@ -60,5 +60,9 @@ SELECT
         , op.x4_solution_evaluation_date__c as solutionEvaluationDate
         , op.x5_decision_date__c as DecisionDate
         , op.x6_negotiate_date__c as negotiationDate
+        , probability as probability
+        , op.originating_contact__c as originatingContactId
+        , op.opportunity_owner_role__c as opportunityOwnerRole
+        , op.Term_Length__c as termlength
 FROM 
     {{ source('salesforce_production', 'opportunity') }} as op

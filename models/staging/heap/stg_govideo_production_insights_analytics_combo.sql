@@ -21,8 +21,11 @@ SELECT
   insights_analytics_combo.domain as domain,
   insights_analytics_combo.path as path,
   insights_analytics_combo.title as title,
-  insights_analytics_combo.channels as channels
+  insights_analytics_combo.channels as channels,
+  isnull(cr.region, 'Other') as gregion
 FROM
   {{ source ('govideo_production' , 'insights_analytics_combo')}} as insights_analytics_combo
+  left join {{ source('ops_utility_tables', 'country_names_with_region') }} cr
+                on insights_analytics_combo.country = cr.country_name       
 WHERE
   insights_analytics_combo.time < DATEADD(day, 1, current_date)

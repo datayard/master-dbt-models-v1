@@ -15,8 +15,11 @@ SELECT
         about_cta.landing_page_query as landingPageQuery,
         about_cta.query as query,
         about_cta.domain as domain,
-        about_cta.path as path
+        about_cta.path as path,
+        isnull(cr.region, 'Other') as gregion
 FROM
         {{ source ( 'govideo_production' , 'acquisition_viewed_landing_page_after_right_clicking_player_and_clicking_about') }} as about_cta
+        left join {{ source('ops_utility_tables', 'country_names_with_region') }} cr
+                on about_cta.country = cr.country_name
 WHERE
         about_cta.time < DATEADD(day, 1, current_date)
