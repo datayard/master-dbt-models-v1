@@ -1,6 +1,21 @@
 version: 2
 
 sources:
+  - name: ops_utility_tables
+    description: Utility Tables
+
+    freshness:
+      warn_after:
+        period: hour
+        count: 12
+      error_after:
+        period: hour
+        count: 24
+
+    tables:
+
+      - name: country_names_with_region
+
   - name: govideo_production
     description: Heap Tables
     
@@ -1460,6 +1475,7 @@ models:
         - name: domain
           description: "The current website domain, including the subdomain, e.g. blog.heap.io. https://heapanalytics.com/app/env/4242522408/definitions?view=properties&type=property&id=domain-domain%3Apageview%3Abuiltin"
 
+
     # Documentation for acquisition_clicked_share_page_signup_cta_top_nav_bar_ table
     - name: stg_signup_cta_top_nav_bar
       columns:
@@ -1515,6 +1531,3 @@ models:
 
         - name: domain
           description: "The current website domain, including the subdomain, e.g. blog.heap.io. https://heapanalytics.com/app/env/4242522408/definitions?view=properties&type=property&id=domain-domain%3Apageview%3Abuiltin"
-
-
-
