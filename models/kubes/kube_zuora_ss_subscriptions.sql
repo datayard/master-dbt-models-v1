@@ -41,6 +41,7 @@ select
     , ft.daysleftontrial,
     (subscriptionenddate != subscriptionstartdate) or subscriptionenddate is null as sublongerthenoneday
     , p.promo
+    , p.promocode
     , p.promostartdate
     , p.promoenddate
     , p.daysleftonpromo
