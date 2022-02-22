@@ -580,6 +580,7 @@ SELECT
         , u.generalUseCase
         , u.specificUseCase
         , vpa.userID
+        , vpa.clientID
         , vpa.sessionID
         , vpa.sessionTime
         , vpa.eventTime
