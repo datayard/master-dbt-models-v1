@@ -15,6 +15,7 @@ SELECT
         , u.generalUseCase
         , u.specificUseCase
         , gs.userid
+        , NULL as clientId
         , gs.sessionid
         , gs.sessiontime
         , NULL AS eventtime
@@ -66,6 +67,7 @@ SELECT
         , u.generalUseCase
         , u.specificUseCase
         , oe.userid
+        , NULL as clientId
         , oe.sessionid
         , oe.sessiontime
         , oe.eventtime
@@ -109,6 +111,7 @@ SELECT
         , u.generalUseCase
         , u.specificUseCase
         , pv.userid
+        , NULL as clientId
         , pv.sessionid
         , pv.sessiontime
         , pv.eventtime
@@ -152,6 +155,7 @@ SELECT
         , u.generalUseCase
         , u.specificUseCase
         , ps.userid
+        , NULL as clientId
         , ps.sessionid
         , ps.sessiontime
         , ps.eventtime
@@ -195,6 +199,7 @@ SELECT
         , u.generalUseCase
         , u.specificUseCase
         , ssc.userid
+        , ssc.clientId
         , ssc.sessionid
         , ssc.sessiontime
         , ssc.eventtime
@@ -238,6 +243,7 @@ SELECT
         , u.generalUseCase
         , u.specificUseCase
         , vidcompv.userid
+        , NULL as clientId
         , vidcompv.sessionid
         , vidcompv.sessiontime
         , vidcompv.eventtime
@@ -280,6 +286,7 @@ SELECT
         , u.generalUseCase
         , u.specificUseCase
         , vidcomss.userid
+        , NULL as clientId
         , vidcomss.sessionid
         , vidcomss.sessiontime
         , NULL AS eventtime
@@ -324,6 +331,7 @@ SELECT
         , u.generalUseCase
         , u.specificUseCase
         , pv.userid
+        , NULL as clientId
         , pv.sessionid
         , pv.sessiontime
         , pv.eventtime
@@ -367,6 +375,7 @@ SELECT
         , u.generalUseCase
         , u.specificUseCase
         , pv.userid
+        , NULL as clientId
         , pv.sessionid
         , pv.sessiontime
         , pv.eventtime
@@ -410,6 +419,7 @@ SELECT
         , u.generalUseCase
         , u.specificUseCase
         , ac.userID
+        , NULL as clientId
         , ac.sessionID
         , ac.sessionTime
         , ac.eventTime
@@ -453,6 +463,7 @@ SELECT
         , u.generalUseCase
         , u.specificUseCase
         , iac.userID
+        , NULL as clientId
         , iac.sessionID
         , iac.sessionTime
         , iac.eventTime
@@ -494,6 +505,7 @@ SELECT
         , u.generalUseCase
         , u.specificUseCase
         , mc.userID
+        , NULL as clientId
         , mc.sessionID
         , mc.sessionTime
         , mc.eventTime
@@ -537,6 +549,7 @@ SELECT
         , u.generalUseCase
         , u.specificUseCase
         , cc.userID
+        , cc.clientId
         , cc.sessionID
         , cc.sessionTime
         , cc.eventTime
@@ -580,6 +593,7 @@ SELECT
         , u.generalUseCase
         , u.specificUseCase
         , vpa.userID
+        , vpa.clientId
         , vpa.sessionID
         , vpa.sessionTime
         , vpa.eventTime

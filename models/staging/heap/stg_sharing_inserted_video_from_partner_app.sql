@@ -3,6 +3,7 @@ SELECT
         inserted_video_from_partner_app.session_id as sessionId,
         inserted_video_from_partner_app.session_time as sessionTime,
         inserted_video_from_partner_app.user_id as userID,
+        inserted_video_from_partner_app.clientid as clientId,
         inserted_video_from_partner_app.time as eventTime,
         inserted_video_from_partner_app.country as country,
         inserted_video_from_partner_app.region as region,
