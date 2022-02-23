@@ -12,7 +12,7 @@ WITH
             {{ ref('tier2_vidyard_user_details') }} vu
             JOIN {{ ref('tier2_heap') }} ht
                 ON  ht.vidyardUserId = vu.userid
-            JOIN {{ ref('tier2_acquisition_events') }} ae
+            LEFT JOIN {{ ref('tier2_acquisition_events') }} ae
                 ON ae.sessionid = ht.sessionid
         WHERE 
             ht.tracker = 'global_session'     
