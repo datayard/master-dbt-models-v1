@@ -36,4 +36,14 @@ select sessionid,
        'End CTA' as acquisition_event
 from {{ ref('stg_govideo_production_signed_up_on_video_end_screen') }}
 where domain = 'vidyard'
+union
+select sessionid,
+       'Product Channel' as acquisition_channel,
+       'Logo Link' as acquisition_event
+from {{ ref('stg_govideo_production_logo_link_click_share_page') }}
+union
+select sessionid,
+       'Product Channel' as acquisition_channel,
+       'Sign Up Header' as acquisition_event
+from {{ ref('stg_signup_cta_top_nav_bar') }}
 
