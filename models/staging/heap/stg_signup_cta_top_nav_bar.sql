@@ -16,7 +16,7 @@ SELECT
         signup_header.query as query,
         signup_header.domain as domain,
         signup_header.path as path,
-        isnull(cr.region, ‘Other’) as gregion
+        isnull(cr.region, 'Other') as gregion
 FROM
         {{ source ( 'govideo_production' , 'acquisition_clicked_share_page_signup_cta_top_nav_bar_') }} as signup_header
         left join {{ source('ops_utility_tables', 'country_names_with_region') }} cr
