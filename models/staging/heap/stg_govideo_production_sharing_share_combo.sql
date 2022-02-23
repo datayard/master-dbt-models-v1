@@ -1,7 +1,7 @@
 SELECT
     share_combo.event_id as eventID,
     share_combo.user_id as userID,
-    share_combo.clientid as clientId
+    share_combo.clientid as clientId,
     share_combo.session_id as sessionID,
     share_combo.time as eventTime,
     share_combo.session_time as sessionTime,
