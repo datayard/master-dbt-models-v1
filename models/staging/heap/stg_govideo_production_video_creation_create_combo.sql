@@ -4,6 +4,7 @@ SELECT
     video_creation_create_combo.session_id as sessionID,
     video_creation_create_combo.time as eventTime,
     video_creation_create_combo.session_time as sessionTime,
+    video_creation_create_combo.clientid as clientId,
     --video_creation_create_combo.continent as continent,
     video_creation_create_combo.country as country,
     video_creation_create_combo.region as region,

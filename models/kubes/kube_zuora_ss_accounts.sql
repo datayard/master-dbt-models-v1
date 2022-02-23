@@ -73,7 +73,7 @@ with accounts
     select
         *
     from
-        accountscase1
+        accountscase2
     union
     select
         accountid
@@ -104,6 +104,7 @@ select
     , daysleftontrial as currentdaysleftontrial
     , sublongerthenoneday as currentsublongerthenoneday
     , promo as currentpromo
+    , promocode as currentpromocode
     , promostartdate as currentpromostartdate
     , promoenddate as currentpromoenddate
     , daysleftonpromo as currentdaysleftonpromo
