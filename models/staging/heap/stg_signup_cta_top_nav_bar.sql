@@ -20,6 +20,6 @@ SELECT
 FROM
         {{ source ( 'govideo_production' , 'acquisition_clicked_share_page_signup_cta_top_nav_bar_') }} as signup_header
         left join {{ source('ops_utility_tables', 'country_names_with_region') }} cr
-                on about_cta.country = cr.country_name
+                on signup_header.country = cr.country_name
 WHERE
         signup_header.time < DATEADD(day, 1, current_date)
