@@ -1,5 +1,6 @@
 SELECT
         users.user_id as userID,
+        users.clientid as clientId,
         users."identity" as identifier,
         cast(case when REGEXP_COUNT(identifier, '^[0-9]+$') = 1 then identifier else null end as integer) as vidyardUserId,
         users.appcuesuserid as appcuesUserID,
