@@ -4,7 +4,7 @@ select case
        end as accounttype,
        count(distinct z.accountid)
 -- from dbt_vidyard_master.kube_zuora_ss_subscriptions z
-from {{ ref('kube_zuora_ss_subscriptions') }}
+from {{ ref('kube_zuora_ss_subscriptions') }} z
 -- left join dbt_vidyard_master.tier2_vidyard_user_details u on u.organizationid = z.vidyardaccountid
 left join {{ ref('tier2_vidyard_user_details') }} u on u.organizationid = z.vidyardaccountid
 where z.promocodebillthrough
