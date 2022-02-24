@@ -24,7 +24,7 @@ with sfdc_raw as
     JOIN {{ ref('stg_zuora_product_rate_plan') }} AS prp ON prp.productrateplanid = rp.productrateplanid
     JOIN {{ ref('stg_zuora_product') }} AS p ON p.productid = prp.productid
     JOIN {{ ref('stg_zuora_contact') }} c ON c.contactid = s.soldtocontactid
-    left join sfdc on left(sfdc2.sfaccountid,15) = left(a.crmid,15)
+    left join sfdc2 on left(sfdc2.sfaccountid,15) = left(a.crmid,15)
   where
     s.fivetrandeleted = 'f'
     and s.status <> 'Expired'
