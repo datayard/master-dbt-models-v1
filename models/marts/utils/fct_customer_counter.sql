@@ -11,6 +11,6 @@ where z.promocodebillthrough
 and z.trailbillthrough
 and z.trailbillthroughnextday
 and z.sublongerthenoneday
-and u.classification != 'enterprise user'
+-- and u.classification != 'enterprise user'
 and (z.subscriptionenddate is null or z.subscriptionenddate < getdate())
 group by 1
