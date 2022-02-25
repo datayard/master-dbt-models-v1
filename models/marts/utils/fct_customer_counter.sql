@@ -37,5 +37,6 @@ and z.trailbillthrough
 and z.trailbillthroughnextday
 and z.sublongerthenoneday
 -- and u.classification != 'enterprise user'
-and (z.subscriptionenddate is null or z.subscriptionenddate > getdate())
+and (z.subscriptionenddate is null or z.subscriptionenddate >= (DATE(DATEADD(minute,0, DATE_TRUNC('minute', GETDATE())))))
 group by 1
+
