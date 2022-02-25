@@ -13,7 +13,7 @@ with dates_table as (
    select
      accountid
      , region
-     , case when a.ispersonaccount or a.isselfserve or a.ispersonaccount is null then 'Vidyard Pro' else a.employeesegment end as customertype
+     , case when a.ispersonaccount then 'Vidyard Pro' when a.ispersonaccount is null then 'Vidyard Pro' else a.employeesegment end as customertype
    from {{ref('tier2_salesforce_account')}} a
    left join {{ref('fct_sfdc_country_to_region')}} c on lower(a.billingcountry) = c.country
  )
@@ -21,8 +21,9 @@ with dates_table as (
 , zuora as (
   select
   --  case when a.crmid is null then a.accountnumber else left(a.crmid, 15) end as accountid15
-  case when sfdc.customertype = 'Vidyard Pro' or sfdc.customertype is null then a.accountnumber else nvl(sfdc.accountid,a.crmid) end as accountid
+  case when p.sku in ('SKU-00000009','SKU-00000020','SS-010') then a.accountnumber else nvl(sfdc.accountid,nvl(a.crmid,a.accountnumber)) end as accountid
     , case when a.crmid is null then 'zid' else 'accountid' end as idtype
+    , case when p.sku in ('SKU-00000009','SKU-00000020','SS-010') then 'Vidyard Pro' when sfdc.customertype in ('Emerging','Commercial') then sfdc.customertype else 'Emerging' end as customertype
     , to_char(date_trunc('month', (case when s.serviceactivationdate > rpc.effectivestartdate then s.serviceactivationdate else rpc.effectivestartdate end)), 'yyyy-mm') as startyearmonth
     , case when date_part('day',rpc.effectiveenddate) >= 28
         and date_part('day',case when s.serviceactivationdate > rpc.effectivestartdate then s.serviceactivationdate else rpc.effectivestartdate end) = 1
@@ -45,14 +46,14 @@ with dates_table as (
     and nvl(rpc.mrr, 0) <> 0
     and (termenddate > serviceactivationdate or termenddate is null)
   --  and (amendmenttype <> 'RemoveProduct' or amendmenttype is null)
-  group by 1,2,3,4,5
+  group by 1,2,3,4,5,6
 
 )
 
 , zuora_discount as (
   select
   --  case when a.crmid is null then a.accountnumber else left(a.crmid, 15) end as accountid15
-  case when sfdc.customertype = 'Vidyard Pro' or sfdc.customertype is null is null then a.accountnumber else nvl(sfdc.accountid,a.crmid) end as accountid
+  case when p.sku in ('SKU-00000009','SKU-00000020','SS-010') then a.accountnumber else nvl(sfdc.accountid,nvl(a.crmid,a.accountnumber)) end as accountid
     , to_char(date_trunc('month', rpc.effectivestartdate), 'yyyy-mm') as startyearmonth
     , case when date_part('day',rpc.effectiveenddate) >= 28 and date_part('day',rpc.effectivestartdate) = 1
         then to_char(date_trunc('month', rpc.effectiveenddate+4), 'yyyy-mm')
@@ -86,6 +87,7 @@ with dates_table as (
     z.accountid
     , z.region
     , z.idtype
+    , z.customertype
     , z.startyearmonth
     , z.endyearmonth
     , z.arr
@@ -108,6 +110,7 @@ with dates_table as (
     z.accountid
     , z.region
     , z.idtype
+    , z.customertype
     , d.yearmonth
     , d.yearmonthvalue
     , d.fiscalyearmonth
@@ -121,7 +124,7 @@ with dates_table as (
   where
     arr > 0
     and d.yearmonth is not null
-  group by 1,2,3,4,5,6,7,8
+  group by 1,2,3,4,5,6,7,8,9
 )
 
 , zuora_discount_final as (
@@ -141,6 +144,7 @@ select
   accountid
   , region
   , idtype
+  , customertype
   , yearmonth
   , yearmonthvalue
   , fiscalyearmonth
