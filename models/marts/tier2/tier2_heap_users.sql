@@ -18,6 +18,7 @@ SELECT
         users.onboardingUsecaseResponse, 
         users.usecase,
         users.usecase_c, 
-        users.combined_usecase     
+        users.combined_usecase,
+        users.confidence_survey
 FROM
         {{ ref('stg_govideo_production_users')}} as users

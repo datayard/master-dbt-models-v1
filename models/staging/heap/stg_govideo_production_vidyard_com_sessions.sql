@@ -24,10 +24,11 @@ SELECT
         vidyard_com_sessions.utm_medium as utmMedium,
         vidyard_com_sessions.utm_campaign as utmCampaign,
         vidyard_com_sessions.utm_term as utmTerm,
-        vidyard_com_sessions.utm_content as utmContent
-
+        vidyard_com_sessions.utm_content as utmContent,
+        isnull(cr.region, 'Other') as gregion
 FROM
         {{ source ('govideo_production' , 'vidyard_com_sessions')}} as vidyard_com_sessions
-
+        left join {{ source('ops_utility_tables', 'country_names_with_region') }} cr
+                on vidyard_com_sessions.country = cr.country_name
 WHERE
         vidyard_com_sessions.session_time < DATEADD(day, 1, current_date)

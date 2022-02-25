@@ -2,13 +2,18 @@ WITH
     first_session_table AS (
         SELECT
             vu.organizationid
+            , ht.sessionid
             , ht.derived_channel 
             , ht.sessiontime
+            , ae.acquisition_channel
+            , ae.acquisition_event
             , ROW_NUMBER() OVER(PARTITION BY vu.organizationid ORDER BY ht.sessiontime) AS rn
         FROM 
             {{ ref('tier2_vidyard_user_details') }} vu
             JOIN {{ ref('tier2_heap') }} ht
-                ON  ht.vidyardUserId = vu.userid         
+                ON  ht.vidyardUserId = vu.userid
+            LEFT JOIN {{ ref('tier2_acquisition_events') }} ae
+                ON ae.sessionid = ht.sessionid
         WHERE 
             ht.tracker = 'global_session'     
             --only include sessions 30 minutes prior to signup
@@ -61,12 +66,28 @@ WITH
             , ROW_NUMBER() OVER(PARTITION BY vu.organizationid ORDER BY CASE WHEN ht.combined_usecase IS NULL THEN 99 ELSE 1 END ASC) AS rn
         FROM 
             {{ ref('tier2_vidyard_user_details') }} vu
-            JOIN {{ ref('stg_govideo_production_users') }} ht
+            JOIN {{ ref('tier2_heap_users') }} ht
                 ON  ht.vidyardUserId = vu.userid 
         ) a
         where rn=1  and combined_usecase is not null      
 
 )
+  , specific_use_case_data as (
+        SELECT * FROM
+        (
+        SELECT
+            vu.userid
+            , vu.organizationid
+            , ht.specificUseCase
+            , ROW_NUMBER() OVER(PARTITION BY vu.organizationid ORDER BY CASE WHEN ht.specificUseCase IS NULL THEN 99 ELSE 1 END ASC) AS rn
+        FROM
+            {{ ref('tier2_vidyard_user_details') }} vu
+            JOIN {{ ref('tier2_heap_users') }} ht
+                ON  ht.vidyardUserId = vu.userid
+        ) a
+        where rn=1  and specificUseCase is not null
+    )
+
 SELECT 
     vu.userid
     , vu.organizationid
@@ -94,6 +115,7 @@ SELECT
     , vu.viewscount
     , vu.activatedFlag
     , coalesce(om.generalUseCase,uc.combined_usecase) as combined_usecase
+    , coalesce(om.specificUseCase,suc.specificUseCase) as specific_usecase
     , case 
         when ext.organizationid is not null then 1
         else 0
@@ -102,8 +124,10 @@ SELECT
         when cv.organizationid is not null then 1
         else 0
     end as createdvideoflag
-    , row_number() over(partition by vu.domain order by vu.createddate) as rn
+    , row_number() over(partition by vu.domain order by vu.createddate asc) as rn
     , lps.last_session as lastsession
+    , fst.acquisition_channel
+    , fst.acquisition_event
 
 
 FROM 
@@ -116,6 +140,8 @@ FROM
         ON vu.userid = om.userid
     LEFT JOIN use_case_data uc
         ON vu.organizationid = uc.organizationid 
+    LEFT JOIN specific_use_case_data suc
+        ON vu.organizationid = suc.organizationid
     LEFT JOIN used_chrome_extension ext
         ON vu.organizationid = ext.organizationid 
     LEFT JOIN created_video cv

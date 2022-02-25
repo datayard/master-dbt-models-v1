@@ -8,9 +8,17 @@ with dates_table as (
    from {{ ref('fct_sfdc_dates') }}
    group by 1,2,3,4,5
  )
+
+ /*, z as (
+   select accountnumber, left(crmid,15) as crmid
+   from
+   {{ ref('stg_zuora_account') }}
+   group by 1,2
+ ) */
 , salesforce as (
   select
-    accountid
+  -- case when (a.ispersonaccount or a.isselfserve or a.ispersonaccount is null) and z.crmid is not null then z.accountnumber else accountid end as accountid
+  accountid
     , opportunityid
     , c.region
     , to_char(date_trunc('month', contractstartdate), 'YYYY-MM') as startyearmonth
@@ -27,6 +35,7 @@ with dates_table as (
     left join
       {{ref('tier2_salesforce_account')}} a using (accountid)
     left join {{ref('fct_sfdc_country_to_region')}} c on lower(a.billingcountry) = c.country
+  --  left join z on crmid = left(accountid,15)
   where
     (lower(stagename) like '%dead%' or lower(stagename) like '%close%')
     and contractstartdate <= contractenddate

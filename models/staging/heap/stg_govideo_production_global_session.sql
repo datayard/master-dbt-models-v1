@@ -24,8 +24,11 @@ SELECT
         global_session.utm_medium as utmMedium,
         global_session.utm_campaign as utmCampaign,
         global_session.utm_term as utmTerm,
-        global_session.utm_content as utmContent
+        global_session.utm_content as utmContent,
+        isnull(cr.region, 'Other') as gregion
 FROM
         {{ source('govideo_production' , 'global_session')}} as global_session
+        left join {{ source('ops_utility_tables', 'country_names_with_region') }} cr
+                on global_session.country = cr.country_name
 WHERE
         global_session.session_time < DATEADD(day, 1, current_date)

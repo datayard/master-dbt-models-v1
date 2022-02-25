@@ -21,8 +21,11 @@ SELECT
   admin_combo.domain as domain,
   admin_combo.path as path,
   admin_combo.title as title,
-  admin_combo.channels as channels
+  admin_combo.channels as channels,
+  isnull(cr.region, 'Other') as gregion
 FROM
   {{ source ('govideo_production' , 'admin_combo') }} as admin_combo
+  left join {{ source('ops_utility_tables', 'country_names_with_region') }} cr
+    on admin_combo.country = cr.country_name
 WHERE
   admin_combo.time < DATEADD(day, 1, current_date)

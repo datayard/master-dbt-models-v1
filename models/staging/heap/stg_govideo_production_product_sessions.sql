@@ -21,8 +21,11 @@ SELECT
         product_sessions.domain as domain,
         product_sessions.path as path,
         product_sessions.title as title,
-        product_sessions.channels as channels
+        product_sessions.channels as channels,
+        isnull(cr.region, 'Other') as gregion
 FROM
         {{ source ('govideo_production', 'product_sessions')}} as product_sessions
+        left join {{ source('ops_utility_tables', 'country_names_with_region') }} cr
+                on product_sessions.country = cr.country_name
 WHERE
         product_sessions.time < DATEADD(day, 1, current_date)

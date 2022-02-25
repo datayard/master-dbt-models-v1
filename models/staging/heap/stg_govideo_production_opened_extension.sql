@@ -20,8 +20,11 @@ SELECT
         opened_extension.domain as domain,
         opened_extension.path as path,
         opened_extension.title as title,
-        opened_extension.channels as channels
+        opened_extension.channels as channels,
+        isnull(cr.region, 'Other') as gregion
 FROM
         {{ source('govideo_production' ,'opened_extension') }} as opened_extension
+        left join {{ source('ops_utility_tables', 'country_names_with_region') }} cr
+                on opened_extension.country = cr.country_name
 WHERE
         opened_extension.time < DATEADD(day, 1, current_date)

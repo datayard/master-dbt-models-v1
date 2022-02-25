@@ -4,6 +4,7 @@ SELECT
     video_creation_create_combo.session_id as sessionID,
     video_creation_create_combo.time as eventTime,
     video_creation_create_combo.session_time as sessionTime,
+    video_creation_create_combo.clientid as clientId,
     --video_creation_create_combo.continent as continent,
     video_creation_create_combo.country as country,
     video_creation_create_combo.region as region,
@@ -21,8 +22,11 @@ SELECT
     video_creation_create_combo.domain as domain,
     video_creation_create_combo.path as path,
     video_creation_create_combo.title as title,
-    video_creation_create_combo.channels as channels
+    video_creation_create_combo.channels as channels,
+    isnull(cr.region, 'Other') as gregion
 FROM
     {{ source ('govideo_production' , 'video_creation_create_combo') }} as video_creation_create_combo
+    left join {{ source('ops_utility_tables', 'country_names_with_region') }} cr
+                on video_creation_create_combo.country = cr.country_name
 WHERE
     video_creation_create_combo.time < DATEADD(day, 1, current_date)

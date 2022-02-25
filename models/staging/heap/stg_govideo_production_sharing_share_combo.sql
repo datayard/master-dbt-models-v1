@@ -1,6 +1,7 @@
 SELECT
     share_combo.event_id as eventID,
     share_combo.user_id as userID,
+    share_combo.clientid as clientId,
     share_combo.session_id as sessionID,
     share_combo.time as eventTime,
     share_combo.session_time as sessionTime,
@@ -21,8 +22,11 @@ SELECT
     share_combo.domain as domain,
     share_combo.path as path,
     share_combo.title as title,
-    share_combo.channels as channels
+    share_combo.channels as channels,
+    isnull(cr.region, 'Other') as gregion
 FROM
     {{ source ('govideo_production' , 'sharing_share_combo')}} as share_combo
+    left join {{ source('ops_utility_tables', 'country_names_with_region') }} cr
+                on share_combo.country = cr.country_name
 WHERE
     share_combo.time < DATEADD(day, 1, current_date)

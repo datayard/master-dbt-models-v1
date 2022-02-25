@@ -15,8 +15,11 @@ SELECT
         signed_up_on_video_pause.landing_page_query as landingPageQuery,
         signed_up_on_video_pause.query as query,
         signed_up_on_video_pause.domain as domain,
-        signed_up_on_video_pause.path as path
+        signed_up_on_video_pause.path as path,
+        isnull(cr.region, 'Other') as gregion
 FROM
         {{ source ( 'govideo_production' , 'sign_in_up_signed_up_on_video_embed_pause') }} as signed_up_on_video_pause
+        left join {{ source('ops_utility_tables', 'country_names_with_region') }} cr
+                on signed_up_on_video_pause.country = cr.country_name
 WHERE
         signed_up_on_video_pause.time < DATEADD(day, 1, current_date)
