@@ -24,8 +24,8 @@ WHERE
 UNION
 
 select case
-        when z.sku = 'SS-010' then 'Pro Self Serve'
-        when z.sku = 'SKU-00000009' or z.sku = 'SKU-00000020' then 'Enterprise Self Serve'
+        when z.sku = 'SS-010' then 'pro_self_serve'
+        when z.sku = 'SKU-00000009' or z.sku = 'SKU-00000020' then 'enterprise_self_serve'
        end as accounttype,
        count(distinct z.accountid)
 -- from dbt_vidyard_master.kube_zuora_ss_subscriptions z
