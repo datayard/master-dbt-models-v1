@@ -1,10 +1,6 @@
 SELECT
     'Enterprise_users' as accounttype,
-<<<<<<< HEAD
     COALESCE(CAST( ( SUM(DISTINCT (CAST(FLOOR(COALESCE( vidyard_allotments.allotmentlimit  ,0)*(1000000*1.0)) AS DECIMAL(38,0))) + CAST(STRTOL(LEFT(MD5(CAST( vidyard_allotments.accountid  AS VARCHAR)),15),16) AS DECIMAL(38,0))* 1.0e8 + CAST(STRTOL(RIGHT(MD5(CAST( vidyard_allotments.accountid  AS VARCHAR)),15),16) AS DECIMAL(38,0)) ) - SUM(DISTINCT CAST(STRTOL(LEFT(MD5(CAST( vidyard_allotments.accountid  AS VARCHAR)),15),16) AS DECIMAL(38,0))* 1.0e8 + CAST(STRTOL(RIGHT(MD5(CAST( vidyard_allotments.accountid  AS VARCHAR)),15),16) AS DECIMAL(38,0))) )  AS DOUBLE PRECISION) / CAST((1000000*1.0) AS DOUBLE PRECISION), 0) AS "accounts"
-=======
-    COALESCE(CAST( ( SUM(DISTINCT (CAST(FLOOR(COALESCE( vidyard_allotments.allotmentlimit  ,0)*(1000000*1.0)) AS DECIMAL(38,0))) + CAST(STRTOL(LEFT(MD5(CAST( vidyard_allotments.accountid  AS VARCHAR)),15),16) AS DECIMAL(38,0))* 1.0e8 + CAST(STRTOL(RIGHT(MD5(CAST( vidyard_allotments.accountid  AS VARCHAR)),15),16) AS DECIMAL(38,0)) ) - SUM(DISTINCT CAST(STRTOL(LEFT(MD5(CAST( vidyard_allotments.accountid  AS VARCHAR)),15),16) AS DECIMAL(38,0))* 1.0e8 + CAST(STRTOL(RIGHT(MD5(CAST( vidyard_allotments.accountid  AS VARCHAR)),15),16) AS DECIMAL(38,0))) )  AS DOUBLE PRECISION) / CAST((1000000*1.0) AS DOUBLE PRECISION), 0) AS "Enterprise"
->>>>>>> 7f477a5e344548c6093083f452464950de55db8c
 FROM
     dbt_vidyard_master.kube_org_wide_metrics  AS kube_org_wide_metrics
 INNER JOIN
