@@ -57,7 +57,7 @@ SELECT
       , case when am.parentCTAsubtype = 'User Signup' then row_number() over(partition by am.email order by am.mqiDateGMT) end as user_rn
      
       , case when a.employeeSegment is null then 'UNKNOWN' else a.employeeSegment end as employee_segment
-      
+      , accountSegment
       , case when a.accountType = 'Prospect' then a.accountType 
              when a.accountType = 'Customer' then a.accountType 
              when a.accountType = 'Sub-Account' then a.accountType 
@@ -69,6 +69,8 @@ SELECT
       , am.accountregion
       , a.abmTier
       , a.qaStatus
+      , a.engagioStatus
+      , a.accountName
 FROM {{ ref('kube_new_all_mqi') }} as am
 LEFT JOIN {{ ref('tier2_salesforce_account') }} as a
     ON am.accountId = a.accountId
