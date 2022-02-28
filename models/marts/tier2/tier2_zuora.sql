@@ -1,5 +1,6 @@
-SELECT a.accountid
-         , CASE
+SELECT 
+         -- SUBSCRIPTION TYPE
+         CASE
                 WHEN (p.sku LIKE 'SS-010' AND s.status LIKE 'Active') THEN 'Active - Pro'
                 WHEN (p.sku LIKE 'SS-010' AND s.status LIKE 'Cancelled' AND s.termenddate >= getdate()) THEN 'Active - Pro'
                 WHEN (p.sku LIKE 'SS-010' AND s.status LIKE 'Cancelled' AND s.termenddate < getdate()) THEN 'Cancelled - Pro'
@@ -14,6 +15,9 @@ SELECT a.accountid
                 WHEN (s.status LIKE 'Cancelled' AND s.termenddate < getdate()) THEN 'Cancelled - Others'
                 ELSE '--not yet classified--'
            END AS subscription_type
+
+          -- ACCOUNT
+         , a.accountid
          , a.accountname
          , a.accountnumber
          , a.accountstatus
@@ -24,6 +28,8 @@ SELECT a.accountid
          , a.customeracquisitiondate
          , a.netMrr
          , a.vidyardAccountId
+
+         -- SUBSCRIPTION
          , s.cancelleddate
          , s.contractstartdate
          , s.createddate AS subsCreatedDate
@@ -51,6 +57,11 @@ SELECT a.accountid
          , s.updatedbyid AS subscriptionupdatedby
          , s.updateddate AS subscriptionupdateddate
          , s.vidyardcanceldate
+         , s.contractEffectiveDate
+         , s.serviceActivationDate
+         , s.promocode
+
+         -- PRODUCT RATE PLAN
          , prp.activecurrencies
          , prp.billingperiod
          , prp.description
@@ -58,26 +69,37 @@ SELECT a.accountid
          , prp.effectivestartdate
          , prp.name AS productrateplanname
          , prp.productid
-         , p.sku
          , prp.productrateplanid
          , prp.pvstatus
          , prp.updatedbyid AS productrateplanupdatedby
          , prp.updateddate AS productrateplanupdateddate
+
+          -- PRODUCT
+         , p.sku
+
+          -- RATE PLAN
+         , rp.name as promo
          , rp.rateplanid
          , rp.amendmentid
          , rp.amendmentsubscriptionrateplanid
          , rp.amendmenttype
          , rp.subscriptionversionamendmentid AS rpsubscriptionversionamendmentid
          , rp.triggersync
+
+         -- RATE PLAN CHARGE
          , rpc.mrr
          , rpc.chargemodel
          , rpc.effectivestartdate as rpc_effectivestartdate
          , rpc.effectiveenddate as rpc_effectiveenddate
+
+         -- RATE PLAN CHARGE TIER
          , rpct.discountpercentage
-         , row_number() over(partition by s.originalsubscriptionid order by (DATE(s.createddate))desc) = 1  as latest_subscription
+
+         -- CONTACT
          , c.personalEmail
-         , s.contractEffectiveDate
-         , s.serviceActivationDate
+
+         -- Misc
+         , row_number() over(partition by s.originalsubscriptionid order by (DATE(s.createddate))desc) = 1  as latest_subscription
 
     FROM {{ ref('stg_zuora_rate_plan') }} AS rp
              JOIN {{ ref('stg_zuora_subscription') }} AS s ON s.subscriptionid = rp.subscriptionid
