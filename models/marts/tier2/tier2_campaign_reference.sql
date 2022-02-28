@@ -86,7 +86,7 @@ with
           select
                campaignadid
                , campaignadfullname
-               , adplatform
+               --, adplatform
                , case when utm_campaign is null then campaignadfullname else utm_campaign end as utm_campaign
                , case when utm_source is null and adplatform = 'google' then 'google' 
                     when utm_source is null and adplatform = 'facebook' then 'facebook'
@@ -103,63 +103,80 @@ with
      campaignad_performance as (
                
           select 
-               gs.date as date
-               , cast(gs.campaignID as char(256)) as campaignAdId 
+               convert_timezone('GMT', gs.date::timestamp) as gtmdate
+               , cast(gs.campaignID as char(256)) as campaignAdId
+               , gh.campaignName as campaignadfullname
+               , 'google' as adplatform
                , sum(gs.cost)*0.8 as spend
                , sum(gs.impressions) as impressions
                , sum(gs.clicks) as clicks
                -- , gs.conversions
 
           from {{ ref('stg_googlead_campaign_hourlystats')}} as gs
-          group by 1,2
+               left join (
+                         select campaignId, 
+                                campaignName,
+                                row_number() over (partition by campaignId ORDER BY campaignId) AS rn
+                         from {{ ref('stg_googlead_campaign_history')}}
+                         ) as gh 
+               on gs.campaignID = gh.campaignId and gh.rn = 1
+          group by 1,2,3,4
 
-          union all
+          -- union all
 
-          select
-               bs.date as date
-               , cast(bs.campaignId as char(256)) as campaignAdId 
-               , sum(bs.dailySpend) as spend
-               , sum(bs.dailyImpressions) as impressions
-               , sum(bs.dailyClicks) as clicks
-               -- , bs.dailyConversions
+          -- select
+          --      --bs.date as date
+          --      convert_timezone('GMT', bs.date::timestamp) as gtmdate
+          --      , cast(bs.campaignId as char(256)) as campaignAdId 
+          --      , sum(bs.dailySpend) as spend
+          --      , sum(bs.dailyImpressions) as impressions
+          --      , sum(bs.dailyClicks) as clicks
+          --      -- , bs.dailyConversions
 
-          from {{ ref('stg_bingad_campaign_daily_performance')}} as bs
-          group by 1,2
+          -- from {{ ref('stg_bingad_campaign_daily_performance')}} as bs
+          -- group by 1,2
 
           union all 
 
           select
-               fs.date as date
+               convert_timezone('GMT', fs.date::timestamp) as gtmdate
                , fs.adId as campaignAdId
+               , fs.ad_name as campaignadfullname
+               , 'facebook' as adplatform
                , sum(dailySpend) as spend
                , sum(dailyImpressions) as impressions
                , sum(cast(round(dailySpend*1/nullif(dailyCpc,0)) as bigint)) as clicks
 
           from {{ ref('stg_facebook_report')}} as fs
-          group by 1,2
+          group by 1,2,3,4
             
 
           union all
 
 
           select
-               lc.date as date
+               convert_timezone('GMT', lc.date::timestamp) as gtmdate
                , cast(lc.creativeId as char(256)) as campaignAdId
+               , original.campaignadfullname as campaignadfullname
+               , original.adplatform as adplatform
                , sum(costInUSD) as spend
                , sum(impressions) as impressions
                , sum(clicks) as clicks
 
           from {{ ref('stg_linkedinads_creative')}} as lc
-          group by 1,2
+               left join original 
+                    on lc.creativeId = original.campaignadid and original.adplatform = 'linkedin'
+          group by 1,2,3,4
      )
 
 -- campaign_performance_summary --
-          
+    
      select 
-          convert_timezone('GMT', cp.date::timestamp) as gmttime
-          , fr.adplatform
+          cp.gtmdate
+          , cp.adplatform
           , cp.campaignAdId
-          , fr.campaignadfullname
+          , cp.campaignadfullname
+          , fr.campaignadfullname as campaignadfullname2
           , fr.utm_campaign
           , fr.utm_source
           , fr.utm_medium
@@ -168,7 +185,7 @@ with
           , sum(cp.clicks) as totalDailyClicks
      
      from campaignad_performance as cp
-          join full_reference fr
+          left join full_reference fr
               on cp.campaignAdId = fr.campaignadid
      group by
           1,
@@ -177,7 +194,9 @@ with
           4,
           5,
           6,
-          7
-     
+          7,
+          8
+
+
 
           
