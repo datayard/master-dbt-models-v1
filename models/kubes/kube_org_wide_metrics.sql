@@ -31,6 +31,7 @@ with active_accounts as (
               , om.viewscount                                                                               as viewsCount
               , om.videoswithviews                                                                          as videosWithViews
               , count(distinct case when v.origin != 'sample' then v.childentityid else null end)           as videos_count
+              , count(distinct v.entityid)                                                                  as players_count
               , count(distinct e.eventid)                                                                   as events_count
               , count(distinct case when e.eventjoinid is not null then e.eventid else null end)            as applied_events_count
               , count(distinct case when e.eventtype not like '%simple%' then e.ownerid else null end)      as custom_videos
@@ -64,6 +65,7 @@ with active_accounts as (
             , sum(o.viewsCount)             as viewsCount
             , sum(o.videosWithViews)        as videosWithViews
             , sum(o.videos_count)           as videos_count
+            , sum(o.players_count)           as players_count
             , sum(o.events_count)           as events_count
             , sum(o.applied_events_count)   as applied_events_count
             , sum(o.custom_videos)          as custom_videos
@@ -84,6 +86,7 @@ select
     , k.viewsCount::numeric(20) + isnull(ss.viewsCount::numeric(20),0)                        as viewsCount
     , k.videosWithViews::numeric(20) + isnull(ss.videosWithViews::numeric(20),0)              as videosWithViews
     , k.videos_count::numeric(20) + isnull(ss.videos_count::numeric(20),0)                    as videos_count
+    , k.players_count::numeric(20) + isnull(ss.players_count::numeric(20),0)                  as players_count
     , k.events_count::numeric(20) + isnull(ss.events_count::numeric(20),0)                    as events_count
     , k.applied_events_count::numeric(20) + isnull(ss.applied_events_count::numeric(20),0)    as applied_events_count
     , k.custom_videos::numeric(20) + isnull(ss.custom_videos::numeric(20),0)                  as custom_videos
