@@ -57,7 +57,11 @@ SELECT
       , case when am.parentCTAsubtype = 'User Signup' then row_number() over(partition by am.email order by am.mqiDateGMT) end as user_rn
      
       , case when a.employeeSegment is null then 'UNKNOWN' else a.employeeSegment end as employee_segment
-      , accountSegment
+
+      , case when a.accountSegment='Emerging' and a.numberOfEmployees between 1 and 50 then 'New Ventures'
+             when a.accountSegment='Emerging' and a.numberOfEmployees between 51 and 200 then 'Startups'
+             when a.accountSegment is null then 'UNKNOWN' else a.accountSegment end as accountSegment
+             
       , case when a.accountType = 'Prospect' then a.accountType 
              when a.accountType = 'Customer' then a.accountType 
              when a.accountType = 'Sub-Account' then a.accountType 
