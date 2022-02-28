@@ -70,6 +70,7 @@ SELECT
       , a.abmTier
       , a.qaStatus
       , a.engagioStatus
+      , a.accountName
 FROM {{ ref('kube_new_all_mqi') }} as am
 LEFT JOIN {{ ref('tier2_salesforce_account') }} as a
     ON am.accountId = a.accountId
