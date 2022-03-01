@@ -4,6 +4,6 @@ SELECT
 	vidyard_referrals.referee_user_id as referreID,
 	vidyard_referrals.status as referralStatus,
 	vidyard_referrals.incentive as incentive,
-	vidyard_referrals.updated_at as updatedAt
+	vidyard_referrals.updated_at as updatedDate
  FROM 
 	{{ source('public', 'vidyard_referrals') }} as vidyard_referrals

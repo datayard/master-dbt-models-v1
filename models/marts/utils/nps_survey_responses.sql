@@ -8,7 +8,7 @@ SELECT
     surveys.userScore,
     surveys.surveytype,
     surveys.userComment,
-    surveys.createdAt
+    surveys.createdDate
 FROM 
     {{ ref('stg_vidyard_nps_surveys') }} as surveys
 JOIN

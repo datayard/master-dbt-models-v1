@@ -1,0 +1,66 @@
+version: 2
+
+sources:
+  - name: ops_utility_tables
+    description: utilities tables used to storage supporting data into the data model (CSV files, Dates, hardcoded etc)
+    
+    freshness:
+      warn_after:
+        period: hour
+        count: 48
+      error_after:
+        period: hour
+        count: 72
+
+    tables:
+
+      - name: kpis
+
+      - name: free_domain_list
+
+      - name: free_domains
+
+      - name: campaign_reference
+
+models:
+  # Documentation for Staging Intercom table
+  - name: kpis
+    columns:
+
+      - name: targetPeriod
+        description: Fiscal year and quarter associated to the KPI
+
+      - name: kpi
+        description: KPI value to measure
+                
+      - name: timePeriod
+        description: timeframe to measure
+
+      - name: target
+        description: numeric goal for kpi
+
+  - name: free_domain_list
+    columns: 
+
+      - name: domain
+        description: the known free domain
+
+  # Documentation for marketing Campaign Reference table
+  - name: campaign_reference
+    columns:
+
+      - name: full_name
+        description: Full name of campaigns shows on ad platforms
+
+      - name: source
+        description: Platforms the campaigns were placed on
+
+      - name: id 
+        description: Campaign ids
+
+      - name: custom_parameter
+        description: custom defined campaign tracking parameters
+
+      - name: tracking_url
+        description: full tracking url of campaigns
+  

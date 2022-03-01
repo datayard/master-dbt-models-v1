@@ -1,0 +1,44 @@
+SELECT accountId
+        , accountName
+        , isDeleted
+        , accountType
+        , parentAccountId
+        , accountPhone
+        , accountIndustry
+        , employeeSegment
+        , numberOfEmployees
+        , annualRevenue
+        , ownerId
+        , customerTier
+        , emailDomain
+        , website
+        , vidyardAccountId
+        , originalContractDate
+        , csmOwnerId
+        , isPersonAccount
+        , isSelfServe
+        , billingStreet
+        , billingCity
+        , billingState
+        , billingPostalCode
+        , billingCountry
+        , isPartner
+        , dateOfChurn
+        , churnReason
+        , churnReasonDetails
+        , partnerType
+        , vidyardAccountProducts
+        , createdDate
+        , accountTerritory
+        , accountRegion
+        , nonContract
+        , vidyardUserId
+        , crmPlatform
+        , marketingAutomationPlatform
+        , abmTier
+        , onlineVideoPlatform
+        , primaryUseCase
+        , qaStatus
+        , arr
+FROM 
+    {{ ref('tier2_salesforce_account') }}

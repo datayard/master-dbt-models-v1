@@ -32,4 +32,8 @@ models:
         +materialized: view
       marts:
         +materialized: table
+      kubes:
+        +materialized: table
+      finkubes:
+        +materialized: table
 

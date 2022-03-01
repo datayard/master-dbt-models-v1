@@ -32,6 +32,8 @@ sources:
 
       - name: vidyard_features
 
+      - name: vidyard_feature_usages
+
       - name: vidyard_players
 
       - name: vidyard_allotment_limits
@@ -49,7 +51,18 @@ sources:
       - name: vidyard_chapters
 
       - name: vidyard_referrals
-      
+
+      - name: vidyard_active_embeds
+
+      - name: vidyard_invoiced_customers
+
+      - name: vidyard_roles
+
+      - name: vidyard_onboarding_metadata
+
+      - name: vidyard_video_metrics      
+
+      - name: vidyard_api_tokens
       
 
 models:
@@ -163,6 +176,9 @@ models:
 
     - name: cancelled
       description: ''
+
+    - name: props
+      description: ''      
 
 
   - name: stg_vidyard_user_groups
@@ -350,6 +366,23 @@ models:
       - name: updatedDate
         description: ''
 
+  - name: stg_vidyard_feature_usage
+    columns:
+
+      - name: featureUsageID
+        description: unique identifier for the table
+        tests:
+          - unique
+          - not_null
+
+      - name: organizationID
+        description: ' '
+        tests:
+          - unique
+          - not_null
+
+      - name: featureID
+        description: which feature the organization has access to, used to join with vidyard_features to get the feature information
 
   - name: stg_vidyard_features
     columns:
@@ -606,4 +639,146 @@ models:
         description: ''  
 
       - name: updatedAt
-        description: ''             
+        description: ''
+
+ # Documentation for VIDYARD_ACTIVE_EMBEDS table from PUBLIC schema
+  - name: stg_vidyard_active_embeds
+    columns:
+
+      - name: id
+        description: unique identifier for this table
+        tests:
+          - unique
+          - not_null
+
+      - name: account_id
+        description: use to join to team_memberships table     
+
+         
+# Documentation for VIDYARD_INVOICED_CUSTOMERS table from PUBLIC schema
+  - name: stg_vidyard_invoiced_customers
+    columns:
+
+      - name: id
+        description: unique identifier for this table
+        tests:
+          - unique
+          - not_null
+
+      - name: accountId
+        description: User Account ID          
+
+      - name: invoicedCustomerId
+        description: User Invoice No   
+
+      - name: active
+        description: User active or not   
+
+      - name: createdAt
+        description: Invoice creation date   
+
+      - name: updatedAt
+        description: Invoice updated at                            
+
+
+# Documentation for VIDYARD_ROLES table from PUBLIC schema
+  - name: stg_vidyard_roles
+    columns:
+
+      - name: id
+        description: unique identifier for this table
+        tests:
+          - unique
+          - not_null
+
+      - name: organization_id
+        description: User Org ID          
+
+      - name: role_type
+        description: Role of the user on the folder
+
+      - name: can_create_roles
+        description: ' '
+
+
+# Documentation for VIDYARD_ONBOARDING_METADATA table from PUBLIC schema
+  - name: stg_vidyard_onboarding_metadata
+    columns:
+
+      - name: id
+        description: unique identifier for this table
+        tests:
+          - unique
+          - not_null
+
+      - name: user_id
+        description: User ID          
+
+      - name: new_user_survey
+        description: ' '
+
+      - name: created_at
+        description: 'date the user filled the onboarding survey'     
+
+      - name: updated_at
+        description: ' '     
+
+      - name: general_use_case
+        description: ' '     
+
+      - name: specific_use_case
+        description: ' '                                             
+
+
+# Documentation for VIDYARD_VIDEO_METRICS table from PUBLIC schema
+  - name: stg_vidyard_video_metrics
+    columns:
+
+      - name: id
+        description: unique identifier for this table
+        tests:
+          - unique
+          - not_null
+
+      - name: views_count
+        description: ' '        
+
+      - name: unique_viewers
+        description: ' '
+
+      - name: identified_viewers
+        description: ' '  
+
+      - name: identified_views
+        description: ' '     
+
+# Documentation for Vidyard_API_Tokens table from PUBLIC schema
+  - name: stg_vidyard_api_tokens
+    columns:
+
+      - name: activeTokenID
+        description: unique identifier for this table
+        tests:
+          - unique
+          - not_null
+
+      - name: organizationID
+        description: ' '        
+
+      - name: tokenType
+        description: ' '
+
+      - name: uuid
+        description: ' '  
+
+      - name: tokendata
+        description: ' '     
+
+      - name: createdAt
+        description: ' '     
+
+      - name: updatedAt
+        description: ' '
+
+      - name: isValid
+        description: ' '

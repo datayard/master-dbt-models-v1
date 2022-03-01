@@ -1,39 +1,68 @@
 SELECT 
-        op.id as opportunityId,
-        op.accountid as accountId,
-        op.ownerid as ownerId,
-        op.name as opportunityName,
-        op.stagename as stageName,
-        op.closedate as closeDate,
-        op.type as opportunityType,
-        op.isclosed as isClosed,
-        op.iswon as isWon,
-        op.campaignid as campaignId,
-        op.createddate as createdDate,
-        op.Entered_Pipeline_Date__c as enteredPipelineDate,
-        op.dead_reason__c as deadReason,
-        op.x7_closed_won_date__c as closedWonDate,
-        op.x8_dead_date__c as deadDate,
-        op.renewal_due_date__c as renewalDueDate,
-        op.multi_year_1st_due_date__c as multiYear1stDueDate,
-        op.multi_year_2nd_due_date__c as multiYear2ndDueDate,
-        op.contact_champion__c as contactChampionId,
-        op.business_unit__c as businessUnit,
-        op.vy_attribution__c as opportunityAttribution,
-        op.new_arr__c as newARR,
-        op.one_time__c as oneTimeCharge,
-        op.last_year_arr__c as lastYearARR,
-        op.renewal_amount__c as renewalAmount,
-        op.csm_owner__c as csmOwnerId,
-        op.contract_start_date__c as contractStartDate,
-        op.contract_end_date__c as contractEndDate,
-        op.previous_contract_start_date__c as previousContractStartDate,
-        op.previous_contract_end_date__c as previousContractEndDate,
-        op.churn_reason__c as churnReason,
-        op.competition__c as competitor,
-        op.forecastcategoryname as forecastCategory,
-        op.red_opportunity__c as redOpportunity,
-        op.assurance__c as Assurance,
-        op.vy_use_case__c as useCase
+        op.id as opportunityId
+        , op.accountid as accountId
+        , LEFT(op.account_id__c, 15) as accountId_trimmed
+        , op.ownerid as ownerId
+        , op.name as opportunityName
+        , op.stagename as stageName
+        , op.closedate as closeDate
+        , op.type as opportunityType
+        , op.isclosed as isClosed
+        , op.iswon as isWon
+        , op.campaignid as campaignId
+        , op.createddate as createdDate
+        , op.Entered_Pipeline_Date__c as enteredPipelineDate
+        , op.dead_reason__c as deadReason
+        , op.x7_closed_won_date__c as closedWonDate
+        , op.x8_dead_date__c as deadDate
+        , op.renewal_due_date__c as renewalDueDate
+        , op.multi_year_1st_due_date__c as multiYear1stDueDate
+        , op.multi_year_2nd_due_date__c as multiYear2ndDueDate
+        , op.contact_champion__c as contactChampionId
+        , op.business_unit__c as businessUnit
+        , op.vy_attribution__c as opportunityAttribution
+        , op.new_acv__c as newACV
+        , op.new_arr__c as newARR
+        , op.one_time__c as oneTimeCharge
+        , op.last_year_arr__c as lastYearARR
+        , op.renewal_amount__c as renewalAmount
+        , op.renewal_won_arr__c as renewalWonARR
+        , op.renewal_lost_arr__c as renewalLostARR
+        , op.reoccurring_mrr__c as reoccurringMRR
+        , op.csm_owner__c as csmOwnerId
+        , op.contract_start_date__c as contractStartDate
+        , op.contract_end_date__c as contractEndDate
+        , op.previous_contract_start_date__c as previousContractStartDate
+        , op.previous_contract_end_date__c as previousContractEndDate
+        , op.churn_reason__c as churnReason
+        , op.competition__c as competitor
+        , op.forecastcategoryname as forecastCategory
+        , op.red_opportunity__c as redOpportunity
+        , op.assurance__c as Assurance
+        , op.vy_use_case__c as useCase
+        , op.Partner_Account__c as partnerAccountID
+        , op.Partner_Buying_Relationship__c as partnerBuyingRelationship
+        , op.Partner_Percentage__c as partnerPercentage
+        , op.PartnerStack_ID__c as partnerStackID
+        , op.PartnerStack_Lead_ID__c as partnerStackLeadID
+        , op.PartnerStack_Partner_ID__c as partnerStackPartnerID
+        , op.Partner_Rep__c as partnerRep
+        , op.days_in_stage_1__c as daysInStage1
+        , op.days_in_stage_2__c as daysInStage2
+        , op.days_in_stage_3__c as daysInStage3
+        , op.days_in_stage_4__c as daysInStage4
+        , op.days_in_stage_5__c as daysInStage5
+        , op.days_in_stage_6__c as daysInStage6
+        , op.days_in_stage_custom__c as daysInStageCustom
+        , op.x1_pre_qualification_date__c as preQualificationDate
+        , op.x2_initiate_date__c as initiationDate
+        , op.x3_value_proposition_date__c as valuePropositionDate
+        , op.x4_solution_evaluation_date__c as solutionEvaluationDate
+        , op.x5_decision_date__c as DecisionDate
+        , op.x6_negotiate_date__c as negotiationDate
+        , probability as probability
+        , op.originating_contact__c as originatingContactId
+        , op.opportunity_owner_role__c as opportunityOwnerRole
+        , op.Term_Length__c as termlength
 FROM 
     {{ source('salesforce_production', 'opportunity') }} as op

@@ -25,6 +25,10 @@ sources:
       - name: lead
 
       - name: campaignmember
+
+      - name: user
+
+      - name: partner_program__c
       
 
 models:
@@ -145,6 +149,73 @@ models:
       
       - name: useCase
         description: The main purpose the client has stated this products will be used for
+
+      - name: partnerAccountID
+        description: ' '
+
+      - name: partnerBuyingRelationship
+        description: ' '
+
+      - name: partnerPercentage
+        description: ' '
+
+      - name: partnerStackID
+        description: ' '
+
+      - name: partnerStackLeadID
+        description: ' '
+
+      - name: partnerStackPartnerID
+        description: ' '
+
+      - name: partnerRep
+        description: ' '     
+
+      - name: daysInStage1
+        description: ' '      
+
+      - name: daysInStage2
+        description: ' '     
+
+      - name: daysInStage3
+        description: ' '     
+
+      - name: daysInStage4
+        description: ' '     
+
+      - name: daysInStage5
+        description: ' '     
+
+      - name: daysInStage6
+        description: ' '     
+
+      - name: daysInStageCustom
+        description: ' '    
+
+      - name: daysInStageCustom
+        description: ' '
+
+      - name: preQualificationDate
+        description: ' '
+
+      - name: initiationDate
+        description: ' '
+
+      - name: valuePropositionDate
+        description: ' '
+
+      - name: solutionEvaluationDate
+        description: ' '     
+        
+      - name: DecisionDate
+        description: ' '  
+
+      - name: negotiationDate
+        description: ' '  
+
+      - name: probability
+        description: Probability that an opportunity is won                                        
+
 
   - name: stg_salesforce_account
     columns:
@@ -300,6 +371,27 @@ models:
         description: status of an account that has been deemed qualified to act on by
           marketing (via a picklist)
 
+      - name: partnerManager
+        description: ' '
+
+      - name: subType
+        description: ' '
+
+      - name: partnerTier
+        description: ' '   
+
+      - name: partnerDesignation
+        description: ' '   
+
+      - name: partnerStackStatus
+        description: ' '      
+
+      - name: partnerStackID
+        description: ' '
+
+      - name: salesProspectingTool
+        description: ' '      
+
   - name: stg_salesforce_contact
     columns:
       - name: contactId
@@ -392,6 +484,10 @@ models:
 
       - name: mailingCountry
         description: also used as billing information for the contact
+      
+      - name: acquisitationprogram
+        description: which marketing acquisition program the contact belongs to
+
 
   - name: stg_salesforce_campaign
     columns:
@@ -541,6 +637,9 @@ models:
       - name: ballerScore
         description: lead score calculated in salesforce
 
+      - name: acquisitationprogram
+        description: which marketing acquisition program the contact belongs to
+
   # Documentation for Staging Campaign Member table
   - name: stg_salesforce_campaignmember
     columns:
@@ -626,3 +725,45 @@ models:
 
       - name: currentStatusReason
         description: reason for a campaign members status
+
+  # Documentation for Staging Users table
+  - name: stg_salesforce_user
+    columns:
+      - name: Id
+        description: id of the user
+        tests:
+          - unique
+          - not_null
+      
+      - name: full_name__c
+        description: User full name
+  # Documentation for Staging Partner Program table
+  - name: stg_salesforce_partnerprogram
+    columns:
+      - name: partnerprogramid
+        description: Unique identifier of partner program
+      
+      - name: partnerprogramname
+        description: Name of partner program
+
+      - name: partneraccount
+        description: ID of patner account
+
+      - name: opportunityid
+        description: ID of opportuntiy partner program is on
+      
+      - name: partnertype
+        description: Type of partner
+      
+      - name: partnermanager
+        description: Partner manager for partner account
+      
+      - name: partnerecosystem
+        description: Ecosystem partner is in
+
+      - name: proportionalarr
+        description: ARR owed to partner
+
+      - name: partnersourced
+        description: Indicated if opportunity was partner sourced
+

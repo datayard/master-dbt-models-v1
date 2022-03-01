@@ -1,4 +1,6 @@
 SELECT
+        pageviews.session_id as sessionid,
+        pageviews.session_time as sessiontime,
         pageviews.event_id as eventID,
         pageviews.user_id as userID,
         pageviews.time as eventTime,
@@ -20,8 +22,11 @@ SELECT
         pageviews.utm_medium as utmMedium,
         pageviews.utm_campaign as utmCampaign,
         pageviews.utm_term as utmTerm,
-        pageviews.utm_content as utmContent
+        pageviews.utm_content as utmContent,
+        isnull(cr.region, 'Other') as gregion
 FROM
         {{ source ('govideo_production' , 'pageviews')}} as pageviews
+        left join {{ source('ops_utility_tables', 'country_names_with_region') }} cr
+                on pageviews.country = cr.country_name
 WHERE
-        TRUE
+        pageviews.time < DATEADD(day, 1, current_date)

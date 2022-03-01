@@ -3,6 +3,8 @@ SELECT
         subscription.account_id as accountId,
         subscription.cancelled_date as cancelledDate,
         subscription.contract_effective_date as contractStartDate,
+        subscription.contract_effective_date as contractEffectiveDate,
+        subscription.service_activation_date as serviceActivationDate,
         subscription.created_by_id as createdById,
         subscription.created_date as createdDate,
         subscription.current_term as currentTerm,
@@ -28,7 +30,9 @@ SELECT
         subscription.sold_to_contact_id as soldToContactId,
         subscription.subscription_version_amendment_id as subscriptionVersionAmendmentId,
         subscription.default_payment_method_id as defaultPaymentMethodId,
-        subscription.bill_to_contact_id as billToContactId
+        subscription.bill_to_contact_id as billToContactId,
+        subscription.version as subscriptionversion,
+        subscription.promocode_c as promocode
 
 FROM
     {{ source ('zuora', 'subscription')}} as subscription

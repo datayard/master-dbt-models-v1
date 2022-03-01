@@ -84,6 +84,15 @@ models:
       - name: lastSeenAt
         description: The last chat session this user had
 
+      - name: customProductPage
+        description: ' '
+
+      - name: customLocation
+        description: ' '
+
+      - name: customUpgradePathsExperience
+        description: ' '       
+
   - name: stg_conversation_contact_history
     columns:
 
@@ -110,3 +119,6 @@ models:
 
       - name: sourceURL
         description: The URL where the conversationw as originated
+
+      - name: createdDate
+        description: date the conversation started        
